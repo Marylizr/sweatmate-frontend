@@ -1,0 +1,21 @@
+
+.sign {
+   width: 10em;
+   height: 3em;
+   background-color: teal;
+   color: white;
+   border-radius: 1.5em;
+   border: none;
+   margin: 2em;
+   cursor: pointer;
+}
+
+.log {
+   width: 10em;
+    height: 3em;
+    background-color: white;
+    color: teal;
+    border-radius: 1.5em;
+    border: 1px teal solid;
+    cursor: pointer;
+}

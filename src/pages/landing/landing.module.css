@@ -1,0 +1,74 @@
+.container{
+   display: flex;
+   flex-direction: row;
+   flex-wrap: nowrap;
+   align-items: center;
+   justify-content: space-evenly;
+}
+
+.leftdiv > img{
+   width: 30%;
+   
+}
+
+.girl > img{
+   width: 70%;
+   margin-top:5%;
+}
+.leftdiv{
+   display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+  
+}
+
+.buttons {
+   display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+   align-content: center;
+   justify-content: center;
+   align-items: center;
+   
+}
+
+.sign {
+   width: 10em;
+   height: 3em;
+   background-color: teal;
+   color: white;
+   border-radius: 1.5em;
+   border: none;
+   margin: 2em;
+   cursor: pointer;
+   display: flex;
+   align-content: center;
+   justify-content: center;
+   align-items: center;
+}
+
+.sign > a {
+   color: white;
+   text-decoration: none;
+}
+
+.log {
+   width: 10em;
+   height: 3em;
+   background-color: white;
+   border-radius: 1.5em;
+   border: 1px teal solid;
+   cursor: pointer;
+   display: flex;
+   align-content: center;
+   justify-content: center;
+   align-items: center;
+}
+
+.log > a {
+   color: teal;
+   text-decoration: none;
+}
