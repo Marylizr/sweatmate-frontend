@@ -3,88 +3,62 @@
    flex-direction: row;
    flex-wrap: nowrap;
    align-items: center;
+   margin-top: 2em;
 }
 
-#topnav {
+.logo > img{
+   width: 7em;
    display: flex;
-   flex-wrap: wrap;
-   flex-direction: row;
-   align-items: center;
-   justify-content: center;
-   align-content: center;
-   margin-right: 1%;
-   width: 100vw;
- }
- 
+}
 
-#topnav > nav > img{
-   margin: 0.5em 0 0.5em 1em;
-   width: 5em;
- }
- 
- 
- #topnav .logo a {
+.logo{
+   margin-right: 5em;
+}
+
+.container .links > a {
    text-decoration: none;
-   padding: 3px 0 0 5px;
-   display: block;
- }
- 
- #topnav nav {
-   display: flex;
-   flex-direction: row;
-   flex-wrap: nowrap;
-   align-content: center;
-   align-items: center;
-   justify-content: center;
- }
- 
- #topnav nav ul {
-   list-style: none;
- }
-
- #topnav nav ul li {
-   display: block;
-   float: left;
-   margin-right: 20px;
-   font-size: 16px;
- }
- 
- #topnav nav ul li a {
    color: grey;
-   font-family: "Muli", sans-serif;
-   font-weight: 900;
-   font-size: 12px;
-   padding: 1em 0.7em;
+   margin-right: 2em;
+  
+}
+
+.links {
+   display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
+    position: absolute;
+    top: -700px;
+    left:2000px;
+    margin: auto;
+}
+
+.links > button {
+   Background-color: transparent;
+    border: none;
+    color: teal;
+    font-size: 1em;
+}
+ 
+.links.active {
+   width: 100%;
    display: block;
-   transition: 0.5s all;
-   -webkit-transition: 0.51s all;
-   -moz-transition: 0.5s all;
-   -o-transition: 0.5s all;
-   text-transform: uppercase;
-   margin-top: 5px;
-   text-decoration: none;
- }
-
- #topnav nav ul li a:hover {
-   color: #555;
-   background: none;
-   border-bottom: 2px solid teal;
- }
- #topnav nav ul li a:active {
-   color: #555;
-   background: none;
-   border-bottom: 2px solid teal;
- }
+   position: absolute;
+   margin-left: auto;
+   margin-right: auto;
+   top:30%;
+   left:0;
+   right:0;
+   text-align: center;
+  }
 
 
- #topnav > nav > button {
-   color: teal;
-   background: none;
-   font-family: "Muli", sans-serif;
-   font-weight: 900;
-   font-size: 12px;
-   padding: 1em 0.7em;
-   display: block;
-   border: none;
-   text-transform: uppercase;
- }
+   @media (min-width:768px) {
+     .burger {
+      display: none;
+     }
+
+    
+   }

@@ -17,6 +17,7 @@ import fullbody from '../workouts/pics/fullbody.jpg';
 import NavBar from '../../components/navBar/navBar';
 
 
+
 const Workouts = () => {
    const navigate = useNavigate();
    const [name, setName] = useState();

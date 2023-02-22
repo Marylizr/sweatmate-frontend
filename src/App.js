@@ -1,6 +1,6 @@
 import { React } from 'globalthis/implementation';
 import './App.css';
-import {BrowserRouter, Routes, Route} from "react-router-dom"
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Home from './home/Home';
 import Workouts from './pages/workouts/Workouts';
 import Arms from './pages/arms/Arms';
@@ -14,6 +14,7 @@ import Shoulders from './pages/shoulders/Shoulders';
 import Fullbody from './pages/fullbody/Fullbody';
 import SignUp from './pages/signUp/SignUp';
 import LogIn from './pages/logIn/LogIn';
+
 
 function App() {
   return (
