@@ -11,18 +11,22 @@
    
 }
 
+.girl{
+   width: 50%;
+}
 .girl > img{
    width: 70%;
    margin-top:5%;
 }
+
 .leftdiv{
    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
-  
+   flex-direction: column;
+   flex-wrap: wrap;
+   align-content: center;
+   justify-content: center;
+   align-items: center;
+   width: 50%;
 }
 
 .buttons {
@@ -72,3 +76,21 @@
    color: teal;
    text-decoration: none;
 }
+
+
+@media (max-width: 600px) {
+   .girl{
+      width: 100%;
+   }
+
+   .leftdiv{
+      width: 100%;
+   }
+   .container {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: space-evenly;
+   }
+ }

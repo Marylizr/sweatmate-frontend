@@ -13,7 +13,7 @@ const SignUp = () => {
 
    useEffect(() => {
      const token = localStorage.getItem("token");
-     if (token) navigate("/workouts");
+     if (token) navigate("/dashboard");
    }, [navigate]);
  
    const {
@@ -26,7 +26,7 @@ const SignUp = () => {
       customFetch("POST", "user", {body: data})
       .then(userSession => {
         setUserSession(userSession);
-        navigate("");
+        navigate("/dashboard");
       }).catch(error => {
         console.error('not possible to sign up');
       });

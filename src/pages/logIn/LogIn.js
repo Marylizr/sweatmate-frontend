@@ -21,7 +21,7 @@ const Login = () => {
     customFetch("POST", "login", {body: data})
     .then(userSession => {
       setUserSession(userSession);
-      navigate("/workouts");
+      navigate("/dashboard");
     }).catch(error => {
       console.error('its no possible to log in');
     });

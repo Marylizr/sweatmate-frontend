@@ -60,8 +60,7 @@ justify-content: space-between;
 
 .logo > img {
    width: 7em;
-  margin-right:0;
-  margin-top: 2em;
+   margin-right:0;
 
   @media(min-width:768px){
    margin-right:3em;
@@ -159,6 +158,8 @@ justify-content: space-between;
 
 .burger {
    display: flex;
+   position: relative;
+   right: -65px;
    @media(min-width:768px){
       display: none;
    }

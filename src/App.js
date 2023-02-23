@@ -2,7 +2,7 @@ import { React } from 'globalthis/implementation';
 import './App.css';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Home from './home/Home';
-import Workouts from './pages/workouts/Workouts';
+import Dashboard from './pages/dashboard/Dashboard';
 import Arms from './pages/arms/Arms';
 import Back from './pages/back/Back';
 import Chest from './pages/chest/Chest';
@@ -14,15 +14,17 @@ import Shoulders from './pages/shoulders/Shoulders';
 import Fullbody from './pages/fullbody/Fullbody';
 import SignUp from './pages/signUp/SignUp';
 import LogIn from './pages/logIn/LogIn';
+import AddWorkout from './pages/addWorkout/AddWorkout';
 
 
 function App() {
+
   return (
     <div className='App'> 
       <BrowserRouter >
         <Routes> 
           <Route path="/" element={ <Home />} />
-          <Route path="/workouts" element={ <Workouts />} />
+          <Route path="/dashboard" element={ <Dashboard />} />
           <Route path="/arms" element={ <Arms />} />
           <Route path="/back" element={ <Back />} />
           <Route path="/chest" element={ <Chest />} />
@@ -34,7 +36,7 @@ function App() {
           <Route path="/fullbody" element={ <Fullbody />} />
           <Route path="/signup" element={ <SignUp />} />
           <Route path="/login" element={ <LogIn />} />
-
+          <Route path="/addworkout" element={ <AddWorkout />} />
         </Routes>
       </BrowserRouter>
 

@@ -3,22 +3,22 @@ import { useState, useEffect } from 'react';
 import customFetch from '../../api';
 import { removeSession } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
-import styles from '../workouts/workouts.module.css';
+import styles from './workouts.module.css';
 import { Link } from 'react-router-dom';
-import arms from '../workouts/pics/arms.jpg';
-import back from '../workouts/pics/back.jpg';
-import chest from '../workouts/pics/chest.jpg';
-import glutes from '../workouts/pics/glutes.jpg';
-import hamstring from '../workouts/pics/hamstring.jpg';
-import quadriceps from '../workouts/pics/quadriceps.jpg';
-import abs from '../workouts/pics/abs.jpg';
-import shoulders from '../workouts/pics/shoulders.jpg';
-import fullbody from '../workouts/pics/fullbody.jpg';
+import arms from './pics/arms.jpg';
+import back from './pics/back.jpg';
+import chest from './pics/chest.jpg';
+import glutes from './pics/glutes.jpg';
+import hamstring from './pics/hamstring.jpg';
+import quadriceps from './pics/quadriceps.jpg';
+import abs from './pics/abs.jpg';
+import shoulders from './pics/shoulders.jpg';
+import fullbody from './pics/fullbody.jpg';
 import NavBar from '../../components/navBar/navBar';
 
 
 
-const Workouts = () => {
+const Dashboard = () => {
    const navigate = useNavigate();
    const [name, setName] = useState();
 
@@ -101,4 +101,4 @@ const Workouts = () => {
   )
 }
 
-export default Workouts;
+export default Dashboard;
