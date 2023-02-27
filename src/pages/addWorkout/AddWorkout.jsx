@@ -7,12 +7,14 @@ const AddWorkout = () => {
    const [photos, setPhotos] = useState([]);
 
 
-   const addPhoto = (data) => {
-     setPhotos([...photos, data])
-   };
+  //  const addPhoto = (data) => {
+  //    setPhotos([...photos, data])
+  //  };
+
+  
   return (
     <div>
-      <Upload addPhoto={addPhoto}/>
+      <Upload setPhotos={setPhotos}/>
       <Galery photos={photos}/>
     </div>
   )

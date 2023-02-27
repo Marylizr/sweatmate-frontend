@@ -70,7 +70,7 @@ const SignUp = () => {
          <select className={styles.goal} type='goal' {...register("goal", { required: true })} >
             <option value="Fat-Lost">Fat Lost</option>
             <option value="Gain-Muscle-Mass ">Gain Muscle Mass</option>
-            <option value=" Manteninance">Manteninance</option>
+            <option value="Manteninance">Manteninance</option>
          </select>
             
                <input className={styles.submit} type="submit" />

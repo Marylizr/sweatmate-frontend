@@ -14,71 +14,93 @@ const eye = <FontAwesomeIcon icon={faEye} />;
 const AccountSetting = () => {
 
     const [passwordShown, setPasswordShown] = useState(false);
+    const [photo, setPhoto] = useState('');
+
     const togglePasswordVisiblity = () => { 
       setPasswordShown(passwordShown ? false : true); 
     };
 
-    const [user, setUser] = useState({name:"name", surname:"surname", email: "email", password:"pass",image:"image", currency:"currency", wallet:"wallet"});
-    const [initialCurrency, setInitialCurrency] = useState({currency:"currency"});
+    const [user, setUser] = useState(
+      { 
+         name:"name", 
+         email: "email", 
+         password:"pass", 
+         image:"image", 
+         age:"age", 
+         height:"height",
+         weight:"weight",
+         goal:"goal"
+      });
+   
 
     const getUser = () => {
-      customFetch("GET", "users/me")
-      .then((json) => { setUser({...json, password:""});   
-        setInitialCurrency(json.currency)  }); }
+      customFetch("GET", "user/me")
+      .then((json) => { 
+         setUser({...json, password:""});   
+         }); }
     
     useEffect(() => {
      getUser() 
    },[]);
 
+
     const onSubmit = async() => {
-      const wallet = (initialCurrency==="€" && user.currency==="$") ? (Math.floor(1.1*user.wallet)).toFixed(4) : ((initialCurrency==="$" && user.currency==="€") ? (Math.floor(0.9*user.wallet)).toFixed(4) : user.wallet);
-      let resultado;
+      
       const imagen = fileUpload();
-      await imagen.then(result => { resultado = result; })
+      await imagen
+        
       const data = {
         name: user.name, 
-        surname: user.surname, 
         email:user.email, 
         password:user.password,
-        image:resultado ? resultado : user.image, 
-        currency:user.currency, 
-        wallet:wallet
+        image: imagen, 
+        age:user.age,
+        height: user.height,
+        weight:user.weight,
+        goal:user.goal
       }
+
       
-      customFetch("PUT", "users/", {body:data})
-      .then(response => {console.log(response);})
-      .then(res => {window.location.reload();})
+      customFetch("PUT", "user", {body:data})
       .catch(err => console.log(err));      
     }
 
     const fileUpload = async () => {
         const files = inputFile.current.files;
         const formData = new FormData();
-        const url = "https://api.cloudinary.com/v1_1/dlh7p829u/image/upload";
+        const url = "https://api.cloudinary.com/v1_1/da6il8qmv/image/upload";
         let imagen;
       
         let file = files[0];
         formData.append("file", file);
-        formData.append("upload_preset", "vn6yolxr");
+        formData.append("upload_preset", "h9rhkl6h");
+        console.log(formData, files)
         await fetch(url, {
           method: "POST",
           header: {
               'Content-Type': 'multipart/form-data'
           },
           body: formData
+          
         })
         .then((response) => {
           console.log(response);
           return response.json();
+          
         })
         .then((photo) => {
           imagen = photo.url;
+       
+          setPhoto(user.image)
+          console.log(imagen)
+         
         })
         .catch((data) => {
           console.log(data);
         });
-
+       
         return imagen;
+        
     }
 
     const inputFile = useRef(null);
@@ -88,7 +110,7 @@ const AccountSetting = () => {
       <div className = {styles.settings}>
           <div className = {styles.editbox}>
               <form className= {styles.form} >
-                  <p>Edit profile</p>
+                  <p>Edit profile </p>
                   
                   <div className={styles.images}>
                     <div className={styles.userimage}><img src={user.image ? user.image : userimg } 
@@ -107,17 +129,33 @@ const AccountSetting = () => {
                   <div className= {styles.namesinput}>
                     <input className = {styles.names} type='text' value={user.name} 
                     onChange={(e) =>setUser({...user,name: e.target.value })} placeholder="name"></input>
-                    <input className = {styles.names} type='text' value={user.surname}  
-                    onChange={(e) =>setUser({...user,surname: e.target.value})} placeholder="surname"></input>
-                  </div>
-                  <div className= {styles.nameserror}>
-                    {!user.name && <span><h3>X</h3></span>}
-                    {!user.surname && <span><h3>X</h3></span>}
+
+                  <input className= {styles.email} type="email" value={user.email} 
+                  onChange={(e) =>setUser({...user,email: e.target.value})} placeholder="email"></input>
+                  {!user.email && <span><h3>X</h3></span>}
+
+                  <input className= {styles.names} type="number" value={user.age}  
+                    onChange={(e) =>setUser({...user, age: e.target.value})} placeholder="age"></input>
+
+                  <input className= {styles.names} type="number" value={user.height}  
+                    onChange={(e) =>setUser({...user, height: e.target.value})} placeholder="height"></input>
+
+                  <input className= {styles.names} type="number" value={user.weight}  
+                    onChange={(e) =>setUser({...user, weight: e.target.value})} placeholder="weight"></input>
+
+                  <select className= {styles.names} type="text" value={user.goal} onChange={(e) =>setUser({...user,goal: e.target.value})} >
+                    <option value="Fat-Lost">Fat Lost</option>
+                    <option value="Gain-Muscle-Mass">Gain Muscle Mass</option>
+                    <option value="Manteninance">Manteninance</option>
+                  </select>    
+
                   </div>
 
-                  <input className = {styles.email} type="email" value={user.email} 
-                  onChange={(e) =>setUser({...user,surname: e.target.value})} placeholder="email"></input>
-                  {!user.email && <span><h3>X</h3></span>}
+                  <div className= {styles.nameserror}>
+                    {!user.name && <span><h3>X</h3></span>}
+                  </div>
+
+                
                   
                   <div className={styles.passwordeye}>
                     <input className = {styles.password} type={passwordShown ? "text" : "password"} 
@@ -125,19 +163,20 @@ const AccountSetting = () => {
                     <i className={styles.eye} onClick={togglePasswordVisiblity}>{eye}</i>
                   </div>
 
-
-                  <select  type='currency' value={user.currency} onChange={(e) =>setUser({...user,currency: e.target.value})} >
-                    <option value="$">USD ($)</option>
-                    <option value="€">EUR (€)</option>
-                    </select>
-
                   <button className = {styles.submit} 
                   onClick={(e) => {e.preventDefault();e.stopPropagation();onSubmit();}}>Save</button>
               </form>
           </div>
+          <div>
+          <img src={photo} alt="userImage"/>
+            {user.name}
+            {user.age}
+          </div>
+
       </div>
 
     )
 }
 
 export default AccountSetting;
+

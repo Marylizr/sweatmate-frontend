@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {useForm} from 'react-hook-form';
 import styles from '../logIn/login.module.css';
 import customFetch from '../../api';
@@ -27,10 +27,6 @@ const Login = () => {
     });
    };
 
-
-   useEffect(() => {
-      console.log('Errors', errors);
-   }, [errors]);
    
    return (
       <div className={styles.container}>

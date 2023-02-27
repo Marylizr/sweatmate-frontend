@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 
-const Upload = ({addPhoto}) => {
+const Upload = ({ setPhotos }) => {
     const inputFile = useRef(null);
 
     const onSubmit = () => {
@@ -12,7 +12,7 @@ const Upload = ({addPhoto}) => {
         for (let i = 0; i < files.length; i++) {
           let file = files[i];
           formData.append("file", file);
-          formData.append("upload_preset", "kam3rrvu");
+          formData.append("upload_preset", "h9rhkl6h");
           fetch(url, {
             method: "POST",
             header: {
@@ -25,8 +25,7 @@ const Upload = ({addPhoto}) => {
               return response.text();
             })
             .catch((data) => {
-              
-              addPhoto(JSON.parse(data));
+              setPhotos(data);
               console.log(data);
             });
         }

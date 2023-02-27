@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import {useContext, useEffect } from 'react';
 import customFetch from '../../api';
 import { removeSession } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
@@ -15,29 +15,30 @@ import abs from './pics/abs.jpg';
 import shoulders from './pics/shoulders.jpg';
 import fullbody from './pics/fullbody.jpg';
 import NavBar from '../../components/navBar/navBar';
-
+import { UserContext } from '../../components/userContext/userContext';
 
 
 const Dashboard = () => {
    const navigate = useNavigate();
-   const [name, setName] = useState();
+   const { name, setName, photo, setPhoto } = useContext(UserContext);
 
    useEffect(() => {
 
       customFetch( "GET", "user/me")
         .then((json) => {
           setName(json.name);
+          setPhoto(json.image)
         })
         .catch(() => {
          removeSession();
          navigate("/login");
        });
-      }, [ navigate, setName]);
+      }, [ navigate, setName, setPhoto]);
 
    return (
       <div className={styles.container}> 
       <NavBar />
-         <h2>Hello, { name }</h2>
+         <h2>Hello, { name } {photo} </h2>
          <h3>What do you want to workout today?</h3>
 
          <div className={styles.wrap}>

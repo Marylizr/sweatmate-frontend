@@ -9,8 +9,7 @@ const Galery = ({ photos }) => {
         cloud: {
           cloudName: 'da6il8qmv'
         }
-      }); 
-      console.log(photos)
+      });
     
     return (
         <div>
@@ -18,8 +17,7 @@ const Galery = ({ photos }) => {
                 <div>
                    
                     <AdvancedImage 
-                        cldImg={cld.image(photo.public_id).resize(fill().width(800))} 
-                        
+                        cldImg={cld.image(photo.public_id).resize(fill().width(800))}  
                     />
                 </div>
             ))}

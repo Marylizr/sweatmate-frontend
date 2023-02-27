@@ -1,0 +1,181 @@
+
+.nameserror {
+   display: flex;
+   flex-direction: row;
+   justify-content: left;
+}
+
+
+.settings{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 60vw;
+   height: 100vh;
+   flex-direction: row;
+   flex-wrap: nowrap;
+   align-content: center;
+   background-color: #F8FBFF;
+}
+
+.editbox{
+   display: flex;
+   width: 426px;
+   height: auto;
+   left: 0px;
+   top: 0px;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   background: #FFFFFF;
+   border: 1px solid #E9E9E9;
+   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
+   border-radius: 4px;
+   padding: 20px;
+}
+
+.form{
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+
+.images {
+   position: relative;
+   padding: 2% 0;
+   display:flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+}
+
+.userimage{
+   width: 100%;
+   height: auto;
+}
+.imagen{
+   width:100px;
+   height:auto;
+   border-radius: 5px;
+}
+
+.editimg{
+   position: absolute;
+    bottom: 0;
+    right: 0%;
+    background-color: #ED6900;
+    /* background-color: #258AFF; */
+    border-style: none;
+    border-radius: 48%;
+    transition: .5s ease;
+    opacity: 1;
+    filter: invert(100%);
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* .editimg>input {
+   visibility:hidden;
+ width:0;
+ height:0
+ } */
+
+.uploading {
+   display: none;
+}
+
+
+.editimg:hover {
+   transform: scale(1.5);
+ }
+
+
+.namesinput {
+   display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2% 0;
+    width: 300px;
+    flex-wrap: wrap;
+    flex-direction: row;
+} 
+
+.names {
+   margin: 10px;
+   width:  80%;
+   height: 30px;
+   border-radius: 3px;
+   border:none;
+   box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04), 0px 4px 16px rgba(51, 51, 51, 0.18);
+   padding: 5px;
+}
+
+.email{
+   margin: 10px;
+   width: 80%;
+   height: 30px;
+   border-radius: 3px;
+   border:none;
+   box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04), 0px 4px 16px rgba(51, 51, 51, 0.18);
+   padding: 5px;
+   
+}
+
+.passwordeye {
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   align-items: center;
+   position: relative;
+   width: 90%;
+   padding: 2% 0;
+} 
+
+.password{
+   margin: 10px;
+   width: 89.5%;
+   height: 30px;
+   border-radius: 3px;
+   border:none;
+   box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04), 0px 4px 16px rgba(51, 51, 51, 0.18);
+   padding: 5px;
+   display: block;
+
+}
+
+.eye {
+   position: absolute; 
+   bottom: 33%; 
+   right: 7.5%;
+   opacity: 50%;
+}
+
+.passwordeye:hover .eye {
+   transform: scale(1.1);
+   opacity: 0.8;
+ }
+
+.submit{
+   margin: 10px;
+   width: 40%;
+   height: 30px;
+   background-color:#258AFF;
+   border:none;
+   border-radius: 5px;
+   color: white;
+   font-weight: 700;
+   cursor: pointer;
+}
+
+.form > select .names{
+   border-radius: 3px;
+   border: none;
+   box-shadow: 0px 4px 4px rgb(51 51 51 / 4%), 0px 4px 16px rgb(51 51 51 / 18%);
+   padding: 5px;
+   margin: 10px;
+   width: 300px;
+}

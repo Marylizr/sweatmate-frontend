@@ -34,7 +34,7 @@ const NavBar = () => {
             <Link to="/workouts">Workouts |</Link>
             <Link to="/about">About Us |</Link>
             <Link to="/healthyTips">Healthy Tips |</Link>
-            <Link to="/FitMenu">Fit Menu |</Link>
+            <Link to="/settings">Settings |</Link>
             <Link to="/contact">Contact</Link>
             <button onClick={() => {onLogOut()}}>Log out</button>
          </div>

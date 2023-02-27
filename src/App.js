@@ -15,12 +15,14 @@ import Fullbody from './pages/fullbody/Fullbody';
 import SignUp from './pages/signUp/SignUp';
 import LogIn from './pages/logIn/LogIn';
 import AddWorkout from './pages/addWorkout/AddWorkout';
-
+import AccountSetting from './pages/UserAccount/userAccount';
+import { UserContextProvider } from './components/userContext/userContext';
 
 function App() {
 
   return (
     <div className='App'> 
+    <UserContextProvider>
       <BrowserRouter >
         <Routes> 
           <Route path="/" element={ <Home />} />
@@ -37,9 +39,10 @@ function App() {
           <Route path="/signup" element={ <SignUp />} />
           <Route path="/login" element={ <LogIn />} />
           <Route path="/addworkout" element={ <AddWorkout />} />
+          <Route path="/settings" element={ <AccountSetting />} />
         </Routes>
       </BrowserRouter>
-
+    </UserContextProvider>
     </div>
 
 
