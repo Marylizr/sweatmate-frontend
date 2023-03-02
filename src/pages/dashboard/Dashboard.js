@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {useContext, useEffect } from 'react';
 import customFetch from '../../api';
 import { removeSession } from "../../api/auth";
@@ -18,27 +18,33 @@ import NavBar from '../../components/navBar/navBar';
 import { UserContext } from '../../components/userContext/userContext';
 
 
+
 const Dashboard = () => {
    const navigate = useNavigate();
-   const { name, setName, photo, setPhoto } = useContext(UserContext);
+   const { name, setName } = useContext(UserContext);
+   const [image, setImage] = useState();
 
    useEffect(() => {
 
       customFetch( "GET", "user/me")
         .then((json) => {
           setName(json.name);
-          setPhoto(json.image)
+          setImage(json.image)
         })
         .catch(() => {
          removeSession();
          navigate("/login");
        });
-      }, [ navigate, setName, setPhoto]);
+      }, [ navigate, setName]);
 
    return (
       <div className={styles.container}> 
       <NavBar />
-         <h2>Hello, { name } {photo} </h2>
+      <div className={styles.small_header}>
+         <img src={image} alt='profile_pic'/>
+         <h2>Hello, { name } </h2>
+      </div>
+        
          <h3>What do you want to workout today?</h3>
 
          <div className={styles.wrap}>

@@ -3,18 +3,15 @@ import { useEffect , useState, useRef} from "react";
 import userimg from './images/userimg.svg'
 import pen from './images/pen.svg'
 import customFetch from '../../api';
-
-// import { AdvancedImage } from '@cloudinary/react';
-// import { Cloudinary } from '@cloudinary/url-gen';
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 const eye = <FontAwesomeIcon icon={faEye} />;
+const cloud = process.env.CLOUD_NAME;
+const upload = process.env.UPLOAD;
 
 const AccountSetting = () => {
 
     const [passwordShown, setPasswordShown] = useState(false);
-    const [photo, setPhoto] = useState('');
 
     const togglePasswordVisiblity = () => { 
       setPasswordShown(passwordShown ? false : true); 
@@ -36,7 +33,7 @@ const AccountSetting = () => {
     const getUser = () => {
       customFetch("GET", "user/me")
       .then((json) => { 
-         setUser({...json, password:""});   
+         setUser({...json, password:""});  
          }); }
     
     useEffect(() => {
@@ -47,13 +44,13 @@ const AccountSetting = () => {
     const onSubmit = async() => {
       
       const imagen = fileUpload();
-      await imagen
-        
+      let resultado;
+      await imagen.then(result => { resultado = result; }) 
       const data = {
         name: user.name, 
         email:user.email, 
         password:user.password,
-        image: imagen, 
+        image:resultado ? resultado : user.image, 
         age:user.age,
         height: user.height,
         weight:user.weight,
@@ -68,12 +65,12 @@ const AccountSetting = () => {
     const fileUpload = async () => {
         const files = inputFile.current.files;
         const formData = new FormData();
-        const url = "https://api.cloudinary.com/v1_1/da6il8qmv/image/upload";
+        const url = `https://api.cloudinary.com/v1_1/${cloud}/image/upload`;
         let imagen;
       
         let file = files[0];
         formData.append("file", file);
-        formData.append("upload_preset", "h9rhkl6h");
+        formData.append("upload_preset", `${upload}`);
         console.log(formData, files)
         await fetch(url, {
           method: "POST",
@@ -91,9 +88,8 @@ const AccountSetting = () => {
         .then((photo) => {
           imagen = photo.url;
        
-          setPhoto(user.image)
-          console.log(imagen)
-         
+        //   setProfilePhoto(user.image)
+        //  console.log(user.image)
         })
         .catch((data) => {
           console.log(data);
@@ -154,8 +150,6 @@ const AccountSetting = () => {
                   <div className= {styles.nameserror}>
                     {!user.name && <span><h3>X</h3></span>}
                   </div>
-
-                
                   
                   <div className={styles.passwordeye}>
                     <input className = {styles.password} type={passwordShown ? "text" : "password"} 
@@ -167,8 +161,8 @@ const AccountSetting = () => {
                   onClick={(e) => {e.preventDefault();e.stopPropagation();onSubmit();}}>Save</button>
               </form>
           </div>
-          <div>
-          <img src={photo} alt="userImage"/>
+          <div className={styles.profile}>
+          <img src={user.image} alt="userImage"/>
             {user.name}
             {user.age}
           </div>

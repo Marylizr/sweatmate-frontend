@@ -179,3 +179,16 @@
    margin: 10px;
    width: 300px;
 }
+
+.profile {
+   display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile > img {
+   width: 200px;
+   border-radius: 100px;
+}

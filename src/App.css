@@ -8,6 +8,7 @@
   align-items: center;
   font-family: 'Roboto';
   color: gray;
+  flex-direction: column;
 }
 
 p {

@@ -30,8 +30,8 @@ const NavBar = () => {
             <img src={logo} alt='logo'/>
          </div>
          <div className={`links ${clicked ? 'active' : ''}`}>
-            <Link to="/">Home |</Link>
-            <Link to="/workouts">Workouts |</Link>
+            <Link to="/dashboard">Home |</Link>
+            {/* <Link to="/dashboard">Workouts |</Link> */}
             <Link to="/about">About Us |</Link>
             <Link to="/healthyTips">Healthy Tips |</Link>
             <Link to="/settings">Settings |</Link>
@@ -88,17 +88,23 @@ justify-content: space-between;
     a{
       color: grey;
       display: block;
+      
     }
 
    @media(min-width:768px){
-      position: initial;
       margin: 0;
-      display: block;
+      position: initial;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
 
       a{
-       
-        color: grey;
-        display: inline;
+         font-size: 1.2em;
+         color: grey;
+         display: inline;
       }
     }
    }
@@ -133,7 +139,7 @@ justify-content: space-between;
       }
     }
 
-    .links.active > button{
+    .links > button{
       Background-color: transparent;
       border: none;
       color: teal;
@@ -150,7 +156,9 @@ justify-content: space-between;
          justify-content: center;
          align-items: center;
          font-size: 1.3em;
-         
+         Background-color: transparent;
+         border: none;
+         color: teal;
       }
     }
   

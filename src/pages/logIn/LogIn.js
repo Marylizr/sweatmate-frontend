@@ -44,7 +44,7 @@ const Login = () => {
                 {errors.password?.type === 'minLength' && <p className={styles.error}>Password should be longer than 8 characters</p>}
                 <br/>
         
-                <input className={styles.submit} type="submit" />
+                <input className={styles.submit} type="submit" value="Lets go!"/>
             </form>
         </div>
    );

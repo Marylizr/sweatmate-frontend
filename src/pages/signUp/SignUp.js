@@ -54,6 +54,9 @@ const SignUp = () => {
          {errors.password?.type === 'required' && <p className={styles.error}>This field is required</p>}
          {errors.password?.type === 'minLength' && <p className={styles.error}>Password should be longer than 8 characters</p>}
          <br/>
+         <label>User Image</label>
+         <input type="text"  {...register("image")} />
+         <br/>
          <label>Weight</label>
          <input type="number" placeholder='60kg' {...register("weight", { required: true })} />
          {errors.weight && <p className={styles.error}>This field is required</p>}
@@ -73,7 +76,7 @@ const SignUp = () => {
             <option value="Manteninance">Manteninance</option>
          </select>
             
-               <input className={styles.submit} type="submit" />
+               <input className={styles.submit} type="submit" value="Sign me up!"/>
            
             </form>
     </div>

@@ -32,3 +32,19 @@
    align-items: center;
    align-content: center;
 }
+
+.small_header > img{
+   width: 55px;
+   border-radius: 50px;
+   box-shadow: 5px 5px 5px grey;
+   margin-right: 10px;
+}
+
+.small_header {
+   display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+}

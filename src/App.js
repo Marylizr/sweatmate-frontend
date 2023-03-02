@@ -31,7 +31,7 @@ function App() {
           <Route path="/back" element={ <Back />} />
           <Route path="/chest" element={ <Chest />} />
           <Route path="/glutes" element={ <Glutes />} />
-          <Route path="/hamstring" element={ <Hamstrings />} />
+          <Route path="/hamstrings" element={ <Hamstrings />} />
           <Route path="/quadriceps" element={ <Quadriceps />} />
           <Route path="/abs" element={ <Abs />} />
           <Route path="/shoulders" element={ <Shoulders />} />
