@@ -3,13 +3,13 @@ import customFetch from '../../api';
 import styles from '../addWorkout/addworkout.module.css';
 import { UserContext } from '../../components/userContext/userContext';
 // import fitness from '../../utils/fitness.png'
-import pen from '../../pages/UserAccount/images/pen.svg'
+import pen from '../../pages/UserAccount/images/pen.svg';
+const cloud = process.env.CLOUD_NAME;
+const upload = process.env.UPLOAD;
 
 const AddWorkout = () => {
 
   const { workout, setWorkout } = useContext(UserContext);
-
-
 
   const onSubmit = async() => {
     
@@ -33,12 +33,12 @@ const AddWorkout = () => {
   const fileUpload = async () => {
       const files = inputFile.current.files;
       const formData = new FormData();
-      const url = "https://api.cloudinary.com/v1_1/da6il8qmv/image/upload";
+      const url = `https://api.cloudinary.com/v1_1/${cloud}/image/upload`;
       let imagen;
     
       let file = files[0];
       formData.append("file", file);
-      formData.append("upload_preset", "h9rhkl6h");
+      formData.append("upload_preset", `${upload}`);
       console.log(formData, files)
       await fetch(url, {
         method: "POST",
