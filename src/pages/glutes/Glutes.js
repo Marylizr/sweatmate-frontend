@@ -2,7 +2,7 @@ import React, {useEffect, useState } from 'react'
 import customFetch from '../../api';
 import Card from '../../components/card/Card';
 import NavBar from '../../components/navBar/navBar';
-import styles from '../abs/abs.module.css';
+import styles from '../glutes/glutes.module.css';
 
 
 
@@ -35,12 +35,12 @@ const Glutes = ({isInFav='false', onClick}) => {
 
 console.log(filteredData)
   return (
-    <div>
+    <div className={styles.container}>
       <NavBar />
       <h1>Welcome to Glutes workout</h1>
-    <div className={styles.container}>
+    <div className={styles.wrap}>
     {
-      filteredData && filteredData.length > 0 && filteredData.filter(item => item.type.includes('glutes')).map( item => 
+      filteredData && filteredData.length > 0 && filteredData.filter(item => item.type.toLocaleLowerCase().includes('glutes', 'Glute')).map( item => 
         <Card addToFav={addToFav} item={item} id={item._id} key={item._id}
         onClick={() => {onClick()}} />)}
     </div>

@@ -1,4 +1,4 @@
-import styles from "./settings.module.css"
+import styles from "./settings.module.css";
 import { useEffect , useState, useRef} from "react";
 import userimg from './images/userimg.svg'
 import pen from './images/pen.svg'
@@ -6,10 +6,15 @@ import customFetch from '../../api';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 const eye = <FontAwesomeIcon icon={faEye} />;
-const cloud = process.env.CLOUD_NAME;
-const upload = process.env.UPLOAD;
+const cloud = process.env.REACT_APP_CLOUD;
+const upload = process.env.REACT_APP_UPLOAD;
+
+
 
 const AccountSetting = () => {
+
+  console.log(process.env.CLOUD_NAME)
+
 
     const [passwordShown, setPasswordShown] = useState(false);
 
@@ -78,7 +83,6 @@ const AccountSetting = () => {
               'Content-Type': 'multipart/form-data'
           },
           body: formData
-          
         })
         .then((response) => {
           console.log(response);
@@ -87,9 +91,6 @@ const AccountSetting = () => {
         })
         .then((photo) => {
           imagen = photo.url;
-       
-        //   setProfilePhoto(user.image)
-        //  console.log(user.image)
         })
         .catch((data) => {
           console.log(data);

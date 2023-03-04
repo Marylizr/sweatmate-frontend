@@ -1,19 +1,9 @@
-import React, { useState } from 'react';
 import {useContext, useEffect } from 'react';
 import customFetch from '../../api';
 import { removeSession } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
-import styles from './workouts.module.css';
+import styles from './dashboard.module.css';
 import { Link } from 'react-router-dom';
-import arms from './pics/arms.jpg';
-import back from './pics/back.jpg';
-import chest from './pics/chest.jpg';
-import glutes from './pics/glutes.jpg';
-import hamstring from './pics/hamstring.jpg';
-import quadriceps from './pics/quadriceps.jpg';
-import abs from './pics/abs.jpg';
-import shoulders from './pics/shoulders.jpg';
-import fullbody from './pics/fullbody.jpg';
 import NavBar from '../../components/navBar/navBar';
 import { UserContext } from '../../components/userContext/userContext';
 
@@ -22,14 +12,27 @@ import { UserContext } from '../../components/userContext/userContext';
 const Dashboard = () => {
    const navigate = useNavigate();
    const { name, setName } = useContext(UserContext);
-   const [image, setImage] = useState();
+   
+
+   const workout = {
+      shoulders:'https://res.cloudinary.com/da6il8qmv/image/upload/v1677854667/r7gdidsnnikouckncros.jpg',
+      hamstrings: 'https://res.cloudinary.com/da6il8qmv/image/upload/v1677942224/befh9pnv55i8ktmb1ew1.jpg',
+      abs:'https://res.cloudinary.com/da6il8qmv/image/upload/v1677938225/zirrxmbjykojtvdptihs.jpg',
+      chest:'https://res.cloudinary.com/da6il8qmv/image/upload/v1677934377/kpdqntkhx1tqkv3hxg14.jpg',
+      arms:'https://res.cloudinary.com/da6il8qmv/image/upload/v1677936587/rf9j6awdqh3hltyxup7e.jpg',
+      glutes:'https://res.cloudinary.com/da6il8qmv/image/upload/v1677936012/s30tjuf0jtsguwexcscq.jpg',
+      quadriceps:'https://res.cloudinary.com/da6il8qmv/image/upload/v1677939605/iymjphi5pqtayh9clzbk.jpg',
+      fullbody: 'https://res.cloudinary.com/da6il8qmv/image/upload/v1677928480/qnreeqhxbn1xy3n6dhoe.jpg',
+      back: 'https://res.cloudinary.com/da6il8qmv/image/upload/v1677937739/knp4fhdcyjb96pjqjbfp.jpg'
+   }
+
+  
 
    useEffect(() => {
 
       customFetch( "GET", "user/me")
         .then((json) => {
           setName(json.name);
-          setImage(json.image)
         })
         .catch(() => {
          removeSession();
@@ -37,11 +40,14 @@ const Dashboard = () => {
        });
       }, [ navigate, setName]);
 
+      
+
+  
+
    return (
       <div className={styles.container}> 
       <NavBar />
       <div className={styles.small_header}>
-         <img src={image} alt='profile_pic'/>
          <h2>Hello, { name } </h2>
       </div>
         
@@ -50,55 +56,58 @@ const Dashboard = () => {
          <div className={styles.wrap}>
             <div className={styles.workouts}>
             <Link to='/arms'>
-               <img className={styles.work} src={arms} alt='body part'/>
+               <img className={styles.work} src={workout.arms} alt='body part'/>
+               <div className={styles.info}>
+                    <h2>Arms</h2>
+               </div>
             </Link>
             </div>
 
             <div className={styles.workouts}>
             <Link to='/back'>
-            <img className={styles.work} src={back} alt='body part'/>
+            <img className={styles.work} src={workout.back} alt='body part'/>
             </Link>
             </div>
 
             <div className={styles.workouts}>
             <Link to='/chest' >
-            <img className={styles.work} src={chest} alt='body part'/>
+            <img className={styles.work} src={workout.chest} alt='body part'/>
             </Link>
             </div>
 
             <div className={styles.workouts}>
             <Link to='/glutes' >
-            <img className={styles.work} src={glutes} alt='body part'/>
+            <img className={styles.work} src={workout.glutes} alt='body part'/>
             </Link>
             </div>
 
             <div className={styles.workouts}>
             <Link to='/hamstrings' >
-            <img className={styles.work} src={hamstring} alt='body part'/>
+            <img className={styles.work} src={workout.hamstrings} alt='body part'/>
             </Link>
             </div>
 
             <div className={styles.workouts}>
             <Link to='/quadriceps' >
-            <img className={styles.work} src={quadriceps} alt='body part'/>
+            <img className={styles.work} src={workout.quadriceps} alt='body part'/>
             </Link>
             </div>
 
             <div className={styles.workouts}>
             <Link to='/abs' >
-            <img className={styles.work} src={abs} alt='body part'/>
+            <img className={styles.work} src={workout.abs} alt='body part'/>
             </Link>
             </div>
 
             <div className={styles.workouts}>
             <Link to='/shoulders'>
-            <img className={styles.work} src={shoulders} alt='body part'/>
+            <img className={styles.work} src={workout.shoulders} alt='body part'/>
             </Link>
             </div>
 
             <div className={styles.workouts}>
             <Link to='/fullbody' >
-            <img className={styles.work} src={fullbody} alt='body part'/>
+            <img className={styles.work} src={workout.fullbody} alt='body part'/>
             </Link>
             </div>
          </div>

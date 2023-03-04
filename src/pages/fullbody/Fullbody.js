@@ -2,7 +2,7 @@ import React, {useEffect, useState } from 'react'
 import customFetch from '../../api';
 import Card from '../../components/card/Card';
 import NavBar from '../../components/navBar/navBar';
-import styles from '../abs/abs.module.css';
+import styles from '../fullbody/fullbody.module.css';
 
 
 
@@ -34,12 +34,12 @@ const FullBody = ({isInFav='false', onClick}) => {
   }
 
   return (
-    <div>
-      <NavBar />
-      <h1>Welcome to Abs workout</h1>
     <div className={styles.container}>
+      <NavBar />
+      <h1>Welcome to FullBody workout</h1>
+    <div className={styles.wrap}>
     {
-      filteredData && filteredData.length > 0 && filteredData.filter(item => item.type.includes('fullbody')).map( item => 
+      filteredData && filteredData.length > 0 && filteredData.filter(item => item.type.toLocaleLowerCase().includes('fullbody')).map( item => 
         <Card addToFav={addToFav} item={item} id={item._id} key={item._id}
         onClick={() => {onClick()}} />)}
     </div>

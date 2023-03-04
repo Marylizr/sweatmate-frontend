@@ -34,12 +34,12 @@ const Shoulders = ({isInFav='false', onClick}) => {
   }
 
   return (
-    <div>
+    <div className={styles.container}>
       <NavBar />
       <h1>Welcome to Shoulders workout</h1>
-    <div className={styles.container}>
+    <div className={styles.wrap}>
     {
-      filteredData && filteredData.length > 0 && filteredData.filter(item => item.type.includes('shoulders')).map( item => 
+      filteredData && filteredData.length > 0 && filteredData.filter(item => item.type.toLocaleLowerCase().includes('shoulders', 'shoulder')).map( item => 
         <Card addToFav={addToFav} item={item} id={item._id} key={item._id}
         onClick={() => {onClick()}} />)}
     </div>

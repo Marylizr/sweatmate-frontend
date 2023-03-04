@@ -8,6 +8,7 @@ const Home = () => {
   return (
     <div className={styles.home}>
        <Landing />
+       
     </div>
   )
 }

@@ -2,6 +2,11 @@
    width: 200px;
 }
 
+.userimage > video {
+   width: 200px;
+}
+
+
 .box > img {
    width: 200px;
 }
@@ -65,7 +70,41 @@
 
 .profile {
    background: rgba(225, 225, 225, 0.6);
-    width: 50vw;
+    width: 40vw;
     padding: 1em;
     margin-top: 2em;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+@media (max-width:768px){
+   .profile {
+      background: transparent;
+      width: 90vw;
+   }
+
+   .box{
+      display: flex;
+      flex-direction: column;
+      align-content: center;
+      justify-content: center;
+      align-items: center;
+      width: 80vw;
+   }
+   .addWorkout{
+      display: flex;
+      flex-direction: column;
+      width: 90vw;
+      margin: 1em 0 2em 0;
+   }
+}
+
+.elements {
+   display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-left: 2em;
+    text-align: left;
 }

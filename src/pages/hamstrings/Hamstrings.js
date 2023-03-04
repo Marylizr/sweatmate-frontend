@@ -3,7 +3,7 @@ import customFetch from '../../api';
 // import { UserContext } from '../../components/userContext/userContext';
 import Card from '../../components/card/Card';
 import NavBar from '../../components/navBar/navBar';
-import styles from '../abs/abs.module.css';
+import styles from '../hamstrings/hamstrings.module.css';
 
 
 
@@ -36,12 +36,12 @@ const Hamstrings = ({isInFav='false', onClick}) => {
 
 console.log(filteredData)
   return (
-    <div>
+    <div className={styles.container}>
       <NavBar />
       <h1>Welcome to Hamstrings workout</h1>
-    <div className={styles.container}>
+    <div className={styles.wrap}>
     {
-      filteredData && filteredData.length > 0 && filteredData.filter(item => item.type.includes('hamstrings')).map( item => 
+      filteredData && filteredData.length > 0 && filteredData.filter(item => item.type.toLocaleLowerCase().includes('hamstrings','hamstring')).map( item => 
         <Card addToFav={addToFav} item={item} id={item._id} key={item._id}
         onClick={() => {onClick()}} />)}
     </div>

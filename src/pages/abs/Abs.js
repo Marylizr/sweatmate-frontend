@@ -36,12 +36,12 @@ const Abs = ({isInFav='false', onClick}) => {
 
 console.log(filteredData)
   return (
-    <div>
+    <div className={styles.container}>
       <NavBar />
       <h1>Welcome to Abs workout</h1>
-    <div className={styles.container}>
+    <div className={styles.wrap}>
     {
-      filteredData && filteredData.length > 0 && filteredData.filter(item => item.type.includes('abs')).map( item => 
+      filteredData && filteredData.length > 0 && filteredData.filter(item => item.type.toLocaleLowerCase().includes('abs')).map( item => 
         <Card addToFav={addToFav} item={item} id={item._id} key={item._id}
         onClick={() => {onClick()}} />)}
     </div>

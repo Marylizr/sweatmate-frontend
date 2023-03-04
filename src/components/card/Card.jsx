@@ -48,21 +48,22 @@ const Card = ({ item, isInFav=false, addToFav }) => {
 
 
      return(
-        <div className={styles.product} >
-            <div className={styles.info}>
-                <img src={item.picture} alt='workout'/>
-                <div className={styles.descrip}>
-                    <p className={styles.bold}>name:</p><p>{item.name}</p>
-                    <p className={styles.bold}>description:</p><p>{item.description}</p>
-                </div> 
-                {!isInFav && 
+        <div className={styles.container}  >
+               <div className={styles.info}>
+                    <video controls src={item.video} alt='workout'/>
+                    {/* <img src={item.picture} alt='workout'/> */}
+                    <div className={styles.descrip}>
+                         <p className={styles.bold}>name:</p><p>{item.name}</p>
+                         <p className={styles.bold}>description:</p><p>{item.description}</p>
+                    </div> 
+               </div>
+               {!isInFav && 
                     <button onClick={() => {
                          onFav()
                          setSelectedItem(item); 
                          openModal()  
                          }}> Save Workout
                     </button>}
-        </div>
             {selectedItem && 
                <Modal isOpen={isOpenModal} closeModal={closeModal}>
                     <h2>your {selectedItem.type} workout</h2>
@@ -74,18 +75,20 @@ const Card = ({ item, isInFav=false, addToFav }) => {
                      <br/>
                      <label>Number of reps</label>
                      <input type="number"  {...register("reps")} />
-
                      <br/>
                      <label>Number of series</label>
                      <input type="number"  {...register("series", { required: true })} />
-                     
                      <br/>
                      <label>Date</label>
                      <input type="date" {...register("date")} />
+                     <br/>
+                     <label>Weight Lifted</label>
+                     <input type="number"  {...register("weight", { required: true })} />
+                    
                      
                      <div className={styles.buttons}>
                         <input className={styles.send} type="submit" value="Save"  />
-                        <button className={styles.save}><Link to="/fav"> go to Favs </Link> </button>
+                        <button className={styles.save}><Link to="/fav"> my WorkOuts </Link> </button>
                      </div>    
                   </form>
                     

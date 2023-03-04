@@ -1,43 +1,54 @@
-.product {
+.container {
    display: flex;
 }
 
 .info {
    display: flex;
-   align-items: center;
-   border: gray 1px solid;
-   width: 200px;
-   height: auto;
-   border-radius: 0 0px 15px 15px;
-   margin-top: 10px;
-   flex-direction: column;
-   margin-right: 1.5em;
+    align-items: center;
+    border: gray 1px solid;
+    width: 300px;
+    height: 440px;
+    border-radius: 0 0px 15px 15px;
+    margin-top: 10px;
+    flex-direction: column;
+    margin-right: 1.5em;
 }
 
-.info > img {
+.info > img, video {
    width: 200px;
+   height: 230px;
+    margin-top: 2em;
+    box-shadow: 59px -16px teal;
 }
+
 .descrip {
    display: flex;
-   flex-direction: column;
-   align-items: center;
-   padding: 1em;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1em;
+    z-index: 100;
+    position: relative;
+    margin-bottom: 2em;
+    text-align: left;
+    width: 85%;
 }
 
 .descrip > p{
     margin: 0;
     font-size: 1em;
+    text-align: left;
 }
 
 
-.info > button {
-   border: solid teal 1px;
-    background: transparent;
-    height: 30px;
-    width: 140px;
-    border-radius: 8px;
-    color: teal;
-    margin: 1em 0 1em 0;
+.container > button {
+   border: solid white 2px;
+   background: teal;
+   height: 50px;
+   width: 140px;
+   border-radius: 8px;
+   color: white;
+   position: fixed;
+   margin: 30.5em 0 1em 14em;
 }
 
 .descrip > p.bold{
@@ -59,3 +70,6 @@
     align-items: flex-start;
 }
 
+.buttons {
+   margin-top: 1em;
+}

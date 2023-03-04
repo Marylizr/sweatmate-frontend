@@ -88,9 +88,12 @@ justify-content: space-between;
     a{
       color: grey;
       display: block;
-      
     }
-
+    a:hover {
+      color:teal;
+      font-size:20px;
+      font-weight:bold;
+    }
    @media(min-width:768px){
       margin: 0;
       position: initial;
@@ -106,6 +109,10 @@ justify-content: space-between;
          color: grey;
          display: inline;
       }
+    }
+
+    @media(max-width: 1024px) {
+      font-size: 13px;
     }
    }
 
@@ -159,11 +166,10 @@ justify-content: space-between;
          Background-color: transparent;
          border: none;
          color: teal;
+         margin: 0;
       }
     }
   
-
-
 .burger {
    display: flex;
    position: relative;
