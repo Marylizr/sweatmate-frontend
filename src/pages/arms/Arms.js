@@ -3,7 +3,8 @@ import customFetch from '../../api';
 import Card from '../../components/card/Card';
 import styles from '../arms/arms.module.css';
 import NavBar from '../../components/navBar/navBar';
-
+import arrow_left from '../../utils/arrow_left.svg';
+import { Link } from 'react-router-dom';
 
 const Arms = ({isInFav='false', onClick}) => {
  const [filteredData, setFilteredData] = useState([])
@@ -32,21 +33,25 @@ const Arms = ({isInFav='false', onClick}) => {
       setFavs([...favs, item]);
   }
 
-console.log(filteredData)
+
+console.log()
+
   return (
     <div className={styles.container}>
       <NavBar />
-      <h1>Welcome to Arms workout</h1>
-    <div className={styles.wrap}>
-    {
-      filteredData && filteredData.length > 0 && filteredData.filter(item => item.type.toLocaleLowerCase().includes('arms','arm')).map( item => 
-        <Card addToFav={addToFav} item={item} id={item._id} key={item._id}
-        onClick={() => {onClick()}} />)}
-    </div>
+      <div className={styles.small_header}> 
+        <Link to='/dashboard'> <img src={arrow_left} alt='' /></Link>
+        <h2>Welcome to Arms workout</h2>
+      </div>
       
-       
+      <div className={styles.wrap}>
+        {
+          filteredData && filteredData.length > 0 && filteredData.filter(item => item.type === 'arms').map( item => 
+            <Card addToFav={addToFav} item={item} id={item._id} key={item._id}
+            onClick={() => {onClick()}} />)
+        }
+      </div>
     </div>
-    
   )
 }
 

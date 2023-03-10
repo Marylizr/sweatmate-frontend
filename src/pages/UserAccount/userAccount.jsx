@@ -5,6 +5,7 @@ import pen from './images/pen.svg'
 import customFetch from '../../api';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
+import NavBar from "../../components/navBar/navBar";
 const eye = <FontAwesomeIcon icon={faEye} />;
 const cloud = process.env.REACT_APP_CLOUD;
 const upload = process.env.REACT_APP_UPLOAD;
@@ -12,9 +13,6 @@ const upload = process.env.REACT_APP_UPLOAD;
 
 
 const AccountSetting = () => {
-
-  console.log(process.env.CLOUD_NAME)
-
 
     const [passwordShown, setPasswordShown] = useState(false);
 
@@ -41,9 +39,9 @@ const AccountSetting = () => {
          setUser({...json, password:""});  
          }); }
     
-    useEffect(() => {
-     getUser() 
-   },[]);
+      useEffect(() => {
+      getUser() 
+    },[]);
 
 
     const onSubmit = async() => {
@@ -97,14 +95,15 @@ const AccountSetting = () => {
         });
        
         return imagen;
-        
     }
 
     const inputFile = useRef(null);
 
     return(
-
+    <div className={styles.container}>
+      <NavBar />
       <div className = {styles.settings}>
+        
           <div className = {styles.editbox}>
               <form className= {styles.form} >
                   <p>Edit profile </p>
@@ -162,14 +161,9 @@ const AccountSetting = () => {
                   onClick={(e) => {e.preventDefault();e.stopPropagation();onSubmit();}}>Save</button>
               </form>
           </div>
-          <div className={styles.profile}>
-          <img src={user.image} alt="userImage"/>
-            {user.name}
-            {user.age}
-          </div>
-
+          
       </div>
-
+    </div>
     )
 }
 

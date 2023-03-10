@@ -152,9 +152,6 @@ const inputFileVideo = useRef(null);
                 onChange={(e) => setWorkout({ ...workout, series: e.target.value })} placeholder="series">
               </input> 
 
-              <input type="text"
-                onChange={(e) => setWorkout({ ...workout, frontpage: e.target.value })} placeholder="frontpage">
-              </input> 
               
               <div className={styles.images}>
               <div className={styles.userimage}><video controls src={workout.video}

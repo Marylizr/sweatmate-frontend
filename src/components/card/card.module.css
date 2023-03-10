@@ -1,5 +1,8 @@
 .container {
    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 .info {
@@ -27,7 +30,6 @@
     align-items: flex-start;
     padding: 1em;
     z-index: 100;
-    position: relative;
     margin-bottom: 2em;
     text-align: left;
     width: 85%;
@@ -47,8 +49,7 @@
    width: 140px;
    border-radius: 8px;
    color: white;
-   position: fixed;
-   margin: 30.5em 0 1em 14em;
+   margin: -3em 0 0em 0em;
 }
 
 .descrip > p.bold{

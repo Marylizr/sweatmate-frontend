@@ -17,6 +17,10 @@ import LogIn from './pages/logIn/LogIn';
 import AddWorkout from './pages/addWorkout/AddWorkout';
 import AccountSetting from './pages/UserAccount/userAccount';
 import { UserContextProvider } from './components/userContext/userContext';
+import { AboutUs } from './pages/aboutUS/AboutUs';
+import HealthyTips from './pages/healthy/HealthyTips';
+import ContactForm from './pages/contact/Contact';
+import Messages from './pages/messages/messages';
 
 function App() {
 
@@ -28,6 +32,9 @@ function App() {
       <BrowserRouter >
         <Routes> 
           <Route path="/" element={ <Home />} />
+          <Route path="/aboutUs" element={ <AboutUs /> } />
+          <Route path="healthyTips" element={ <HealthyTips />} />
+          <Route path="contact" element={ <ContactForm />} />
           <Route path="/dashboard" element={ <Dashboard />} />
           <Route path="/arms" element={ <Arms />} />
           <Route path="/back" element={ <Back />} />
@@ -42,6 +49,7 @@ function App() {
           <Route path="/login" element={ <LogIn />} />
           <Route path="/addworkout" element={ <AddWorkout />} />
           <Route path="/settings" element={ <AccountSetting />} />
+          <Route path="/messages" element={ <Messages />} />
         </Routes>
       </BrowserRouter>
     </UserContextProvider>

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styles from '../landing/landing.module.css';
 import logo from '../../utils/logo.jpeg';
 import beGirl from '../../utils/beGirl.jpg';
-import Prueba from '../dashboard/prueba';
+
 
 const Landing = () => {
   
@@ -30,7 +30,7 @@ const Landing = () => {
             <Link to='/login' >Log me In</Link>
           </div>
         </div>
-          <Prueba />
+  
        </div>
     </div>
   )

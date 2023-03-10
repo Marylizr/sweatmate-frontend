@@ -3,7 +3,8 @@ import customFetch from '../../api';
 import Card from '../../components/card/Card';
 import NavBar from '../../components/navBar/navBar';
 import styles from '../quadriceps/quadriceps.module.css';
-
+import { Link } from 'react-router-dom';
+import arrow_left from '../../utils/arrow_left.svg';
 
 
 const Quadriceps = ({isInFav='false', onClick}) => {
@@ -37,13 +38,17 @@ console.log(filteredData)
   return (
     <div className={styles.container} >
       <NavBar />
-      <h1>Welcome to Quadriceps workout</h1>
-    <div className={styles.wrap}>
-    {
-      filteredData && filteredData.length > 0 && filteredData.filter(item => item.type.toLocaleLowerCase().includes('quadriceps', 'quadricep')).map( item => 
-        <Card addToFav={addToFav} item={item} id={item._id} key={item._id}
-        onClick={() => {onClick()}} />)}
-    </div>
+      <div className={styles.small_header}> 
+        <Link to='/dashboard'> <img src={arrow_left} alt='' /></Link>
+        <h2>Welcome to Quadriceps workout</h2>
+      </div>
+      <div className={styles.wrap}>
+        {
+          filteredData && filteredData.length > 0 && filteredData.filter(item => item.type === 'quadriceps').map( item => 
+            <Card addToFav={addToFav} item={item} id={item._id} key={item._id}
+            onClick={() => {onClick()}} />)
+        }
+      </div>
       
        
     </div>

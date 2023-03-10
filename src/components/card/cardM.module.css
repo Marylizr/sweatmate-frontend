@@ -1,0 +1,49 @@
+.box {
+   display: flex;
+    align-items: center;
+    border: teal 1px solid;
+    width: 300px;
+    height: 300px;
+    border-radius: 0 0px 15px 15px;
+    margin-top: 10px;
+    flex-direction: column;
+    padding: 1em;
+    box-shadow: 3px 3px 3px teal;
+}
+
+.box > button {
+   border: teal 1px solid;
+    width: 130px;
+    height: 30px;
+    border-radius: 7px;
+    background-color: white;
+    position: relative;
+    bottom: -50px;
+}
+
+.info {
+   display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    margin: 0 0 1em 0;
+    width: 288px;
+}
+
+form {
+   display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+   align-content: center;
+   justify-content: center;
+   align-items: center;
+}
+
+div.container > form > button {
+   border: teal 1px solid;
+   width: 130px;
+   height: 30px;
+   border-radius: 7px;
+   background-color: white;  
+}
+

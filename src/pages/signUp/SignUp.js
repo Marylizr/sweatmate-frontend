@@ -28,7 +28,7 @@ const SignUp = () => {
         setUserSession(userSession);
         navigate("/dashboard");
       }).catch(error => {
-        console.error('not possible to sign up');
+        console.error('no token for user session');
       });
     };
 

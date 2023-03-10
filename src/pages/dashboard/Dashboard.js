@@ -15,7 +15,10 @@ const Dashboard = () => {
    
 
    const workout = {
-      shoulders:'https://res.cloudinary.com/da6il8qmv/image/upload/v1677854667/r7gdidsnnikouckncros.jpg',
+      shoulders:{
+         url:'https://res.cloudinary.com/da6il8qmv/image/upload/v1677854667/r7gdidsnnikouckncros.jpg',
+         name:'shoulders'
+      },
       hamstrings: 'https://res.cloudinary.com/da6il8qmv/image/upload/v1677942224/befh9pnv55i8ktmb1ew1.jpg',
       abs:'https://res.cloudinary.com/da6il8qmv/image/upload/v1677938225/zirrxmbjykojtvdptihs.jpg',
       chest:'https://res.cloudinary.com/da6il8qmv/image/upload/v1677934377/kpdqntkhx1tqkv3hxg14.jpg',
@@ -26,8 +29,6 @@ const Dashboard = () => {
       back: 'https://res.cloudinary.com/da6il8qmv/image/upload/v1677937739/knp4fhdcyjb96pjqjbfp.jpg'
    }
 
-  
-
    useEffect(() => {
 
       customFetch( "GET", "user/me")
@@ -35,14 +36,12 @@ const Dashboard = () => {
           setName(json.name);
         })
         .catch(() => {
-         removeSession();
-         navigate("/login");
-       });
-      }, [ navigate, setName]);
+          removeSession();
+          navigate("/login");
+        });
+      }, [navigate, setName]);
 
       
-
-  
 
    return (
       <div className={styles.container}> 
@@ -101,7 +100,8 @@ const Dashboard = () => {
 
             <div className={styles.workouts}>
             <Link to='/shoulders'>
-            <img className={styles.work} src={workout.shoulders} alt='body part'/>
+               <p>{workout.shoulders.name}</p>
+            <img className={styles.work} src={workout.shoulders.url} alt='body part'/>
             </Link>
             </div>
 

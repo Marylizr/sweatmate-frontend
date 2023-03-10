@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect}from 'react';
 import {useForm} from 'react-hook-form';
 import styles from '../logIn/login.module.css';
 import customFetch from '../../api';
@@ -7,13 +7,14 @@ import { useNavigate } from "react-router-dom";
 import logo from '../../utils/logo.jpeg';
 
 
+
 const Login = () => {
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     const token = localStorage.getItem("token");
-    //     if (token) navigate("/workouts");
-    //   }, [navigate]);
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) navigate("/dashboard");
+      }, [navigate]);
 
    const {register, handleSubmit, formState:{ errors} } = useForm();
    

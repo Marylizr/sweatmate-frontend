@@ -3,7 +3,8 @@ import customFetch from '../../api';
 import Card from '../../components/card/Card';
 import NavBar from '../../components/navBar/navBar';
 import styles from '../fullbody/fullbody.module.css';
-
+import { Link } from 'react-router-dom';
+import arrow_left from '../../utils/arrow_left.svg';
 
 
 const FullBody = ({isInFav='false', onClick}) => {
@@ -36,17 +37,18 @@ const FullBody = ({isInFav='false', onClick}) => {
   return (
     <div className={styles.container}>
       <NavBar />
-      <h1>Welcome to FullBody workout</h1>
-    <div className={styles.wrap}>
-    {
-      filteredData && filteredData.length > 0 && filteredData.filter(item => item.type.toLocaleLowerCase().includes('fullbody')).map( item => 
-        <Card addToFav={addToFav} item={item} id={item._id} key={item._id}
-        onClick={() => {onClick()}} />)}
-    </div>
-      
-       
-    </div>
-    
+      <div className={styles.small_header}> 
+        <Link to='/dashboard'> <img src={arrow_left} alt='' /></Link>
+        <h2>Welcome to FullBody workout</h2>
+      </div>
+      <div className={styles.wrap}>
+        {
+          filteredData && filteredData.length > 0 && filteredData.filter(item => item.type === 'fullbody' ).map( item => 
+            <Card addToFav={addToFav} item={item} id={item._id} key={item._id}
+            onClick={() => {onClick()}} />)
+        }
+      </div> 
+    </div> 
   )
 }
 

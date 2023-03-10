@@ -2,28 +2,30 @@ import {getUserToken} from "./auth";
 
 export const API_URL =  window.location.hostname === 'beFit-deployed-front' ? "beFit-deployd-backend" : "http://localhost:3001";
 // Custom API error to throw
-function ApiError(message, data, status) {
-    let response = null;
-    let isObject = false;
+class ApiError {
+    constructor(message, data, status) {
+        let response = null;
+        let isObject = false;
 
-    // We are trying to parse response
-    try {
-        response = JSON.parse(data);
-        isObject = true;
-    } catch (e) {
-        response = data;
+        // We are trying to parse response
+        try {
+            response = JSON.parse(data);
+            isObject = true;
+        } catch (e) {
+            response = data;
+        }
+
+        this.response = response;
+        this.message = message;
+        this.status = status;
+        this.toString = function () {
+            return `${this.message}\nResponse:\n${isObject ? JSON.stringify(this.response, null, 2) : this.response}`;
+        };
     }
-
-    this.response = response;
-    this.message = message;
-    this.status = status;
-    this.toString = function () {
-        return `${ this.message }\nResponse:\n${ isObject ? JSON.stringify(this.response, null, 2) : this.response }`;
-    };
 }
 
 // API wrapper function
-const fetchResource = (method = "GET", path, userOptions = {}) => {
+ const fetchResource = (method = "GET", path, userOptions = {}) => {
     // Define default options
     const defaultOptions = {
         mode: 'cors',

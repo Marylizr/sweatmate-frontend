@@ -32,7 +32,7 @@ const NavBar = () => {
          <div className={`links ${clicked ? 'active' : ''}`}>
             <Link to="/dashboard">Home |</Link>
             {/* <Link to="/dashboard">Workouts |</Link> */}
-            <Link to="/about">About Us |</Link>
+            <Link to="/aboutUs">About Us |</Link>
             <Link to="/healthyTips">Healthy Tips |</Link>
             <Link to="/settings">Settings |</Link>
             <Link to="/contact">Contact</Link>
