@@ -1,17 +1,15 @@
-import {useContext, useEffect } from 'react';
+import {useEffect, useState } from 'react';
 import customFetch from '../../api';
 import { removeSession } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
 import styles from './dashboard.module.css';
 import { Link } from 'react-router-dom';
 import NavBar from '../../components/navBar/navBar';
-import { UserContext } from '../../components/userContext/userContext';
-
 
 
 const Dashboard = () => {
    const navigate = useNavigate();
-   const { name, setName } = useContext(UserContext);
+  const [user, setUser] = useState()
    
 
    const workout = {
@@ -32,23 +30,23 @@ const Dashboard = () => {
 
       customFetch( "GET", "user/me")
         .then((json) => {
-          setName(json.name);
+          setUser(json.email);
         })
         .catch(() => {
          removeSession();
          navigate("/login");
        });
-      }, [ navigate, setName]);
+      }, [ navigate, setUser]);
 
       
-
+console.log(user)
   
 
    return (
       <div className={styles.container}> 
       <NavBar />
       <div className={styles.small_header}>
-         <h2>Hello, { name } </h2>
+         <h2>Hello, { user } </h2>
       </div>
         
          <h3>What do you want to workout today?</h3>

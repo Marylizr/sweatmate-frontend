@@ -3,7 +3,7 @@ import {deleteStorageObject, getStorageObject, setStorageObject} from "../storag
 export const getUserToken = () => {
     const session = getStorageObject("user-session");
     if(session){
-        return session.token
+        return session.accessToken
     }
     return undefined;
 }

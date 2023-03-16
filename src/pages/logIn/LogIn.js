@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useForm} from 'react-hook-form';
 import styles from '../logIn/login.module.css';
 import customFetch from '../../api';
-import { setUserSession } from "../../api/auth";
+import { getUserToken, setUserSession } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
 import logo from '../../utils/logo.jpeg';
 
@@ -10,10 +10,10 @@ import logo from '../../utils/logo.jpeg';
 const Login = () => {
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     const token = localStorage.getItem("token");
-    //     if (token) navigate("/workouts");
-    //   }, [navigate]);
+    useEffect(() => {
+        const accessToken = getUserToken("accessToken");
+        if (accessToken) navigate("/dashboard");
+      }, [navigate]);
 
    const {register, handleSubmit, formState:{ errors} } = useForm();
    
@@ -22,9 +22,7 @@ const Login = () => {
     .then(userSession => {
       setUserSession(userSession);
       navigate("/dashboard");
-    }).catch(error => {
-      console.error('its no possible to log in');
-    });
+    })
    };
 
    
