@@ -1,0 +1,226 @@
+[{
+  "type": "shoulders",
+  "name": "pulldown",
+  "description": "soft movement up down with the barbell",
+  "reps": 12,
+  "series": 4,
+  "picture": "https://res.cloudinary.com/da6il8qmv/image/upload/v1678461939/e8aizjg2jyezzbrwqaqu.jpg",
+  "video": "https://res.cloudinary.com/da6il8qmv/video/upload/v1678461955/pmxlfrl0dxz0jh0ngk7p.mov"
+},{
+  "type": "fullbody",
+  "name": "sitdown shoulder",
+  "description": "make a sit down meanwhile you balance and lift the arms",
+  "reps": 12,
+  "series": 4,
+  "picture": "https://res.cloudinary.com/da6il8qmv/image/upload/v1678462677/tqcxmmtgvuejjfrqa2ji.jpg",
+  "video": "https://res.cloudinary.com/da6il8qmv/video/upload/v1678462681/x0odz8jr9nqw7lxv6w3g.mov"
+},{
+  "type": "fullbody",
+  "name": "lateral sitedown",
+  "description": "Slightly lateral movements until get a squat then repeat to the other side",
+  "reps": 12,
+  "series": 4,
+  "picture": "https://res.cloudinary.com/da6il8qmv/image/upload/v1678459654/k5krpkpghj0mcpumqifq.jpg",
+  "video": "https://res.cloudinary.com/da6il8qmv/video/upload/v1678459736/e76u6ukeec2bleuxsi9q.mov"
+},{
+  "type": "fullbody",
+  "name": "side squat",
+  "description": "make a side squat both ways",
+  "reps": 12,
+  "series": 4,
+  "picture": "https://res.cloudinary.com/da6il8qmv/image/upload/v1678460318/rzn4s6jbwsgnsuxrwppp.jpg",
+  "video": "https://res.cloudinary.com/da6il8qmv/video/upload/v1678460325/w5ehrwhf3ita8ck7b8qq.mov"
+},{
+  "type": "fullbody",
+  "name": "planck",
+  "description": "set a horizontal position with arms at the sides pressing the core",
+  "reps": 12,
+  "series": 4,
+  "picture": "https://res.cloudinary.com/da6il8qmv/image/upload/v1678460168/xgbzjhlooogtnjlxd4w7.jpg",
+  "video": "https://res.cloudinary.com/da6il8qmv/video/upload/v1678460174/dstf4krjsznder3hzxsx.mov"
+},{
+
+  "type": "glutes",
+  "name": "heel lifted squat",
+  "description": "lift a bit the heels and make a back move before the squat",
+  "reps": 12,
+  "series": 4,
+  "picture": "https://res.cloudinary.com/da6il8qmv/image/upload/v1678460424/fygn5dsyfcto5hy3tt87.jpg",
+  "video": "https://res.cloudinary.com/da6il8qmv/video/upload/v1678460429/efy8us3ibpqqss9otd61.mov"
+},{
+  "type": "quadriceps",
+  "name": "bulgarian squat",
+  "description": "support one leg on the bench, light upfront position and squat",
+  "reps": 14,
+  "series": 3,
+  "picture": "https://res.cloudinary.com/da6il8qmv/image/upload/v1678460671/zg16fzykyitrs7srkmnq.jpg",
+  "video": "https://res.cloudinary.com/da6il8qmv/video/upload/v1678460678/g8uh8g07q0l0e4cazliy.mov"
+},{
+  "type": "chest",
+  "name": "chest press",
+  "description": "push with both arms to the front waiting few seconds before go backwards",
+  "reps": 10,
+  "series": 5,
+  "picture": "https://res.cloudinary.com/da6il8qmv/image/upload/v1678460939/mnfuerqvw0g7wb3bbtuy.jpg",
+  "video": "https://res.cloudinary.com/da6il8qmv/video/upload/v1678460943/l3ddhsfi6ayro55glmin.mov"
+},{
+  "type": "chest",
+  "name": "press bench",
+  "description": "curv the back and lift the barbell with both arms with the shoulder size opening",
+  "reps": 12,
+  "series": 4,
+  "picture": "https://res.cloudinary.com/da6il8qmv/image/upload/v1678461145/uw0u7mnzjnycwbbroyba.jpg",
+  "video": "https://res.cloudinary.com/da6il8qmv/video/upload/v1678461151/rfsytgumpy3fnnnhttxv.mov"
+},{
+  "type": "chest",
+  "name": "Barbell press",
+  "description": "move the barbells over the chest with slow and controlled movements ",
+  "reps": 14,
+  "series": 3,
+  "picture": "https://res.cloudinary.com/da6il8qmv/image/upload/v1678461395/gqsftxt5u7esvhkmxo6l.jpg",
+  "video": "https://res.cloudinary.com/da6il8qmv/video/upload/v1678461402/phcook7qj1qo8iumw2cl.mov"
+},{
+
+  "type": "glutes",
+  "name": "glute bridge",
+  "description": "move up and down single leg move making a square position ",
+  "reps": 15,
+  "series": 5,
+  "picture": "https://res.cloudinary.com/da6il8qmv/image/upload/v1678461588/n6wyeflqpfqwjefcg1dp.jpg",
+  "video": "https://res.cloudinary.com/da6il8qmv/video/upload/v1678461592/lqtr6dkyziyvgiejkosi.mov"
+},{
+
+  "type": "glutes",
+  "name": "bulgarian death lift",
+  "description": "upfront position with barbells and move the hips back",
+  "reps": 15,
+  "series": 5,
+  "picture": "https://res.cloudinary.com/da6il8qmv/image/upload/v1678458794/neihyyne8sms9tkld03f.jpg",
+  "video": "https://res.cloudinary.com/da6il8qmv/video/upload/v1678458800/bi3e2vc8mfo4hu187uvc.mov"
+},{
+
+  "type": "arms",
+  "name": "tricep pull down ",
+  "description": "make a square move and move the wrist outside",
+  "reps": 12,
+  "series": 4,
+  "picture": "https://res.cloudinary.com/da6il8qmv/image/upload/v1678461316/xeizneu1kbvq8z0phdg0.jpg",
+  "video": "https://res.cloudinary.com/da6il8qmv/video/upload/v1678461320/ue7ulf7upd3ouu9htmja.mov"
+},{
+  "type": "arms",
+  "name": "Bicep Curl",
+  "description": "up and down in a diagonal position for more resistance ",
+  "reps": 12,
+  "series": 4,
+  "picture": "https://res.cloudinary.com/da6il8qmv/image/upload/v1678461727/kuzqbni3ejfgvq1kidjw.jpg",
+  "video": "https://res.cloudinary.com/da6il8qmv/video/upload/v1678461741/hom8tbixhewfdfncwrpy.mov"
+},{
+
+  "type": "arms",
+  "name": "sitted bicep lift",
+  "description": "lateral bicep curl",
+  "reps": 14,
+  "series": 4,
+  "picture": "https://res.cloudinary.com/da6il8qmv/image/upload/v1678459278/ruiuk2vjy6vdz61ymigi.png",
+  "video": "https://res.cloudinary.com/da6il8qmv/video/upload/v1678459281/throbytckjfwky5icvw0.mov"
+},{
+
+  "type": "back",
+  "name": "single pull back",
+  "description": "pull the pulley with a single arm until you reach de lat",
+  "reps": 12,
+  "series": 4,
+  "picture": "https://res.cloudinary.com/da6il8qmv/image/upload/v1678461859/gzogi34qafjmdxjmtvwf.jpg",
+  "video": "https://res.cloudinary.com/da6il8qmv/video/upload/v1678461862/aelldfv9fsjwfsnxtaih.mov"
+},{
+
+  "type": "back",
+  "name": "barbell lateral lift",
+  "description": "upfront position and lift the barbell to the chest and go down",
+  "reps": 12,
+  "series": 5,
+  "picture": "https://res.cloudinary.com/da6il8qmv/image/upload/v1678462601/yn4y9wfbp1icfh1g7s5v.jpg",
+  "video": "https://res.cloudinary.com/da6il8qmv/video/upload/v1678462604/wsosnqelrojgtrvumecl.mov"
+},{
+
+  "type": "back",
+  "name": "up row",
+  "description": "rowing position  with lift arms movements ",
+  "reps": 14,
+  "series": 5,
+  "picture": "https://res.cloudinary.com/da6il8qmv/image/upload/v1678462019/ka1pzw9zymnzk30lle4n.jpg",
+  "video": "https://res.cloudinary.com/da6il8qmv/video/upload/v1678462022/hahb2qtgq7x3x1tld52r.mov"
+},{
+
+  "type": "abs",
+  "name": "Hypo-pressive ",
+  "description": "Squeeze the core and the glutes",
+  "reps": 12,
+  "series": 3,
+  "picture": "http://res.cloudinary.com/da6il8qmv/image/upload/v1677938125/obertvr32iszynyj02ip.jpg",
+  "video": "http://res.cloudinary.com/da6il8qmv/video/upload/v1677938127/oegblxkgvedjmqddkvxh.mov"
+},{
+
+  "type": "abs",
+  "name": "lifted leg bridge",
+  "description": "bridge position lifting one leg ",
+  "reps": 12,
+  "series": 4,
+  "picture": "https://res.cloudinary.com/da6il8qmv/image/upload/v1678462163/wuniwipih1ts6uweofza.jpg",
+  "video": "https://res.cloudinary.com/da6il8qmv/video/upload/v1678462165/cjpecbxvqh7g9i09yxbf.mov"
+},{
+
+  "type": "abs",
+  "name": "core resistance",
+  "description": "lifted legs and backward position ",
+  "reps": 12,
+  "series": 4,
+  "picture": "https://res.cloudinary.com/da6il8qmv/image/upload/v1678462313/ogurkbsvx6ppmzu6dydc.jpg",
+  "video": "https://res.cloudinary.com/da6il8qmv/video/upload/v1678462316/qq1nqpedfuc4znliqi7h.mov"
+},{
+
+  "type": "quadriceps",
+  "name": "step lifted barbell lunges",
+  "description": "put one leg under a step and make a lunge",
+  "reps": 12,
+  "series": 5,
+  "picture": "https://res.cloudinary.com/da6il8qmv/image/upload/v1678462414/pwwodwh4uybrv9p7ouls.jpg",
+  "video": "https://res.cloudinary.com/da6il8qmv/video/upload/v1678462417/phdltdjhtrbcfbz1uaiw.mov"
+},{
+
+  "type": "quadriceps",
+  "name": "lateral squat",
+  "description": "slight diagonal position with the bar, squat until the floor",
+  "reps": 12,
+  "series": 5,
+  "picture": "https://res.cloudinary.com/da6il8qmv/image/upload/v1678462504/wafukmo7yltt1zsfmml5.jpg",
+  "video": "https://res.cloudinary.com/da6il8qmv/video/upload/v1678462508/zb6z79yng8ot97ruwx0d.mov"
+},{
+
+  "type": "shoulders",
+  "name": "lateral lift",
+  "description": "move one arm at the time and lift the dumbell until the shoulder high",
+  "reps": 14,
+  "series": 3,
+  "picture": "https://res.cloudinary.com/da6il8qmv/image/upload/v1678459074/hzrzgi5j7ebq5pxhje3i.jpg",
+  "video": "https://res.cloudinary.com/da6il8qmv/video/upload/v1678459079/unraw9fy40gst2nhaqbm.mov"
+},{
+
+  "type": "hamstrings",
+  "name": "sun salutation",
+  "description": "with the weight on the shoulders bend over and then go backwards and lock the hip",
+  "reps": 12,
+  "series": 5,
+  "picture": "https://res.cloudinary.com/da6il8qmv/image/upload/v1678458374/mnsfsvfe1qq2x5o30abv.jpg",
+  "video": "https://res.cloudinary.com/da6il8qmv/video/upload/v1678458390/lxlrquvd2c3xykecuxtq.mov"
+},{
+
+  "type": "hamstrings",
+  "name": "free weight squat",
+  "description": "squat taking the hips backwards ",
+  "reps": 14,
+  "series": 4,
+  "picture": "https://res.cloudinary.com/da6il8qmv/image/upload/v1678458872/wttqtddguznyoyvixrca.jpg",
+  "video": "https://res.cloudinary.com/da6il8qmv/video/upload/v1678458876/qmdgqtqnfatyb1zp1mwi.mov"
+}
+]

@@ -12,13 +12,13 @@ const Landing = () => {
       <div className={styles.girl}>
         <img src={beGirl} alt='girl'/>
       </div>
-      <div className={styles.leftdiv}>
-     
-          <img src={logo} alt='logo beFit'/>
 
-        <div>
-            <h2>Welcome!</h2>
-            <p>you are about to become <br/>
+      <div className={styles.block}>
+
+        <div className={styles.leftdiv}>
+          <img src={logo} alt='logo beFit'/>
+          <h2>Welcome!</h2>
+          <p>you are about to become <br/>
               into your best version</p>
         </div>
 

@@ -5,7 +5,7 @@ import customFetch from '../../api';
 
 const CardMessages = ({ item }) => {
 
-   const handleDelete = () => { 
+   const handleEdit = () => { 
       customFetch("DELETE", "contact/" + item._id)
     .then(res => {window.location.reload();})
    }
@@ -17,7 +17,7 @@ const CardMessages = ({ item }) => {
             <p>email: {item.email}</p>
             <p>Message: {item.message}</p>
          </div>
-            <button onClick={() => handleDelete(item._id)}>DELETE </button>
+            <button onClick={() => handleEdit(item._id)}>DELETE </button>
       </div>
     )
 };

@@ -21,7 +21,7 @@
 
  .modalContainer{
    position: relative;
-   min-width: 400px;
+   min-width: 365px;
    max-width: 450px;
    min-height: 400px;
    max-height: 700px;
@@ -38,6 +38,7 @@
 
  .modalContainer > img{
    width: 200px;
+   margin-bottom: 1em;
  }
 
  .modalClose{
@@ -89,3 +90,14 @@ form > .buttons {
 }
 
 
+@media(max-width:768px){
+  .modalContainer > img{
+    width: 200px;
+    height: 250px;
+    margin-bottom: 1em;
+  }
+
+  .modalContainer {
+    min-width: 330px;
+  }
+}

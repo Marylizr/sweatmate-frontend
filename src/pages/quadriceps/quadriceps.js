@@ -34,6 +34,7 @@ const Quadriceps = ({isInFav='false', onClick}) => {
       setFavs([...favs, item]);
   }
 
+
 console.log(filteredData)
   return (
     <div className={styles.container} >
@@ -44,7 +45,7 @@ console.log(filteredData)
       </div>
       <div className={styles.wrap}>
         {
-          filteredData && filteredData.length > 0 && filteredData.filter(item => item.type === 'quadriceps').map( item => 
+          filteredData && filteredData.length > 0 && filteredData.filter(item => item.type === 'quadriceps' || item.type === 'quadricep').map( item => 
             <Card addToFav={addToFav} item={item} id={item._id} key={item._id}
             onClick={() => {onClick()}} />)
         }

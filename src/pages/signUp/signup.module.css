@@ -17,7 +17,7 @@ form {
 }
 
 .img > img{
-   width: 50%;
+   width: 30%;
    margin-top:10%;
   
 }
@@ -30,7 +30,6 @@ form {
 }
 
 .container > form > input {
-   margin: 1em;
     width: 18em;
     height: 2em;
     border: gray solid 1px;
@@ -48,3 +47,51 @@ form {
     height: 3em;
 }
 
+
+.container > form > input.submit:hover{
+   background: white;
+    color: teal;
+    border: 1px solid teal;
+    border-radius: 20px;
+    width: 12em;
+    margin-top: 3em;
+    height: 3em;
+}
+
+.log {
+   display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+}
+
+.log > a {
+   text-decoration: none;  
+   text-transform: capitalize;
+   color: teal;
+}
+
+.log > a:hover {
+  border-bottom: 1px solid teal ; 
+   text-transform: capitalize;
+   color: teal;
+   font-weight: 800;
+}
+
+
+
+@media(max-width:768px){
+
+   .container{
+      height: 100vh;
+   }
+
+   .log {
+      display: flex;
+      flex-wrap: wrap;
+      align-content: center;
+      align-items: center;
+      flex-direction: column;
+   }
+}

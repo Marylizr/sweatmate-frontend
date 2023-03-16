@@ -6,9 +6,9 @@ import customFetch from '../../api';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import NavBar from "../../components/navBar/navBar";
+import { Link } from 'react-router-dom';
 const eye = <FontAwesomeIcon icon={faEye} />;
-const cloud = process.env.REACT_APP_CLOUD;
-const upload = process.env.REACT_APP_UPLOAD;
+
 
 
 
@@ -68,12 +68,12 @@ const AccountSetting = () => {
     const fileUpload = async () => {
         const files = inputFile.current.files;
         const formData = new FormData();
-        const url = `https://api.cloudinary.com/v1_1/${cloud}/image/upload`;
+        const url = `https://api.cloudinary.com/v1_1/da6il8qmv/image/upload`;
         let imagen;
       
         let file = files[0];
         formData.append("file", file);
-        formData.append("upload_preset", `${upload}`);
+        formData.append("upload_preset", 'h9rhkl6h');
         console.log(formData, files)
         await fetch(url, {
           method: "POST",
@@ -115,7 +115,7 @@ const AccountSetting = () => {
                       
                       <label>
                         <input type='file' ref={inputFile} 
-                        onChange={(e) => setUser({...user,image: URL.createObjectURL(e.target.files[0])}) }
+                        onChange={(e) => setUser({...user, image: URL.createObjectURL(e.target.files[0])}) }
                         className={styles.uploading}></input>
                         <img src={pen} alt="penlogo"/>
                       </label>
@@ -124,22 +124,22 @@ const AccountSetting = () => {
 
                   <div className= {styles.namesinput}>
                     <input className = {styles.names} type='text' value={user.name} 
-                    onChange={(e) =>setUser({...user,name: e.target.value })} placeholder="name"></input>
+                    onChange={(e) =>setUser({...user,name: e.target.value })} placeholder="name" />
 
                   <input className= {styles.email} type="email" value={user.email} 
-                  onChange={(e) =>setUser({...user,email: e.target.value})} placeholder="email"></input>
+                  onChange={(e) =>setUser({...user,email: e.target.value})} placeholder="email" />
                   {!user.email && <span><h3>X</h3></span>}
 
                   <input className= {styles.names} type="number" value={user.age}  
-                    onChange={(e) =>setUser({...user, age: e.target.value})} placeholder="age"></input>
+                    onChange={(e) =>setUser({...user, age: e.target.value})} placeholder="age" />
 
                   <input className= {styles.names} type="number" value={user.height}  
-                    onChange={(e) =>setUser({...user, height: e.target.value})} placeholder="height"></input>
+                    onChange={(e) =>setUser({...user, height: e.target.value})} placeholder="height" />
 
                   <input className= {styles.names} type="number" value={user.weight}  
-                    onChange={(e) =>setUser({...user, weight: e.target.value})} placeholder="weight"></input>
+                    onChange={(e) =>setUser({...user, weight: e.target.value})} placeholder="weight" />
 
-                  <select className= {styles.names} type="text" value={user.goal} onChange={(e) =>setUser({...user,goal: e.target.value})} >
+                  <select className= {styles.names} type="text" value={user.goal} onChange={(e) =>setUser({...user, goal: e.target.value})} >
                     <option value="Fat-Lost">Fat Lost</option>
                     <option value="Gain-Muscle-Mass">Gain Muscle Mass</option>
                     <option value="Manteninance">Manteninance</option>
@@ -161,7 +161,15 @@ const AccountSetting = () => {
                   onClick={(e) => {e.preventDefault();e.stopPropagation();onSubmit();}}>Save</button>
               </form>
           </div>
-          
+          <div className={styles.infoCard}>
+            <img src={user.image}  alt=''/>
+            <p>name: {user.name}</p>
+            <p>age: {user.age} years old</p>
+            <p>weight: {user.weight} kg</p>
+            <p>height: {user.height} cm</p>
+            <p>goal: {user.goal}</p>
+            <button className={styles.save}><Link to="/savedworkouts"> my WorkOuts </Link> </button>
+          </div>
       </div>
     </div>
     )

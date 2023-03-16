@@ -1,0 +1,76 @@
+.images > img {
+   width: 130px;
+}
+
+.container {
+   display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+   align-content: center;
+   align-items: center;
+   margin-top: 2em;
+   width: 80vw;
+}
+
+.wrap {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   align-items: center;
+   justify-content: center;
+}
+
+.small_header {
+   display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 2em;
+}
+
+
+.small_header > a > img {
+   margin-right: 1em;
+}
+
+
+#root > div > div > div.modal.is-open > div > div > form > img {
+   width: 120px;
+}
+
+
+.worksinput {
+   display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.worksinput > input, textarea {
+   width: 330px;
+}
+
+.worksinput > video {
+   width: 130px;
+   height: auto;
+}
+
+.buttons > button.save {
+    background: teal;
+    height: 50px;
+    width: 140px;
+    border-radius: 8px;
+    color: white;
+    margin: 2em 1em 0em 0em;
+}
+
+.buttons > button.reload {
+   border: solid teal 2px;
+    background: white;
+    height: 50px;
+    width: 140px;
+    border-radius: 8px;
+    color: teal;
+    margin: 2em 0 0em 0em;
+}

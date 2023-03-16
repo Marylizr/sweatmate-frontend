@@ -46,9 +46,10 @@ console.log()
       
       <div className={styles.wrap}>
         {
-          filteredData && filteredData.length > 0 && filteredData.filter(item => item.type === 'arms').map( item => 
+          filteredData && filteredData.length > 0 && filteredData.filter(item => item.type === 'arms' || item.type === 'arm').map( item => 
             <Card addToFav={addToFav} item={item} id={item._id} key={item._id}
-            onClick={() => {onClick()}} />)
+            onClick={() => {
+              onClick()}} />)
         }
       </div>
     </div>

@@ -1,18 +1,22 @@
 .container{
    display: flex;
-   flex-direction: row;
-   flex-wrap: nowrap;
-   align-items: center;
-   justify-content: space-evenly;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    height: 100vh;
 }
 
 .leftdiv > img{
-   width: 30%;
+   width: 50%;
    
 }
 
 .girl{
    width: 50%;
+   display: flex;
+   justify-content: flex-end;
 }
 .girl > img{
    width: 70%;
@@ -77,10 +81,19 @@
    text-decoration: none;
 }
 
+.block {
+   display: flex;
+   flex-direction: column;
+   flex-wrap: nowrap;
+   align-content: center;
+   align-items: flex-start;
+}
+
 
 @media (max-width: 600px) {
    .girl{
       width: 100%;
+      justify-content: center;
    }
 
    .leftdiv{
@@ -93,4 +106,12 @@
       align-items: center;
       justify-content: space-evenly;
    }
+
+   .block {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-content: center;
+      align-items: center;
+  }
  }

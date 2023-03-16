@@ -16,6 +16,16 @@
     flex-direction: column;
     margin-right: 1.5em;
 }
+.info > div > button{
+   border: solid white 2px;
+    background: teal;
+    height: 50px;
+    width: 140px;
+    border-radius: 8px;
+    color: white;
+    margin: 2em 0 0em 0em;
+}
+
 
 .info > img, video {
    width: 200px;
@@ -62,15 +72,56 @@
     height: 20px;
     border-radius: 5px;
     margin-top: 5px;
+    
 }
 
 .form {
    display: flex;
     flex-direction: column;
     align-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
 }
 
 .buttons {
    margin-top: 1em;
+}
+
+.containerModal > form {
+   display: flex;
+   flex-direction: column;
+   align-content: flex-start;
+   align-items: center;
+}
+
+.containerModal > form > div > button {
+   border: solid white 2px;
+   background: teal;
+   height: 50px;
+   width: 140px;
+   border-radius: 8px;
+   color: white;
+   margin: -3em 0 0em 0em;
+}
+
+.cardDeleteFavs {
+   display: flex;
+    align-items: center;
+    border: gray 1px solid;
+    width: 300px;
+    height: auto;
+    border-radius: 0 0px 15px 15px;
+    margin-top: 10px;
+    flex-direction: column;
+    margin-right: 1.5em;
+}
+
+.cardDeleteFavs > h4, p {
+   margin: 1em;
+}
+
+.cardDeleteFavs > img, video {
+   width: 200px;
+   height: 230px;
+   margin-top: 2em;
+   box-shadow: 59px -16px teal;
 }

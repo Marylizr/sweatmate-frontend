@@ -3,13 +3,12 @@ import customFetch from '../../api';
 import styles from '../addWorkout/addworkout.module.css';
 import { UserContext } from '../../components/userContext/userContext';
 import pen from '../../pages/UserAccount/images/pen.svg';
-const cloud = process.env.REACT_APP_CLOUD;
-const upload = process.env.REACT_APP_UPLOAD;
+import WorkoutsMenu from './workoutsMenu';
+import pic from "../../utils/back1.jpg";
 
 const AddWorkout = () => {
 
   const { workout, setWorkout } = useContext(UserContext);
-
 
   const onSubmit = async () => {
 
@@ -42,12 +41,12 @@ const AddWorkout = () => {
   const fileUpload = async () => {
     const files = inputFile.current.files;
     const formData = new FormData();
-    const url = `https://api.cloudinary.com/v1_1/${cloud}/image/upload`;
+    const url = `https://api.cloudinary.com/v1_1/da6il8qmv/image/upload`;
 
     let imagen;
     let file = files[0];
     formData.append("file", file);
-    formData.append("upload_preset", `${upload}`);
+    formData.append("upload_preset", 'h9rhkl6h');
     console.log(formData, files);
     await fetch(url, {
       method: "POST",
@@ -77,13 +76,13 @@ const AddWorkout = () => {
 const videoUpload = async () => {
   const files = inputFileVideo.current.files;
   const formData = new FormData();
-  const url = `https://api.cloudinary.com/v1_1/${cloud}/video/upload`;
+  const url = `https://api.cloudinary.com/v1_1/da6il8qmv/video/upload`;
  
   let videoLoaded;
 
   let file = files[0];
   formData.append("file", file);
-  formData.append("upload_preset", `${upload}`);
+  formData.append("upload_preset", 'h9rhkl6h');
   console.log(formData, files);
   await fetch(url, {
     method: "POST",
@@ -113,82 +112,86 @@ const inputFileVideo = useRef(null);
   };
 
   return (
-      <div className={styles.addWorkout}>
-        <div className={styles.editbox}>
-          <form className={styles.form}>
-            <h2>Add a Workout</h2>
+    <div className={styles.addWorkout}>
+      <WorkoutsMenu />
+      <div className={styles.editbox}>
+        <form className={styles.form}>
+          <h2>Add a Workout</h2>
 
+          <div className={styles.images}>
+            <div className={styles.userimage}><img src={workout.image ? workout.image : pic} 
+              className={styles.imagen} alt="userImage" /></div>
+            <div className={styles.editimg}>
+
+              <label>
+                <input type='file' ref={inputFile}
+                  onChange={(e) => setWorkout({ ...workout, image: URL.createObjectURL(e.target.files[0]) })}
+                  className={styles.uploading}></input>
+                <img src={pen} alt="penlogo" />
+              </label>
+            </div>
+          </div>
+
+          <div className={styles.worksinput}>
+            <input type='text'
+              onChange={(e) => setWorkout({ ...workout, type: e.target.value })} placeholder="type">
+            </input>
+
+            <input type="text"
+              onChange={(e) => setWorkout({ ...workout, name: e.target.value })} placeholder="name">
+            </input>
+
+            <textarea placeholder='description' rows={2} cols={40}
+              onChange={(e) => setWorkout({ ...workout, description: e.target.value })} />
+
+            <input type="text"
+              onChange={(e) => setWorkout({ ...workout, reps: e.target.value })} placeholder="reps">
+            </input>
+
+            <input type="text"
+              onChange={(e) => setWorkout({ ...workout, series: e.target.value })} placeholder="series">
+            </input> 
+
+            <input type="text"
+              onChange={(e) => setWorkout({ ...workout, frontpage: e.target.value })} placeholder="frontpage">
+            </input> 
+            
             <div className={styles.images}>
-              <div className={styles.userimage}><img src={workout.image}
-                className={styles.imagen} alt="userImage" /></div>
-              <div className={styles.editimg}>
+            <div className={styles.userimage}><video controls src={workout.video}
+              className={styles.imagen} alt="userVideo" /></div>
+            <div className={styles.editimg}>
 
-                <label>
-                  <input type='file' ref={inputFile}
-                    onChange={(e) => setWorkout({ ...workout, image: URL.createObjectURL(e.target.files[0]) })}
-                    className={styles.uploading}></input>
-                  <img src={pen} alt="penlogo" />
-                </label>
-              </div>
+              <label>
+                <input type='file' ref={inputFileVideo}
+                  onChange={(e) => setWorkout({ ...workout, video: URL.createObjectURL(e.target.files[0]) })}
+                  className={styles.uploading}></input>
+                <img src={pen} alt="penlogo" />
+              </label>
             </div>
-
-            <div className={styles.worksinput}>
-              <input type='text'
-                onChange={(e) => setWorkout({ ...workout, type: e.target.value })} placeholder="type">
-              </input>
-
-              <input type="text"
-                onChange={(e) => setWorkout({ ...workout, name: e.target.value })} placeholder="name">
-              </input>
-
-              <textarea placeholder='description' rows={2} cols={40}
-                onChange={(e) => setWorkout({ ...workout, description: e.target.value })} />
-
-              <input type="text"
-                onChange={(e) => setWorkout({ ...workout, reps: e.target.value })} placeholder="reps">
-              </input>
-
-              <input type="text"
-                onChange={(e) => setWorkout({ ...workout, series: e.target.value })} placeholder="series">
-              </input> 
-
-              
-              <div className={styles.images}>
-              <div className={styles.userimage}><video controls src={workout.video}
-                className={styles.imagen} alt="userVideo" /></div>
-              <div className={styles.editimg}>
-
-                <label>
-                  <input type='file' ref={inputFileVideo}
-                    onChange={(e) => setWorkout({ ...workout, video: URL.createObjectURL(e.target.files[0]) })}
-                    className={styles.uploading}></input>
-                  <img src={pen} alt="penlogo" />
-                </label>
-              </div>
-            </div>
-
-            </div>
-            <div className={styles.buttons}>
-              <button className={styles.save} onClick={(e) => { e.preventDefault(); e.stopPropagation(); onSubmit(); } }>Save</button>
-              <button className={styles.reload} onClick={() => { handleOnClick(); } }>reset</button>
-            </div>
-
-          </form>
-        </div>
-        <div className={styles.profile}>
-          <h3>new created workout</h3>
-          <div className={styles.box}>
-            <img src={workout.image} alt="workout_Image" />
-            <div className={styles.elements}>
-              <p>workout name: {workout.name}</p>
-              <p>workout type: {workout.type}</p>
-              <p>workout description: {workout.description}</p>
-            </div>
+          </div>
 
           </div>
+          <div className={styles.buttons}>
+            <button className={styles.save} onClick={(e) => { e.preventDefault(); e.stopPropagation(); onSubmit(); } }>Save</button>
+            <button className={styles.reload} onClick={() => { handleOnClick(); } }>reset</button>
+          </div>
+
+        </form>
+      </div>
+      <div className={styles.profile}>
+        <h3>new created workout</h3>
+        <div className={styles.box}>
+          <img src={workout.image ? workout.image : pic} alt="workout_Image" />
+          <div className={styles.elements}>
+            <p>workout name: {workout.name}</p>
+            <p>workout type: {workout.type}</p>
+            <p>workout description: {workout.description}</p>
+          </div>
+
         </div>
       </div>
-  );
+    </div>
+);
 }
 
 export default AddWorkout

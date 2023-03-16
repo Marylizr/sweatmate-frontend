@@ -15,7 +15,7 @@ const NavBar = () => {
    const navigate = useNavigate();
     const onLogOut = () => {
         removeSession()
-        navigate("/login");
+        navigate("/");
       };
    
       const handleClick = () => {
@@ -52,10 +52,12 @@ const NavBar = () => {
 export default NavBar;
 
 const NavContainer = styled.nav`
-display: flex;
-align-items: center;
-align-content: center
-justify-content: space-between;
+   display: flex;
+   align-items: center;
+   align-content: center
+   justify-content: space-between;
+   z-index: 100;
+   background-color: white;
 
 
 .logo > img {
@@ -84,7 +86,8 @@ justify-content: space-between;
     margin-right: auto;
     text-align: center;
     transition: all .5s ease;
-
+   z-index:100;
+   padding-bottom: 2em;
     a{
       color: grey;
       display: block;
@@ -103,7 +106,7 @@ justify-content: space-between;
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
-
+    padding-bottom: 0;
       a{
          font-size: 1.2em;
          color: grey;
@@ -113,6 +116,7 @@ justify-content: space-between;
 
     @media(max-width: 1024px) {
       font-size: 13px;
+     
     }
    }
 
@@ -126,6 +130,8 @@ justify-content: space-between;
       right: 0;
       text-align: center;
       background-color: white;
+      z-index:100;
+      
       a{
         font-size: 1.2rem;
         margin-top: 1rem;
@@ -138,6 +144,7 @@ justify-content: space-between;
          align-content: center;
          justify-content: center;
          align-items: center;
+         padding-bottom: 0;
          a{
             font-size: 1.2rem;
             margin-top: 0;

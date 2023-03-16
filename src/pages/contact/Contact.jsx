@@ -2,25 +2,17 @@ import React, { useState , useEffect} from 'react';
 import NavBar from '../../components/navBar/navBar';
 import styles from '../contact/contact.module.css';
 import customFetch from '../../api';
-import CardMessages from '../../components/card/cardMessages';
+import Modal from "../../components/Modal/Modal";
+import { useModal } from "../../hooks/useModal";
 
 
 const ContactForm = ({onClick}) => {
 
-   const [info, setInfo] = useState(
-      {
-         name:"name",
-         email:"email",
-         message:"message"
-      }
-   )
+   const [info, setInfo] = useState({ name:"name", email:"email", message:"message"})
+   const [user, setUser] = useState({ name:"name", email: "email"});
+   const [isOpenModal, openModal, closeModal] = useModal(false);
+   const [selectedItem, setSelectedItem] = useState();
 
-   const [user, setUser] = useState(
-      { 
-         name:"name", 
-         email: "email", 
-      });
-   
 
     const getUser = () => {
       customFetch("GET", "user/me")
@@ -31,8 +23,6 @@ const ContactForm = ({onClick}) => {
       useEffect(() => {
       getUser() 
     },[]);
-
-   
 
     useEffect(() => {
       customFetch("GET", "contact")
@@ -55,10 +45,9 @@ const ContactForm = ({onClick}) => {
           })
          .catch(err => console.log(err));  
       }    
-
-         
-      
-
+      const handleOnClick = () => {
+         window.location.reload();
+      }
 
   return (
    <div className={styles.container}>
@@ -68,12 +57,12 @@ const ContactForm = ({onClick}) => {
       <h3>Fill our contact form</h3>
 
        <form >
-         <label htmlFor="name">Name:</label>
-         <input
-         id="name" type="text" placeholder='name'
+         <label>Name</label>
+        { <input
+         id="name" type="text" placeholder={user.name}
          onChange={(e) => setInfo({ ...info, name: e.target.value })}
          required
-         />
+         />}
 
          <label htmlFor="email">Email:</label>
          <input id="email" type="email" placeholder='email'
@@ -86,9 +75,21 @@ const ContactForm = ({onClick}) => {
                 onChange={(e) => setInfo({ ...info, message: e.target.value })} />
 
          <button className={styles.onsubmit} 
-                  onClick={(e) => { e.stopPropagation(); handleSubmit(); e.preventDefault() }}>Submit</button>
-    </form>
-       <CardMessages item={info} id={info._id} key={info._id} onClick={onClick}/>
+                  onClick={(e) => { 
+                     e.stopPropagation(); 
+                     handleSubmit(); 
+                     e.preventDefault() 
+                     setSelectedItem(info); 
+                     handleOnClick()
+                     openModal()  
+                  }}>Submit</button>
+      </form>
+
+       {selectedItem &&  
+       <Modal isOpen={isOpenModal} closeModal={closeModal}>
+            <p>{user.name}</p>
+            <p>Your message was sent successfuly</p>
+      </Modal>}
    </div>
    
   );

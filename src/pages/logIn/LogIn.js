@@ -3,7 +3,7 @@ import {useForm} from 'react-hook-form';
 import styles from '../logIn/login.module.css';
 import customFetch from '../../api';
 import { setUserSession } from "../../api/auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from '../../utils/logo.jpeg';
 
 
@@ -44,8 +44,9 @@ const Login = () => {
                 {errors.password?.type === 'required' && <p className={styles.error}>This field is required</p>}
                 {errors.password?.type === 'minLength' && <p className={styles.error}>Password should be longer than 8 characters</p>}
                 <br/>
-        
                 <input className={styles.submit} type="submit" value="Lets go!"/>
+                
+                <div className={styles.log}> <p>I don´t have an account</p><Link to='/signup'>Sign me Up!</Link></div>  
             </form>
         </div>
    );

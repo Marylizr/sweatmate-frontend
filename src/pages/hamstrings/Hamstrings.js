@@ -45,7 +45,7 @@ console.log(filteredData)
       </div>
       <div className={styles.wrap}>
       {
-        filteredData && filteredData.length > 0 && filteredData.filter(item => item.type === 'hamstrings' ).map( item => 
+        filteredData && filteredData.length > 0 && filteredData.filter(item => item.type === 'hamstrings' || item.type === 'hamstring').map( item => 
           <Card addToFav={addToFav} item={item} id={item._id} key={item._id}
           onClick={() => {onClick()}} />)
       }

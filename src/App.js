@@ -21,6 +21,9 @@ import { AboutUs } from './pages/aboutUS/AboutUs';
 import HealthyTips from './pages/healthy/HealthyTips';
 import ContactForm from './pages/contact/Contact';
 import Messages from './pages/messages/messages';
+import Workouts from './pages/workOuts/Workouts';
+import SavedWorkouts from './pages/fav/fav';
+
 
 function App() {
 
@@ -50,6 +53,8 @@ function App() {
           <Route path="/addworkout" element={ <AddWorkout />} />
           <Route path="/settings" element={ <AccountSetting />} />
           <Route path="/messages" element={ <Messages />} />
+          <Route path="/workouts" element={ <Workouts />} />
+          <Route path="/savedWorkouts" element={ <SavedWorkouts />} />
         </Routes>
       </BrowserRouter>
     </UserContextProvider>

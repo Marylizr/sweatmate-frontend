@@ -5,6 +5,7 @@ import customFetch from '../../api';
 import { setUserSession } from "../../api/auth";
 import styles from '../signUp/signup.module.css';
 import logo from '../../utils/logo.jpeg';
+import { Link } from 'react-router-dom';
 
 
 
@@ -40,36 +41,38 @@ const SignUp = () => {
        </div>
        <h2>Register</h2>
        <form onSubmit={handleSubmit(onSubmit)}>
-         <label>Name</label>
+        
          <input type="text" placeholder='Your Name' {...register("name", { required: true  })} />
          {errors.name?.type === 'required' && <p className={styles.error}>This field is required</p>}
          {errors.name?.type === 'pattern' && <p className={styles.error}>Incorrect name</p>}
          <br/>
-         <label>Email</label>
+         
          <input type="text" placeholder='myemail.mail.com' {...register("email", { required: true })} />
          {errors.email && <p className={styles.error}>This field is required</p>}
          <br/>
-         <label>Password</label>
-         <input type="password" placeholder='minLength: 8 ' {...register("password", { required: true, minLength: 8 })} />
+        
+         <input type="password" placeholder='password minLength: 8 ' {...register("password", { required: true, minLength: 8 })} />
          {errors.password?.type === 'required' && <p className={styles.error}>This field is required</p>}
          {errors.password?.type === 'minLength' && <p className={styles.error}>Password should be longer than 8 characters</p>}
          <br/>
-         <label>User Image</label>
+         {/* <label>User Image</label>
          <input type="text"  {...register("image")} />
-         <br/>
-         <label>Weight</label>
-         <input type="number" placeholder='60kg' {...register("weight", { required: true })} />
-         {errors.weight && <p className={styles.error}>This field is required</p>}
-         <br/>
-         <label>Height</label>
-         <input type="number" placeholder='1.67' {...register("height", { required: true })} />
+         <br/> */}
+        
+         <input type="number" placeholder='height: 167' {...register("height", { required: true })} />
          {errors.height && <p className={styles.error}>This field is required</p>}
          <br/>
-         <label>Age</label>
-         <input type="number" placeholder='30' {...register("age", { required: true })} />
+
+        
+         <input type="number" placeholder='weight: 60' {...register("weight", { required: true })} />
+         {errors.weight && <p className={styles.error}>This field is required</p>}
+         <br/>
+
+        
+         <input type="number" placeholder='age: 30' {...register("age", { required: true })} />
          {errors.age && <p className={styles.error}>This field is required</p>}
          <br/>
-         <label>Goal</label>
+         
          <select className={styles.goal} type='goal' {...register("goal", { required: true })} >
             <option value="Fat-Lost">Fat Lost</option>
             <option value="Gain-Muscle-Mass ">Gain Muscle Mass</option>
@@ -77,8 +80,8 @@ const SignUp = () => {
          </select>
             
                <input className={styles.submit} type="submit" value="Sign me up!"/>
-           
             </form>
+          <div className={styles.log}><p>I already have an account</p><Link to='/login'>Log me In</Link></div>  
     </div>
   )
 }
