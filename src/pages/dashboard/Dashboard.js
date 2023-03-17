@@ -26,20 +26,20 @@ const Dashboard = () => {
 
   
 
-   useEffect(() => {
+//    useEffect(() => {
 
-      customFetch( "GET", "user/me")
-        .then((json) => {
-          setUser(json.email);
-        })
-        .catch(() => {
-         removeSession();
-         navigate("/login");
-       });
-      }, [ navigate, setUser]);
+//       customFetch( "GET", "user/me")
+//         .then((json) => {
+//           setUser(json.email);
+//         })
+//         .catch(() => {
+//          removeSession();
+//          navigate("/login");
+//        });
+//       }, [ navigate, setUser]);
 
       
-console.log(user)
+// console.log(user)
   
 
    return (
