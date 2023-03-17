@@ -1,14 +1,14 @@
 .box {
    display: flex;
-    align-items: center;
-    border: teal 1px solid;
-    width: 300px;
-    height: 300px;
-    border-radius: 0 0px 15px 15px;
-    margin-top: 10px;
-    flex-direction: column;
-    padding: 1em;
-    box-shadow: 3px 3px 3px teal;
+   align-items: center;
+   border: teal 1px solid;
+   width: 300px;
+   height: 300px;
+   border-radius: 0 0px 15px 15px;
+   margin: 1em 1em;
+   flex-direction: column;
+   padding: 1em;
+   box-shadow: 3px 3px 3px #d0d0d0;
 }
 
 .box > button {

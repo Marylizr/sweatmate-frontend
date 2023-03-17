@@ -23,7 +23,8 @@ import ContactForm from './pages/contact/Contact';
 import Messages from './pages/messages/messages';
 import Workouts from './pages/workOuts/Workouts';
 import SavedWorkouts from './pages/fav/fav';
-
+import Main from './pages/main/main';
+// import PrivateRoute from "./api/auth/privateRoute";
 
 function App() {
 
@@ -55,6 +56,7 @@ function App() {
           <Route path="/messages" element={ <Messages />} />
           <Route path="/workouts" element={ <Workouts />} />
           <Route path="/savedWorkouts" element={ <SavedWorkouts />} />
+          <Route path="/main/*" element={<Main />} />
         </Routes>
       </BrowserRouter>
     </UserContextProvider>

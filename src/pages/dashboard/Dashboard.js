@@ -1,4 +1,4 @@
-import React, {useContext, useEffect } from 'react';
+import React, {useContext, useEffect} from 'react';
 import customFetch from '../../api';
 import { removeSession } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
@@ -64,13 +64,13 @@ const Dashboard = () => {
         });
       }, [navigate, setName]);
 
-      
+      console.log()
 
    return (
       <div className={styles.container}> 
       <NavBar />
       <div className={styles.small_header}>
-         <h2>Hello, { name } </h2>
+         <h2>Hello, {name}</h2>
       </div>
         
          <h3>What do you want to workout today?</h3>
