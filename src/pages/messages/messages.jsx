@@ -1,10 +1,6 @@
 import React, {useEffect, useState } from 'react'
 import customFetch from '../../api';
-
-import NavBar from '../../components/navBar/navBar';
-import styles from '../hamstrings/hamstrings.module.css';
-import { Link } from 'react-router-dom';
-import arrow_left from '../../utils/arrow_left.svg';
+import styles from '../messages/messages.module.css';
 import CardMessages from '../../components/card/cardMessages';
 
 
@@ -37,10 +33,8 @@ const Messages = ({isInFav='false'}) => {
 console.log(filteredData)
   return (
     <div className={styles.container}>
-      <NavBar />
       <div className={styles.small_header}> 
-        <Link to='/dashboard'> <img src={arrow_left} alt='' /></Link>
-        <h2>Welcome to messages inBox</h2>
+        <h2>inBox</h2>
       </div>
       <div className={styles.wrap}>
       {

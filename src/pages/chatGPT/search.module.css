@@ -1,0 +1,63 @@
+.chat  {
+   margin: 2em;
+    border: 0.1em teal solid;
+    width: 30vw;
+    height: auto;
+    padding: 1em;
+    border-radius: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: large;
+    color: teal;
+    font-weight: 800;
+}
+
+.prompt {
+ 
+}
+
+.prompt > input {
+   background-color: transparent;
+   margin: 2em;
+   border: 0.1em teal solid;
+   width: 30vw;
+   height: 12vh;
+   border-radius: 1em;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-size: large;
+   text-align: center;
+   
+}
+
+.prompt > .reset {
+   width: 130px;
+    height: 40px;
+    background-color: white;
+    border: 1px solid teal;
+    border-radius: 7px;
+    color: teal;
+    text-transform: capitalize;
+}
+
+.prompt > .send {
+   width: 130px;
+    height: 40px;
+    background-color: white;
+    border: 1px solid teal;
+    border-radius: 7px;
+    color: teal;
+    text-transform: capitalize;
+}
+
+.wrap {
+   display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    margin: 2em;
+}

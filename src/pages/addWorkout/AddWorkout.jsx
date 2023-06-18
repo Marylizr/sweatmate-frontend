@@ -3,7 +3,6 @@ import customFetch from '../../api';
 import styles from '../addWorkout/addworkout.module.css';
 import { UserContext } from '../../components/userContext/userContext';
 import pen from '../../pages/UserAccount/images/pen.svg';
-import WorkoutsMenu from './workoutsMenu';
 import pic from "../../utils/back1.jpg";
 
 const AddWorkout = () => {
@@ -112,8 +111,8 @@ const inputFileVideo = useRef(null);
   };
 
   return (
-    <div className={styles.addWorkout}>
-      <WorkoutsMenu />
+    <div className={styles.container}>
+      <div className={styles.wrap}>
       <div className={styles.editbox}>
         <form className={styles.form}>
           <h2>Add a Workout</h2>
@@ -178,16 +177,17 @@ const inputFileVideo = useRef(null);
 
         </form>
       </div>
-      <div className={styles.profile}>
-        <h3>new created workout</h3>
-        <div className={styles.box}>
-          <img src={workout.image ? workout.image : pic} alt="workout_Image" />
-          <div className={styles.elements}>
-            <p>workout name: {workout.name}</p>
-            <p>workout type: {workout.type}</p>
-            <p>workout description: {workout.description}</p>
+          <div className={styles.profile}>
+            <h3>new created workout</h3>
+            <div className={styles.box}>
+              <img src={workout.image ? workout.image : pic} alt="workout_Image" />
+              <div className={styles.elements}>
+                <p>workout name: {workout.name}</p>
+                <p>workout type: {workout.type}</p>
+                <p>workout description: {workout.description}</p>
           </div>
 
+          </div>
         </div>
       </div>
     </div>

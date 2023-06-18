@@ -65,6 +65,14 @@ input[type="submit" i] {
   margin-top: 1em;
 }
 
+input[type="submit" i]:hover {
+ box-shadow: 2px 2px 10px gray;
+  width: 120px;
+  border-radius: 25px;
+  color: teal;
+  margin-top: 1em;
+}
+
 form > div > button {
   border: none;
   background: teal;

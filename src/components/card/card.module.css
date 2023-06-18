@@ -16,6 +16,7 @@
     flex-direction: column;
     margin-right: 1.5em;
 }
+
 .info > div > button{
    border: solid white 2px;
     background: teal;
@@ -26,6 +27,40 @@
     margin: 2em 0 0em 0em;
 }
 
+.container > button:hover{
+   width: 150px;
+    box-shadow: 4px 4px 10px gray;
+    border-radius: 25px;
+}
+
+.infoCard {
+   display: flex;
+    align-items: center;
+    border: gray 1px solid;
+    width: 300px;
+    height: auto;
+    border-radius: 0 0px 15px 15px;
+    margin-top: 10px;
+    flex-direction: column;
+    margin-right: 1.5em;
+}
+
+.infoCard > div > button{
+   border: solid white 2px;
+    background: teal;
+    height: 50px;
+    width: 140px;
+    border-radius: 8px;
+    color: white;
+   
+}
+
+.infoCard > img, video {
+   width: 200px;
+   height: 230px;
+    margin-top: 2em;
+    box-shadow: 59px -16px teal;
+}
 
 .info > img, video {
    width: 200px;

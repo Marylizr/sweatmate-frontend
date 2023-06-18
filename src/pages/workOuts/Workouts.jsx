@@ -1,8 +1,5 @@
  import React,{ useEffect, useState, useRef}from 'react';
  import styles from '../workOuts/workouts.module.css';
- import NavBar from '../../components/navBar/navBar';
- import arrow_left from '../../utils/arrow_left.svg';
- import { Link } from 'react-router-dom';
  import CardDelete from '../../components/card/cardDeleteWork'
  import customFetch from '../../api';
  import Modal from "../../components/Modal/Modal";
@@ -136,10 +133,8 @@ const videoUpload = async () => {
 
    return (
     <div className={styles.container}>
-    <NavBar />
     <div className={styles.small_header}> 
-      <Link to='/dashboard'> <img src={arrow_left} alt='' /></Link>
-      <h2>Workout</h2>
+      <h2>Edit Workouts</h2>
     </div>
     
     <div className={styles.wrap}>

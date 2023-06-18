@@ -4,7 +4,7 @@ import {useForm} from 'react-hook-form';
 import customFetch from '../../api';
 import { setUserSession } from "../../api/auth";
 import styles from '../signUp/signup.module.css';
-import logo from '../../utils/logo.jpeg';
+import logo from '../../utils/logo_new.png';
 import { Link } from 'react-router-dom';
 
 
@@ -40,6 +40,9 @@ const SignUp = () => {
        <img src={logo} alt='logo beFit'/>
        </div>
        <h2>Register</h2>
+
+      <div className={styles.wrapper}>
+
        <form onSubmit={handleSubmit(onSubmit)}>
         
          <input type="text" placeholder='Your Name' {...register("name", { required: true  })} />
@@ -55,15 +58,11 @@ const SignUp = () => {
          {errors.password?.type === 'required' && <p className={styles.error}>This field is required</p>}
          {errors.password?.type === 'minLength' && <p className={styles.error}>Password should be longer than 8 characters</p>}
          <br/>
-         {/* <label>User Image</label>
-         <input type="text"  {...register("image")} />
-         <br/> */}
         
          <input type="number" placeholder='height: 167' {...register("height", { required: true })} />
          {errors.height && <p className={styles.error}>This field is required</p>}
          <br/>
 
-        
          <input type="number" placeholder='weight: 60' {...register("weight", { required: true })} />
          {errors.weight && <p className={styles.error}>This field is required</p>}
          <br/>
@@ -81,13 +80,14 @@ const SignUp = () => {
 
          <select className={styles.goal} type='role' {...register("role", { required: true })} >
             <option value="basic">Basic</option>
-            <option value="supervisor">Supervisor</option>
-            <option value="admin">Admin</option>
+            <option value="medium">Medium</option>
+            <option value="advanced">Advanced</option>
          </select>
             
                <input className={styles.submit} type="submit" value="Sign me up!"/>
             </form>
           <div className={styles.log}><p>I already have an account</p><Link to='/login'>Log me In</Link></div>  
+      </div>
     </div>
   )
 }

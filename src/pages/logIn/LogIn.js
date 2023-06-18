@@ -1,20 +1,25 @@
-import React, {useEffect}from 'react';
+import React from 'react';
 import {useForm} from 'react-hook-form';
 import styles from '../logIn/login.module.css';
 import customFetch from '../../api';
-import { setUserSession } from "../../api/auth";
+import { setUserSession, getUserRole } from "../../api/auth";
 import { Link, useNavigate } from "react-router-dom";
-import logo from '../../utils/logo.jpeg';
+import logo from '../../utils/logo_new.png';
 
 
 
 const Login = () => {
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (token) navigate("/dashboard");
-      }, [navigate]);
+      const getRoles = () => {
+        const userRole = getUserRole("role")
+        if (userRole === "admin") {
+          navigate("/main/addworkout")
+        } else if (userRole === "basic") {
+          navigate("/dashboard")
+        }
+      }
+   
 
    const {register, handleSubmit, formState:{ errors} } = useForm();
    
@@ -22,7 +27,7 @@ const Login = () => {
     customFetch("POST", "login", {body: data})
     .then(userSession => {
       setUserSession(userSession);
-      navigate("/dashboard");
+      getRoles()
     }).catch(error => {
       console.error('its no possible to log in');
     });

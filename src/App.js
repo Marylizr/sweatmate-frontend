@@ -24,6 +24,7 @@ import Messages from './pages/messages/messages';
 import Workouts from './pages/workOuts/Workouts';
 import SavedWorkouts from './pages/fav/fav';
 import Main from './pages/main/main';
+
 // import PrivateRoute from "./api/auth/privateRoute";
 
 function App() {
@@ -52,7 +53,7 @@ function App() {
           <Route path="/signup" element={ <SignUp />} />
           <Route path="/login" element={ <LogIn />} />
           <Route path="/addworkout" element={ <AddWorkout />} />
-          <Route path="/settings" element={ <AccountSetting />} />
+          <Route path="/profile" element={ <AccountSetting />} />
           <Route path="/messages" element={ <Messages />} />
           <Route path="/workouts" element={ <Workouts />} />
           <Route path="/savedWorkouts" element={ <SavedWorkouts />} />

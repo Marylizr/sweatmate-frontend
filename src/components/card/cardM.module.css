@@ -5,20 +5,30 @@
    width: 300px;
    height: 300px;
    border-radius: 0 0px 15px 15px;
-   margin: 1em 1em;
+   margin:0.5em;
    flex-direction: column;
-   padding: 1em;
    box-shadow: 3px 3px 3px #d0d0d0;
 }
 
 .box > button {
+   background-color: teal;
+   color: white;
+   width: 130px;
+   height: 40px;
+   border-radius: 7px;
+   position: relative;
+   bottom: -38px;
+   border: none;
+}
+
+.box > button:hover {
    border: teal 1px solid;
-    width: 130px;
-    height: 30px;
-    border-radius: 7px;
-    background-color: white;
-    position: relative;
-    bottom: -50px;
+   width: 160px;
+   height: 40px;
+   border-radius: 20px;
+   transition: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+   color: teal;
+   background-color: white;
 }
 
 .info {
@@ -28,6 +38,14 @@
     text-align: left;
     margin: 0 0 1em 0;
     width: 288px;
+}
+
+.info > p {
+   box-shadow: 0px 0px 8px grey;
+   width: 268px;
+    height: 2em;
+    padding: 0.5em;
+    margin: 0.2em 0 0.3em 0;
 }
 
 form {

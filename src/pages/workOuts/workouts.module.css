@@ -8,8 +8,7 @@
    flex-wrap: wrap;
    align-content: center;
    align-items: center;
-   margin-top: 2em;
-   width: 80vw;
+   width: 75vw;
 }
 
 .wrap {
@@ -18,6 +17,7 @@
    flex-wrap: wrap;
    align-items: center;
    justify-content: center;
+   align-content: center;
 }
 
 .small_header {

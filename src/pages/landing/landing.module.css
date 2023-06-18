@@ -9,7 +9,7 @@
 }
 
 .leftdiv > img{
-   width: 50%;
+   width: 85%;
    
 }
 
@@ -57,11 +57,22 @@
    justify-content: center;
    align-items: center;
 }
+.sign:hover {
+   width: 12em;
+   height: 3em;
+   background-color: teal;
+   color: white;
+   border-radius: 0.1em;
+   border: none;
+   animation-fill-mode: forwards;
+  
+}
 
 .sign > a {
    color: white;
    text-decoration: none;
 }
+
 
 .log {
    width: 10em;
@@ -74,6 +85,15 @@
    align-content: center;
    justify-content: center;
    align-items: center;
+}
+
+.log:hover {
+   width: 12em;
+   height: 3em;
+   background-color: white;
+   border: 1px teal solid;
+   border-radius: 0.1em;
+  
 }
 
 .log > a {

@@ -14,34 +14,34 @@ const Card = ({ item, isInFav=false, addToFav }) => {
 
      const onSubmit = (data) => {
           setSelectedItem(data)
-          customFetch("POST", "fav", {body: data})
-           .then(alert('are you sure that you want to save this workout?'))
-           .then(() => {
-             window.location.reload()
-             })
-            .catch((error) => {
+          const onFav = () => {   
+               const data = {
+                 type: item.type,
+                 name: item.name,
+                 description: item.description,
+                 reps: item.reps,
+                 series: item.series,
+                 weight: item.weight,
+                 picture: item.picture,
+                 date: item.date,
+                 video: item.video
+               }
+               customFetch("POST", "fav", {body: data})
+               .then(() => {
+                  addToFav()
+               })
+               .then(alert('are you sure that you want to save this workout?'))
+               .then(() => {
+               window.location.reload()
+               })
+               .catch((error) => {
                console.log(error);
             })
+          }
+          onFav()
        };
   
-       const onFav = () => {   
-            const data ={
-              type: item.type,
-              name: item.name,
-              description: item.description,
-              reps: item.reps,
-              series: item.series,
-              picture: item.picture,
-              video: item.video
-            }
-            customFetch("POST", "fav", {body: data})
-            .then(() => {
-                 addToFav()
-            })
-            .catch(error => {
-                 console.error(error);
-            })
-       }
+       
 console.log(item)
 
      return(
@@ -56,17 +56,16 @@ console.log(item)
                </div>
                {!isInFav && 
                     <button onClick={() => {
-                         onFav()
                          setSelectedItem(item); 
                          openModal()  
-                         }}> Open
+                         }}> Save
                     </button>
                }
             {selectedItem && 
                <Modal isOpen={isOpenModal} closeModal={closeModal}>
                     <h2>your {selectedItem.type} workout</h2>
                     <img src={selectedItem.picture} alt="img"/> 
-                    <p>Exercise Name: {selectedItem.name}</p>
+                    <p> {selectedItem.name}</p>
 
                     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                      <br/>
@@ -74,17 +73,18 @@ console.log(item)
                      <input type="number" placeholder='Number of reps' {...register("reps")} />
                      <br/>
                     
-                     <input type="number" placeholder='Number of series' {...register("series", { required: true })} />
+                     <input type="number" placeholder='Number of series' {...register("series")} />
                      <br/>
                     
                      <input type="date" placeholder='workout date' {...register("date")} />
                      <br/>
                     
-                     <input type="number"  placeholder='Weight Lifted' {...register("weight", { required: true })} />
+                     <input type="number"  placeholder='Weight Lifted' {...register("weight")} />
                     
                      
                      <div className={styles.buttons}>
                         <input className={styles.send} type="submit" value="Save"  />
+                        
                      </div>    
                   </form>
                     

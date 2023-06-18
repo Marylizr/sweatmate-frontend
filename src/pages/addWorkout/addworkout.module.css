@@ -1,11 +1,10 @@
-.addWorkout {
+.container {
    display: flex;
-   flex-direction: row;
-   flex-wrap: wrap;
-   align-content: flex-start;
-   align-items: flex-start;
-   justify-content: space-around;
-   margin-top: 2em;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    width: 80vw;
 }
 
 .userimage > img {
@@ -15,7 +14,13 @@
 .userimage > video {
    width: 200px;
 }
-
+.wrap {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   align-items: center;
+   justify-content: center;
+}
 
 .box > img {
    width: 200px;
@@ -93,11 +98,26 @@
    box-shadow: 0px 0px 8px grey;
 }
 
+.side_menu:hover {
+      width: 18vw;
+    height: 45px;
+    border: teal 1px solid;
+    background: white;
+    border-radius: 0px 10px
+}
+
 .side_menu > a {
    color: teal;
     font-weight: 800;
     text-decoration: none;
     text-transform: capitalize;
+}
+
+.side_menu > a:hover {
+   color: teal;
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: uppercase;
 }
 
 .profile {
@@ -144,7 +164,7 @@
     align-items: flex-start;
     margin: 0 0em 2em 0;
     flex-wrap: wrap;
-    height: 200px;
+    height: 53px;
     width: 90vw;
     background: transparent;
     box-shadow: none;
@@ -155,7 +175,7 @@
     height: 50px;
     border: teal 1px solid;
     background: white;
-    margin: 0.1em 2em 0.1em;
+    margin: 0.1em 2em 0.3em;
     align-items: center;
     display: flex;
     justify-content: center;
@@ -166,9 +186,18 @@
       display: none;
    }
 
-   .form {
-      margin-top: 3em;
-   }
+
+}
+
+.side_menu > button {
+   background: transparent;
+   color: teal;
+   font-weight: 800;
+   text-decoration: none;
+   text-transform: capitalize;
+   font-size: large;
+   font-family: 'ROBOTO';
+   border: none;
 }
 
 .elements {
@@ -180,7 +209,6 @@
 }
 
 .menu {
-   border-radius: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -192,8 +220,4 @@
     width: 300px;
 }
 
-.menu > img {
-   width: 100px;
-   border-radius: 50px;
-}
 

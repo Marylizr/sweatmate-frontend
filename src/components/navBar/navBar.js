@@ -3,7 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import { removeSession } from "../../api/auth";
-import logo from '../../utils/logo.jpeg';
+import logo from '../../utils/logo_new.png';
 import NavButton from '../navButton/navButton';
 import styled from 'styled-components';
 import { useState } from 'react';
@@ -34,7 +34,7 @@ const NavBar = () => {
             {/* <Link to="/dashboard">Workouts |</Link> */}
             <Link to="/aboutUs">About Us |</Link>
             <Link to="/healthyTips">Healthy Tips |</Link>
-            <Link to="/settings">Settings |</Link>
+            <Link to="/profile">My Profile |</Link>
             <Link to="/contact">Contact</Link>
             <button onClick={() => {onLogOut()}}>Log out</button>
          </div>
@@ -61,12 +61,12 @@ const NavContainer = styled.nav`
 
 
 .logo > img {
-   width: 7em;
+   width: 13em;
    margin-right:0;
 
   @media(min-width:768px){
    margin-right:3em;
-   width: 5em;
+   width: 13em;
  }
 }
 
@@ -116,7 +116,6 @@ const NavContainer = styled.nav`
 
     @media(max-width: 1024px) {
       font-size: 13px;
-     
     }
    }
 
@@ -151,6 +150,9 @@ const NavContainer = styled.nav`
             color: grey;
           }
       }
+      @media(max-width:667px){
+         top: 14%;
+      }
     }
 
     .links > button{
@@ -176,11 +178,17 @@ const NavContainer = styled.nav`
          margin: 0;
       }
     }
+    .links > button:hover{
+      border: 1px solid teal;
+      border-radius:5px;
+      width:100px;
+      height: 40px;
+    }
   
 .burger {
    display: flex;
    position: relative;
-   right: -65px;
+   right: -15px;
    @media(min-width:768px){
       display: none;
    }

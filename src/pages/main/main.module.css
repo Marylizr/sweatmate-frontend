@@ -1,0 +1,23 @@
+.container {
+   display: flex;
+}
+
+.wrap {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   align-items: center;
+   justify-content: center;
+   align-content: center;
+}
+
+
+@media(max-width:768px) {
+   .container {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-content: center;
+    align-items: center;
+   }
+}

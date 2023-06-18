@@ -8,25 +8,23 @@ const CardDeleteFavs = ({ item }) => {
       
    
    const handleDelete = () => { 
-         customFetch("DELETE", "saveworkout/" + item._id)
-      .then(res => {window.location.reload();})
+         customFetch("DELETE", "fav/" + item._id)
+      .then(res => {window.location.reload()})
       }
       console.log(item)
      return(
-          <div className={styles.info} >
+          <div className={styles.infoCard} >
                <img src={item.picture} alt=""/>
                <p>
-                  Type: {item.type} <br />
                   Name: {item.name} <br />
-                  Description: {item.description} <br />
                   # Series: {item.series} <br />
                   # Reps: {item.reps}<br />
-                  Weigt lifted: {item.weight}
+                  Weight lifted: {item.weight} <br />
+                  Date: {item.date}
                </p>
                
                <div>
-                    <button onClick={() => 
-                     handleDelete(item._id)}>DELETE </button>
+                    <button onClick={() => handleDelete(item._id)}>DELETE </button>
                </div>
           </div>
      )

@@ -8,18 +8,18 @@ export const getUserToken = () => {
     return undefined;
 }
 
-export const getUserRole= ( )=> {
-    const session = getStorageObject("user-session");
-    if(session){
-        return session.role
-    }
-    return undefined;
-}
-
 export const getSessionUser = () => {
     const session = getStorageObject("user-session");
     if(session){
         return session.user
+    }
+    return undefined;
+}
+
+export const getUserRole = () => {
+    const session = getStorageObject("user-session");
+    if(session){
+        return session.role
     }
     return undefined;
 }

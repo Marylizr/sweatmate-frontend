@@ -17,7 +17,7 @@ form {
 }
 
 .img > img{
-   width: 30%;
+   width: 70%;
    margin-top:10%;
   
 }
@@ -29,7 +29,7 @@ form {
    align-items: center;
 }
 
-.container > form > input {
+.wrapper > form > input {
     width: 18em;
     height: 2em;
     border: gray solid 1px;
@@ -38,7 +38,7 @@ form {
     color: lightgray;
 }
 
-.container > form > input.submit{
+.wrapper > form > input.submit{
    background: teal;
     color: white;
     border: none;
@@ -48,7 +48,7 @@ form {
 }
 
 
-.container > form > input.submit:hover{
+.wrapper > form > input.submit:hover{
    background: white;
     color: teal;
     border: 1px solid teal;
@@ -85,6 +85,7 @@ form {
 
    .container{
       height: 100vh;
+      display: block;
    }
 
    .log {
@@ -93,5 +94,13 @@ form {
       align-content: center;
       align-items: center;
       flex-direction: column;
+   }
+
+   .wrapper {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-content: center;
+      align-items: center;
    }
 }
