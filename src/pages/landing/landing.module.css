@@ -110,9 +110,13 @@
 
 
 @media (max-width: 600px) {
-   .girl{
+   .girl > img{
       width: 100%;
       justify-content: center;
+   }
+
+   .girl {
+      width: 100%;
    }
 
    .leftdiv{

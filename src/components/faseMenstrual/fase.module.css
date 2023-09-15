@@ -13,6 +13,7 @@
    border-radius: 4px;
    padding: 20px;
    margin-right: 2%;
+   margin-bottom: 2%;
 }
 
 .inputFase {
@@ -45,4 +46,12 @@
     color: white;
     text-transform: capitalize;
     cursor: pointer;
+}
+
+@media(max-width:768px) {
+   .container{
+      width: 85%;
+      height: 300px;
+      margin: 0;
+   }
 }

@@ -1,7 +1,7 @@
 import styles from '../card/card.module.css'
 import customFetch from '../../api';
 import { useModal } from "../../hooks/useModal";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Modal from "../Modal/Modal";
 import {useForm} from 'react-hook-form';
 
@@ -12,15 +12,23 @@ const Card = ({ item, isInFav=false }) => {
      
      const {register, handleSubmit } = useForm();
      const [favs, setFavs] = useState()
+     const [user, setUser] = useState();
 
      
     const addToFav = (item) => {       
       setFavs([...favs, item]);
   }
 
+     useEffect(() => {
+     customFetch("GET", "user/me")
+     .then((json) => {
+     setUser(json);
+     })
+   }, [setUser]);
+
      const onSubmit = (data) => {
           setFavs(data)
-     
+          setUser(user)
           const onFav = () => {   
 
                customFetch("POST", "fav", {body: data})
@@ -37,7 +45,7 @@ const Card = ({ item, isInFav=false }) => {
           onFav()
        };
   
-
+console.log(user)
      return(
         <div className={styles.container}  >
                <div className={styles.info}>
@@ -51,6 +59,7 @@ const Card = ({ item, isInFav=false }) => {
                {!isInFav && 
                     <button onClick={() => {
                          setFavs(item); 
+                         setUser(user)
                          openModal()  
                          }}> Save
                     </button>
@@ -62,7 +71,8 @@ const Card = ({ item, isInFav=false }) => {
 
                     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                      <br/>
-                     
+                     <input type='text' value={user.name}  {...register("userName")} />
+
                      <input type="hidden" alt='' value={favs.picture} {...register("picture")} />
                     
                      <input type="text" value= {favs.name} {...register("name")}/>

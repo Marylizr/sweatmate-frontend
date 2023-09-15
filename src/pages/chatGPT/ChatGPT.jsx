@@ -35,7 +35,8 @@ const ChatComponent = () => {
      
       </form>
       <div className={styles.chat}>
-        <p>{response}</p>
+        <textarea>{response}</textarea>
+        
       </div>
     </div>
   );

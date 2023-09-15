@@ -14,3 +14,12 @@
    padding: 20px;
    margin-right: 2em;
 }
+
+
+@media(max-width:768px) {
+   .container{
+      width: 85%;
+      height: 300px;
+      margin: 0;
+   }
+}

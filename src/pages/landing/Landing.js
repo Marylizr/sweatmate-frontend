@@ -2,15 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../landing/landing.module.css';
 import logo from '../../utils/logo_new.png';
-import beGirl from '../../utils/beGirl.jpg';
+
 
 
 const Landing = () => {
+
+  let beGirl = {
+    url: 'https://res.cloudinary.com/da6il8qmv/image/upload/v1694767050/personal_traine_izpzce.png'
+  }
   
   return (
     <div className={styles.container}>
       <div className={styles.girl}>
-        <img src={beGirl} alt='girl'/>
+        <img src={beGirl.url} alt='girl'/>
       </div>
 
       <div className={styles.block}>

@@ -4,21 +4,21 @@ import customFetch from '../../api';
 
 
 
-
 const FollowCard = ({ item }) => {
    const handleEdit = () => { 
       customFetch("DELETE", "progress/" + item._id)
     .then( window.location.reload())
    }
-
    let newDate = new Date(item.date)
-     const curretDate = newDate.toDateString()
+     const curretDate = newDate.toDateString();
+    
 
-   console.log(item)
+   console.log(item.id)
    return(
       <div className={styles.cardWrap}  >
           <div className={styles.follow}>
             <img src={item.picture} alt='user_img'/>
+            <p>{item.name}</p>
             <p>Weight: {item.weight} Kg</p>
             <p>Waist: {item.waist} Cm</p>
             <p>Chest: {item.chest} Cm</p>

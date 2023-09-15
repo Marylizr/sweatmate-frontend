@@ -41,12 +41,29 @@ form {
 }
 
 .container > form > input.submit{
-   background: teal;
-    color: white;
-    border: none;
-    width: 10em;
-    margin-top: 3em;
-    height: 3em;
+   width: 10em;
+   height: 3em;
+   background-color: white;
+   border-radius: 1.5em;
+   border: 1px teal solid;
+   cursor: pointer;
+   display: flex;
+   align-content: center;
+   justify-content: center;
+   align-items: center;
+}
+
+.container > form > input.submit:hover {
+   width: 14em;
+   height: 3em;
+   background-color: white;
+   border-radius: 1.5em;
+   border: 1px teal solid;
+   cursor: pointer;
+   display: flex;
+   align-content: center;
+   justify-content: center;
+   align-items: center;
 }
 
 .log {

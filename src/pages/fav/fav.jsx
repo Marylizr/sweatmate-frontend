@@ -41,12 +41,12 @@ const SavedWorkouts = () => {
     <div className={styles.container} >
       <NavBar />
       <div className={styles.small_header}> 
-        <Link to='/dashboard'> <img src={arrow_left} alt='' /></Link>
+        <Link to='/profile'> <img src={arrow_left} alt='' /></Link>
         <h2>{name}, Welcome to your WorkOut</h2>
       </div>
       <div className={styles.wrap}>
         {
-          saved && saved.length > 0 && saved.map( item => 
+          saved && saved.length > 0 && saved.filter( item => item.userName === `${name}`).map( item => 
             <CardDeleteFavs  item={item} id={item._id} key={item._id}
              />)
         }
@@ -58,3 +58,4 @@ const SavedWorkouts = () => {
 }
 
 export default SavedWorkouts;
+

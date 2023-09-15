@@ -46,7 +46,9 @@
    border-radius: 4px;
    padding: 20px;
    margin-right: 1.2em;
+ 
  }
+
 
  .save > button {
    background: transparent;
@@ -257,6 +259,26 @@
     align-content: center;
     background-color: #F8FBFF;
     margin-top: 7em;
+   }
+
+   .rearrange {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      flex-direction: column;
+      width: 100%;
+      align-content: center;
+      margin: 0;
+   }
+
+   .editbox {
+      width: 85%;
+      margin:0;
+   }
+
+   .save {
+      margin: 0;
+      width: 85%;
    }
 }
 

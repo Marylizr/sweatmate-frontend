@@ -19,10 +19,10 @@ const AccountSetting = ({historial}) => {
             <FaseMenstrual />
             <WeekStorical historial={historial} />
             <div className={styles.save}>
-            <button className={styles.save}><Link to="/savedworkouts"> my WorkOuts </Link> </button>
+              <button className={styles.save}><Link to="/savedworkouts"> my WorkOuts </Link> </button>
             </div>
             <div className={styles.save}>
-            <button className={styles.save}><Link to="/progress"> my Progress </Link> </button>
+              <button className={styles.save}><Link to="/progress"> my Progress </Link> </button>
             </div>
             
           </div>
