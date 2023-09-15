@@ -5,26 +5,31 @@ import customFetch from '../../api';
 
 const CardDeleteFavs = ({ item }) => {
 
+     
+
+     const { picture, name, series, reps, lifted } = item
+     let newDate = new Date(item.date)
+     const curretDate = newDate.toDateString()
+        
       
-   
    const handleDelete = () => { 
          customFetch("DELETE", "fav/" + item._id)
-      .then(res => {window.location.reload()})
+      .then(window.location.reload())
       }
-      console.log(item)
+     
      return(
           <div className={styles.infoCard} >
-               <img src={item.picture} alt=""/>
-               <p>
-                  Name: {item.name} <br />
-                  # Series: {item.series} <br />
-                  # Reps: {item.reps}<br />
-                  Weight lifted: {item.weight} <br />
-                  Date: {item.date}
+               <img src={picture} alt=""/>
+               <p className={styles.left}>
+                    name: {name} <br />
+                  # Series: {series} <br />
+                  # Reps: {reps}<br />
+                  Weight lifted:{lifted} <br />
+                  Date: {curretDate}
                </p>
                
                <div>
-                    <button onClick={() => handleDelete(item._id)}>DELETE </button>
+                    <button onClick={() => handleDelete(item._id)}>Delete </button>
                </div>
           </div>
      )

@@ -20,10 +20,11 @@ import { UserContextProvider } from './components/userContext/userContext';
 import { AboutUs } from './pages/aboutUS/AboutUs';
 import HealthyTips from './pages/healthy/HealthyTips';
 import ContactForm from './pages/contact/Contact';
-import Messages from './pages/messages/messages';
-import Workouts from './pages/workOuts/Workouts';
+import UserProfile from './pages/userProfile/UserProfile';
+import EditWorkouts from './pages/editWorkOuts/EditWorkouts';
 import SavedWorkouts from './pages/fav/fav';
 import Main from './pages/main/main';
+import FollowUp from './components/followUp/FollowUp';
 
 // import PrivateRoute from "./api/auth/privateRoute";
 
@@ -54,10 +55,11 @@ function App() {
           <Route path="/login" element={ <LogIn />} />
           <Route path="/addworkout" element={ <AddWorkout />} />
           <Route path="/profile" element={ <AccountSetting />} />
-          <Route path="/messages" element={ <Messages />} />
-          <Route path="/workouts" element={ <Workouts />} />
+          <Route path="/messages" element={ <UserProfile />} />
+          <Route path="/workouts" element={ <EditWorkouts />} />
           <Route path="/savedWorkouts" element={ <SavedWorkouts />} />
           <Route path="/main/*" element={<Main />} />
+          <Route path="/progress" element={<FollowUp/>} />
         </Routes>
       </BrowserRouter>
     </UserContextProvider>

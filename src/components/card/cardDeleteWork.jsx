@@ -7,7 +7,7 @@ const DeleteCart = ({ item, onClick }) => {
 
    const handleDelete = () => { 
          customFetch("DELETE", "workouts/" + item._id)
-       .then(res => {window.location.reload(true)})
+       .then(window.location.reload(true))
       }
       
      return(

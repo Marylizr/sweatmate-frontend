@@ -11,20 +11,64 @@
     align-content: center;
     justify-content: center;
     align-items: center;
-    width: 71vw;
     margin-top: 2em;
+ }
+
+ .apps {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   justify-content: center;
+   margin-top: 2%;
+ }
+
+ .rearrange {
+   display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 70%;
+    margin-left: 2%;
+ }
+
+ .save {
+   display: flex;
+   width: 300px;
+   height: 300px;
+   left: 0px;
+   top: 0px;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   background: #FFFFFF;
+   border: 1px solid #E9E9E9;
+   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
+   border-radius: 4px;
+   padding: 20px;
+   margin-right: 1.2em;
+ }
+
+ .save > button {
+   background: transparent;
+   border: none;
+   box-shadow: none;
+ }
+
+ .save > a {
+   color: teal;
+   text-decoration: none;
+   font-size: 20px;
  }
 
 .settings{
    display: flex;
    align-content: center;
-   background-color: #F8FBFF;
    margin-top: 3em;
 }
 
 .editbox{
    display: flex;
-   width: 426px;
+   width: 300px;
    height: auto;
    left: 0px;
    top: 0px;

@@ -10,7 +10,6 @@ import arrow_left from '../../utils/arrow_left.svg';
 
 const Abs = ({isInFav='false', onClick}) => {
  const [filteredData, setFilteredData] = useState([])
-  const [favs, setFavs] = useState([]);
   const [data, setData] = useState([]);
  
 
@@ -31,9 +30,7 @@ const Abs = ({isInFav='false', onClick}) => {
       })
   }, [setFilteredData]);
 
-    const addToFav = (item) => {       
-      setFavs([...favs, item]);
-  }
+
 
 console.log(filteredData)
   return (
@@ -46,8 +43,9 @@ console.log(filteredData)
     <div className={styles.wrap}>
     {
       filteredData && filteredData.length > 0 && filteredData.filter(item => item.type === 'abs' ).map( item => 
-        <Card addToFav={addToFav} item={item} id={item._id} key={item._id}
-        onClick={() => {onClick()}} />)}
+        <Card item={item} id={item._id} key={item._id}
+        onClick={() => {onClick()}} />)
+    }
     </div>
       
        

@@ -1,5 +1,5 @@
  import React,{ useEffect, useState, useRef}from 'react';
- import styles from '../workOuts/workouts.module.css';
+ import styles from './editWorkouts.module.css';
  import CardDelete from '../../components/card/cardDeleteWork'
  import customFetch from '../../api';
  import Modal from "../../components/Modal/Modal";
@@ -63,6 +63,7 @@ import pic from "../../utils/back1.jpg";
     return imagen;
   };
   const inputFile = useRef(null);
+
   //video upload
 
 const videoUpload = async () => {
@@ -96,6 +97,7 @@ const videoUpload = async () => {
  
   return videoLoaded;
  };
+ 
  const inputFileVideo = useRef(null);
 
   const onSubmit = async () => {

@@ -6,7 +6,7 @@ import Modal from "../../components/Modal/Modal";
 import { useModal } from "../../hooks/useModal";
 
 
-const ContactForm = ({onClick}) => {
+const ContactForm = () => {
 
    const [info, setInfo] = useState({ name:"name", email:"email", message:"message"})
    const [user, setUser] = useState({ name:"name", email: "email"});

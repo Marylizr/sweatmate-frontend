@@ -1,5 +1,6 @@
 .container {
    display: flex;
+   width: 100%;
 }
 
 .wrap {
@@ -11,6 +12,15 @@
    align-content: center;
 }
 
+.header {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   justify-content: center;
+   width: 99%;
+   color: teal;
+   border-bottom: solid lightblue 1px;
+}
 
 @media(max-width:768px) {
    .container {

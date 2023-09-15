@@ -45,13 +45,13 @@ console.log(user)
           <h2>{user}!</h2>
           
             <div className={styles.side_menu}>
-              <Link to='/main/workouts'> Edit Workout </Link> <br />
-            </div>
-            <div className={styles.side_menu}>
               <Link to='/main/addworkout'> Add Workout </Link>
             </div>
             <div className={styles.side_menu}>
-              <Link to='/main/messages'> InBox </Link>
+              <Link to='/main/workouts'> Edit Workout </Link> <br />
+            </div>
+            <div className={styles.side_menu}>
+              <Link to='/main/userList'> User List </Link>
             </div>
             <div className={styles.side_menu}>
               <Link to='/dashboard'> Dashboard </Link>
@@ -77,7 +77,6 @@ const NavContainer = styled.nav`
    align-content: center
    justify-content: space-between;
    z-index: 100;
-   background-color: white;
 
 
    .links > a {
@@ -98,7 +97,8 @@ const NavContainer = styled.nav`
      transition: all .5s ease;
     z-index:100;
     padding-bottom: 2em;
-     a{
+
+     a {
        color: grey;
        display: block;
      }
@@ -144,12 +144,11 @@ const NavContainer = styled.nav`
       left: 0;
       right: 0;
       text-align: center;
-      background-color: white;
+      background: white;
       z-index:100;
       
       a{
         font-size: 1.2rem;
-        margin-top: 1rem;
         color: grey;
       }
       @media(min-width:768px){

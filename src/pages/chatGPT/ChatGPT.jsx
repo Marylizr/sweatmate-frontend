@@ -25,11 +25,14 @@ const ChatComponent = () => {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <form onSubmit={handleSubmit} className={styles.prompt}>
-        <input type="text" value={prompt} onChange={handleInputChange} />
-        <button className={styles.send} type="submit">Send</button>
-        <button className={styles.reset} onClick={onReload}>Reset</button>
+        <input type="text" value={prompt} onChange={handleInputChange} placeholder="prompt"/>
+        <div className={styles.buttons}>
+          <button className={styles.send} type="submit">Send</button>
+          <button className={styles.reset} onClick={onReload}>Reset</button>
+        </div>
+     
       </form>
       <div className={styles.chat}>
         <p>{response}</p>

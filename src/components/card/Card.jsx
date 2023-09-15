@@ -7,33 +7,29 @@ import {useForm} from 'react-hook-form';
 
 
 
-const Card = ({ item, isInFav=false, addToFav }) => {
+const Card = ({ item, isInFav=false }) => {
      const [isOpenModal, openModal, closeModal] = useModal(false);
-     const [selectedItem, setSelectedItem] = useState();
+     
      const {register, handleSubmit } = useForm();
+     const [favs, setFavs] = useState()
+
+     
+    const addToFav = (item) => {       
+      setFavs([...favs, item]);
+  }
 
      const onSubmit = (data) => {
-          setSelectedItem(data)
+          setFavs(data)
+     
           const onFav = () => {   
-               const data = {
-                 type: item.type,
-                 name: item.name,
-                 description: item.description,
-                 reps: item.reps,
-                 series: item.series,
-                 weight: item.weight,
-                 picture: item.picture,
-                 date: item.date,
-                 video: item.video
-               }
+
                customFetch("POST", "fav", {body: data})
                .then(() => {
                   addToFav()
+                  
                })
                .then(alert('are you sure that you want to save this workout?'))
-               .then(() => {
-               window.location.reload()
-               })
+               .then(window.location.reload())
                .catch((error) => {
                console.log(error);
             })
@@ -41,14 +37,12 @@ const Card = ({ item, isInFav=false, addToFav }) => {
           onFav()
        };
   
-       
-console.log(item)
 
      return(
         <div className={styles.container}  >
                <div className={styles.info}>
                     <video controls src={item.video} alt='workout'/>
-                    {/* <img src={item.picture} alt='workout'/> */}
+                    
                     <div className={styles.descrip}>
                          <p className={styles.bold}>name:</p><p>{item.name}</p>
                          <p className={styles.bold}>description:</p><p>{item.description}</p>
@@ -56,19 +50,22 @@ console.log(item)
                </div>
                {!isInFav && 
                     <button onClick={() => {
-                         setSelectedItem(item); 
+                         setFavs(item); 
                          openModal()  
                          }}> Save
                     </button>
                }
-            {selectedItem && 
+            {favs && 
                <Modal isOpen={isOpenModal} closeModal={closeModal}>
-                    <h2>your {selectedItem.type} workout</h2>
-                    <img src={selectedItem.picture} alt="img"/> 
-                    <p> {selectedItem.name}</p>
+                    <h2>your {favs.type} workout</h2>
+                    <img src={favs.picture} alt="img"/> 
 
                     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                      <br/>
+                     
+                     <input type="hidden" alt='' value={favs.picture} {...register("picture")} />
+                    
+                     <input type="text" value= {favs.name} {...register("name")}/>
                      
                      <input type="number" placeholder='Number of reps' {...register("reps")} />
                      <br/>
@@ -76,10 +73,10 @@ console.log(item)
                      <input type="number" placeholder='Number of series' {...register("series")} />
                      <br/>
                     
-                     <input type="date" placeholder='workout date' {...register("date")} />
+                     <input type="date" placeholder='Workout date' {...register("date")} />
                      <br/>
                     
-                     <input type="number"  placeholder='Weight Lifted' {...register("weight")} />
+                     <input type="number"  placeholder='Weight Lifted' {...register("lifted")} />
                     
                      
                      <div className={styles.buttons}>

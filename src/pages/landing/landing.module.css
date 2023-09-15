@@ -57,15 +57,14 @@
    justify-content: center;
    align-items: center;
 }
+
 .sign:hover {
    width: 12em;
    height: 3em;
    background-color: teal;
    color: white;
-   border-radius: 0.1em;
+   border-radius: 1.5em;
    border: none;
-   animation-fill-mode: forwards;
-  
 }
 
 .sign > a {
@@ -92,7 +91,7 @@
    height: 3em;
    background-color: white;
    border: 1px teal solid;
-   border-radius: 0.1em;
+   border-radius: 1.5em;
   
 }
 

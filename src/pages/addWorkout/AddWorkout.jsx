@@ -113,23 +113,41 @@ const inputFileVideo = useRef(null);
   return (
     <div className={styles.container}>
       <div className={styles.wrap}>
-      <div className={styles.editbox}>
+     
         <form className={styles.form}>
           <h2>Add a Workout</h2>
 
-          <div className={styles.images}>
-            <div className={styles.userimage}><img src={workout.image ? workout.image : pic} 
-              className={styles.imagen} alt="userImage" /></div>
-            <div className={styles.editimg}>
+          <div className={styles.media}>
+            <div className={styles.images}>
+              <div className={styles.userimage}><img src={workout.image ? workout.image : pic} 
+                className={styles.imagen} alt="userImage" /></div>
+              <div className={styles.editimg}>
 
-              <label>
-                <input type='file' ref={inputFile}
-                  onChange={(e) => setWorkout({ ...workout, image: URL.createObjectURL(e.target.files[0]) })}
-                  className={styles.uploading}></input>
-                <img src={pen} alt="penlogo" />
-              </label>
+                <label>
+                  <input type='file' ref={inputFile}
+                    onChange={(e) => setWorkout({ ...workout, image: URL.createObjectURL(e.target.files[0]) })}
+                    className={styles.uploading}></input>
+                  <img src={pen} alt="penlogo" />
+                </label>
+              </div>
             </div>
+
+            <div className={styles.images}>
+                <div className={styles.userimage}><video controls src={workout.video}
+                  className={styles.imagen} alt="userVideo" /></div>
+
+                <div className={styles.editimg}>
+                  <label>
+                    <input type='file' ref={inputFileVideo}
+                      onChange={(e) => setWorkout({ ...workout, video: URL.createObjectURL(e.target.files[0]) })}
+                      className={styles.uploading}></input>
+                    <img src={pen} alt="penlogo" />
+                  </label>
+                </div>
+              </div>
           </div>
+
+
 
           <div className={styles.worksinput}>
             <input type='text'
@@ -151,32 +169,15 @@ const inputFileVideo = useRef(null);
               onChange={(e) => setWorkout({ ...workout, series: e.target.value })} placeholder="series">
             </input> 
 
-            <input type="text"
-              onChange={(e) => setWorkout({ ...workout, frontpage: e.target.value })} placeholder="frontpage">
-            </input> 
-            
-            <div className={styles.images}>
-            <div className={styles.userimage}><video controls src={workout.video}
-              className={styles.imagen} alt="userVideo" /></div>
-            <div className={styles.editimg}>
-
-              <label>
-                <input type='file' ref={inputFileVideo}
-                  onChange={(e) => setWorkout({ ...workout, video: URL.createObjectURL(e.target.files[0]) })}
-                  className={styles.uploading}></input>
-                <img src={pen} alt="penlogo" />
-              </label>
+            <div className={styles.buttons}>
+              <button className={styles.save} onClick={(e) => { e.preventDefault(); e.stopPropagation(); onSubmit(); } }>Save</button>
+              <button className={styles.reload} onClick={() => { handleOnClick(); } }>reset</button>
             </div>
-          </div>
-
-          </div>
-          <div className={styles.buttons}>
-            <button className={styles.save} onClick={(e) => { e.preventDefault(); e.stopPropagation(); onSubmit(); } }>Save</button>
-            <button className={styles.reload} onClick={() => { handleOnClick(); } }>reset</button>
+            
           </div>
 
         </form>
-      </div>
+      
           <div className={styles.profile}>
             <h3>new created workout</h3>
             <div className={styles.box}>
@@ -194,4 +195,4 @@ const inputFileVideo = useRef(null);
 );
 }
 
-export default AddWorkout
+export default AddWorkout;

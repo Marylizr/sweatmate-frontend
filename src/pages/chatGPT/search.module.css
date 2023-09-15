@@ -32,32 +32,36 @@
    
 }
 
-.prompt > .reset {
-   width: 130px;
-    height: 40px;
-    background-color: white;
-    border: 1px solid teal;
-    border-radius: 7px;
-    color: teal;
-    text-transform: capitalize;
+.buttons > .reset {
+   border: solid white 2px;
+    background: teal;
+    height: 50px;
+    width: 140px;
+    border-radius: 8px;
+    color: white;
+    margin: 2em 0 0em 0em;
 }
 
-.prompt > .send {
-   width: 130px;
-    height: 40px;
-    background-color: white;
-    border: 1px solid teal;
-    border-radius: 7px;
-    color: teal;
-    text-transform: capitalize;
+.buttons > .send {
+   border: solid teal 2px;
+   background: white;
+   height: 50px;
+   width: 140px;
+   border-radius: 8px;
+   color: teal;
+   margin: 2em 0 0em 0em;
 }
 
-.wrap {
+.container {
    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    margin: 2em;
+   width: 100%;
+   flex-direction: column;
+   flex-wrap: wrap;
+   align-content: center;
+   align-items: center;
+}
+
+.buttons {
+   display: flex;
+
 }

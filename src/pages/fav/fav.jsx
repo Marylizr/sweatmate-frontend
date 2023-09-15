@@ -11,8 +11,8 @@ import CardDeleteFavs from '../../components/card/CardDeleteFavs';
 
 const SavedWorkouts = () => {
   const [saved, setSaved] = useState([]);
-  const [data, setData] = useState([]);
   const { name, setName  } = useContext(UserContext);
+  
 
 
   useEffect(() => {
@@ -22,34 +22,27 @@ const SavedWorkouts = () => {
     })
   }, [name, setName]);
 
-  useEffect(() => {
-    if (data.length) {
-      setSaved(data);
-    }
-  }, [data, setSaved]);
-
 
   useEffect(() => {
     customFetch("GET", "fav")
       .then((json) => {
-      setData(json);
+      setSaved(json);
       })
       .catch((error) => {
         console.log(error);
       })
   }, [setSaved]);
 
-  
+ 
 
-
-console.log(saved)
+  console.log(saved)
 
   return (
     <div className={styles.container} >
       <NavBar />
       <div className={styles.small_header}> 
         <Link to='/dashboard'> <img src={arrow_left} alt='' /></Link>
-        <h2>{name}, Welcome to your saved workout</h2>
+        <h2>{name}, Welcome to your WorkOut</h2>
       </div>
       <div className={styles.wrap}>
         {

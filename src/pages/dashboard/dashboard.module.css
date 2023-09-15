@@ -24,14 +24,9 @@
 .workouts:hover {
    display: flex;
    align-items: center;
-   border: gray 1px solid;
-   width: 310px;
-   height: 380px;
+   border: teal 2px solid;
    border-radius: 0 0px 15px 15px;
-   margin-top: 10px;
-   flex-direction: column;
-   margin-right: 1.5em;
-   box-shadow: 0px 0px 20px gray;
+  
 }
 
 .info {

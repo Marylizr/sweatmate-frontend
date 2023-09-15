@@ -160,3 +160,40 @@
    margin-top: 2em;
    box-shadow: 59px -16px teal;
 }
+
+
+/*follow card*/
+
+.follow > img {
+   width: 90%;
+   margin-top: 5%;
+   box-shadow: 20px -16px teal;
+}
+
+.follow > p{
+   margin: 0.3em;
+}
+
+.cardWrap {
+   display: flex;
+   flex-wrap: wrap;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   align-content: center;
+   width: 25%;
+   height: 80%;
+   border: gray 1px solid;
+   border-radius: 0 0px 15px 15px;
+   margin: 0.5em
+}
+
+.cardWrap > button {
+   border: solid white 2px;
+   background: teal;
+   height: 50px;
+   width: 140px;
+   border-radius: 8px;
+   color: white;
+   margin-top: 2em;
+}
