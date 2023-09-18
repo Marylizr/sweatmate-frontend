@@ -9,6 +9,15 @@
    margin-top: 2em;
    
 }
+
+.cardWrap {
+   border: 1px solid teal;
+   border-radius: 0 0 1em 1em;
+   width: 20vw;
+   height: 20em;
+   overflow-y: scroll;
+}
+
 .tips {
    column-count: 3;
    margin-top: 1.5em;

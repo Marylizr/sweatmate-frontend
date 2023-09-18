@@ -1,7 +1,7 @@
 .chat  {
    margin: 2em;
     border: 0.1em teal solid;
-    width: 30vw;
+    width: 25em;
     height: auto;
     padding: 1em;
     border-radius: 1em;
@@ -11,17 +11,19 @@
     font-size: large;
     color: teal;
     font-weight: 800;
+    overflow:scroll;
 }
 
-.prompt {
- 
+.chat > textarea {
+   box-shadow: none;
 }
+
 
 .prompt > input {
    background-color: transparent;
    margin: 2em;
    border: 0.1em teal solid;
-   width: 30vw;
+   width: 25em;
    height: 12vh;
    border-radius: 1em;
    display: flex;
