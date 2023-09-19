@@ -55,35 +55,40 @@ const ContactForm = () => {
 
       <h2>Hello {user.name} Do you have a request?</h2>
       <h3>Fill our contact form</h3>
+      <div className={styles.wrapper}>
+         <div className={styles.image}>
+            <img src='https://res.cloudinary.com/da6il8qmv/image/upload/v1695123207/trainers2_sz7j9v.png' alt=''/>
+         </div>
+         <form >
+            <label>Name</label>
+         { <input
+            id="name" type="text" placeholder={user.name}
+            onChange={(e) => setInfo({ ...info, name: e.target.value })}
+            required
+            />}
 
-       <form >
-         <label>Name</label>
-        { <input
-         id="name" type="text" placeholder={user.name}
-         onChange={(e) => setInfo({ ...info, name: e.target.value })}
-         required
-         />}
+            <label htmlFor="email">Email:</label>
+            <input id="email" type="email" placeholder='email'
+            onChange={(e) => setInfo({ ...info, email: e.target.value })}
+            required
+            />
 
-         <label htmlFor="email">Email:</label>
-         <input id="email" type="email" placeholder='email'
-         onChange={(e) => setInfo({ ...info, email: e.target.value })}
-         required
-         />
+            <label htmlFor="message">Message:</label>
+            <textarea placeholder='message' rows={3} cols={40}
+                  onChange={(e) => setInfo({ ...info, message: e.target.value })} />
 
-         <label htmlFor="message">Message:</label>
-         <textarea placeholder='message' rows={3} cols={40}
-                onChange={(e) => setInfo({ ...info, message: e.target.value })} />
+            <button className={styles.onsubmit} 
+                     onClick={(e) => { 
+                        e.stopPropagation(); 
+                        handleSubmit(); 
+                        e.preventDefault() 
+                        setSelectedItem(info); 
+                        handleOnClick()
+                        openModal()  
+                     }}>Submit</button>
+         </form>
 
-         <button className={styles.onsubmit} 
-                  onClick={(e) => { 
-                     e.stopPropagation(); 
-                     handleSubmit(); 
-                     e.preventDefault() 
-                     setSelectedItem(info); 
-                     handleOnClick()
-                     openModal()  
-                  }}>Submit</button>
-      </form>
+      </div>
 
        {selectedItem &&  
        <Modal isOpen={isOpenModal} closeModal={closeModal}>

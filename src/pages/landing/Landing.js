@@ -8,7 +8,7 @@ import logo from '../../utils/logo_new.png';
 const Landing = () => {
 
   let beGirl = {
-    url: 'https://res.cloudinary.com/da6il8qmv/image/upload/v1694767050/personal_traine_izpzce.png'
+    url: 'https://res.cloudinary.com/da6il8qmv/image/upload/v1695055353/trainers_tuyl4k.png'
   }
   
   return (

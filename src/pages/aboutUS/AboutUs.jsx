@@ -1,16 +1,17 @@
 import React from 'react';
 import NavBar from '../../components/navBar/navBar';
 import styles from '../aboutUS/about.module.css';
-import back from '../../utils/back1.jpg'
-import back2 from '../../utils/back4.jpg'
+
 
 export const AboutUs = () => {
   return (
     <div className={styles.container}>
       <NavBar />
       <h2>AboutUs</h2>
+      <div className={styles.img}>
+         <img src= 'https://res.cloudinary.com/da6il8qmv/image/upload/v1695127637/group5_rrew5h.png' alt=''/>
+      </div>
       <div className={styles.wrap}>
-         <img src={back} alt=''/>
       <p>
          Welcome to beFit, your ultimate online resource for all things fitness! 
          Our website is dedicated to providing you with accurate and reliable information on 
@@ -20,7 +21,7 @@ export const AboutUs = () => {
          fitness advice. Whether you're looking to lose weight, build muscle, or just improve your 
          overall health, we have the tools and resources you need to succeed.
       </p>
-      <img src={back2} alt=''/>
+      
       <p>
          At beFit, we believe that fitness is not just about physical activity, but it's 
          also about mental and emotional well-being. That's why we offer a variety of articles, guides, 

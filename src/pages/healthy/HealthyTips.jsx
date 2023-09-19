@@ -18,8 +18,7 @@ const HealthyTips = () => {
     .catch((error) => {
       console.log(error);
     })
-
-  }, [])
+  }, [setResponse])
 
 console.log(response)
 

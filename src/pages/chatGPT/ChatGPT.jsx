@@ -8,85 +8,32 @@ const ChatComponent = () => {
   const [prompt, setPrompt] = useState();
   const [response, setResponse] = useState();
   const [userName, setUserName] = useState();
-  const [userinfo, setUserInfo] = useState({
-    infoType: [],
-    replied: [],
-    });
-
   const [getResponse, setGetResponse] = useState({
     userName: userName,
-    infoType: userinfo.infoType,
     content: response,
   })
-
-  useEffect(() => {
+  
+  const getUser = () => {
     customFetch("GET", "user/me")
-      .then((json) => {
-      setUserName(json);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-  }, [setUserName]);
-
-
-const handleChange = (e) => {
-  // Destructuring
-  const { value, checked } = e.target;
-  const { infoType } = userinfo;
+    .then((json) => { 
+       setUserName(json.name);  
+       }); }
   
-  console.log(`${value} is ${checked}`);
-  
-  // Case 1 : The user checks the box
-  if (checked) {
-    setUserInfo({
-      infoType: [...infoType, value]
-      .catch((error) => {
-        console.log(error, `Error in setting state of infoType`);
-      }),
-      replied: [...infoType, value]
-      .catch((error) => {
-        console.log(`Error in setting state of reply`, error)})
-      });
-  }
-  
-  // Case 2  : The user unchecks the box
-  else {
-    setUserInfo({
-      infoType: infoType.filter((e) => e !== value)
-      .then((error) => {
-      console.log('you have to choose a value', error)
-      }),
-      replied: infoType.filter((e) => e !== value),
-    });
-  }
-};
+    useEffect(() => {
+    getUser() 
+  },[]);
 
 
-const handleInputChange = (event) => {
-    setPrompt(event.target.value);
-  };
+  const handleInputChange = (event) => {
+      setPrompt(event.target.value);
+    };
 
   const onReload = () => {
     window.location.reload()
   }
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    const data = {
-      userName: userName,
-      infoType: userinfo.infoType,
-      content: response,
-    }
-
-    customFetch("POST", "savePrompt", {body: data})
-    .then((json) => {
-    setGetResponse(json);
-    })
-    .catch((error) => {
-      console.log(error);
-    })
+    event.preventDefault()
 
     try {
       const response = await axios.post('http://localhost:3001/chat', { prompt });
@@ -95,6 +42,22 @@ const handleInputChange = (event) => {
       console.error('Error:', error);
     }
   };
+
+  const onSave =() => {
+    const data = {
+      userName: userName,
+      infotype: getResponse.infotype,
+      content: response,
+    }
+    customFetch ("POST", "savePrompt", {body: data})
+    .then((json) => {
+      setGetResponse(json);
+    })
+    .catch((error) => {
+      console.log(error, 'it hasn´t been possible to save the prompt');
+    })
+  }
+
     useEffect(() => {
     customFetch("GET", "savePrompt")
     .then((json) => {
@@ -102,40 +65,40 @@ const handleInputChange = (event) => {
     })
   }, [setGetResponse]);
 
-  // const {content} = getResponse;
 
-  console.log(getResponse)
+  console.log(getResponse, userName)
+  
 
   return (
     <div className={styles.container}>
-      <form onSubmit={handleSubmit} className={styles.prompt}>
+     <form onSubmit={handleSubmit} className={styles.prompt} id="promp_machine">
         <input type="text" value={prompt} onChange={handleInputChange} placeholder="prompt"/>
         
         <input type="hidden" value={response}
-         onChange={(e) => setGetResponse({ ...getResponse, content: e.target.value })} />
+         onChange={(e) => setGetResponse({ ...getResponse, content: response })} />
         <input type="hidden" 
         onChange={(e) => setGetResponse({ ...getResponse, userName: e.target.value })} placeholder="name" />
        
         <div className={styles.check}>
           <input
             type="checkbox"
-            infoType="infoType"
-            value="Healthy Tips"
+            infotype="infotype"
+            value='healthy-tips'
             id="flexCheckDefault"
-            onChange={handleChange}
+            onChange={(e) => setGetResponse({ ...getResponse, infotype: e.target.value })}
           />
           <label
             className=""
             htmlFor="flexCheckDefault"
-          > Healyhy Tips
+          > Healthy Tips
           </label>
 
           <input
             type="checkbox"
-            infoType="infoType"
-            value="Recipes"
+            infotype="infotype"
+            value="recipes"
             id="flexCheckDefault"
-            onChange={handleChange}
+            onChange={(e) => setGetResponse({ ...getResponse, infotype: e.target.value })}
           />
           <label
             className="form-check-label"
@@ -145,15 +108,15 @@ const handleInputChange = (event) => {
 
           <input
             type="checkbox"
-            infoType="infoType"
-            value="WorkOuts"
+            infotype="infotype"
+            value="workouts"
             id="flexCheckDefault"
-            onChange={handleChange}
+            onChange={(e) => setGetResponse({ ...getResponse, infotype: e.target.value })}
           />
           <label
             className="form-check-label"
             htmlFor="flexCheckDefault"
-          > WorkOuts
+          > workouts
           </label>
         </div>
         
@@ -164,10 +127,9 @@ const handleInputChange = (event) => {
      
       </form>
       <div className={styles.chat}>
-       {
-       response
-       }
+       {response}
       </div>
+      <button className={styles.save} onClick={() => {onSave()}}>Save</button>
     </div>
   );
 };

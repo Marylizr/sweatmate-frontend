@@ -34,7 +34,6 @@ const WorkoutsMenu = () => {
     setClicked(!clicked)
  }
 
-console.log(user)
 
   return (
     <div className={styles.menu}>

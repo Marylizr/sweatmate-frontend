@@ -10,8 +10,6 @@
    
 }
 
-
-
 .wrap {
    column-count: 3;
    margin-top: 1.5em;
@@ -24,6 +22,10 @@
 
 .wrap > p {
   text-align: left;
+}
+
+.img > img {
+   width: 80vw;
 }
 
 @media(max-width: 768px){
