@@ -1,4 +1,4 @@
-.container{
+.macros {
    display: flex;
     align-items: center;
     border: gray 1px solid;
@@ -11,18 +11,18 @@
     justify-content: center;
 }
 
-.inputFase {
+.form {
    display: flex;
     justify-content: center;
     align-items: center;
     padding: 2% 0;
-    width: 300px;
+    width: 15em;
     flex-wrap: wrap;
     flex-direction: row;
 }
 
-.inputFase > input {
-   margin: 10px;
+.form > input {
+   margin: 5px;
     width: 80%;
     height: 30px;
     border-radius: 3px;
@@ -31,7 +31,7 @@
     padding: 5px;
 }
 
-.inputFase > button {
+.form > button {
    border: none;
     background: teal;
     height: 50px;
@@ -39,46 +39,12 @@
     border-radius: 8px;
     margin: 2em 0 0em 0em;
     color: white;
-    text-transform: capitalize;
-    cursor: pointer;
-}
-
-
-.faseButtons  {
-   display: flex;
-   flex-wrap: wrap;
-   flex-direction: row;
-   align-items: center;
-   justify-content: center;
-}
-
-.yes {
-   border: none;
-    background: teal;
-    height: 50px;
-    width: 140px;
-    border-radius: 8px;
-    margin: 2em 0 0em 0em;
-    color: white;
-    text-transform: capitalize;
-    cursor: pointer;
-    margin-right: 2em;
-}
-
-.no {
-   border: 1px solid teal;
-    background: white;
-    height: 50px;
-    width: 140px;
-    border-radius: 8px;
-    margin: 2em 0 0em 0em;
-    color: teal;
     text-transform: capitalize;
     cursor: pointer;
 }
 
 @media(max-width:800px) {
-   .container{
+   .macros {
       width: 87vw;
       height: 20em;
       margin-bottom: 1em;
@@ -87,7 +53,8 @@
 }
 
 @media (min-width: 768px) and (max-width: 1180px) {
-   .container {
-      margin: 0.5em;
-   }
+.macros {
+   margin:0.5em;
+}
+
 }

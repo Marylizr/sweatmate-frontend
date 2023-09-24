@@ -25,9 +25,7 @@ console.log(response)
   return (
     <div className={styles.container}>
       <NavBar />
-      <h2>
-        Tips
-      </h2>
+     
       <div className={styles.cardWrap}>
         {
           response && response.length > 0 && response.map( (item) => 

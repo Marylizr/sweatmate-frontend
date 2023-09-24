@@ -2,13 +2,14 @@ import styles from "./settings.module.css";
 import NavBar from "../../components/navBar/navBar"
 import Settings from "../UserAccount/settings/Settings"
 import FaseMenstrual from "../../components/faseMenstrual/FaseMentrual";
-import WeekStorical from "../../components/trainingStorical/WeekStorical";
 import { Link } from 'react-router-dom';
+import MacroCalculator from "../../components/macroCalculator/MacroCalculator";
+import WeekStorical from "../../components/trainingStorical/WeekStorical";
 
 
 
 
-const AccountSetting = ({historial}) => {
+const AccountSetting = () => {
 
     return(
     <div className={styles.container}>
@@ -17,12 +18,13 @@ const AccountSetting = ({historial}) => {
           <Settings />
           <div className={styles.rearrange}>
             <FaseMenstrual />
-            <WeekStorical historial={historial} />
+            <WeekStorical />
+            <MacroCalculator />
             <div className={styles.save}>
-              <button className={styles.save}><Link to="/savedworkouts"> my WorkOuts </Link> </button>
+              <button><Link to="/savedworkouts"> my WorkOuts </Link> </button>
             </div>
-            <div className={styles.save}>
-              <button className={styles.save}><Link to="/progress"> my Progress </Link> </button>
+            <div className={styles.progress}>
+              <button><Link to="/progress"> my Progress </Link> </button>
             </div>
             
           </div>

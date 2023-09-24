@@ -5,7 +5,7 @@
    align-content: center;
    justify-content: center;
    align-items: center;
-   width: 71vw;
+   width: 80vw;
    margin-top: 2em;
 }
 
@@ -98,4 +98,23 @@
     justify-content: center;
     flex-wrap: wrap;
     align-items: center;
+}
+
+@media (max-width: 768px) {
+   .container{
+      width: 90vw;
+   }
+}
+
+@media (min-width: 769px) and (max-width: 1181px) {
+   .container {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-content: center;
+      justify-content: center;
+      align-items: center;
+      width: 90vw;
+      margin-top: 2em;
+   }
 }

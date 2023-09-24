@@ -9,7 +9,10 @@
   font-family: 'Roboto';
   color: gray;
   flex-direction: column;
+  overflow-x: hidden;
 }
+
+
 
 p {
   font-size: 1.2em;
@@ -44,4 +47,17 @@ p {
   to {
     transform: rotate(360deg);
   }
+}
+
+@media (max-width:768px){
+  #root {
+    display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-items: center;
+      width: 100%;
+      align-content: center;
+      overflow-x: hidden;
+  }
+
 }

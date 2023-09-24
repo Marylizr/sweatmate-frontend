@@ -1,16 +1,15 @@
 .container {
    display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
     align-content: center;
     align-items: center;
     width: 80vw;
 }
 
-
 .form {
    display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: nowrap;
     align-content: center;
     justify-content: center;
@@ -36,7 +35,7 @@
 
 .media {
    display: flex;
-   flex-direction: row;
+   flex-direction: column;
    width: 50%;
 }
 
@@ -113,18 +112,18 @@
 }
 
 .side_menu {
-   width: 16vw;
+   width: 280PX;
    height: 45px;
    background: white;
    margin: 0.3em 0 0;
    align-items: center;
    display: flex;
    justify-content: center;
-   box-shadow: 0px 0px 6px lightgrey;
+   box-shadow: 0px 0px 8px #80808042;
 }
 
 .side_menu:hover {
-      width: 18vw;
+   width: 280px;
     height: 45px;
     border: teal 1px solid;
     background: white;
@@ -182,6 +181,13 @@
       flex-wrap: wrap;
       align-content: center;
    }
+   .addWorkout:hover {
+   width: 80vw;
+    height: 45px;
+    border: teal 1px solid;
+    background: white;
+    border-radius: 20px;
+   }
 
   div > .menu {
    display: flex;
@@ -199,12 +205,12 @@
       width: 286px;
     height: 50px;
     background: white;
-    margin: 0.1em 2em 0.3em;
+    margin: 0.3em 2em 0.3em;
     align-items: center;
     display: flex;
     justify-content: center;
     border-radius: 10px;
-    box-shadow: 0px 0px 8px grey;
+    box-shadow: 0px 0px 8px #80808042;
    }
    .menu > img {
       display: none;
@@ -233,6 +239,48 @@
    }
 }
 
+@media (min-width: 769px) and (max-width: 1181px) {
+   .menu {
+      display: none;
+      flex-direction:unset; 
+      align-items:baseline;
+      background: none;
+      box-shadow:none;
+      height: 0vh;
+      justify-content: center;
+      width:auto
+   }
+
+   div > .menu {
+      display: flex;
+       flex-direction: row;
+       align-items: flex-start;
+       margin: 0 0em 2em 0;
+       flex-wrap: wrap;
+       height: 53px;
+       width: 90vw;
+       background: transparent;
+       box-shadow: none;
+      }
+   
+      div > .side_menu  {
+         width: 286px;
+       height: 50px;
+       background: white;
+       margin: 0.3em 2em 0.3em;
+       align-items: center;
+       display: flex;
+       justify-content: center;
+       border-radius: 10px;
+       box-shadow: 0px 0px 8px #80808042;
+      }
+      .menu > img {
+         display: none;
+      }
+}
+
+
+
 .side_menu > button {
    background: transparent;
    color: teal;
@@ -260,7 +308,7 @@
     box-shadow: 4px -4px 8px grey;
     height: 100vh;
     justify-content: center;
-    width: 350px;
+   width: 30em;
 }
 
 

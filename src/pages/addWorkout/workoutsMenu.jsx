@@ -41,7 +41,7 @@ const WorkoutsMenu = () => {
 
         <div className={`links ${clicked ? 'active' : ''}`}>
           <img src={logo} alt=''/>
-          <h2>{user}!</h2>
+          <h2>Hi, {user}!</h2>
           
             <div className={styles.side_menu}>
               <Link to='/main/addworkout'> Add Workout </Link>
@@ -71,19 +71,13 @@ const WorkoutsMenu = () => {
   )
 }
 const NavContainer = styled.nav`
-   display: flex;
+    /* Estilos para móviles */
+
+  display: flex;
    align-items: center;
    align-content: center
    justify-content: space-between;
    z-index: 100;
-
-
-   .links > a {
-    text-decoration: none;
-    color: grey;
-    margin-right:1em;
-    font-size: 12px;
- }
  
  .links {
     position: absolute;
@@ -100,7 +94,11 @@ const NavContainer = styled.nav`
      a {
        color: grey;
        display: block;
+       margin-right:1em;
+       font-size: 12px;
+       text-decoration: none;
      }
+
      a:hover {
        color:teal;
        font-size:20px;
@@ -110,72 +108,252 @@ const NavContainer = styled.nav`
      img {
       width:250px;
      }
+  }
 
-     @media(min-width:768px){
-      margin: 0;
-      position: initial;
-      display: flex;
-      flex-direction: column;
-      align-content: center;
-      flex-wrap: nowrap;
-      justify-content: center;
-      align-items: center;
-      padding-bottom: 0;
-        a{
-          font-size: 1.2em;
-          color: grey;
-          display: inline;
-        }
+
+  .links.active {
+    width: 88%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    top: 10%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    background: white;
+    z-index:100;
+    
+    a{
+      font-size: 1.2rem;
+      color: grey;
     }
+  }
 
-    @media(max-width: 1024px) {
-      font-size: 13px;
-     
-    }
-   }
+  .links > button {
+    Background-color: transparent;
+    border: none;
+    color: teal;
+    font-size: 1.3em;
+    margin-top: 1rem;
+    margin-right: 1em;
+    margin-bottom: 1em;
+  }
 
-   .links.active {
-      width: 88%;
-      display: block;
+  .links > button:hover{
+    border: 1px solid teal;
+    border-radius:5px;
+    width:100px;
+    height: 40px;
+  }
+
+  .burger {
+    display: flex;
+    position: relative;
+    right: -117px;
+    top: 30px;
+  }
+
+  @media (min-height: 1182px) and (max-width: 600px) {
+    display: flex;
+    align-items: center;
+    align-content: center
+    justify-content: space-between;
+    z-index: 100;
+  
+  .links {
+     position: absolute;
+      top: -700px;
+      left: -2000px;
+      right: 0;
       margin-left: auto;
       margin-right: auto;
-      top: 10%;
-      left: 0;
-      right: 0;
       text-align: center;
-      background: white;
-      z-index:100;
-      
-      a{
-        font-size: 1.2rem;
+      transition: all .5s ease;
+     z-index:100;
+     padding-bottom: 2em;
+ 
+      a {
         color: grey;
+        display: block;
+        margin-right:1em;
+        font-size: 12px;
+        text-decoration: none;
       }
-      @media(min-width:768px){
-         display: flex;
-         flex-wrap: wrap;
-         flex-direction: row;
-         align-content: center;
-         justify-content: center;
-         align-items: center;
-         padding-bottom: 0;
-         a{
-            font-size: 1.2rem;
-            margin-top: 0;
-            color: grey;
-          }
+ 
+      a:hover {
+        color:teal;
+        font-size:20px;
+        font-weight:bold;
       }
-    }
+ 
+      img {
+       width:250px;
+      }
+   }
+ 
+   .links.active {
+    width: 44%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    top: 10%;
+    left: 152px;
+    right: 0;
+    text-align: center;
+    background: white;
+    z-index: 100;
+     
+     a{
+       font-size: 1.2rem;
+       color: grey;
+     }
+   }
+ 
+   .links > button {
+     Background-color: transparent;
+     border: none;
+     color: teal;
+     font-size: 1.3em;
+     margin-top: 1rem;
+     margin-right: 1em;
+     margin-bottom: 1em;
+   }
+ 
+   .links > button:hover{
+     border: 1px solid teal;
+     border-radius:5px;
+     width:100px;
+     height: 40px;
+   }
+ 
+   .burger {
+     display: flex;
+     position: relative;
+     right: -270px;
+    top: 100px;
+   }
+  }
 
-    .links > button{
-      Background-color: transparent;
-      border: none;
-      color: teal;
-      font-size: 1.3em;
-      margin-top: 1rem;
-      margin-right: 1em;
-      margin-bottom: 1em;
-      
-      @media(min-width:768px){
+
+
+ @media (min-width: 601px) and (max-width: 900px) and (orientation: landscape) {
+    display: flex;
+    align-items: center;
+    align-content: center
+    justify-content: space-between;
+    z-index: 100;
+  
+  .links {
+     position: absolute;
+      top: -700px;
+      left: -2000px;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      transition: all .5s ease;
+     z-index:100;
+     padding-bottom: 2em;
+ 
+      a {
+        color: grey;
+        display: block;
+        margin-right:1em;
+        font-size: 12px;
+        text-decoration: none;
+      }
+ 
+      a:hover {
+        color:teal;
+        font-size:20px;
+        font-weight:bold;
+      }
+ 
+      img {
+       width:250px;
+      }
+   }
+ 
+   .links.active {
+    width: 44%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    top: 10%;
+    left: 152px;
+    right: 0;
+    text-align: center;
+    background: white;
+    z-index: 100;
+     
+     a{
+       font-size: 1.2rem;
+       color: grey;
+     }
+   }
+ 
+   .links > button {
+     Background-color: transparent;
+     border: none;
+     color: teal;
+     font-size: 1.3em;
+     margin-top: 1rem;
+     margin-right: 1em;
+     margin-bottom: 1em;
+   }
+ 
+   .links > button:hover{
+     border: 1px solid teal;
+     border-radius:5px;
+     width:100px;
+     height: 40px;
+   }
+ 
+   .burger {
+     display: flex;
+     position: relative;
+     right: -270px;
+    top: 100px;
+   }
+  }
+
+
+      /* Estilos para pantallas grandes */
+      @media (min-width: 900px) {
+        
+     .links {
+       margin: 0;
+     position: initial;
+     display: flex;
+     flex-direction: column;
+     align-content: center;
+     flex-wrap: nowrap;
+     justify-content: center;
+     align-items: center;
+     padding-bottom: 0;
+       a{
+         font-size: 1.2em;
+         color: grey;
+         display: inline;
+       }
+     }
+ 
+     .links.active {
+       display: flex;
+       flex-wrap: wrap;
+       flex-direction: row;
+       align-content: center;
+       justify-content: center;
+       align-items: center;
+       padding-bottom: 0;
+       a{
+         font-size: 1.2rem;
+         margin-top: 0;
+         color: grey;
+         }
+     }
+ 
+       .links > button {
          display: flex;
          flex-wrap: wrap;
          flex-direction: row;
@@ -187,26 +365,13 @@ const NavContainer = styled.nav`
          border: none;
          color: teal;
          margin: 0;
-      }
-    }
-    .links > button:hover{
-      border: 1px solid teal;
-      border-radius:5px;
-      width:100px;
-      height: 40px;
-    }
-  
-.burger {
-  display: flex;
-  position: relative;
-  right: -117px;
-  top: 30px;
-   @media(min-width:768px){
-      display: none;
-   }
-}
+       }
+ 
+       .burger {
+         display:none;
+       }
 
-`
+   `
 
 
 

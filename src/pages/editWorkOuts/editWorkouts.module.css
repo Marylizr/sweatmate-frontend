@@ -84,3 +84,25 @@
     color: teal;
     margin: 2em 0 0em 0em;
 }
+
+@media(max-width:768px) {
+   .container {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-content: center;
+      align-items: center;
+      width: 99vw;
+   }
+}
+
+@media (min-width: 769px) and (max-width: 1181px) {
+   .container {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-content: center;
+      align-items: center;
+      width: 99vw;
+   }
+}

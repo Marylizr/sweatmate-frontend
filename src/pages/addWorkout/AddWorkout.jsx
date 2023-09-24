@@ -112,11 +112,10 @@ const inputFileVideo = useRef(null);
 
   return (
     <div className={styles.container}>
+      <h2>Add a Workout</h2>
       <div className={styles.wrap}>
-     
-        <form className={styles.form}>
-          <h2>Add a Workout</h2>
 
+        <form className={styles.form}>
           <div className={styles.media}>
             <div className={styles.images}>
               <div className={styles.userimage}><img src={workout.image ? workout.image : pic} 

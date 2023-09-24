@@ -15,8 +15,9 @@
    flex-direction: row;
    flex-wrap: wrap;
    align-items: center;
-   width: 100vw;
+   width: 80vw;
    justify-content: center;
+   margin-top: 3em;
 }
 
 .tips {
@@ -53,5 +54,14 @@
       flex-direction: column;
       flex-wrap: wrap;
       align-items: center;
+   }
+
+   .cardWrap {
+      display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 90vw;
+    justify-content: center;
    }
 }

@@ -1,6 +1,5 @@
 import React, {useEffect, useState, useContext } from 'react'
 import customFetch from '../../api';
-// import Card from '../../components/card/Card';
 import NavBar from '../../components/navBar/navBar';
 import styles from '../quadriceps/quadriceps.module.css';
 import { Link } from 'react-router-dom';

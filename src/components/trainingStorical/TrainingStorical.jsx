@@ -1,42 +1,64 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import customFetch from '../../api';
 
-const RegistroEntrenamientos = () => {
-   
-  const [historial, setHistorial] = useState([
-    { dia: 'Lunes', porcentaje: 1 },
-    { dia: 'Martes', porcentaje: 1 },
-    { dia: 'Miércoles', porcentaje: 2 },
-    { dia: 'Jueves', porcentaje: 0 },
-    { dia: 'Viernes', porcentaje: 0 },
-    { dia: 'Sábado', porcentaje: 0 },
-    { dia: 'Domingo', porcentaje: 0 },
-  ]);
 
-  const handleRegistro = (dia, porcentaje) => {
-    // Actualiza el historial con el nuevo porcentaje de entrenamiento
-    const nuevoHistorial = historial.map(item =>
-      item.dia === dia ? { ...item, porcentaje } : item
-    );
-    setHistorial(nuevoHistorial);
-  };
+const TrainingStorical = ({item,  historial}) => {
+ 
+  const fecha = new Date(item.date);
+    const diaSemana = fecha.getDay();
+
+    const trainingDays = () => {
+      const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      return daysOfWeek[diaSemana];
+    };
+    
+    const myTrainDays = trainingDays();
+    
+
+
+    historial.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    function obtenerSemanasDeEntrenamiento() {
+      const semanasDeEntrenamiento = [];
+      let semanaActual;
+    
+    historial.forEach(entrenamiento => {
+      const fecha = new Date(entrenamiento.date);
+      const diaSemana = fecha.getDay();
+  
+      if (diaSemana === 1) {
+        semanaActual = { Monday: fecha, Sunday: null, historial: [] };
+      }
+      
+      if (semanaActual) {
+        semanaActual.Sunday = fecha;
+        semanaActual.historial.push(entrenamiento);
+      }
+  
+      if (diaSemana === 0 && semanaActual) {
+        semanasDeEntrenamiento.push(semanaActual);
+        semanaActual = null;
+      }
+    });
+  
+      return semanasDeEntrenamiento;
+    }
+
+    useEffect(() => {
+      obtenerSemanasDeEntrenamiento()
+    }, );
+
+  
 
   return (
     <div>
-      <h1>Registro de Entrenamientos Diarios</h1>
-      <div>
-        {historial.map(item => (
-          <div key={item.dia}>
-            <p>{item.dia}</p>
-            <input
-              type="number"
-              value={item.porcentaje}
-              onChange={(e) => handleRegistro(item.dia, e.target.value)}
-            />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
+      {myTrainDays}
+     
+    </div> 
+  )
+}
 
-export default RegistroEntrenamientos;
+export default TrainingStorical;
+
+// .map(item => (
+//   <TrainingStorical historial={historial} key={item._id}  item={item} id={item._id}

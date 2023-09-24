@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef,useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from '../chatGPT/search.module.css';
 import customFetch from '../../api';
@@ -31,6 +31,37 @@ const ChatComponent = () => {
   const onReload = () => {
     window.location.reload()
   }
+  const fileUpload = async () => {
+    const files = inputFile.current.files;
+    const formData = new FormData();
+    const url = `https://api.cloudinary.com/v1_1/da6il8qmv/image/upload`;
+
+    let imagen;
+    let file = files[0];
+    formData.append("file", file);
+    formData.append("upload_preset", 'h9rhkl6h');
+    console.log(formData, files);
+    await fetch(url, {
+      method: "POST",
+      header: {
+        'Content-Type': 'multipart/form-data'
+      },
+      body: formData
+    })
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
+      .then((photo) => {
+        imagen = photo.url;
+
+      })
+      .catch((data) => {
+        console.log(data);
+      });
+
+    return imagen;
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -43,16 +74,24 @@ const ChatComponent = () => {
     }
   };
 
-  const onSave =() => {
+  const inputFile = useRef(null);
+
+  const onSave = async () => {
+    const imagen = fileUpload();
+    let resultado;
+    await imagen.then(result => { resultado = result; });
+
     const data = {
       userName: userName,
       infotype: getResponse.infotype,
       content: response,
+      picture: resultado ? resultado : getResponse.picture,
     }
     customFetch ("POST", "savePrompt", {body: data})
     .then((json) => {
       setGetResponse(json);
     })
+    .then( window.location.reload())
     .catch((error) => {
       console.log(error, 'it hasn´t been possible to save the prompt');
     })
@@ -72,7 +111,9 @@ const ChatComponent = () => {
   return (
     <div className={styles.container}>
      <form onSubmit={handleSubmit} className={styles.prompt} id="promp_machine">
-        <input type="text" value={prompt} onChange={handleInputChange} placeholder="prompt"/>
+        <textarea defaultValue={prompt}
+        onChange={handleInputChange} placeholder="prompt">
+        </textarea>
         
         <input type="hidden" value={response}
          onChange={(e) => setGetResponse({ ...getResponse, content: response })} />
@@ -80,43 +121,28 @@ const ChatComponent = () => {
         onChange={(e) => setGetResponse({ ...getResponse, userName: e.target.value })} placeholder="name" />
        
         <div className={styles.check}>
-          <input
-            type="checkbox"
-            infotype="infotype"
-            value='healthy-tips'
-            id="flexCheckDefault"
+          <input type="checkbox" infotype="infotype" value='healthy-tips' id="flexCheckDefault"
             onChange={(e) => setGetResponse({ ...getResponse, infotype: e.target.value })}
           />
-          <label
-            className=""
-            htmlFor="flexCheckDefault"
-          > Healthy Tips
-          </label>
+          <label htmlFor="flexCheckDefault"> Healthy Tips </label>
 
-          <input
-            type="checkbox"
-            infotype="infotype"
-            value="recipes"
-            id="flexCheckDefault"
+          <input type="checkbox" infotype="infotype" value="recipes" id="flexCheckDefault"
             onChange={(e) => setGetResponse({ ...getResponse, infotype: e.target.value })}
           />
-          <label
-            className="form-check-label"
-            htmlFor="flexCheckDefault"
-          > Recipes
-          </label>
+          <label htmlFor="flexCheckDefault"> Recipes </label>
 
-          <input
-            type="checkbox"
-            infotype="infotype"
-            value="workouts"
-            id="flexCheckDefault"
+          <input type="checkbox" infotype="infotype" value="workouts" id="flexCheckDefault"
             onChange={(e) => setGetResponse({ ...getResponse, infotype: e.target.value })}
           />
-          <label
-            className="form-check-label"
-            htmlFor="flexCheckDefault"
-          > workouts
+          <label htmlFor="flexCheckDefault"> workouts </label>
+        </div>
+
+        {/* upload image */}
+        <div className={styles.upload}>
+          <label>
+            <input type='file' ref={inputFile}
+              onChange={(e) => setGetResponse({ ...getResponse, image: URL.createObjectURL(e.target.files[0]) })}
+              className={styles.uploading}></input>
           </label>
         </div>
         
@@ -124,10 +150,12 @@ const ChatComponent = () => {
           <button className={styles.send} type="submit">Send</button>
           <button className={styles.reset} onClick={onReload}>Reset</button>
         </div>
-     
       </form>
+
+      {/* textearea for response */}
       <div className={styles.chat}>
-       {response}
+        <textarea defaultValue={response}>
+        </textarea>
       </div>
       <button className={styles.save} onClick={() => {onSave()}}>Save</button>
     </div>

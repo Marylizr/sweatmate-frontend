@@ -25,6 +25,11 @@
    margin: 0.5em;
 }
 
+
+.info {
+   margin: 0 0  1em 0;
+}
+
 .imagen {
    display: flex;
     flex-wrap: wrap;
@@ -36,6 +41,13 @@
 
 .box {
    margin-top: 1em;
+   display: flex;
+    margin-top: 1em;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .box > button {
@@ -58,4 +70,8 @@ form {
 }
 
 
-
+@media (min-width: 601px) and (max-width: 1180px) {
+   .info {
+      margin: 0.5em;
+   }
+}

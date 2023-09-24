@@ -33,7 +33,7 @@ const NavBar = () => {
             <Link to="/dashboard">Home |</Link>
             {/* <Link to="/dashboard">Workouts |</Link> */}
             <Link to="/aboutUs">About Us |</Link>
-            <Link to="/healthyTips">Healthy Tips |</Link>
+            <Link to="/healthyTips">Health |</Link>
             <Link to="/profile">My Profile |</Link>
             <Link to="/contact">Contact</Link>
             <button onClick={() => {onLogOut()}}>Log out</button>
@@ -52,6 +52,8 @@ const NavBar = () => {
 export default NavBar;
 
 const NavContainer = styled.nav`
+/* Estilos para móviles */
+
    display: flex;
    align-items: center;
    align-content: center
@@ -194,7 +196,6 @@ const NavContainer = styled.nav`
    }
 }
 
+
+
 `
-
-  
-

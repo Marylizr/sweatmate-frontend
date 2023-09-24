@@ -22,8 +22,6 @@ const Landing = () => {
         <div className={styles.leftdiv}>
           <img src={logo} alt='logo beFit'/>
           <h2>Welcome!</h2>
-          <p>you are about to become <br/>
-              into your best version</p>
         </div>
 
         <div className={styles.buttons}>
