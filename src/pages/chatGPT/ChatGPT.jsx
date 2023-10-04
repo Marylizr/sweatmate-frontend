@@ -1,29 +1,21 @@
-import React, { useRef,useState, useEffect } from 'react';
+import React, {useRef,useState, useContext, useEffect } from 'react';
+import { UserContext } from '../../components/userContext/userContext';
 import axios from 'axios';
 import styles from '../chatGPT/search.module.css';
 import customFetch from '../../api';
 
 
 const ChatComponent = () => {
+
   const [prompt, setPrompt] = useState();
   const [response, setResponse] = useState();
-  const [userName, setUserName] = useState();
-  const [getResponse, setGetResponse] = useState({
-    userName: userName,
+  const { name  } = useContext(UserContext);
+  const [getResponse, setGetResponse] = useState(
+    {
+    userName: name,
     content: response,
   })
   
-  const getUser = () => {
-    customFetch("GET", "user/me")
-    .then((json) => { 
-       setUserName(json.name);  
-       }); }
-  
-    useEffect(() => {
-    getUser() 
-  },[]);
-
-
   const handleInputChange = (event) => {
       setPrompt(event.target.value);
     };
@@ -77,12 +69,13 @@ const ChatComponent = () => {
   const inputFile = useRef(null);
 
   const onSave = async () => {
+    alert('saving')
     const imagen = fileUpload();
     let resultado;
     await imagen.then(result => { resultado = result; });
 
     const data = {
-      userName: userName,
+      userName: name,
       infotype: getResponse.infotype,
       content: response,
       picture: resultado ? resultado : getResponse.picture,
@@ -105,7 +98,6 @@ const ChatComponent = () => {
   }, [setGetResponse]);
 
 
-  console.log(getResponse, userName)
   
 
   return (
@@ -152,10 +144,12 @@ const ChatComponent = () => {
         </div>
       </form>
 
-      {/* textearea for response */}
+    
       <div className={styles.chat}>
-        <textarea defaultValue={response}>
-        </textarea>
+        <p>
+          {response}
+        </p>
+       
       </div>
       <button className={styles.save} onClick={() => {onSave()}}>Save</button>
     </div>

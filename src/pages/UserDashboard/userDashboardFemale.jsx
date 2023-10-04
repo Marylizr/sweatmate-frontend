@@ -1,25 +1,46 @@
+import React, {useState, useEffect} from "react";
 import styles from "./settings.module.css";
 import NavBar from "../../components/navBar/navBar"
-import Settings from "../UserAccount/settings/Settings"
+import Settings from "./settings/Settings"
 import FaseMenstrual from "../../components/faseMenstrual/FaseMentrual";
 import { Link } from 'react-router-dom';
 import MacroCalculator from "../../components/macroCalculator/MacroCalculator";
 import WeekStorical from "../../components/trainingStorical/WeekStorical";
+import customFetch from '../../api';
 
 
 
+const UserDashboardFemale = () => {
 
-const AccountSetting = () => {
+  const [name, setName ] = useState();
+   
+  useEffect(() => {
 
+    customFetch( "GET", "user/me")
+      .then((json) => {
+        setName(json.name);
+      })
+      .catch((e) => {
+       console.log(e)
+      });
+    }, [setName]);
+
+    
     return(
     <div className={styles.container}>
       <NavBar />
+      <div><h2>Welcome to your Dashboard {name}!</h2></div>
         <div className={styles.apps}>
-          <Settings />
-          <div className={styles.rearrange}>
+         {/* Settings is the box to edit the user data */}
+            <Settings />
+            <div className={styles.rearrange}>
+               {/* rest of the small blocks */}
             <FaseMenstrual />
             <WeekStorical />
             <MacroCalculator />
+            <div className={styles.save}>
+               <button><Link to="/allworkouts"> Customize Workout </Link> </button>
+            </div>
             <div className={styles.save}>
               <button><Link to="/savedworkouts"> my WorkOuts </Link> </button>
             </div>
@@ -35,5 +56,5 @@ const AccountSetting = () => {
     )
 }
 
-export default AccountSetting;
+export default UserDashboardFemale;
 

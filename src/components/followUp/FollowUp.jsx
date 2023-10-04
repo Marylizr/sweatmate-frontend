@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect} from 'react';
 import customFetch from '../../api';
-import pen from '../../pages/UserAccount/images/pen.svg';
+import pen from '../../pages/UserDashboard/images/pen.svg';
 import pic from "../../utils/back1.jpg";
 import FollowCard from '../card/FollowCard';
 import styles from '../followUp/followUp.module.css';

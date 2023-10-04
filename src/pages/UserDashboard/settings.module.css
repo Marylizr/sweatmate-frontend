@@ -35,16 +35,18 @@
  .save {
    display: flex;
     align-items: center;
-    border: gray 1px solid;
+    border: lightgray 1px solid;
     width: 300px;
     height: 300px;
     border-radius: 0 0px 15px 15px;
-    margin-top: 10px;
+    margin-bottom: 10px;
     flex-direction: column;
     margin-right: 1.5em;
+    overflow-y: scroll;
     align-content: center;
     flex-wrap: wrap;
     justify-content: center;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
  }
 
  .save > button {
@@ -59,19 +61,30 @@
    font-size: 20px;
  }
 
+ .save:hover {
+   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
+   border: teal 1.5px solid;
+}
+.progress:hover {
+   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
+   border: teal 1.5px solid;
+}
+
  .progress {
-      display: flex;
-       align-items: center;
-       border: gray 1px solid;
-       width: 300px;
-       height: 300px;
-       border-radius: 0 0px 15px 15px;
-       margin-top: 10px;
-       flex-direction: column;
-       margin-right: 1.5em;
-       align-content: center;
-       flex-wrap: wrap;
-       justify-content: center;
+   display: flex;
+   align-items: center;
+   border: lightgray 1px solid;
+   width: 300px;
+   height: 300px;
+   border-radius: 0 0px 15px 15px;
+   margin-bottom: 10px;
+   flex-direction: column;
+   margin-right: 1.5em;
+   overflow-y: scroll;
+   align-content: center;
+   flex-wrap: wrap;
+   justify-content: center;
+   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
  }
 
  .progress > button {
@@ -298,14 +311,14 @@
    }
   
    .save{
-      width: 87vw;
-      height: 20em;
+      width: 22em;
+      height: 13em;
       margin-bottom: 1em;
       margin-right: 0;
 }
    .progress{
-      width: 87vw;
-      height: 20em;
+      width: 22em;
+      height: 13em;
       margin-bottom: 1em;
       margin-right: 0;
       background-color: white;
@@ -338,20 +351,21 @@
    }
 
    .editbox {
-      width: 85%;
-      margin:0;
+      width: 17em;
    }
 
    .save {
-      margin: 0.5em;
-      width: 300px;
-      background-color: white;
+      width: 22em;
+      height: 13em;
+      margin-bottom: 1em;
+      margin-right: 0;
    }
 
    .progress {
-      margin: 0.5em;
-      width: 300px;
-      background-color: white;
+      width: 22em;
+      height: 13em;
+      margin-bottom: 1em;
+      margin-right: 0;
    }
    
 }

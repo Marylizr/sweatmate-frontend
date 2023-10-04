@@ -1,8 +1,8 @@
 import React, { useRef, useContext} from 'react';
+import { UserContext } from '../../components/userContext/userContext';
 import customFetch from '../../api';
 import styles from '../addWorkout/addworkout.module.css';
-import { UserContext } from '../../components/userContext/userContext';
-import pen from '../../pages/UserAccount/images/pen.svg';
+import pen from '../../pages/UserDashboard/images/pen.svg';
 import pic from "../../utils/back1.jpg";
 
 const AddWorkout = () => {
@@ -34,7 +34,12 @@ const AddWorkout = () => {
     console.log(data)
 
     customFetch("POST", "workouts", { body: data })
+    .then(() => {
+      alert('workout saved')
+    })
       .catch(err => console.log(err));
+
+      
   };
 
   const fileUpload = async () => {
@@ -102,12 +107,14 @@ const videoUpload = async () => {
     });
 
   return videoLoaded;
+
 };
+
 const inputFileVideo = useRef(null);
 
 
-  const handleOnClick = () => {
-    window.location.reload();
+  const onReset = () => {
+      window.location.reload();
   };
 
   return (
@@ -146,8 +153,6 @@ const inputFileVideo = useRef(null);
               </div>
           </div>
 
-
-
           <div className={styles.worksinput}>
             <input type='text'
               onChange={(e) => setWorkout({ ...workout, type: e.target.value })} placeholder="type">
@@ -170,7 +175,7 @@ const inputFileVideo = useRef(null);
 
             <div className={styles.buttons}>
               <button className={styles.save} onClick={(e) => { e.preventDefault(); e.stopPropagation(); onSubmit(); } }>Save</button>
-              <button className={styles.reload} onClick={() => { handleOnClick(); } }>reset</button>
+              <button className={styles.reload} onClick={() => { onReset(); } }>reset</button>
             </div>
             
           </div>

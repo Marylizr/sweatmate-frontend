@@ -3,7 +3,7 @@
  import CardDelete from '../../components/card/cardDeleteWork'
  import customFetch from '../../api';
  import Modal from "../../components/Modal/Modal";
- import pen from '../../pages/UserAccount/images/pen.svg';
+ import pen from '../../pages/UserDashboard/images/pen.svg';
 import { useModal } from "../../hooks/useModal";
 import pic from "../../utils/back1.jpg";
 

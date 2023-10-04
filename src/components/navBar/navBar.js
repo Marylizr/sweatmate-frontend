@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState, useContext} from 'react';
+import { UserContext } from '../../components/userContext/userContext';
 // import styles from '../navBar/navbar.module.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
@@ -6,22 +7,27 @@ import { removeSession } from "../../api/auth";
 import logo from '../../utils/logo_new.png';
 import NavButton from '../navButton/navButton';
 import styled from 'styled-components';
-import { useState } from 'react';
+
+
 
 const NavBar = () => {
 
    const [clicked, setClicked] = useState(false);
+   const { gender } = useContext(UserContext);
+
 
    const navigate = useNavigate();
     const onLogOut = () => {
         removeSession()
         navigate("/");
       };
-   
-      const handleClick = () => {
-         //when the value is true will passed it false and all over
-         setClicked(!clicked)
-      }
+
+
+   const handleClick = () => {
+      //when the value is true will passed it false and all over
+      setClicked(!clicked)
+   }
+
 
    return (
       <>
@@ -30,11 +36,10 @@ const NavBar = () => {
             <img src={logo} alt='logo'/>
          </div>
          <div className={`links ${clicked ? 'active' : ''}`}>
-            <Link to="/dashboard">Home |</Link>
-            {/* <Link to="/dashboard">Workouts |</Link> */}
+            { gender === 'female' ? <Link to="/dashboard/female">Home | </Link> : <Link to="/dashboard/male">Home |</Link> }
             <Link to="/aboutUs">About Us |</Link>
             <Link to="/healthyTips">Health |</Link>
-            <Link to="/profile">My Profile |</Link>
+            <Link to="/savedworkouts">My Profile |</Link>
             <Link to="/contact">Contact</Link>
             <button onClick={() => {onLogOut()}}>Log out</button>
          </div>

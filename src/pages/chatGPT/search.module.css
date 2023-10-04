@@ -1,3 +1,22 @@
+.container {
+   display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+   align-content: center;
+   align-items: center;
+   width: 75vw;
+}
+
+.form {
+   display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+
 .chat  {
    margin: 2em;
     border: 0.1em teal solid;
@@ -69,15 +88,6 @@ button.save {
    margin: 2em 0 0em 0em;
 }
 
-.container {
-   display: flex;
-   width: 100%;
-   flex-direction: column;
-   flex-wrap: wrap;
-   align-content: center;
-   align-items: center;
-   max-width: 99vw;
-}
 
 .buttons {
    display: flex;

@@ -20,7 +20,22 @@ const HealthyTips = () => {
     })
   }, [setResponse])
 
-console.log(response)
+
+    function ordenarPorFecha() {
+      // Usamos el método sort con una función de comparación
+      response.sort((a, b) => {
+          // Comparamos las fechas, asegurándonos de que sean objetos Date
+          const fechaA = new Date(a.date);
+          const fechaB = new Date(b.date);
+
+          // Comparamos las fechas en orden descendente (más reciente primero)
+          return fechaA - fechaB;
+      });
+
+      return response;
+    }
+    const elementosOrdenados = ordenarPorFecha(response);
+    console.log(elementosOrdenados);        
 
   return (
     <div className={styles.container}>

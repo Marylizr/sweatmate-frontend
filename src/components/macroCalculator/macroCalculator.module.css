@@ -1,15 +1,25 @@
 .macros {
    display: flex;
     align-items: center;
-    border: gray 1px solid;
+    border: lightgray 1px solid;
     width: 300px;
     height: 300px;
     border-radius: 0 0px 15px 15px;
-    margin-top: 10px;
+    margin-bottom: 10px;
     flex-direction: column;
     margin-right: 1.5em;
+    overflow-y: scroll;
+    align-content: center;
+    flex-wrap: wrap;
     justify-content: center;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
 }
+
+.macros:hover {
+   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
+   border: teal 1.5px solid;
+}
+
 
 .form {
    display: flex;

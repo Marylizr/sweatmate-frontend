@@ -2,13 +2,13 @@ import React, {useContext, useEffect} from 'react';
 import customFetch from '../../api';
 import { removeSession } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
-import styles from './dashboard.module.css';
+import styles from './allWorkoutsList.module.css';
 import { Link } from 'react-router-dom';
 import NavBar from '../../components/navBar/navBar';
 import { UserContext } from '../../components/userContext/userContext';
 
 
-const Dashboard = () => {
+const AllWorkoutsList = () => {
    const navigate = useNavigate();
    const { name, setName } = useContext(UserContext);
    
@@ -146,4 +146,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard;
+export default AllWorkoutsList;

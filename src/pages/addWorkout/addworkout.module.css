@@ -1,10 +1,10 @@
 .container {
    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-content: center;
-    align-items: center;
-    width: 80vw;
+   flex-direction: column;
+   flex-wrap: wrap;
+   align-content: center;
+   align-items: center;
+   width: 75vw;
 }
 
 .form {
@@ -308,7 +308,7 @@
     box-shadow: 4px -4px 8px grey;
     height: 100vh;
     justify-content: center;
-   width: 30em;
+    width: 25em;
 }
 
 

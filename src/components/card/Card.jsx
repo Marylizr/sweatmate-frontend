@@ -71,7 +71,7 @@ console.log(user)
 
                     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                      <br/>
-                     <input type='hidden' value={user.name}  {...register("userName")} />
+                     <input type='hidden' value={user.email}  {...register("userName")} />
 
                      <input type="hidden" alt='' value={favs.picture} {...register("picture")} />
                     

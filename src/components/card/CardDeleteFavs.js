@@ -5,7 +5,7 @@ import customFetch from '../../api';
 
 const CardDeleteFavs = ({ item }) => {
 
-     const { userName, picture, name, series, reps, lifted } = item
+     const { picture, name, series, reps, lifted } = item
      let newDate = new Date(item.date)
      const curretDate = newDate.toDateString()
         
@@ -21,7 +21,7 @@ const CardDeleteFavs = ({ item }) => {
           <div className={styles.infoCard} >
                <img src={picture} alt=""/>
                <p className={styles.left}>
-                {userName} you saved this! <br />
+               
                     name: {name} <br />
                   # Series: {series} <br />
                   # Reps: {reps}<br />

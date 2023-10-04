@@ -1,4 +1,45 @@
-.container{
+
+
+.container {
+   display: flex;
+   flex-wrap: wrap;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+}
+
+.wrapper {
+   border: 1px solid  teal;
+   border-radius: 1em;
+   padding: 2em;
+   margin: 2em;
+   width: 25em;
+   display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+   align-content: center;
+   align-items: center;
+}
+
+.header {
+   display: flex;
+   flex-wrap: wrap;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   align-items: center;
+   margin:2em;
+}
+
+.header > h1 {
+   font-weight: bolder;
+   color:  teal;
+   font-size: 1.5em;
+}
+
+.form_styles > form{
    display: flex;
    flex-direction: column;
    flex-wrap: wrap;
@@ -7,96 +48,64 @@
    align-items: center;
 }
 
-form {
+.form_styles > form > input {
+   width: 18em;
+   height: 2em;
+   border: gray solid 1px;
+   border-radius: 0.5em;
+   text-align: center;
+   color: lightgray;
+   margin: 0.5em
+}
+
+
+.form_styles > form > select {
+   width: 18em;
+   height: 2em;
+   margin-top: 0.5em;
+   border: gray solid 1px;
+   border-radius: 0.5em;
+   text-align: center;
+   color: gray;
+}
+
+
+.form_styles > form > input.submit{
+   width: 10em;
+   height: 3em;
+   background-color:teal;
+   color: white;
+   border-radius: 1.5em;
+   cursor: pointer;
    display: flex;
-   flex-direction: column;
-   flex-wrap: wrap;
    align-content: center;
    justify-content: center;
    align-items: center;
+   margin-top: 1.5em;
+   margin-bottom: 3em;
 }
 
-.img > img{
-   width: 70%;
-   margin-top:10%;
-  
-}
-
-.img{
+.form_styles > form > input.submit:hover {
+   width: 14em;
+   height: 3em;
+   background-color: white;
+   border-radius: 1.5em;
+   border: 1px  teal solid;
+   cursor: pointer;
    display: flex;
    align-content: center;
    justify-content: center;
    align-items: center;
-}
-
-.wrapper > form > input {
-    width: 18em;
-    height: 2em;
-    border: gray solid 1px;
-    border-radius: 0.5em;
-    text-align: center;
-    color: lightgray;
-}
-
-.wrapper > form > input.submit{
-   background: teal;
-    color: white;
-    border: none;
-    width: 10em;
-    margin-top: 3em;
-    height: 3em;
-}
-
-
-.wrapper > form > input.submit:hover{
-   background: white;
-    color: teal;
-    border: 1px solid teal;
-    border-radius: 20px;
-    width: 12em;
-    margin-top: 3em;
-    height: 3em;
-}
-
-.log {
-   display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: center;
-    align-items: center;
-}
-
-.log > a {
-   text-decoration: none;  
-   text-transform: capitalize;
    color: teal;
+   margin-top: 1.5em;
+   margin-bottom: 3em;
 }
 
-.log > a:hover {
-  border-bottom: 1px solid teal ; 
-   text-transform: capitalize;
-   color: teal;
-   font-weight: 800;
-}
-
-
-
-@media(max-width:768px){
-
-   .container{
-      height: 100vh;
-      display: block;
-   }
-
-   .log {
-      display: flex;
-      flex-wrap: wrap;
-      align-content: center;
-      align-items: center;
-      flex-direction: column;
-   }
+@media(max-width: 600px) {
 
    .wrapper {
+      margin: 0;
+      width: 90vw;
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
@@ -104,3 +113,4 @@ form {
       align-items: center;
    }
 }
+

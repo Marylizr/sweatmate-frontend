@@ -1,8 +1,8 @@
 import { React } from 'react';
 import './App.css';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import Home from './home/Home';
-import Dashboard from './pages/dashboard/Dashboard';
+import Home from './pages/home/Home';
+import AllWorkoutsList from './pages/allWorkouts/AllWorkoutsList';
 import Arms from './pages/arms/Arms';
 import Back from './pages/back/Back';
 import Chest from './pages/chest/Chest';
@@ -13,9 +13,10 @@ import Abs from './pages/abs/Abs';
 import Shoulders from './pages/shoulders/Shoulders';
 import Fullbody from './pages/fullbody/Fullbody';
 import SignUp from './pages/signUp/SignUp';
-import LogIn from './pages/logIn/LogIn';
+import Login from './pages/login/Login';
 import AddWorkout from './pages/addWorkout/AddWorkout';
-import AccountSetting from './pages/UserAccount/userAccount';
+import UserDashboardFemale from './pages/UserDashboard/userDashboardFemale';
+import UserDashboardMale from './pages/UserDashboard/userDashboardMale';
 import { UserContextProvider } from './components/userContext/userContext';
 import { AboutUs } from './pages/aboutUS/AboutUs';
 import HealthyTips from './pages/healthy/HealthyTips';
@@ -41,7 +42,7 @@ function App() {
           <Route path="/aboutUs" element={ <AboutUs /> } />
           <Route path="healthyTips" element={ <HealthyTips />} />
           <Route path="contact" element={ <ContactForm />} />
-          <Route path="/dashboard" element={ <Dashboard />} />
+          <Route path="/allworkouts" element={ <AllWorkoutsList />} />
           <Route path="/arms" element={ <Arms />} />
           <Route path="/back" element={ <Back />} />
           <Route path="/chest" element={ <Chest />} />
@@ -52,9 +53,10 @@ function App() {
           <Route path="/shoulders" element={ <Shoulders />} />
           <Route path="/fullbody" element={ <Fullbody />} />
           <Route path="/signup" element={ <SignUp />} />
-          <Route path="/login" element={ <LogIn />} />
+          <Route path="/login" element={ <Login />} />
           <Route path="/addworkout" element={ <AddWorkout />} />
-          <Route path="/profile" element={ <AccountSetting />} />
+          <Route path="/dashboard/male" element={ <UserDashboardMale />} />
+          <Route path="/dashboard/female" element={ <UserDashboardFemale />} />
           <Route path="/messages" element={ <UserProfile />} />
           <Route path="/workouts" element={ <EditWorkouts />} />
           <Route path="/savedWorkouts" element={ <SavedWorkouts />} />

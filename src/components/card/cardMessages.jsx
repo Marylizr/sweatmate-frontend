@@ -5,7 +5,7 @@ import customFetch from '../../api';
 
 
 const CardMessages = ({ user, onClick }) => {
-   const {name, email, age, weight, height, goal, image } = user;
+   const {name, email, image } = user;
 
    // const handleEdit = () => { 
    //    customFetch("PUT", "user/" + user._id)
@@ -24,18 +24,15 @@ const CardMessages = ({ user, onClick }) => {
          <div className={styles.imagen}> 
             <img src={image}  alt=''/>
          </div>
+         <div className={styles.data}>
             <p><b>name:</b> {name}</p>
             <p><b>email:</b> {email}</p>
-            <p><b>age:</b> {age} years old</p>
-            <p><b>weight:</b> {weight} Kg</p>
-            <p><b>height:</b> {height} Cm</p>
-            <p><b>goal:</b> {goal} </p>
-         <div className={styles.box}  >
-            <button onClick={() => handleDelete(user._id)}>DELETE </button>
-            <button onClick={onClick}>EDIT</button>
          </div>
-      </div>
-            
+         <div className={styles.box}  >
+            <button onClick={() => handleDelete(user._id)}>D</button>
+            <button onClick={onClick}>E</button>
+         </div>
+      </div>   
     )
 };
 

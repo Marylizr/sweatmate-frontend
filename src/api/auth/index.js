@@ -24,6 +24,14 @@ export const getUserRole = () => {
     return undefined;
 }
 
+export const getUserGender = () => {
+    const session = getStorageObject("user-session");
+    if(session){
+        return session.gender
+    }
+    return undefined;
+}
+
 export const getUserId = () => {
     const session = getStorageObject("user-session");
     if(session){

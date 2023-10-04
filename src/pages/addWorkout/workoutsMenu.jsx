@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useContext} from 'react';
+import { UserContext } from '../../components/userContext/userContext';
 import { Link } from 'react-router-dom';
 import styles from '../addWorkout/addworkout.module.css';
-import customFetch from '../../api';
 import { useNavigate } from "react-router-dom";
 import { removeSession } from "../../api/auth";
 import styled from 'styled-components';
@@ -10,19 +10,11 @@ import logo from '../../utils/logo_new.png'
 
 const WorkoutsMenu = () => {
 
-  const [user, setUser] = useState();
+  
   const navigate = useNavigate();
   const [clicked, setClicked] = useState(false);
 
-  const getUser = () => {
-    customFetch("GET", "user/me")
-    .then((json) => { 
-       setUser(json.name);  
-       }); }
-  
-    useEffect(() => {
-    getUser() 
-  },[]);
+  const { name, role } = useContext(UserContext);
 
   const onLogOut = () => {
     removeSession()
@@ -41,7 +33,7 @@ const WorkoutsMenu = () => {
 
         <div className={`links ${clicked ? 'active' : ''}`}>
           <img src={logo} alt=''/>
-          <h2>Hi, {user}!</h2>
+          <h2>Hi, {name}!</h2>
           
             <div className={styles.side_menu}>
               <Link to='/main/addworkout'> Add Workout </Link>
@@ -53,7 +45,9 @@ const WorkoutsMenu = () => {
               <Link to='/main/userList'> User List </Link>
             </div>
             <div className={styles.side_menu}>
-              <Link to='/dashboard'> Dashboard </Link>
+            { role === 'admin' && <Link to="/dashboard/female">female Dashboard </Link>  }
+            { role === 'admin' && <Link to="/dashboard/male">Male Dashboard</Link>}
+
             </div>
             <div className={styles.side_menu}>
               <Link to='/main/openAi'> ChatBot </Link>

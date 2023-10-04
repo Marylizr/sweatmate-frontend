@@ -68,6 +68,9 @@
     margin-top: 2em;
     box-shadow: 59px -16px teal;
 }
+.infoCard > p {
+   text-align: left;
+}
 
 .descrip {
    display: flex;
