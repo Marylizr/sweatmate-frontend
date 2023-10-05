@@ -1,61 +1,51 @@
-import React, {useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import customFetch from '../../api';
 import CardWorkout from '../../components/card/CardWorkouts';
 import styles from '../workoutHistoric/workoutHistoric.module.css';
 
-
 const WorkoutHistoric = () => {
+   const [currentWorkout, setCurrentWorkout] = useState([]);
+   const [formattedDate, setFormattedDate] = useState('');
 
-   const [curretWorkout, setCurrentWorkout] = useState([])
-   const [email, setEmail] = useState()
+   // Obtener la fecha actual y convertirla a formato local
+   useEffect(() => {
+      const today = new Date();
+      const formattedDate = today.toLocaleDateString();
+      setFormattedDate(formattedDate);
+   }, []);
 
-
+   // Obtener los entrenamientos y filtrar por fecha y usuario
    useEffect(() => {
       customFetch("GET", "saveworkout")
-        .then((json) => {
-        setCurrentWorkout(json);
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-    }, [setCurrentWorkout]);
+         .then((json) => {
+            // Filtrar los entrenamientos por fecha y usuario
+            const filteredWorkouts = json.filter(item => {
+               const workoutDate = new Date(item.date).toLocaleDateString();
+               return workoutDate === formattedDate;
+            });
 
-    useEffect(() => {
-      customFetch( "GET", "user/me")
-      .then((json) => {
-      setEmail(json.email)
-      })
-      .catch((e) => {
-      console.log(e, 'cannot retrieve user email')
-      });
-  }, [setEmail])
+            setCurrentWorkout(filteredWorkouts);
+         })
+         .catch((error) => {
+            console.log(error);
+         })
+   }, [formattedDate]);
 
-
-
-// Obtener la fecha más reciente
-const dates = curretWorkout.map(item => new Date(item.date));
-const latestDate = new Date(Math.max(...dates));
-
-// Convertir a formato de fecha local
-const formattedDate = latestDate.toLocaleDateString();
-
-console.log(formattedDate);
-
-
-  return (
-    <div  className={styles.container}>
-      <div>
-        <h1> Today´s Workout {formattedDate}</h1>
+   return (
+      <div className={styles.container}>
+         <div>
+            <h1> Today´s Workout {formattedDate}</h1>
+         </div>
+         <div className={styles.wrap}>
+            {
+               currentWorkout && currentWorkout.length > 0 &&
+               currentWorkout.map(item =>
+                  <CardWorkout item={item} id={item._id} key={item._id} />
+               )
+            }
+         </div>
       </div>
-      <div className={styles.wrap}>
-      {
-          curretWorkout && curretWorkout.length > 0 && curretWorkout.filter( item => item.userName === `${email}`).map( item => 
-            <CardWorkout  item={item} id={item._id} key={item._id}
-             />)
-        }
-      </div>
-    </div>
-  )
+   )
 }
 
 export default WorkoutHistoric;

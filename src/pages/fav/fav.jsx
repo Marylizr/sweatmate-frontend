@@ -1,69 +1,81 @@
-import React, {useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import customFetch from '../../api';
 import styles from '../fav/fav.module.css';
 import CardDeleteFavs from '../../components/card/CardDeleteFavs';
 
-
 const SavedWorkouts = () => {
   const [saved, setSaved] = useState([]);
+  const [email, setEmail] = useState();
+  const [show, setShow] = useState(false);
 
-  const [email, setEmail] = useState()
+  const handleShow = () => {
+    setShow(!show)
+  }
+   
 
   useEffect(() => {
-      const getGender = () => {
-         customFetch( "GET", "user/me")
-         .then((json) => {
-         setEmail(json.email)
-         })
-         .catch((e) => {
-         console.log(e, 'cannot retrieve user gender')
-         });
-      }
-      getGender()
+    const getEmail = () => {
+      customFetch("GET", "user/me")
+        .then((json) => {
+          setEmail(json.email)
+        })
+        .catch((e) => {
+          console.log(e, 'cannot retrieve user gender')
+        });
+    }
+    getEmail()
   }, [])
-  
 
   useEffect(() => {
     customFetch("GET", "fav")
       .then((json) => {
-      setSaved(json);
+        setSaved(json);
       })
       .catch((error) => {
         console.log(error);
       })
   }, [setSaved]);
 
-  function ordenarPorFecha() {
-    // Usamos el método sort con una función de comparación
-    saved.sort((a, b) => {
-        // Comparamos las fechas, asegurándonos de que sean objetos Date
-        const fechaA = new Date(a.date);
-        const fechaB = new Date(b.date);
-
-        // Comparamos las fechas en orden descendente (más reciente primero)
-        return fechaB - fechaA;
-    });
-
-    return saved;
+  function groupByMonth() {
+    return saved.reduce((acc, item) => {
+      const fecha = new Date(item.date);
+      const month = fecha.getMonth();
+      const monthName = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(fecha);
+      if (item.userName === email) {
+        if (!acc[monthName]) {
+          acc[monthName] = [];
+        }
+        acc[monthName].push(item);
+      }
+      return acc;
+    }, {});
   }
-  const elementosOrdenados = ordenarPorFecha(saved);
-  console.log(elementosOrdenados); 
 
+  const entrenamientosPorMes = groupByMonth();
+  
 
   return (
     <div className={styles.container} >
       <h1>All past workouts</h1>
       <div className={styles.wrap}>
-        {
-          elementosOrdenados && elementosOrdenados.length > 0 && elementosOrdenados.filter( item => item.userName === `${email}`).map( item => 
-            <CardDeleteFavs  item={item} id={item._id} key={item._id}
-             />)
-        }
+        {Object.entries(entrenamientosPorMes).map(([mes, entrenamientos]) => (
+          <div key={mes} className={styles.click}>
+            <h2 onClick={handleShow}>{ show ? ' Hide ' : ' Show '} {mes} | </h2>
+          { show &&
+            <div className={styles.block}>
+              {
+                entrenamientos && entrenamientos.length > 0 &&
+                entrenamientos.map(item =>
+                  <CardDeleteFavs item={item} id={item._id} key={item._id} />
+                )
+              }
+            </div>
+          }
+          </div>
+        ))}
       </div>
     </div>
-    
   )
 }
 
 export default SavedWorkouts;
-

@@ -14,22 +14,12 @@ const NavBar = () => {
 
    const [clicked, setClicked] = useState(false);
    const { gender, role } = useContext(UserContext);
-   const [show, setShow] = useState(false)
 
    const navigate = useNavigate();
    const onLogOut = () => {
         removeSession()
         navigate("/");
       };
-
-
-      const onShow = () => {
-         if(show) {
-            setShow(true)
-            navigate("/main/addworkout");
-         }
-      }
-      onShow()
 
 
    const handleClick = () => {
