@@ -39,7 +39,7 @@ const UserDashboardMale = () => {
                <button><Link to="/allworkouts"> Customize Workout </Link> </button>
                </div>
                <div className={styles.save}>
-               <button><Link to="/savedworkouts"> my WorkOuts </Link> </button>
+               <button><Link to="/workoutHistoric"> my WorkOuts </Link> </button>
                </div>
                <div className={styles.progress}>
                <button><Link to="/progress"> my Progress </Link> </button>

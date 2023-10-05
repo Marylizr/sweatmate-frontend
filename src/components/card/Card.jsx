@@ -1,101 +1,63 @@
 import styles from '../card/card.module.css'
+import React, { useState, useEffect} from 'react'
 import customFetch from '../../api';
-import { useModal } from "../../hooks/useModal";
-import { useState, useEffect } from 'react';
-import Modal from "../Modal/Modal";
 import {useForm} from 'react-hook-form';
 
+const Card = ({ item }) => {
 
-
-const Card = ({ item, isInFav=false }) => {
-     const [isOpenModal, openModal, closeModal] = useModal(false);
-     
+     const [selected, setSelected ] = useState([])
+     const [email, setEmail] = useState()
      const {register, handleSubmit } = useForm();
-     const [favs, setFavs] = useState()
-     const [user, setUser] = useState();
-
-     
-    const addToFav = (item) => {       
-      setFavs([...favs, item]);
-  }
 
      useEffect(() => {
-     customFetch("GET", "user/me")
-     .then((json) => {
-     setUser(json);
-     })
-   }, [setUser]);
+          customFetch("GET", "user/me")
+          .then((json) => {
+          setEmail(json.email);
+          })
+        }, [setEmail]);
 
-     const onSubmit = (data) => {
-          setFavs(data)
-          setUser(user)
-          const onFav = () => {   
+         
+     const onSubmit = () => {
 
-               customFetch("POST", "fav", {body: data})
-               .then(() => {
-                  addToFav()
-                  
-               })
-               .then(alert('are you sure that you want to save this workout?'))
-               .then(window.location.reload())
-               .catch((error) => {
-               console.log(error);
-            })
+          const data = {
+               userName: email,
+               name: item.name,
+               description: item.description,
+               picture: item.picture,
+               video: item.video
           }
-          onFav()
-       };
-  
-console.log(user)
+
+          customFetch( "POST", "saveworkout", {body:data})
+          .then(() => {
+               setSelected(selected);
+               alert('workout selected')
+          })
+          .catch((e) => {
+           e = new Error('cannot get this info')
+          });
+    }
+
+
+    console.log(email)
+
      return(
-        <div className={styles.container}  >
-               <div className={styles.info}>
-                    <video controls src={item.video} alt='workout'/>
-                    
-                    <div className={styles.descrip}>
-                         <p className={styles.bold}>name:</p><p>{item.name}</p>
-                         <p className={styles.bold}>description:</p><p>{item.description}</p>
-                    </div> 
-               </div>
-               {!isInFav && 
-                    <button onClick={() => {
-                         setFavs(item); 
-                         setUser(user)
-                         openModal()  
-                         }}> Save
-                    </button>
-               }
-            {favs && 
-               <Modal isOpen={isOpenModal} closeModal={closeModal}>
-                    <h2>your {favs.type} workout</h2>
-                    <img src={favs.picture} alt="img"/> 
-
-                    <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+        <div className={styles.container} onClick={(e) => { 
+          onSubmit()
+          setEmail(email)
+          e.preventDefault(); 
+          e.stopPropagation();   
+     }}> 
+          <div className={styles.info}>
+               <video controls src={item.video} alt='workout'/>
+               <div className={styles.descrip}>
+               <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                      <br/>
-                     <input type='hidden' value={user.email}  {...register("userName")} />
-
-                     <input type="hidden" alt='' value={favs.picture} {...register("picture")} />
-                    
-                     <input type="text" value= {favs.name} {...register("name")}/>
-                     
-                     <input type="number" placeholder='Number of reps' {...register("reps")} />
-                     <br/>
-                    
-                     <input type="number" placeholder='Number of series' {...register("series")} />
-                     <br/>
-                    
-                     <input type="date" placeholder='Workout date' {...register("date")} />
-                     <br/>
-                    
-                     <input type="number"  placeholder='Weight Lifted' {...register("lifted")} />
-                    
-                     
-                     <div className={styles.buttons}>
-                        <input className={styles.send} type="submit" value="Save"  />
-                        
-                     </div>    
+                     <input type='hidden' value={email}  {...register("userName")} />   
                   </form>
-                    
-               </Modal>}
+                    <p className={styles.bold}>name:</p><p>{item.name}</p>
+                    <p className={styles.bold}>description:</p><p>{item.description}</p>
+               </div> 
+          </div>
           </div>
      )
 };

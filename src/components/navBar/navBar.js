@@ -13,21 +13,29 @@ import styled from 'styled-components';
 const NavBar = () => {
 
    const [clicked, setClicked] = useState(false);
-   const { gender } = useContext(UserContext);
-
+   const { gender, role } = useContext(UserContext);
+   const [show, setShow] = useState(false)
 
    const navigate = useNavigate();
-    const onLogOut = () => {
+   const onLogOut = () => {
         removeSession()
         navigate("/");
       };
+
+
+      const onShow = () => {
+         if(show) {
+            setShow(true)
+            navigate("/main/addworkout");
+         }
+      }
+      onShow()
 
 
    const handleClick = () => {
       //when the value is true will passed it false and all over
       setClicked(!clicked)
    }
-
 
    return (
       <>
@@ -39,8 +47,9 @@ const NavBar = () => {
             { gender === 'female' ? <Link to="/dashboard/female">Home | </Link> : <Link to="/dashboard/male">Home |</Link> }
             <Link to="/aboutUs">About Us |</Link>
             <Link to="/healthyTips">Health |</Link>
-            <Link to="/savedworkouts">My Profile |</Link>
-            <Link to="/contact">Contact</Link>
+            <Link to="/workoutsDashboard">My Profile |</Link>
+            <Link to="/contact">Contact |</Link>
+            { role === 'admin' ? <Link to="/main/addworkout"> Admin | </Link> : '' }
             <button onClick={() => {onLogOut()}}>Log out</button>
          </div>
          <div className='burger'>

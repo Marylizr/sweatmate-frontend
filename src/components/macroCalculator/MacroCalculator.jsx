@@ -19,7 +19,6 @@ function MacroCalculator() {
     const caloriesFats = fats * 9;
 
     const totalCalories = caloriesProteins + caloriesCarbs + caloriesFats;
-
     setCalories(totalCalories);
   };
 

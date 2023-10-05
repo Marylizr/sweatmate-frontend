@@ -38,8 +38,6 @@ const AddWorkout = () => {
       alert('workout saved')
     })
       .catch(err => console.log(err));
-
-      
   };
 
   const fileUpload = async () => {

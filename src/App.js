@@ -23,9 +23,10 @@ import HealthyTips from './pages/healthy/HealthyTips';
 import ContactForm from './pages/contact/Contact';
 import UserProfile from './pages/userProfile/UserProfile';
 import EditWorkouts from './pages/editWorkOuts/EditWorkouts';
-import SavedWorkouts from './pages/fav/fav';
+import WorkoutDash from './pages/workoutsDash/WorkoutDash';
 import Main from './pages/main/main';
 import FollowUp from './components/followUp/FollowUp';
+import SavedWorkouts from './pages/fav/fav';
 
 // import PrivateRoute from "./api/auth/privateRoute";
 
@@ -59,9 +60,10 @@ function App() {
           <Route path="/dashboard/female" element={ <UserDashboardFemale />} />
           <Route path="/messages" element={ <UserProfile />} />
           <Route path="/workouts" element={ <EditWorkouts />} />
-          <Route path="/savedWorkouts" element={ <SavedWorkouts />} />
+          <Route path="/workoutsDashboard" element={ <WorkoutDash />} />
           <Route path="/main/*" element={<Main />} />
           <Route path="/progress" element={<FollowUp/>} />
+          <Route path='/workoutHistoric' element={<SavedWorkouts />} />
         </Routes>
       </BrowserRouter>
     </UserContextProvider>

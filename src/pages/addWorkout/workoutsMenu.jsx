@@ -46,7 +46,7 @@ const WorkoutsMenu = () => {
             </div>
             <div className={styles.side_menu}>
             { role === 'admin' && <Link to="/dashboard/female">female Dashboard </Link>  }
-            { role === 'admin' && <Link to="/dashboard/male">Male Dashboard</Link>}
+            {role === 'admin' && <Link to="/dashboard/male">User Dashboard</Link>}
 
             </div>
             <div className={styles.side_menu}>

@@ -35,7 +35,20 @@ const FollowUp = () => {
            });
       },[setUser]);
 
+      const [gender, setGender] = useState()
 
+      useEffect(() => {
+          const getGender = () => {
+             customFetch( "GET", "user/me")
+             .then((json) => {
+             setGender(json.gender)
+             })
+             .catch((e) => {
+             console.log(e, 'cannot retrieve user gender')
+             });
+          }
+          getGender()
+      }, [])
 
   const onSubmit = async () => {
 
@@ -115,7 +128,12 @@ const FollowUp = () => {
     <div className={styles.container}>
        <NavBar />
        <div className={styles.small_header}> 
-        <Link to='/profile'> <img src={arrow_left} alt='' /> </Link>
+        
+       <div className={styles.small_header}> 
+      { gender === 'female' ? <Link to="/dashboard/female"><img src={arrow_left} alt='' /></Link> : 
+      <Link to="/dashboard/male"><img src={arrow_left} alt='' /></Link> }
+      </div>
+
           <h2> My Progress</h2>
        </div>
       

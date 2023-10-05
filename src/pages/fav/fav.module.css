@@ -8,6 +8,12 @@
    width: 80vw;
 }
 
+.historical {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+}
+
 .wrap {
    display: flex;
    flex-direction: row;

@@ -1,25 +1,18 @@
-import React, {useEffect, useState, useContext } from 'react'
+import React, {useEffect, useState } from 'react'
 import customFetch from '../../api';
-import NavBar from '../../components/navBar/navBar';
 import styles from '../fav/fav.module.css';
-import { Link } from 'react-router-dom';
-import arrow_left from '../../utils/arrow_left.svg';
-import { UserContext } from '../../components/userContext/userContext';
 import CardDeleteFavs from '../../components/card/CardDeleteFavs';
 
 
 const SavedWorkouts = () => {
   const [saved, setSaved] = useState([]);
-  const { name } = useContext(UserContext);
-  const [email, setEmail] = useState()
 
-  const [gender, setGender] = useState()
+  const [email, setEmail] = useState()
 
   useEffect(() => {
       const getGender = () => {
          customFetch( "GET", "user/me")
          .then((json) => {
-         setGender(json.gender)
          setEmail(json.email)
          })
          .catch((e) => {
@@ -29,8 +22,6 @@ const SavedWorkouts = () => {
       getGender()
   }, [])
   
-
-
 
   useEffect(() => {
     customFetch("GET", "fav")
@@ -61,13 +52,7 @@ const SavedWorkouts = () => {
 
   return (
     <div className={styles.container} >
-      <NavBar />
-      <div className={styles.small_header}> 
-      { gender === 'female' ? <Link to="/dashboard/female"><img src={arrow_left} alt='' /></Link> : 
-      <Link to="/dashboard/male"><img src={arrow_left} alt='' /></Link> }
-       
-        <h2>{name}, Welcome to your WorkOut</h2>
-      </div>
+      <h1>All past workouts</h1>
       <div className={styles.wrap}>
         {
           elementosOrdenados && elementosOrdenados.length > 0 && elementosOrdenados.filter( item => item.userName === `${email}`).map( item => 
@@ -75,8 +60,6 @@ const SavedWorkouts = () => {
              />)
         }
       </div>
-       
-
     </div>
     
   )
