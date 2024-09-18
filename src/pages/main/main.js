@@ -7,6 +7,7 @@ import EditWorkouts from '../editWorkOuts/EditWorkouts';
 import WorkoutsMenu from '../addWorkout/workoutsMenu';
 import styles from '../main/main.module.css';
 import Chat from '../chatGPT/ChatGPT';
+import Training from '../training/Training';
 
 
 const Main = () => {
@@ -25,6 +26,7 @@ const Main = () => {
           <Route path="/userList" element={<PrivateRoute><UserProfile/></PrivateRoute>} />
           <Route path="/workouts" element={<PrivateRoute><EditWorkouts/></PrivateRoute>} />
           <Route path="/openAi" element={<PrivateRoute><Chat /></PrivateRoute> } />
+          <Route path="/training" element={<PrivateRoute><Training /></PrivateRoute> } />
         </Routes>
       </div>
      

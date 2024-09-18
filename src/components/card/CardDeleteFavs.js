@@ -21,12 +21,11 @@ const CardDeleteFavs = ({ item }) => {
           <div className={styles.infoCard} >
                <img src={picture} alt=""/>
                <p className={styles.left}>
-               
                     name: {name} <br />
-                  # Series: {series} <br />
-                  # Reps: {reps}<br />
-                  Weight lifted:{lifted} <br />
-                  Date: {curretDate}
+                    # Series: {series} <br />
+                    # Reps: {reps}<br />
+                    Weight lifted:{lifted} <br />
+                    Date: {curretDate}
                </p>
                
                <div>

@@ -3,15 +3,17 @@ import customFetch from '../../api';
 import styles from '../fav/fav.module.css';
 import CardDeleteFavs from '../../components/card/CardDeleteFavs';
 
-const SavedWorkouts = () => {
+
+
+const SavedWorkouts = ({ show, setShow }) => {
+
   const [saved, setSaved] = useState([]);
   const [email, setEmail] = useState();
-  const [show, setShow] = useState(false);
 
-  const handleShow = () => {
-    setShow(!show)
+
+  const handleShow = (month) => {
+    setShow(prevShow => (prevShow === month ? null : month));
   }
-   
 
   useEffect(() => {
     const getEmail = () => {
@@ -20,7 +22,7 @@ const SavedWorkouts = () => {
           setEmail(json.email)
         })
         .catch((e) => {
-          console.log(e, 'cannot retrieve user gender')
+          console.log(e, 'cannot retrieve user email')
         });
     }
     getEmail()
@@ -36,7 +38,7 @@ const SavedWorkouts = () => {
       })
   }, [setSaved]);
 
-  function groupByMonth() {
+  const groupByMonth = () => {
     return saved.reduce((acc, item) => {
       const fecha = new Date(item.date);
       const month = fecha.getMonth();
@@ -52,25 +54,20 @@ const SavedWorkouts = () => {
   }
 
   const entrenamientosPorMes = groupByMonth();
-  
 
   return (
     <div className={styles.container} >
-      <h1>All past workouts</h1>
       <div className={styles.wrap}>
-        {Object.entries(entrenamientosPorMes).map(([mes, entrenamientos]) => (
-          <div key={mes} className={styles.click}>
-            <h2 onClick={handleShow}>{ show ? ' Hide ' : ' Show '} {mes} | </h2>
-          { show &&
-            <div className={styles.block}>
-              {
-                entrenamientos && entrenamientos.length > 0 &&
-                entrenamientos.map(item =>
+        {Object.entries(entrenamientosPorMes).map(([month, entrenamientos]) => (
+          <div key={month} className={styles.click}>
+            <p onClick={() => handleShow(month)}>{ show === month ? ' Hide ' : ' Show '} {month} | </p>
+            {show === month && (
+              <div className={styles.block}>
+                {entrenamientos && entrenamientos.length > 0 && entrenamientos.map(item =>
                   <CardDeleteFavs item={item} id={item._id} key={item._id} />
-                )
-              }
-            </div>
-          }
+                )}
+              </div>
+            )}
           </div>
         ))}
       </div>

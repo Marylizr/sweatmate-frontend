@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../landing/landing.module.css';
-import logo from '../../utils/logo_new.png';
+import logo from '../../utils/logo.png';
 
 
 

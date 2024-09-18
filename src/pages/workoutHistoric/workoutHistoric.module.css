@@ -5,3 +5,22 @@
    align-items: center;
    justify-content: center;
 }
+
+.container {
+   border: lightgray 1px solid;
+   width: 70vw;
+   padding: 1px;
+}
+
+.headline {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   align-content: center;
+   align-items: center;
+   justify-content: center;
+}
+
+.arrow{
+   margin-right: 1em;
+}

@@ -101,58 +101,65 @@ const ChatComponent = () => {
   
 
   return (
-    <div className={styles.container}>
-     <form onSubmit={handleSubmit} className={styles.prompt} id="promp_machine">
-        <textarea defaultValue={prompt}
-        onChange={handleInputChange} placeholder="prompt">
-        </textarea>
-        
-        <input type="hidden" value={response}
-         onChange={(e) => setGetResponse({ ...getResponse, content: response })} />
-        <input type="hidden" 
-        onChange={(e) => setGetResponse({ ...getResponse, userName: e.target.value })} placeholder="name" />
-       
-        <div className={styles.check}>
-          <input type="checkbox" infotype="infotype" value='healthy-tips' id="flexCheckDefault"
-            onChange={(e) => setGetResponse({ ...getResponse, infotype: e.target.value })}
-          />
-          <label htmlFor="flexCheckDefault"> Healthy Tips </label>
+    <div className={styles.wrapper}>
+      <div className={styles.container}>
+        <form onSubmit={handleSubmit} className={styles.prompt} id="promp_machine">
+            <textarea defaultValue={prompt}
+            onChange={handleInputChange} placeholder="prompt">
+            </textarea>
+            
+            <input type="hidden" value={response}
+            onChange={(e) => setGetResponse({ ...getResponse, content: response })} />
+            <input type="hidden" 
+            onChange={(e) => setGetResponse({ ...getResponse, userName: e.target.value })} placeholder="name" />
+          
+            <div className={styles.check}>
+              <input type="checkbox" infotype="infotype" value='healthy-tips' id="flexCheckDefault"
+                onChange={(e) => setGetResponse({ ...getResponse, infotype: e.target.value })}
+              />
+              <label htmlFor="flexCheckDefault"> Healthy Tips </label>
 
-          <input type="checkbox" infotype="infotype" value="recipes" id="flexCheckDefault"
-            onChange={(e) => setGetResponse({ ...getResponse, infotype: e.target.value })}
-          />
-          <label htmlFor="flexCheckDefault"> Recipes </label>
+              <input type="checkbox" infotype="infotype" value="recipes" id="flexCheckDefault"
+                onChange={(e) => setGetResponse({ ...getResponse, infotype: e.target.value })}
+              />
+              <label htmlFor="flexCheckDefault"> Recipes </label>
 
-          <input type="checkbox" infotype="infotype" value="workouts" id="flexCheckDefault"
-            onChange={(e) => setGetResponse({ ...getResponse, infotype: e.target.value })}
-          />
-          <label htmlFor="flexCheckDefault"> workouts </label>
-        </div>
+              <input type="checkbox" infotype="infotype" value="workouts" id="flexCheckDefault"
+                onChange={(e) => setGetResponse({ ...getResponse, infotype: e.target.value })}
+              />
+              <label htmlFor="flexCheckDefault"> workouts </label>
+            </div>
 
-        {/* upload image */}
-        <div className={styles.upload}>
-          <label>
-            <input type='file' ref={inputFile}
-              onChange={(e) => setGetResponse({ ...getResponse, image: URL.createObjectURL(e.target.files[0]) })}
-              className={styles.uploading}></input>
-          </label>
-        </div>
-        
-        <div className={styles.buttons}>
-          <button className={styles.send} type="submit">Send</button>
-          <button className={styles.reset} onClick={onReload}>Reset</button>
-        </div>
-      </form>
-
+            {/* upload image */}
+            <div className={styles.upload}>
+              <label>
+                <input type='file' ref={inputFile}
+                  onChange={(e) => setGetResponse({ ...getResponse, image: URL.createObjectURL(e.target.files[0]) })}
+                  className={styles.uploading}></input>
+              </label>
+            </div>
+            
+            <div className={styles.buttons}>
+              <button className={styles.send} type="submit">Send</button>
+              <button className={styles.reset} onClick={onReload}>Reset</button>
+            </div>
+          </form>
     
-      <div className={styles.chat}>
-        <p>
-          {response}
-        </p>
-       
+          <div className={styles.chat}>
+            <p>
+              {response}
+            </p>
+          </div>
+          <button className={styles.save} onClick={() => {onSave()}}>Save</button>
+    </div> 
+    {/* wrapper */}
+      <div className={styles.img}>
+        <img src='https://res.cloudinary.com/da6il8qmv/image/upload/v1697112778/bot_wwqlon.png'
+        alt='ai-woman' />
       </div>
-      <button className={styles.save} onClick={() => {onSave()}}>Save</button>
     </div>
+    
+    
   );
 };
 

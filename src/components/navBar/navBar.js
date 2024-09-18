@@ -1,6 +1,6 @@
 import React, { useState, useContext} from 'react';
 import { UserContext } from '../../components/userContext/userContext';
-// import styles from '../navBar/navbar.module.css';
+import styles from '../navBar/navbar.module.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import { removeSession } from "../../api/auth";
@@ -27,8 +27,10 @@ const NavBar = () => {
       setClicked(!clicked)
    }
 
+   console.log(` soy el ${gender}`)
+
    return (
-      <>
+      <div className={styles.container}>
        <NavContainer>
          <div className='logo'>
             <img src={logo} alt='logo'/>
@@ -46,7 +48,7 @@ const NavBar = () => {
             <NavButton clicked={clicked} handleClick={handleClick}/>
          </div>
       </NavContainer>
-      </>
+      </div>
      
          
       
@@ -67,12 +69,12 @@ const NavContainer = styled.nav`
 
 
 .logo > img {
-   width: 13em;
+   width: 10em;
    margin-right:0;
 
   @media(min-width:768px){
    margin-right:3em;
-   width: 13em;
+   width: 10em;
  }
 }
 

@@ -1,6 +1,5 @@
 import React, {useContext } from 'react';
 import { UserContext } from '../../components/userContext/userContext';
-// import customFetch from '../../api';
 import Card from '../../components/card/Card';
 import styles from '../arms/arms.module.css';
 import NavBar from '../../components/navBar/navBar';

@@ -1,0 +1,202 @@
+.container {
+   display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.info {
+   display: flex;
+    align-items: center;
+    border: gray 1px solid;
+    width: 300px;
+    height: 440px;
+    border-radius: 0 0px 15px 15px;
+    margin-top: 10px;
+    flex-direction: column;
+    margin-right: 1.5em;
+}
+
+.info > div > button{
+   border: solid white 2px;
+    background: teal;
+    height: 50px;
+    width: 140px;
+    border-radius: 8px;
+    color: white;
+    margin: 2em 0 0em 0em;
+}
+
+.container > button:hover{
+   width: 150px;
+    box-shadow: 4px 4px 10px gray;
+    border-radius: 25px;
+}
+
+.infoCard {
+   display: flex;
+    align-items: center;
+    border: gray 1px solid;
+    width: 300px;
+    height: auto;
+    border-radius: 0 0px 15px 15px;
+    margin-top: 10px;
+    flex-direction: column;
+    margin-right: 1.5em;
+}
+
+.infoCard > div > button{
+   border: solid white 2px;
+    background: teal;
+    height: 50px;
+    width: 140px;
+    border-radius: 8px;
+    color: white;
+   
+}
+
+.infoCard > img, video {
+   width: 200px;
+   height: 230px;
+    margin-top: 2em;
+    box-shadow: 59px -16px teal;
+}
+
+.info > img, video {
+   width: 200px;
+   height: 230px;
+    margin-top: 2em;
+    box-shadow: 59px -16px teal;
+}
+.infoCard > p {
+   text-align: left;
+}
+
+.descrip {
+   display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1em;
+    z-index: 100;
+    margin-bottom: 2em;
+    text-align: left;
+    width: 85%;
+}
+
+.descrip > p{
+    margin: 0;
+    font-size: 1em;
+    text-align: left;
+}
+
+
+.container > button {
+   border: solid white 2px;
+   background: teal;
+   height: 50px;
+   width: 140px;
+   border-radius: 8px;
+   color: white;
+   margin: -3em 0 0em 0em;
+}
+
+.descrip > p.bold{
+   font-weight: bold;
+}
+
+.form > input {
+   border: 1px solid teal;
+    width: 200px;
+    height: 20px;
+    border-radius: 5px;
+    margin-top: 5px;
+    
+}
+
+.form {
+   display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    align-items: center;
+}
+
+.buttons {
+   margin-top: 1em;
+}
+
+.containerModal > form {
+   display: flex;
+   flex-direction: column;
+   align-content: flex-start;
+   align-items: center;
+}
+
+.containerModal > form > div > button {
+   border: solid white 2px;
+   background: teal;
+   height: 50px;
+   width: 140px;
+   border-radius: 8px;
+   color: white;
+   margin: -3em 0 0em 0em;
+}
+
+.cardDeleteFavs {
+   display: flex;
+    align-items: center;
+    border: gray 1px solid;
+    width: 300px;
+    height: auto;
+    border-radius: 0 0px 15px 15px;
+    margin-top: 10px;
+    flex-direction: column;
+    margin-right: 1.5em;
+}
+
+.cardDeleteFavs > h4, p {
+   margin: 1em;
+}
+
+.cardDeleteFavs > img, video {
+   width: 200px;
+   height: 230px;
+   margin-top: 2em;
+   box-shadow: 59px -16px teal;
+}
+
+
+/*follow card*/
+
+.follow > img {
+   width: 60%;
+   margin-top: 5%;
+   box-shadow: 20px -16px teal;
+}
+
+.follow > p{
+   margin: 0.3em;
+   display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+
+
+.cardWrap {
+   border: 1px solid lightgray;
+    padding: 1em;
+    width: 17em;
+    height: 30em;
+    margin: 0 1em;
+}
+
+.cardWrap > button {
+   border: solid white 2px;
+   background: teal;
+   height: 50px;
+   width: 140px;
+   border-radius: 8px;
+   color: white;
+   margin-top: 2em;
+}

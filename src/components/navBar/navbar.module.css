@@ -3,11 +3,11 @@
    flex-direction: row;
    flex-wrap: nowrap;
    align-items: center;
-   margin-top: 2em;
+   margin: 2em;
 }
 
 .logo > img{
-   width: 7em;
+   width: 5em;
    display: flex;
 }
 

@@ -55,22 +55,11 @@
 }
 
 .box > button {
-   border: solid teal 1px;
-   background: white;
+   background: transparent;
+   border: none;
    height: 30px;
    width: 30px;
-   border-radius: 30px;
-   color: teal;
-   margin: 0.5em;
-}
-.box > button:hover {
-   border: solid teal 2px;
-   background: white;
-   height: 30px;
-   width: 30px;
-   border-radius: 30px;
-   color: teal;
-   margin: 0.5em;
+   cursor: pointer;
 }
 
 

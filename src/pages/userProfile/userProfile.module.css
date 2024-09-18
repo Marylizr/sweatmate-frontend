@@ -5,14 +5,17 @@
    align-content: center;
    align-items: center;
    width: 75vw;
+   height: 100vh;
 }
 
 .wrap {
    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-start;
+   flex-direction: row;
+   flex-wrap: wrap;
+   align-content: center;
+   align-items: center;
+   width: 75vw;
+   justify-content: none;
 }
 
 .small_header {
@@ -29,15 +32,16 @@
 
 .namesinput {
    display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: wrap;
     margin-top: 1.5em;
     align-items: center;
+    justify-content: space-around;
 }
 
-.namesinput > input {
+.namesinput > input, select {
    margin: 10px;
-    width: 80%;
+    width: 60%;
     height: 30px;
     border-radius: 3px;
     border: none;
@@ -62,4 +66,18 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+}
+
+.wrap_form{
+   display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: space-around;
+    width: 50%;
+
+}
+
+.form {
+   display: flex;
+   flex-direction: column;
 }

@@ -1,11 +1,9 @@
 import styles from "../settings.module.css";
 import { useEffect , useState, useRef} from "react";
 import userimg from '../images/userimg.svg'
-import pen from '../images/pen.svg'
 import customFetch from '../../../api';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
-const eye = <FontAwesomeIcon icon={faEye} />;
+import pen from '../../../assets/pen_white.svg';
+import eye from '../../../assets/eye.svg';
 
 
 const Settings = () => {
@@ -145,7 +143,9 @@ const Settings = () => {
                   <div className={styles.passwordeye}>
                     <input className = {styles.password} type={passwordShown ? "text" : "password"} 
                     onChange={(e) =>setUser({...user,password: e.target.value})} placeholder="Password"  />
-                    <i className={styles.eye} onClick={togglePasswordVisiblity}>{eye}</i>
+                    <i className={styles.eye} onClick={togglePasswordVisiblity}>
+                      <img src={eye} alt='eye-icon'/>
+                    </i>
                   </div>
 
                   <button className = {styles.submit} 
