@@ -21,7 +21,7 @@ const DesignedByPt = () => {
 
    // get workouts and filter by date and user
    useEffect(() => {
-      customFetch("GET", "personaltrainer")
+      customFetch("GET", "designedByPt")
          .then((json) => {
             // filter workout by date and user
             const filteredWorkouts = json.filter(item => {

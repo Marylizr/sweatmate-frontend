@@ -1,6 +1,5 @@
-import React, {useContext, useEffect, useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import styles from '../training/training.module.css'
-import { UserContext } from '../../components/userContext/userContext';
 import Card from './card/Card';
 import customFetch from '../../api';
 import { useForm } from 'react-hook-form';
@@ -10,7 +9,6 @@ const Training = ({onClick}) => {
 
    const [selected, setSelected ] = useState([])
    const [users, setUsers] = useState([])
-   const { workout } = useContext(UserContext);
    const [data, setData] = useState([]);
    const [searchValue, setSearchValue] = useState('');
    const [email, setEmail] = useState('');
@@ -30,6 +28,7 @@ const Training = ({onClick}) => {
       })
     }, [setEmail, email]);
 
+
     //filter data from search box
     
      useEffect(() => {
@@ -42,11 +41,9 @@ const Training = ({onClick}) => {
           }
        }, [searchValue, setData, data]);
 
-    
-
+   
         useEffect(() => {
             customFetch("GET", "workouts")
-           
             .then((json) => {
              setData(json);
             })
@@ -56,30 +53,22 @@ const Training = ({onClick}) => {
         }, []);
 
 
-
-      customFetch( "POST", "personaltrainer", {body:data})
-      .then(() => {
-           setSelected(selected);
-      })
-      .catch((e) => {
-       e = new Error('cannot get this info')
-      });
-
-
       const { register, handleSubmit} = useForm();
 
       const onSubmit = () => {
-         const data = {
-            userName: users.email,
-            type: workout.type,
-            name: workout.name,
-            description: workout.description,
-            picture: workout.picture,
-            video: workout.video
-         }
+
+         customFetch( "POST", "designedByPt", {body:data})
+         .then(() => {
+              setSelected(selected);
+              setEmail(email)
+              
+         })
+         .catch((e) => {
+          e = new Error('cannot get this info')
+         });
    }
 
-   console.log('soy', data)
+  
     
   return (
     <div className={styles.container}>
@@ -103,30 +92,22 @@ const Training = ({onClick}) => {
                      setSearchValue(value) 
                      }} type="text" placeholder="Search Workout" />
                </div> 
-               <input type='hidden' value={email}  {...register("userName")} />  
-               <div className={styles.wrap} onClick={(e) => { 
-                  setSelected(data)
-                  e.preventDefault(); 
-                  e.stopPropagation();   
-                  alert('workout selected')
-            }} >
+                  <input type='hidden' value={email}  {...register("userName")} />  
+
+               <div className={styles.wrap} onClick={() => {onClick()}}>
                   {
                      data && data.length > 0 && data.map( item => 
                         <Card item={item} id={item._id} key={item._id}
-                        onClick={onClick}/>)
+                        onClick={() => {onClick()}}/>)
                   }
                </div>
-
-
 
                <input className={styles.submit} type="submit" value="Save"
                   onClick={(e) => { 
                      onSubmit()
                      e.preventDefault(); 
                      e.stopPropagation();   
-                     setSelected()
-                     setData(data)
-                     alert('workout saved')
+                     alert(`${email} workout has been sent`)
             }} />
          </form>
       </div>
