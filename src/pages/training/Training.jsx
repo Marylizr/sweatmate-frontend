@@ -57,7 +57,7 @@ const Training = ({onClick}) => {
 
 
 
-      customFetch( "POST", "personaltrainer", {body:data})
+      customFetch( "POST", "designedByPt", {body:data})
       .then(() => {
            setSelected(selected);
       })
