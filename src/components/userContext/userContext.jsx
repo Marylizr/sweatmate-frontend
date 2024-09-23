@@ -19,7 +19,7 @@ export const UserContextProvider = ({ children }) => {
       
   }, [setName])
 
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState([]);
 
   useEffect(() => {
         customFetch( "GET", "user/me")
@@ -69,7 +69,7 @@ export const UserContextProvider = ({ children }) => {
    }, [setWorkout]);
 
 
-   const [gender, setGender] = useState()
+   const [gender, setGender] = useState([])
 
    useEffect(() => {
      const getGender = () => {

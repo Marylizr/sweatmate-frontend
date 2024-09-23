@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './cardM.module.css';
 import customFetch from '../../api';
-
-
+import pen from '../../assets/pen.svg';
+import trash from '../../assets/trash.svg';
 
 const CardMessages = ({ user, onClick }) => {
    const {name, email, image } = user;
@@ -20,7 +20,7 @@ const CardMessages = ({ user, onClick }) => {
    }
 
    return(
-      <div className={styles.info}>
+      <div className={styles.info} onClick={onClick}>
          <div className={styles.imagen}> 
             <img src={image}  alt=''/>
          </div>
@@ -29,8 +29,13 @@ const CardMessages = ({ user, onClick }) => {
             <p><b>email:</b> {email}</p>
          </div>
          <div className={styles.box}  >
-            <button onClick={() => handleDelete(user._id)}>D</button>
-            <button onClick={onClick}>E</button>
+            <button onClick={() => handleDelete(user._id)}>
+               <img src={trash} alt='tras-icon'/>
+            </button>
+          
+            <button>
+               <img  src={pen} alt='edit-icon' />
+            </button>
          </div>
       </div>   
     )

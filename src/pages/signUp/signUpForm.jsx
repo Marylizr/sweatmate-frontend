@@ -10,7 +10,7 @@ const SignUpForm = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) navigate("/dashboard");
+    if (token) navigate("/");
   }, [navigate]);
 
   const { register, handleSubmit, formState: { errors } } = useForm();

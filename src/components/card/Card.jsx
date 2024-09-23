@@ -38,7 +38,6 @@ const Card = ({ item }) => {
     }
 
 
-    console.log(email)
 
      return(
         <div className={styles.container} onClick={(e) => { 

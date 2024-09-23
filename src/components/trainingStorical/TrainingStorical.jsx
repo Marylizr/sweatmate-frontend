@@ -1,26 +1,24 @@
-import React from 'react';
-// import customFetch from '../../api';
+import React, { useState, useEffect } from 'react';
 
+const TrainingStorical = ({ item, days }) => {
+  const [displayedDay, setDisplayedDay] = useState(null);
 
-const TrainingStorical = ({item, cantidadEntrenamientos }) => {
+  useEffect(() => {
+    const fecha = new Date(item.date);
+    const dayName = fecha.toLocaleString('en-US', { weekday: 'long' });
 
- 
-  const fecha = new Date(item.date);
-    const diaSemana = fecha.getDay();
+    if (displayedDay !== dayName) {
+      setDisplayedDay(dayName);
+    }
+  }, [item, displayedDay]);
 
-    const trainingDays = () => {
-      const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-      return daysOfWeek[diaSemana];
-    };
-    const myTrainDays = trainingDays(cantidadEntrenamientos);
-    
-    
+  console.log(days)
+
   return (
     <div>
-      {myTrainDays}  
-
-    </div> 
-  )
+      {displayedDay && `I trained on ${displayedDay}`}
+    </div>
+  );
 }
 
 export default TrainingStorical;

@@ -149,7 +149,8 @@ const videoUpload = async () => {
         }}/>)
       }
     </div>
-    {selectedItem &&  <Modal isOpen={isOpenModal} closeModal={closeModal}>
+    {selectedItem &&  
+        <Modal isOpen={isOpenModal} closeModal={closeModal}>
          <p>{selectedItem.name}</p>
             <div className={styles.containerModal}>
               <form className={styles.form}>
@@ -199,17 +200,17 @@ const videoUpload = async () => {
                   
                
                </div>
-               <div className={styles.buttons}>
-                  <button className={styles.save} onClick={(e) => { 
-                    e.preventDefault(); 
-                    e.stopPropagation(); 
-                    onSubmit(); 
-                    }}>Save</button>
-                  <button className={styles.reload} onClick={() => { handleOnClick(); } }>reset</button>
-               </div>
-           </form>
-         </div>      
-              </Modal>}
+                  <div className={styles.buttons}>
+                      <button className={styles.save} onClick={(e) => { 
+                        e.preventDefault(); 
+                        e.stopPropagation(); 
+                        onSubmit(); 
+                        }}>Save</button>
+                      <button className={styles.reload} onClick={() => { handleOnClick(); } }>reset</button>
+                    </div>
+                </form>
+              </div>      
+          </Modal>}
 
   </div>
    )
