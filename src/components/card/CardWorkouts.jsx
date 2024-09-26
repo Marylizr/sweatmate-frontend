@@ -57,7 +57,7 @@ const CardWorkout = ({ item }) => {
                     <img src={favs.picture} alt="img"/> 
 
                     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-                     <br/>
+                    
                      <input type='hidden' value={user.email}  {...register("userName")} />
 
                      <input type="hidden" alt='' value={favs.picture} {...register("picture")} />
@@ -65,16 +65,12 @@ const CardWorkout = ({ item }) => {
                      <input type="text" value= {favs.name} {...register("name")}/>
                      
                      <input type="number" placeholder='Number of reps' {...register("reps")} />
-                     <br/>
-                    
+                     
                      <input type="number" placeholder='Number of series' {...register("series")} />
-                     <br/>
-                    
-                     <input type="date" placeholder='Workout date' {...register("date")} />
-                     <br/>
-                    
+                     
                      <input type="number"  placeholder='Weight Lifted' {...register("lifted")} />
                     
+                     <input type="date" placeholder='Workout date' {...register("date")} />
                      
                      <div className={styles.buttons}>
                         <input className={styles.send} type="submit" value="Save"  />

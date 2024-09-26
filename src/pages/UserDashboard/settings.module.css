@@ -59,6 +59,11 @@
    color: teal;
    text-decoration: none;
    font-size: 20px;
+   display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+   align-content: center;
+   align-items: center;
  }
 
  .save:hover {
@@ -96,8 +101,13 @@
 
  .progress > button > a {
    color: teal;
-   text-decoration: none;
-   font-size: 20px;
+    text-decoration: none;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
  }
 
 
@@ -153,18 +163,20 @@
    position: absolute;
     bottom: 0;
     right: 0%;
-    background-color: #ED6900;
-    /* background-color: #258AFF; */
     border-style: none;
     border-radius: 48%;
-    transition: .5s ease;
-    opacity: 1;
-    filter: invert(100%);
-    width: 25px;
-    height: 25px;
+    background-color: teal;
+    width: 30px;
+    height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.editimg > label > img {
+   transition: .5s ease;
+   opacity: 1;
+   filter: invert(100%);
 }
 
 /* .editimg>input {

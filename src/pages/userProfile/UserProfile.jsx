@@ -3,7 +3,7 @@ import { UserContext } from '../../components/userContext/userContext';
 import Form from './Form';
 import styles from './userProfile.module.css';
 import CardMessages from '../../components/card/cardMessages';
-import Modal from "../../components/Modal/Modal";
+import Modal from "./Modal/Modal";
 import { useModal } from "../../hooks/useModal";
 
 const UserProfile = () => {

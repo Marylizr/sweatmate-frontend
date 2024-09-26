@@ -6,7 +6,15 @@ import { useNavigate } from "react-router-dom";
 import { removeSession } from "../../api/auth";
 import styled from 'styled-components';
 import NavButton from '../../components/navButton/navButton';
-import logo from '../../utils/logo_new.png'
+import logo from '../../utils/logo_new.png';
+import plus from '../../assets/plus.svg';
+import edit from '../../assets/edit.svg';
+import person from '../../assets/person.svg';
+import woman from '../../assets/woman.svg';
+import man from '../../assets/man.svg';
+import bot from '../../assets/bot.svg';
+import exit from '../../assets/exit.svg';
+
 
 const WorkoutsMenu = () => {
 
@@ -25,7 +33,7 @@ const WorkoutsMenu = () => {
     //when the value is true will passed it false and all over
     setClicked(!clicked)
  }
-
+ console.log(`my role is ${role}`)
 
   return (
     <div className={styles.menu}>
@@ -36,24 +44,28 @@ const WorkoutsMenu = () => {
           <h2>Hi, {name}!</h2>
           
             <div className={styles.side_menu}>
-              <Link to='/main/addworkout'> Add Workout </Link>
+              <Link to='/main/addworkout'><img src={plus} alt=''/> Add Workout </Link>
             </div>
             <div className={styles.side_menu}>
-              <Link to='/main/workouts'> Edit Workout </Link> <br />
+              <Link to='/main/workouts'><img src={edit} alt=''/> Edit Workout </Link> <br />
             </div>
             <div className={styles.side_menu}>
-              <Link to='/main/userList'> User List </Link>
+              <Link to='/main/training'><img src={bot} alt='icon'/> Training </Link>
             </div>
             <div className={styles.side_menu}>
-            { role === 'admin' && <Link to="/dashboard/female">female Dashboard </Link>  }
-            {role === 'admin' && <Link to="/dashboard/male">User Dashboard</Link>}
+              <Link to='/main/userList'><img src={person} alt=''/> User List </Link>
+            </div>
+            <div className={styles.side_menu}>
+            { role === 'admin' && <Link to="/dashboard/female"><img src={woman} alt='icon'/> | </Link> }
+            {role === 'admin' && <Link to="/dashboard/male"><img src={man} alt='icon'/></Link>}
 
             </div>
             <div className={styles.side_menu}>
-              <Link to='/main/openAi'> ChatBot </Link>
+              <Link to='/main/openAi'><img src={bot} alt='icon'/> ChatBot </Link>
             </div>
             <div className={styles.side_menu}>
-              <button onClick={() => {onLogOut()}} > Log Out </button>
+              <button onClick={() => {onLogOut()}}>
+                 <img className={styles.exit} src={exit} alt='icon'/> Log Out </button>
             </div>
         </div>
         <div className='burger'>
@@ -100,7 +112,7 @@ const NavContainer = styled.nav`
      }
 
      img {
-      width:250px;
+      width:10em;
      }
   }
 
@@ -326,9 +338,14 @@ const NavContainer = styled.nav`
      align-items: center;
      padding-bottom: 0;
        a{
-         font-size: 1.2em;
-         color: grey;
-         display: inline;
+        font-size: 1.2em;
+        color: grey;
+        display: inline;
+        display: flex;
+        flex-wrap: wrap;
+        align-content: center;
+        align-items: center;
+        justify-content: flex-start;
        }
      }
  

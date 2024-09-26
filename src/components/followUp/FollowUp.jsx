@@ -133,7 +133,6 @@ const FollowUp = () => {
       { gender === 'female' ? <Link to="/dashboard/female"><img src={arrow_left} alt='' /></Link> : 
       <Link to="/dashboard/male"><img src={arrow_left} alt='' /></Link> }
       </div>
-
           <h2> My Progress</h2>
        </div>
       

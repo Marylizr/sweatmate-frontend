@@ -1,23 +1,20 @@
-import React, {useContext } from 'react'
-import { UserContext } from '../../components/userContext/userContext';
+import React, {useState } from 'react'
 import styles from '../workoutsDash/workoutDash.module.css';
-import WorkoutHistoric from '../workoutHistoric/WorkoutHistoric';
 import SavedWorkouts from '../fav/fav';
 import NavBar from '../../components/navBar/navBar';
+import TodayWorkout from '../workoutHistoric/WorkoutHistoric';
 
 const WorkoutDash = () => {
-   const { name} = useContext(UserContext);
 
+
+   const [show, setShow] = useState(null);
 
   return (
     <div className={styles.container}>
         <NavBar />
-     <div>
-      <h2>{name}, Welcome to your WorkOuts Dashboard</h2>
-     </div>
-
-      <WorkoutHistoric />
-      <SavedWorkouts />
+    
+      <TodayWorkout />
+      <SavedWorkouts show={show}  setShow={setShow}/>
 
     </div>
   )

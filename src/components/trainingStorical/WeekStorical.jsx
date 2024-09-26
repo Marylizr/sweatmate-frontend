@@ -1,90 +1,87 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styles from './training.module.css';
 import customFetch from '../../api';
-import TrainingStorical from './TrainingStorical';
+// import TrainingStorical from './TrainingStorical';
+import fitness from '../../assets/fitness.svg';
 
 const WeekStorical = () => {
- 
-  const [cantidadEntrenamientosSemanaActual, setCantidadEntrenamientosSemanaActual] = useState(0);
-  const [name, setName ] = useState()
-
+  const [entrenamientos, setEntrenamientos] = useState(0);
+  const [email, setEmail] = useState([]);
   const [historial, setHistorial] = useState([]);
 
   useEffect(() => {
     customFetch("GET", "user/me")
-    .then((json) => {
-    setName(json.name);
-    })
-  }, [name, setName]);
-
-  useEffect(() => {
-    customFetch("GET", "fav")
       .then((json) => {
-      setHistorial(json);
+        setEmail(json.email);
       })
       .catch((error) => {
         console.log(error);
-      })
-  }, [setHistorial]);
+      });
 
-    
-  const obtenerSemanasDeEntrenamiento  = useCallback(() => {
-    const semanasDeEntrenamiento = [];
-    let semanaActual;
-    historial.sort((a, b) => new Date(a.date) - new Date(b.date));
-    
-    historial.forEach(myTrainDays => {
-      const fechaEntrenamiento = new Date(myTrainDays.date);
-      const diaSemanaEntrenamiento = fechaEntrenamiento.getDay();
-     
-      if (diaSemanaEntrenamiento === 1) {
-        semanaActual = { Monday: fechaEntrenamiento, Sunday: null, historial: [] };
-      }
-      
-      if (semanaActual) {
-        semanaActual.Sunday = fechaEntrenamiento;
-        semanaActual.historial.push(myTrainDays);
-      }
-  
-      if (diaSemanaEntrenamiento === 0 && semanaActual) {
-        semanasDeEntrenamiento.push(semanaActual);
-        semanaActual = null;
-      }
-    });
-    return semanasDeEntrenamiento;
-  } , [historial]); 
- 
+    customFetch("GET", "fav")
+      .then((json) => {
+        setHistorial(json);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  const getWorkouts = useCallback(() => {
+    const lastWeekStart = new Date();
+    lastWeekStart.setDate(lastWeekStart.getDate() - 7); // Subtract 7 days
+
+    const workoutsThisWeek = historial.filter(item =>
+      item.userName === `${email}` && new Date(item.date) > lastWeekStart
+    );
+
+    const uniqueDays = [...new Set(workoutsThisWeek.map(item => new Date(item.date).toDateString()))];
+    console.log(`unique days ${uniqueDays}`)
+    return uniqueDays.length;
+   
+  }, [historial, email]);
 
   useEffect(() => {
-    const semanasDeEntrenamiento = obtenerSemanasDeEntrenamiento();
-    const semanaActual = semanasDeEntrenamiento[0]; // La primera semana es la actual
-    
-    if (semanaActual) {
-      const cantidadEntrenamientos = semanaActual.historial.length;
-      setCantidadEntrenamientosSemanaActual(cantidadEntrenamientos);
-    }
-  }, [obtenerSemanasDeEntrenamiento]);
-  
-
-     return (
-       <div className={styles.container}>
-         <h2>Weekly Workouts</h2>
-         <p>Haz entrenado: {cantidadEntrenamientosSemanaActual} dias esta semana!</p>
-
-         
-        {historial.filter( item => item.userName === `${name}`).map(item => (
-           <TrainingStorical 
-              key={item._id}  
-              item={item} 
-              id={item._id} 
-              historial={historial}
-              cantidadEntrenamientos={cantidadEntrenamientosSemanaActual}
-           />
-         ))}
-         
-       </div>
-     );
-   };
+    const daysWorkedOut = getWorkouts();
+    setEntrenamientos(daysWorkedOut);
    
+  }, [getWorkouts]);
+ 
   
+  const getDays = () => {
+    const lastWeekStart = new Date();
+    lastWeekStart.setDate(lastWeekStart.getDate() - 7); // Subtract 7 days
+
+    const workoutsThisWeek = historial.filter(item =>
+      item.userName === `${email}` && new Date(item.date) > lastWeekStart
+    );
+
+    const uniqueDays = [...new Set(workoutsThisWeek.map(item => new Date(item.date).toDateString()))];
+    
+    return uniqueDays;
+  }
+
+  const days = getDays()
+  console.log(`unique days ${days}`)
+
+   
+
+  return (
+    <div className={styles.container}>
+      <img  src={fitness} alt='fit-icon'/>
+      <h2>Weekly Workouts</h2>
+      <p>Haz entrenado: {entrenamientos} días esta semana!</p>
+      <p>{days }</p>
+{/* 
+      {historial.filter(item => item.userName === `${email}`).map(item => (
+        <TrainingStorical
+          key={item._id}
+          item={item}
+          id={item._id}
+        />
+      ))} */}
+    </div>
+  );
+};
+
 export default WeekStorical;

@@ -26,11 +26,13 @@ import EditWorkouts from './pages/editWorkOuts/EditWorkouts';
 import WorkoutDash from './pages/workoutsDash/WorkoutDash';
 import Main from './pages/main/main';
 import FollowUp from './components/followUp/FollowUp';
-import SavedWorkouts from './pages/fav/fav';
+import TodayWorkout from './pages/workoutHistoric/WorkoutHistoric';
+import DesignedByPt from './components/designedByPt/DesignedByPt';
 
 // import PrivateRoute from "./api/auth/privateRoute";
 
 function App() {
+
 
   return (
     <div className='App'> 
@@ -54,7 +56,7 @@ function App() {
           <Route path="/shoulders" element={ <Shoulders />} />
           <Route path="/fullbody" element={ <Fullbody />} />
           <Route path="/signup" element={ <SignUp />} />
-          <Route path="/login" element={ <Login />} />
+          <Route path="/login"  element={ <Login/> }/>
           <Route path="/addworkout" element={ <AddWorkout />} />
           <Route path="/dashboard/male" element={ <UserDashboardMale />} />
           <Route path="/dashboard/female" element={ <UserDashboardFemale />} />
@@ -63,7 +65,8 @@ function App() {
           <Route path="/workoutsDashboard" element={ <WorkoutDash />} />
           <Route path="/main/*" element={<Main />} />
           <Route path="/progress" element={<FollowUp/>} />
-          <Route path='/workoutHistoric' element={<SavedWorkouts />} />
+          <Route path='/todayworkout' element={<TodayWorkout />} />
+          <Route path='/personaltrainer' element={<DesignedByPt />} />
         </Routes>
       </BrowserRouter>
     </UserContextProvider>

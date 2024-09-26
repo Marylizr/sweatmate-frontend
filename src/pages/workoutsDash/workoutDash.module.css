@@ -7,3 +7,17 @@
    margin-top: 2em;
    width: 80vw;
 }
+
+@media(max-width: 800px) {
+   .container {
+      margin-bottom: 2em;
+      width: 90vw;
+   }
+}
+
+@media (min-width: 769px) and (max-width: 1181px) {
+   .container {
+      margin-bottom: 2em;
+      width: 90vw;
+   }
+}
