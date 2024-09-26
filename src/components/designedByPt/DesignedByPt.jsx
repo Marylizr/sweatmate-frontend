@@ -21,7 +21,11 @@ const DesignedByPt = () => {
 
    // get workouts and filter by date and user
    useEffect(() => {
+<<<<<<< HEAD
       customFetch("GET", "personaltrainer")
+=======
+      customFetch("GET", "designedByPt")
+>>>>>>> refs/remotes/origin/original
          .then((json) => {
             // filter workout by date and user
             const filteredWorkouts = json.filter(item => {

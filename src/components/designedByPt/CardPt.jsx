@@ -25,7 +25,11 @@ const CardPt = ({ item }) => {
           setFavs(data)
           setUser(user)
           const onFav = () => {   
+<<<<<<< HEAD
                customFetch("POST", "personaltrainer", {body: data})
+=======
+               customFetch("POST", "designedByPt", {body: data})
+>>>>>>> refs/remotes/origin/original
                .then(alert('are you sure that you want to save this workout?'))
                .then(window.location.reload())
                .catch((error) => {
