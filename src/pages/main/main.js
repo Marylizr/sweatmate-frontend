@@ -4,11 +4,12 @@ import PrivateRoute from "../../api/auth/privateRoute";
 import AddWorkout from '../addWorkout/AddWorkout';
 import UserProfile from '../userProfile/UserProfile';
 import EditWorkouts from '../editWorkOuts/EditWorkouts';
-import WorkoutsMenu from '../addWorkout/workoutsMenu';
+import WorkoutsMenu from '../dashboard/navBar/workoutsMenu';
 import styles from '../main/main.module.css';
 import Chat from '../chatGPT/ChatGPT';
 import Training from '../training/Training';
 import Dashboard from '../dashboard/Dashboard';
+
 
 
 const Main = () => {

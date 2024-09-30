@@ -1,3 +1,4 @@
+// auth.js
 import { deleteStorageObject, getStorageObject, setStorageObject } from "../storage"; // Importing the storage utilities
 
 // Function to get the user's token from the session

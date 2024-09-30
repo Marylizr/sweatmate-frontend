@@ -1,19 +1,19 @@
 import React, { useState, useContext} from 'react';
-import { UserContext } from '../../components/userContext/userContext';
+import { UserContext } from '../../../components/userContext/userContext';
 import { Link } from 'react-router-dom';
-import styles from '../addWorkout/addworkout.module.css';
+import styles from '../navBar/navbar.module.css';
 import { useNavigate } from "react-router-dom";
-import { removeSession } from "../../api/auth";
+import { removeSession } from "../../../api/auth";
 import styled from 'styled-components';
-import NavButton from '../../components/navButton/navButton';
-import logo from '../../utils/logo_new.png';
-import plus from '../../assets/plus.svg';
-import edit from '../../assets/edit.svg';
-import person from '../../assets/person.svg';
-import woman from '../../assets/woman.svg';
-import man from '../../assets/man.svg';
-import bot from '../../assets/bot.svg';
-import exit from '../../assets/exit.svg';
+import NavButton from '../../../components/navButton/navButton';
+import logo from '../../../utils/logo_new.png';
+import plus from '../../../assets/plus.svg';
+import edit from '../../../assets/edit.svg';
+import person from '../../../assets/person.svg';
+import woman from '../../../assets/woman.svg';
+import man from '../../../assets/man.svg';
+import bot from '../../../assets/bot.svg';
+import exit from '../../../assets/exit.svg';
 
 
 const WorkoutsMenu = () => {

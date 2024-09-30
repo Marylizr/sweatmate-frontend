@@ -1,8 +1,9 @@
+// SignUpForm.js
 import React, { useEffect } from 'react';
-import styles from './signUp.module.css';
+import styles from './signup.module.css';
 import { useForm } from 'react-hook-form';
 import customFetch from '../../api';
-import { setUserSession } from "../../api/auth";
+import { setUserSession } from "../../api/auth"; // Importing session management functions
 import { useNavigate } from 'react-router';
 
 const SignUpForm = () => {
@@ -18,8 +19,8 @@ const SignUpForm = () => {
   const onSubmit = (data) => {
     customFetch("POST", "user", { body: data })
       .then(userSession => {
+        console.log("API response:", userSession); // Debugging log to see the API response
         setUserSession(userSession);
-        
         
         if (data.gender === "female") {
           navigate("/dashboard/female");
@@ -29,7 +30,7 @@ const SignUpForm = () => {
           console.error('Invalid gender');
         }
       }).catch(error => {
-        console.error('No se pudo obtener el token de la sesión', error);
+        console.error('API error:', error);
       });
   };
 
@@ -40,7 +41,7 @@ const SignUpForm = () => {
         {errors.name?.type === 'required' && <p className={styles.error}>This field is required</p>}
         {errors.name?.type === 'pattern' && <p className={styles.error}>Incorrect name</p>}
 
-        <input type="text" placeholder='myemail.mail.com' {...register("email", { required: true })} />
+        <input type="text" placeholder='example@mail.com' {...register("email", { required: true })} />
         {errors.email && <p className={styles.error}>This field is required</p>}
 
         <input type="password" placeholder='password minLength: 8 ' {...register("password", { required: true, minLength: 8 })} />
@@ -57,20 +58,26 @@ const SignUpForm = () => {
         {errors.age && <p className={styles.error}>This field is required</p>}
 
         <select className={styles.goal} type='goal' {...register("goal", { required: true })}>
+          <option value="">Select Goal</option>
           <option value="Fat-Lost">Fat Lost</option>
           <option value="Gain-Muscle-Mass">Gain Muscle Mass</option>
-          <option value="Manteninance">Manteninance</option>
+          <option value="Maintenance">Maintenance</option>
         </select>
 
         <select className={styles.gender} type='gender' {...register("gender", { required: true })} >
+          <option value="">Select Gender</option>
           <option value="female">Female</option>
           <option value="male">Male</option>
         </select>
 
+        <input type="text" placeholder='role' {...register("role", { required: true })} />
+        {errors.role && <p className={styles.error}>This field is mandatory</p>}
+        <br />
+
         <input className={styles.submit} type="submit" value="Sign me up!" />
       </form>
     </div>
-  )
-}
+  );
+};
 
 export default SignUpForm;

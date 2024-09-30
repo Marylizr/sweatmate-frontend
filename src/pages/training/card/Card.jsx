@@ -1,52 +1,12 @@
 import styles from '../card/card.module.css'
-<<<<<<< HEAD
 import React from 'react'
-=======
-import React, { useState} from 'react'
-import customFetch from '../../../api';
->>>>>>> refs/remotes/origin/original
 
 
 const Card = ({ item }) => {
 
-<<<<<<< HEAD
 console.log('yo soy item', item)
      return(
         <div className={styles.container} > 
-=======
-     const [selected, setSelected ] = useState([])
-
-     const onSubmit = () => {
-          const data = {
-               type: item.type,
-               name: item.name,
-               description: item.description,
-               picture: item.picture,
-               video: item.video
-            }
-     
-            customFetch( "POST", "designedByPt", {body:data})
-            .then(() => {
-               setSelected(selected);
-               
-            })
-            .catch((e) => {
-            e = new Error('cannot get this info')
-            });
-             
-            alert(`workout ${data.name}`)
-    }
-
-
-
-console.log('yo soy esto:', item)
-     return(
-        <div className={styles.container} onClick={(e) => { 
-          onSubmit()
-          e.preventDefault(); 
-          e.stopPropagation();   
-     }}> 
->>>>>>> refs/remotes/origin/original
           <div className={styles.info}>
                <video controls src={item.video} alt='workout'/>
                <div className={styles.descrip}>
