@@ -41,7 +41,7 @@ const NavBar = () => {
             <Link to="/healthyTips">Health |</Link>
             <Link to="/workoutsDashboard">My Profile |</Link>
             <Link to="/contact">Contact |</Link>
-            { role === 'admin' ? <Link to="/main/addworkout"> Admin | </Link> : '' }
+            { role === 'admin' ? <Link to="/main/dashboard"> Admin | </Link> : '' }
             <button onClick={() => {onLogOut()}}>Log out</button>
          </div>
          <div className='burger'>

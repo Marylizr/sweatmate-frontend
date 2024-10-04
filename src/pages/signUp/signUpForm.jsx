@@ -11,7 +11,7 @@ const SignUpForm = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) navigate("/");
+    if (!token) navigate("/");
   }, [navigate]);
 
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -22,7 +22,9 @@ const SignUpForm = () => {
         console.log("API response:", userSession); // Debugging log to see the API response
         setUserSession(userSession);
         
-        if (data.gender === "female") {
+        if (data.role === "admin"){
+          navigate("/main/dashboard");
+        } else if(data.gender === "female") {
           navigate("/dashboard/female");
         } else if (data.gender === "male") {
           navigate("/dashboard/male");

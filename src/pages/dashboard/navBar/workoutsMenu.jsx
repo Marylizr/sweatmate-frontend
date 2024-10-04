@@ -14,6 +14,7 @@ import woman from '../../../assets/woman.svg';
 import man from '../../../assets/man.svg';
 import bot from '../../../assets/bot.svg';
 import exit from '../../../assets/exit.svg';
+import fit from '../../../assets/fit.svg';
 
 
 const WorkoutsMenu = () => {
@@ -33,7 +34,7 @@ const WorkoutsMenu = () => {
     //when the value is true will passed it false and all over
     setClicked(!clicked)
  }
- console.log(`my role is ${role}`)
+ console.log(`my role is ${role} and name ${name}`)
 
   return (
     <div className={styles.menu}>
@@ -42,7 +43,10 @@ const WorkoutsMenu = () => {
         <div className={`links ${clicked ? 'active' : ''}`}>
           <img src={logo} alt=''/>
           <h2>Hi, {name}!</h2>
-          
+
+           <div className={styles.side_menu}>
+              <Link to='/main/dashboard'> Dashboard </Link>
+            </div>
             <div className={styles.side_menu}>
               <Link to='/main/addworkout'><img src={plus} alt=''/> Add Workout </Link>
             </div>
@@ -50,7 +54,7 @@ const WorkoutsMenu = () => {
               <Link to='/main/workouts'><img src={edit} alt=''/> Edit Workout </Link> <br />
             </div>
             <div className={styles.side_menu}>
-              <Link to='/main/training'><img src={bot} alt='icon'/> Training </Link>
+              <Link to='/main/training'><img src={fit} alt='icon'/> Training </Link>
             </div>
             <div className={styles.side_menu}>
               <Link to='/main/userList'><img src={person} alt=''/> User List </Link>

@@ -30,7 +30,7 @@ const Form = ({selectedItem}) => {
 
    
   return (
-    <div classname={styles.wrap_form}>
+    <div className={styles.wrap_form}>
       <p>Edit {selectedItem.name}´s Profile </p>
       
       <form className= {styles.form} >

@@ -1,0 +1,109 @@
+
+.modal{
+   position: fixed;
+   z-index: 1999;
+   top: 0;
+   left: 0;
+   width: 100%;
+   min-height: 100vh;
+   background-color: rgba(139, 139, 139, 0.75);
+   display: none;
+   justify-content: center;
+   align-items: center;
+   color: teal;
+   font-size: 16px;
+   font-weight: bold;
+ }
+ 
+ .modal.is-open{
+   display: flex;
+ }
+
+ .modalContainer{
+   position: relative;
+   width: 90vw;
+   height: 90vh;
+   background-color: white;
+   overflow-y: auto;
+   padding: 1rem;
+   display: flex;
+   flex-direction: column;
+   align-content: center;
+   justify-content: center;
+   align-items: center;
+   border-radius: 1em;
+ }
+
+ .modalContainer > img{
+   width: 200px;
+ }
+
+ .modalClose{
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  color: teal;
+  font-size: 20px;
+ }
+
+.modalContainer > p {
+  margin: 1px;
+}
+
+input[type="submit" i] {
+  border: solid white 2px;
+  background: teal;
+  height: 50px;
+  width: 140px;
+  border-radius: 8px;
+  color: white;
+  margin: 2em 0 0em 0em;
+}
+
+input[type="submit" i]:hover {
+  width: 145px;
+  height: 50px;
+  border-radius: 25px;
+  color: white;
+  background-color: teal;
+  margin: 2em 0 0em 0em;
+}
+
+form > div > button {
+  border: none;
+  background: teal;
+  height: 20px;
+  width: 100px;
+  border-radius: 8px;
+  margin-top: 1em;
+  margin-left: 1em;
+}
+
+form > div > button > a {
+  color: white;
+  text-decoration: none;
+ 
+}
+
+form > div.buttons {
+  margin-top: 1em;
+}
+
+form > .buttons {
+  display: flex;
+}
+
+
+@media(max-width:768px){
+  .modalContainer > img{
+    width: 200px;
+    height: 250px;
+    margin-bottom: 1em;
+  }
+
+  .modalContainer {
+    min-width: 330px;
+  }
+}

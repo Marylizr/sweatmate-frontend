@@ -4,12 +4,19 @@ import { useForm } from 'react-hook-form';
 import customFetch from '../../api';
 import { setUserSession, getUserToken } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
+import eye from '../../assets/eye.svg';
 
 const Login = () => {
    const { register, handleSubmit, formState: { errors } } = useForm();
    const navigate = useNavigate();
    const [gender, setGender] = useState('');
    const [role, setRole] = useState('');
+
+   const [passwordShown, setPasswordShown] = useState(false);
+
+   const togglePasswordVisiblity = () => {
+     setPasswordShown(!passwordShown);
+   };
 
    // Check if user is already logged in
    useEffect(() => {
@@ -35,7 +42,7 @@ const Login = () => {
    // Navigate based on role and gender
    const navigateBasedOnRole = (userRole, userGender) => {
       if (userRole === "admin") {
-         navigate("/main/addworkout");
+         navigate("/main/dashboard");
       } else if (["basic", "medium", "advance"].includes(userRole)) {
          if (userGender === "female") {
             navigate("/dashboard/female");
@@ -70,22 +77,31 @@ const Login = () => {
             <div className={styles.form_styles}>
                <form onSubmit={handleSubmit(onSubmit)}>
                   <label>Email</label>
+                  <br />
                   <input
                      type="text"
                      placeholder='myemail@mail.com'
                      {...register("email", { required: true })}
                   />
                   {errors.email && <p className={styles.error}>This field is mandatory</p>}
-                  <br />
+                 
+                   <br />
+
                   <label>Password</label>
-                  <input
-                     type="password"
-                     placeholder='Longitud mínima: 8'
-                     {...register("password", { required: true, minLength: 8 })}
-                  />
-                  {errors.password?.type === 'required' && <p className={styles.error}>This field is mandatory</p>}
-                  {errors.password?.type === 'minLength' && <p className={styles.error}>The password must have 8 characters min</p>}
                   <br />
+                  <div className={styles.log}>
+                     <input
+                        type={passwordShown ? "text" : "password"}
+                        placeholder='Longitud mínima: 8'
+                        {...register("password", { required: true, minLength: 8 })}
+                        />
+                     <i className={styles.eye} onClick={togglePasswordVisiblity}>
+                        <img src={eye} alt='eye-icon' />
+                     </i>
+                     {errors.password?.type === 'required' && <p className={styles.error}>This field is mandatory</p>}
+                     {errors.password?.type === 'minLength' && <p className={styles.error}>The password must have 8 characters min</p>}
+                  
+                  </div>
                   <input className={styles.submit} type="submit" value="Let's Go!" />
                </form>
             </div>

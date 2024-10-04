@@ -10,6 +10,7 @@
    align-items: center;
    justify-content: center;
    align-content: center;
+   background-color: lightgray;
 }
 
 .header {
@@ -19,7 +20,10 @@
    justify-content: center;
    width: 99%;
    color: teal;
-   border-bottom: solid lightblue 1px;
+   background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   
 }
 
 @media(max-width:768px) {

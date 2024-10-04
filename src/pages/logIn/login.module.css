@@ -60,7 +60,7 @@
    border: gray solid 1px;
    border-radius: 0.5em;
    text-align: center;
-   color: lightgray;
+   color: gray;
 }
 
 .form_styles > form > input.submit{
@@ -88,6 +88,19 @@
    align-content: center;
    justify-content: center;
    align-items: center;
+}
+
+.log {
+   display: flex;
+}
+
+.log > input {
+   width: 18em;
+    height: 2em;
+    border: gray solid 1px;
+    border-radius: 0.5em;
+    text-align: center;
+    color: gray;
 }
 
 @media(max-width: 768px) {
