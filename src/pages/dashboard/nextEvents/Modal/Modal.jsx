@@ -3,12 +3,12 @@ import  '../Modal/modal.css';
 
 
 
-const Modal = ({children, isOpen, closeModal }) => {
+const Modal = ({children, isOpen, isClose }) => {
 
   return(
     <div className={`modal ${isOpen && "is-open"}`} >
       <div className="modalContainer">
-        <button className="modalClose" onClick={closeModal}>X</button>
+        <button className="modalClose" onClick={isClose}>X</button>
         
         {children}
       

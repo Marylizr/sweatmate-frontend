@@ -4,9 +4,11 @@
    flex-wrap: wrap;
    align-content: center;
    align-items: center;
-   width: 18vw;
-   height: 30vh;
-   border: 1px teal solid;
-   border-radius: 0 5px 0px 5px;
+   width: 20vw;
+   background-color: #fff;
+   border-radius: 10px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
    margin: 1px;
+   padding: 1em;
+   
 }

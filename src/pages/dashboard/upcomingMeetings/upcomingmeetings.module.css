@@ -4,9 +4,102 @@
    flex-wrap: wrap;
    align-content: center;
    align-items: center;
-   width: 35vw;
-   height: 30vh;
-   border: 1px teal solid;
-   border-radius: 0 5px 0px 5px;
+   width: 40vw;
+   background-color: #fff;
+   border-radius: 10px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
    margin: 1px;
 }
+
+.meetingsContainer {
+   border-radius: 10px;
+   padding: 20px;
+   background-color: #fff;
+   max-width: 600px;
+   margin: 0 auto;
+ }
+ 
+ .header {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-bottom: 20px;
+ }
+ 
+ .currentDate {
+   font-weight: bold;
+ }
+ 
+ .meetingsList {
+   display: flex;
+   flex-direction: column;
+   gap: 15px;
+ }
+ 
+ .meetingItem {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 10px;
+   border: 1px solid #ddd;
+   border-radius: 5px;
+   background-color: #f9f9f9;
+ }
+ 
+ .userInfo {
+   display: flex;
+   align-items: center;
+ }
+ 
+ .userImage {
+   width: 40px;
+   height: 40px;
+   border-radius: 50%;
+   margin-right: 10px;
+ }
+ 
+ .userDetails {
+   display: flex;
+   flex-direction: column;
+ }
+ 
+ .userName {
+   font-weight: bold;
+   margin: 0;
+ }
+ 
+ .workoutType {
+   font-size: 0.9em;
+   color: #666;
+ }
+ 
+ .meetingDetails {
+   display: flex;
+   flex-direction: column;
+   align-items: flex-end;
+ }
+ 
+ .meetingTime {
+   font-size: 1.5em;
+   font-weight: bold;
+ }
+ 
+ .meetingDuration {
+   font-size: 0.9em;
+   color: #666;
+ }
+ 
+ .toggleButton {
+   background-color: #007bff;
+   color: #fff;
+   border: none;
+   padding: 10px;
+   border-radius: 5px;
+   cursor: pointer;
+   margin-top: 20px;
+ }
+ 
+ .toggleButton:hover {
+   background-color: #0056b3;
+ }
+ 

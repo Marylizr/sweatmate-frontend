@@ -1,10 +1,14 @@
 import React from 'react';
-import styles from '../products/products.module.css';
+import styles from './products.module.css';
+import product from '../../../assets/product.svg'
 
 const Products = () => {
   return (
     <div className={styles.container}>
-      <p>here the personal trainal can load products like ebook, exercises guides and some more</p>
+      <div>
+        <img src={product} alt='product-icon'/>
+        <h2>e-products</h2>
+      </div>
     </div>
   )
 }
