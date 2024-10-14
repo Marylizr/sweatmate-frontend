@@ -3,7 +3,7 @@ import fetchResource from '../../../api'; // Assume fetchResource is available f
 import styles from './upcomingmeetings.module.css'; // Custom CSS module
 import person from '../../../assets/person_1.svg';
 
-const UpcomingMeetings = () => {
+const UpcomingMeetings = ({ userId }) => {
   const [meetings, setMeetings] = useState([]);
   const [showAll, setShowAll] = useState(false);
 
@@ -12,7 +12,6 @@ const UpcomingMeetings = () => {
     const fetchMeetings = async () => {
       try {
         const data = await fetchResource('GET', 'events');
-        console.log('Fetched Meetings:', data); // Log to check if populated data is received
         const todayMeetings = filterTodayMeetings(data);
         setMeetings(todayMeetings);
       } catch (error) {
@@ -20,21 +19,37 @@ const UpcomingMeetings = () => {
       }
     };
     fetchMeetings();
-  }, []);
 
-  // Filter the meetings to show only today's meetings
-  const filterTodayMeetings = (meetings) => {
-    const today = new Date();
-    return meetings.filter(meeting => {
+    // Auto-refresh the meeting list every minute
+    const interval = setInterval(fetchMeetings, 60000);
+
+    return () => clearInterval(interval);
+    }, []);
+
+
+ // Filter the meetings to show only today's meetings and exclude trainer-only events for general users
+
+ const filterTodayMeetings = (meetings) => {
+  const today = new Date();
+  
+  return meetings
+    .filter(meeting => {
       const meetingDate = new Date(meeting.date);
-      // Check if the meeting date matches today's year, month, and day
+      
+      // Check if the meeting date matches exactly today's year, month, and day
       return (
         meetingDate.getFullYear() === today.getFullYear() &&
         meetingDate.getMonth() === today.getMonth() &&
         meetingDate.getDate() === today.getDate()
       );
+    })
+    .filter(meeting => {
+      // Ensure the meeting has not already ended
+      const meetingEndTime = new Date(meeting.date).getTime() + meeting.duration * 60000;
+      return Date.now() < meetingEndTime;
     });
-  };
+};
+
 
   // Toggle the view of meetings (3 or all)
   const toggleShowAll = () => {
@@ -68,17 +83,22 @@ const UpcomingMeetings = () => {
             <div key={index} className={styles.meetingItem}>
               <div className={styles.userInfo}>
                 <img
-                  src={meeting.user ? user.image : person} 
+                  src={meeting.user ? meeting.user.image : person} 
                   alt={`${meeting.userId?.name || 'User'}'s profile`}
                   className={styles.userImage}
                 />
                 <div className={styles.userDetails}>
-                  <p className={styles.userName}>{meeting.userId?.name || 'Unknown User'}</p>
+                  <p className={styles.userName}>
+                    {meeting.userId?.name || 'Unknown User'}
+                    {meeting.userId === 'all' && <span className={styles.allUsersLabel}> (All Users)</span>}
+                  </p>
                   <p className={styles.workoutType}>{meeting.eventType}</p>
                 </div>
               </div>
               <div className={styles.meetingDetails}>
-                <p className={styles.meetingTime}>{new Date(meeting.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                <p className={styles.meetingTime}>
+                  {new Date(meeting.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </p>
                 <p className={styles.meetingDuration}>{meeting.duration} min Session</p>
               </div>
             </div>

@@ -4,12 +4,15 @@
    flex-wrap: wrap;
    align-content: center;
    align-items: center;
-   width: 34vw;
+   width: 30vw;
    background-color: #fff;
    border-radius: 10px;
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
    margin: 0.5em 0.5em 0 0;
    padding: 1em;
+   height: 55vh;
+   overflow-y: auto;
+   flex-wrap: nowrap;
 }
 
 /* .meetingsContainer {

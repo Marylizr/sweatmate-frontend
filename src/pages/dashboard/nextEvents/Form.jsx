@@ -10,14 +10,14 @@ const Form = () => {
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
   const [existingUsers, setExistingUsers] = useState([]);
-  const [selectedUser, setSelectedUser] = useState('');
+  const [selectedUsers, setSelectedUsers] = useState([]);
   const [newUserName, setNewUserName] = useState('');
   const [newUserEmail, setNewUserEmail] = useState('');
   const [selectAll, setSelectAll] = useState(false);
   const [trainerOnly, setTrainerOnly] = useState(false);
 
   useEffect(() => {
-    // Fetch existing users to populate dropdown
+    // Fetch existing users to populate the dropdown
     const fetchUsers = async () => {
       try {
         const users = await fetchResource('GET', 'user');
@@ -28,7 +28,7 @@ const Form = () => {
         }
         setExistingUsers(users);
       } catch (err) {
-        console.error("Error fetching users:", err);
+        console.error('Error fetching users:', err);
       }
     };
     fetchUsers();
@@ -36,61 +36,48 @@ const Form = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Handle case when the event is for personal trainer only
-    let userId = null;
-    if (!trainerOnly && !selectAll && eventType === 'personal_training' && newUserName && newUserEmail) {
-      // Manually create a new user if not existing
-      const newUser = {
-        name: newUserName,
-        email: newUserEmail,
+    
+      let usersToAssign = [];
+    
+      if (trainerOnly) {
+        usersToAssign = null; // Trainer-only event
+      } else if (selectAll) {
+        usersToAssign = existingUsers.map(user => user._id); // Assign to all users
+      } else if (selectedUsers.length > 0) {
+        usersToAssign = selectedUsers; // Assign to selected users
+      }
+    
+      const newEvent = {
+        eventType,
+        title,
+        date,
+        duration,
+        location,
+        description,
+        userId: trainerOnly ? null : usersToAssign, // Assigning event to selected users
+        trainerOnly,
       };
+    
       try {
-        const createdUser = await fetchResource('POST', 'user', { body: newUser });
-        if (createdUser.authError) {
-          alert('Your session has expired. Please log in again.');
-          window.location.href = '/login';
-          return;
-        }
-        userId = createdUser._id;
+        const response = await fetchResource('POST', 'events', { body: newEvent });
+        alert('Event successfully created!');
+        window.location.reload();
       } catch (err) {
-        console.error("Error creating new user:", err);
-        return;
+        console.error('Error creating event:', err);
       }
-    }
-
-    // Prepare the event data
-    const newEvent = {
-      eventType,
-      title,
-      date,
-      duration,
-      location,
-      description,
-      userId: trainerOnly ? null : selectAll ? existingUsers.map(user => user.name) : selectedUser || userId,
     };
+    
 
-    try {
-      // Send the request to create a new event
-      const response = await fetchResource('POST', 'events', { body: newEvent });
-
-      if (response.authError) {
-        alert('Your session has expired. Please log in again.');
-        window.location.href = '/login';
-        return;
-      }
-
-      alert('Event successfully created!');
-    } catch (err) {
-      console.error("Error creating event:", err);
-    }
+  const handleUserSelection = (e) => {
+    const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
+    setSelectedUsers(selectedOptions);
   };
 
   return (
     <div className={styles.wrap}>
       <h2>Plan Next Events</h2>
       <form onSubmit={handleSubmit} className={styles.styleinput}>
-       
+        
         <select value={eventType} onChange={(e) => setEventType(e.target.value)}>
           <option value="event-type"> Event Type: </option>
           <option value="personal_training">Personal Training</option>
@@ -99,85 +86,104 @@ const Form = () => {
         </select>
 
         <label>Title:</label>
-        <input type="text" 
-        onChange={(e) => setTitle(e.target.value)} 
-        placeholder={`title: ${title}`}
-        required />
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Event Title"
+          required
+        />
 
-       
-        <input type="datetime-local" 
-        onChange={(e) => setDate(e.target.value)} 
-        placeholder={`${date}`}
-        required />
+        <input
+          type="datetime-local"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          required
+        />
 
+        <input
+          type="number"
+          value={duration}
+          onChange={(e) => setDuration(e.target.value)}
+          placeholder="Duration (minutes)"
+          required
+        />
 
-        <input type="number" 
-        onChange={(e) => setDuration(e.target.value)} 
-        placeholder={`Duration (minutes): ${duration}`}
-        required />
+        <input
+          type="text"
+          value={location}
+          placeholder="Location"
+          onChange={(e) => setLocation(e.target.value)}
+        />
 
+        <textarea
+          value={description}
+          placeholder="Description"
+          onChange={(e) => setDescription(e.target.value)}
+        />
 
-        <input type="text" value={location} 
-        placeholder={`Location: ${location}`}
-        onChange={(e) => setLocation(e.target.value)} />
+        <div className={styles.checkboxes}>
+          <label>
+            <input
+              type="checkbox"
+              checked={trainerOnly}
+              onChange={(e) => {
+                setTrainerOnly(e.target.checked);
+                if (e.target.checked) {
+                  setSelectAll(false);
+                  setSelectedUsers([]);
+                  setNewUserName('');
+                  setNewUserEmail('');
+                }
+              }}
+            />
+            Personal Trainer Only
+          </label>
 
-        <textarea value={description} 
-        placeholder={`Description: ${description}`}
-        onChange={(e) => setDescription(e.target.value)} />
+          <label>
+            <input
+              type="checkbox"
+              checked={selectAll}
+              onChange={(e) => {
+                setSelectAll(e.target.checked);
+                if (e.target.checked) {
+                  setTrainerOnly(false);
+                  setSelectedUsers([]);
+                }
+              }}
+            />
+            Select All Users
+          </label>
+        </div>
 
-        {eventType === 'personal_training' && (
+        {!trainerOnly && !selectAll && (
           <>
-            <div className={styles.checkboxes}>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={trainerOnly}
-                  onChange={(e) => {
-                    setTrainerOnly(e.target.checked);
-                    if (e.target.checked) {
-                      setSelectAll(false);
-                      setSelectedUser('');
-                      setNewUserName('');
-                      setNewUserEmail('');
-                    }
-                  }}
-                />
-                Personal Trainer Only
-              </label>
+            <label>Select Users:</label>
+            <select
+              multiple
+              value={selectedUsers}
+              onChange={handleUserSelection}
+            >
+              {existingUsers.map(user => (
+                <option key={user._id} value={user._id}>
+                  {user.name}
+                </option>
+              ))}
+            </select>
 
-              <label>
-                <input
-                  type="checkbox"
-                  checked={selectAll}
-                  onChange={(e) => {
-                    setSelectAll(e.target.checked);
-                    if (e.target.checked) {
-                      setTrainerOnly(false);
-                      setSelectedUser('');
-                      setNewUserName('');
-                      setNewUserEmail('');
-                    }
-                  }}
-                />
-                Select All Users
-              </label>
-            </div>
-
-            {!trainerOnly && !selectAll && (
-              <>
-                <label>Select Existing User:</label>
-                <select value={selectedUser} onChange={(e) => setSelectedUser(e.target.value)}>
-                  <option value="">Select a user...</option>
-                  {existingUsers.map((user) => (
-                    <option key={user._id} value={user._id}>{user.name}</option>
-                  ))}
-                </select>
-
-                <label>Or Add New User:</label>
-                <input type="text" placeholder="New User Name" value={newUserName} onChange={(e) => setNewUserName(e.target.value)} />
-                <input type="email" placeholder="New User Email" value={newUserEmail} onChange={(e) => setNewUserEmail(e.target.value)} />
-              </>
-            )}
+            <label>Or Add New User:</label>
+            <input
+              type="text"
+              placeholder="New User Name"
+              value={newUserName}
+              onChange={(e) => setNewUserName(e.target.value)}
+            />
+            <input
+              type="email"
+              placeholder="New User Email"
+              value={newUserEmail}
+              onChange={(e) => setNewUserEmail(e.target.value)}
+            />
           </>
         )}
 
@@ -188,7 +194,3 @@ const Form = () => {
 };
 
 export default Form;
-
-
-// src={meeting.user ? user.image : person} 
-// import person from '../../../assets/person_1.svg'
