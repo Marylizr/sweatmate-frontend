@@ -3,7 +3,7 @@ import { UserContext } from '../../components/userContext/userContext';
 import customFetch from '../../api';
 import styles from '../addWorkout/addworkout.module.css';
 import pen from '../../pages/UserDashboard/images/pen.svg';
-import pic from "../../utils/back1.jpg";
+import pic from "../../assets/person_1.svg";
 
 const AddWorkout = () => {
 

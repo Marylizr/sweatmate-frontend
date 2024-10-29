@@ -10,7 +10,7 @@
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
    margin: 0.5em 0.5em 0 0;
    padding: 1em;
-   height: 55vh;
+   height: 21.5em;
    overflow-y: auto;
    flex-wrap: nowrap;
 }
@@ -113,3 +113,28 @@
    background-color: #0056b3;
  }
  
+ @media (max-width:768px){
+
+  .container {
+    width: 36vw;
+    margin: 0.5em 0 0 0;
+    height: 17em;
+  }
+  .header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1em;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.header > h2 {
+  font-size: 20px;
+}
+
+.header > p {
+  font-size: 15px;
+}
+
+}

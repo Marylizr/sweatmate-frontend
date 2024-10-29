@@ -4,11 +4,15 @@
    flex-wrap: wrap;
    align-content: center;
    align-items: center;
-   /* width: 75vw; */
+   width: 57vw;
+   padding: 2em;
+   margin: 1em;
+   background: white;
+   border-radius: 1em;
 }
 .img > img{
    display: flex;
-   width: 33em;
+   width: 3em;
 }
 .wrapper {
    display: flex;

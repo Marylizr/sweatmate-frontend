@@ -6,13 +6,11 @@ const Form = () => {
   const [eventType, setEventType] = useState('personal_training');
   const [title, setTitle] = useState('');
   const [date, setDate] = useState('');
-  const [duration, setDuration] = useState(60);
+  const [duration, setDuration] = useState();
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
   const [existingUsers, setExistingUsers] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
-  const [newUserName, setNewUserName] = useState('');
-  const [newUserEmail, setNewUserEmail] = useState('');
   const [selectAll, setSelectAll] = useState(false);
   const [trainerOnly, setTrainerOnly] = useState(false);
 
@@ -79,13 +77,11 @@ const Form = () => {
       <form onSubmit={handleSubmit} className={styles.styleinput}>
         
         <select value={eventType} onChange={(e) => setEventType(e.target.value)}>
-          <option value="event-type"> Event Type: </option>
           <option value="personal_training">Personal Training</option>
           <option value="group_class">Group Class</option>
           <option value="gathering">Gathering</option>
         </select>
 
-        <label>Title:</label>
         <input
           type="text"
           value={title}
@@ -117,6 +113,7 @@ const Form = () => {
         />
 
         <textarea
+          className={styles.text}
           value={description}
           placeholder="Description"
           onChange={(e) => setDescription(e.target.value)}
@@ -132,12 +129,10 @@ const Form = () => {
                 if (e.target.checked) {
                   setSelectAll(false);
                   setSelectedUsers([]);
-                  setNewUserName('');
-                  setNewUserEmail('');
                 }
               }}
             />
-            Personal Trainer Only
+            PT Only
           </label>
 
           <label>
@@ -160,6 +155,7 @@ const Form = () => {
           <>
             <label>Select Users:</label>
             <select
+              className={styles.selection}
               multiple
               value={selectedUsers}
               onChange={handleUserSelection}
@@ -170,20 +166,6 @@ const Form = () => {
                 </option>
               ))}
             </select>
-
-            <label>Or Add New User:</label>
-            <input
-              type="text"
-              placeholder="New User Name"
-              value={newUserName}
-              onChange={(e) => setNewUserName(e.target.value)}
-            />
-            <input
-              type="email"
-              placeholder="New User Email"
-              value={newUserEmail}
-              onChange={(e) => setNewUserEmail(e.target.value)}
-            />
           </>
         )}
 

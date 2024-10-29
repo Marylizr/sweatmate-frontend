@@ -1,12 +1,25 @@
 .container {
    display: flex;
    flex-direction: column;
-   flex-wrap: wrap;
    align-content: center;
    align-items: center;
-   width: 20vw;
+   width: 17vw;
+   height: 21vh;
    background-color: #fff;
    border-radius: 10px;
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-   margin: 1px;
+   margin: 0.5em 0.5em 1em 0;
+   padding: 1em;
+   justify-content: center;
 }
+
+@media (max-width:768px){
+
+   .container {
+      width: 39vw;
+      margin: 0.5em 0.5em 0 0;
+      height: 9em;
+   }
+ 
+ 
+ }

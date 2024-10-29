@@ -4,12 +4,14 @@
    flex-wrap: wrap;
    align-content: center;
    align-items: center;
-   width: 35vw;
-   height: 30vh;
-   border: 1px teal solid;
-   border-radius: 0 5px 0px 5px;
-   margin: 1px;
+   width: 32vw;
+   margin: 0 1em 0;
+   padding: 20px;
+   background-color: #fff;
+   border-radius: 10px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 .chartContainer {
    width: 32vw;
    margin: 0 1em 0;
@@ -25,4 +27,33 @@
    font-size: 24px;
    font-weight: bold;
  }
+
+ .yearButton {
+  background-color: white;
+  border: 1px solid teal;
+  border-radius: 6px;
+  color: teal;
+  margin: 1em 0 0 0;
+  padding: 1em;
+ }
  
+.clientChart > canvas.chart{
+  width: 30vw;
+  display: flex;
+ }
+
+ @media (max-width:768px){
+
+  .container {
+    width: 40vw;
+    margin: 0.5em 0.5em 0 0;
+    height: 17em;
+    padding: 16px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+
+}

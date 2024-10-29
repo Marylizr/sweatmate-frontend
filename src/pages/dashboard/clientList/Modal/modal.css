@@ -104,8 +104,6 @@ form > .buttons {
   }
 
   .modalContainer {
-    min-width: 80vw;
-    height: 65vh;
-    padding-top: 2em;
+    min-width: 330px;
   }
 }

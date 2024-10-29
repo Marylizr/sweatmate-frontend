@@ -4,7 +4,11 @@
    flex-wrap: wrap;
    align-content: center;
    align-items: center;
-   width: 75vw;
+   width: 78vw;
+   background-color: #fff;
+   border-radius: 10px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   margin: 1em;
 }
 
 .form {
@@ -173,6 +177,10 @@
 @media (max-width:768px){
    .profile {
       background: transparent;
+      width: 90vw;
+   }
+
+   .container{
       width: 90vw;
    }
 

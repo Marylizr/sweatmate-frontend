@@ -14,3 +14,13 @@
    flex-direction: column;
    flex-wrap: wrap;
 } 
+
+@media (max-width:768px){
+
+   .container {
+      width: 95vw;
+      margin-top: 1em;
+      padding-bottom: 10em;
+   }
+
+}

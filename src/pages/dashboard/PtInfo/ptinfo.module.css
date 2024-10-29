@@ -115,3 +115,15 @@
    text-transform: capitalize;
    cursor: pointer;
 }
+
+
+@media (max-width:768px){
+
+   .container {
+      width: 95vw;
+   }
+
+   .namesinput > input, textarea {
+      width: 80%;
+   }
+}

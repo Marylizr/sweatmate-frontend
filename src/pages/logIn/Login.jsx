@@ -22,7 +22,7 @@ const Login = () => {
    useEffect(() => {
       const token = getUserToken();
       if (!token) {
-         navigate("/"); // Redirect to homepage if logged in
+         navigate("/"); // Redirect to homepage if not logged in
       }
    }, [navigate]);
 

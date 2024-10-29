@@ -3,6 +3,7 @@ import { UserContext } from '../../components/userContext/userContext';
 import axios from 'axios';
 import styles from '../chatGPT/search.module.css';
 import customFetch from '../../api';
+import bot from '../../assets/bot.svg'
 
 
 const ChatComponent = () => {
@@ -103,6 +104,10 @@ const ChatComponent = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
+      <div className={styles.img}>
+          <img src={bot}
+          alt='ai-woman' />
+          </div>
         <form onSubmit={handleSubmit} className={styles.prompt} id="promp_machine">
             <textarea defaultValue={prompt}
             onChange={handleInputChange} placeholder="prompt">
@@ -153,10 +158,7 @@ const ChatComponent = () => {
           <button className={styles.save} onClick={() => {onSave()}}>Save</button>
     </div> 
     {/* wrapper */}
-      <div className={styles.img}>
-        <img src='https://res.cloudinary.com/da6il8qmv/image/upload/v1697112778/bot_wwqlon.png'
-        alt='ai-woman' />
-      </div>
+    
     </div>
     
     

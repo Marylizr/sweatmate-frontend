@@ -1,10 +1,14 @@
 import React from 'react';
-import styles from '../predesignWorkout/predesignworkout.module.css'
+import styles from '../predesignWorkout/predesignworkout.module.css';
+import fit from '../../../assets/fit.svg'
+
+
 
 const PredesignWorkout = () => {
   return (
     <div className={styles.container}>
-      <p>Here is gonna be the pre design workout for basic, medium and advantage level</p>
+      <img src={fit} alt='fit-icon'/>
+      <h2>Pre design workouts</h2>
     </div>
   )
 }

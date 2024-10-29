@@ -86,10 +86,10 @@ const ClientBarChartWithHistoricalToggle = () => {
   };
 
   return (
-    <div className={styles.chartContainer}>
+    <div className={styles.container}>
       <img src={chart} alt='chart-icon' />
       <h2 className={styles.title}>Monthly User Growth</h2>
-      <Bar data={chartData} />
+      <Bar data={chartData} className={styles.chart} />
 
       <div className={styles.buttonsContainer}>
         {availableYears.map((year) => (

@@ -9,7 +9,7 @@
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
    margin: 0.5em;
    padding: 0.5em;
-   max-height: 84vh;
+   height: 22.5em;
    overflow-y: auto;
    flex-wrap: nowrap;
 }
@@ -53,3 +53,99 @@
 .userDetails > p {
    margin: 0;
 }
+
+.monthButtons{
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   align-items: center;
+   justify-content: center;
+   margin-top: 2em;
+}
+
+.monthButtons > div > button {
+   background-color: white;
+    border: 1px solid teal;
+    padding: 0.5em;
+    border-radius: 0.5em;
+    margin: 0.5em;
+    color: teal;
+    width: 6em;
+}
+
+.activityHistory {
+   width: 23em;
+   background: #f2f2f2;
+   padding: 1em;
+   border-radius: 1em;
+}
+
+.historyItem {
+   display: flex;
+}
+
+.historyItem > p.time {
+   font-size: 20px;
+   margin: 0.3em 0 0 0;
+}
+
+.block {
+   display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    align-items: flex-start;
+    margin: 0 1em 0 1em;
+}
+
+.block > p {
+   margin: 0.3em 0 0 0;
+}
+
+.block2 {
+   display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    align-items: flex-start;
+    margin: 0 1em 0 1em;
+}
+
+.block2 > p {
+   margin: 0.3em 0 0 0;
+}
+
+.modalstyle{
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   justify-content: center;
+}
+
+@media (max-width:768px){
+
+   .container {
+     width: 42vw;
+     margin: 0.5em 0.5em 0 0;
+     height: 10em;
+   }
+   .userList {
+      width: 40vw;
+   }
+
+   .userItem > img {
+      width: 2em;
+   }
+   .userDetails > p {
+      font-size: 14px;
+   }
+
+   img.chevronIcon {
+      width: 2em;
+   }
+
+   .userItem {
+      width: 40vw;
+   }
+ 
+ }

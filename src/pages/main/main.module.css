@@ -34,6 +34,10 @@
       align-content: center;
       align-items: center;
    }
+   .header {
+      width: 95%;
+      margin-top:1em;
+   }
 }
 
 @media (min-width: 769px) and (max-width: 1181px) {

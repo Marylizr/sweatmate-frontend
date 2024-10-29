@@ -28,15 +28,12 @@ const UpcomingMeetings = ({ userId }) => {
 
 
  // Filter the meetings to show only today's meetings and exclude trainer-only events for general users
-
- const filterTodayMeetings = (meetings) => {
+const filterTodayMeetings = (meetings) => {
   const today = new Date();
-  
   return meetings
     .filter(meeting => {
       const meetingDate = new Date(meeting.date);
-      
-      // Check if the meeting date matches exactly today's year, month, and day
+      // Check if the meeting date matches today's year, month, and day
       return (
         meetingDate.getFullYear() === today.getFullYear() &&
         meetingDate.getMonth() === today.getMonth() &&
@@ -44,10 +41,17 @@ const UpcomingMeetings = ({ userId }) => {
       );
     })
     .filter(meeting => {
-      // Ensure the meeting has not already ended
-      const meetingEndTime = new Date(meeting.date).getTime() + meeting.duration * 60000;
-      return Date.now() < meetingEndTime;
-    });
+      // Check if the meeting is NOT trainer-only and has a user assigned
+      return !meeting.trainerOnly && meeting.userId;
+    })
+    .filter(meeting => {
+      // Check if the meeting time has passed (exclude ended meetings)
+      const meetingStartTime = new Date(meeting.date).getTime();
+      const meetingEndTime = meetingStartTime + meeting.duration * 60000;
+      const currentTime = Date.now();
+      return currentTime < meetingEndTime; // Only show meetings that haven't ended yet
+    })
+    .sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort meetings by time
 };
 
 

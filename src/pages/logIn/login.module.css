@@ -95,12 +95,13 @@
 }
 
 .log > input {
-   width: 18em;
-    height: 2em;
-    border: gray solid 1px;
-    border-radius: 0.5em;
-    text-align: center;
-    color: gray;
+   width: 15em;
+   height: 2em;
+   margin-right: 1em;
+   border: gray solid 1px;
+   border-radius: 0.5em;
+   text-align: center;
+   color: gray;
 }
 
 @media(max-width: 768px) {
@@ -114,6 +115,10 @@
    .header {
       margin-bottom: 2em;
       margin-top: 0em;
+   }
+
+   .container {
+      margin-top: 4em;
    }
 }
 
