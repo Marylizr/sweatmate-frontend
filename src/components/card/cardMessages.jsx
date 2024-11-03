@@ -3,42 +3,42 @@ import styles from './cardM.module.css';
 import customFetch from '../../api';
 import pen from '../../assets/pen.svg';
 import trash from '../../assets/trash.svg';
+import persona from '../../assets/person_1.svg';
 
-const CardMessages = ({ user, onClick }) => {
-   const {name, email, image } = user;
+const CardMessages = ({ user, onEdit, onDelete }) => {
+   const { name, email, image,  } = user;
 
-   // const handleEdit = () => { 
-   //    customFetch("PUT", "user/" + user._id)
-   //  .then(window.location.reload())
-   //  .catch(console.error('cannot delete this user'))
-   // }
+   const handleEdit = () => {
+      onEdit(user);
+   };
 
-   const handleDelete = () => { 
-      customFetch("DELETE", "user/" + user._id)
-    .then(window.location.reload())
-    .catch(console.error('cannot delete this user'))
-   }
+   const handleDelete = () => {
+      if (window.confirm('Are you sure you want to delete this user?')) {
+         customFetch("DELETE", `user/${user._id}`)
+            .then(() => onDelete(user._id))
+            .catch(error => console.error('Error deleting user:', error));
+      }
+   };
 
-   return(
-      <div className={styles.info} onClick={onClick}>
-         <div className={styles.imagen}> 
-            <img src={image}  alt=''/>
+   return (
+      <div className={styles.info}>
+         <div className={styles.imagen}>
+            <img src={image || persona} alt="userImage" />
          </div>
          <div className={styles.data}>
-            <p><b>name:</b> {name}</p>
-            <p><b>email:</b> {email}</p>
+            <p><b>Name:</b> {name}</p>
+            <p><b>Email:</b> {email}</p>
          </div>
-         <div className={styles.box}  >
-            <button onClick={() => handleDelete(user._id)}>
-               <img src={trash} alt='tras-icon'/>
+         <div className={styles.box}>
+            <button onClick={handleDelete}>
+               <img src={trash} alt='trash-icon' />
             </button>
-          
-            <button>
-               <img  src={pen} alt='edit-icon' />
+            <button onClick={handleEdit}>
+               <img src={pen} alt='edit-icon' />
             </button>
          </div>
-      </div>   
-    )
+      </div>
+   );
 };
 
 export default CardMessages;

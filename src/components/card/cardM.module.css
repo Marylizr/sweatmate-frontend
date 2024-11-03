@@ -23,12 +23,9 @@
    }
 
 .imagen > img {
-   width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    margin-top: 0.5em;
-    border: solid 0.06em lightgray;
-
+   width: 70px;
+   border-radius: 50%;
+   margin-top: 0.5em;
 }
 
 .data > p {

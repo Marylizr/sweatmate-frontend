@@ -29,6 +29,7 @@ import FollowUp from './components/followUp/FollowUp';
 import TodayWorkout from './pages/workoutHistoric/WorkoutHistoric';
 import DesignedByPt from './components/designedByPt/DesignedByPt';
 
+
 // import PrivateRoute from "./api/auth/privateRoute";
 
 function App() {
@@ -70,6 +71,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </UserContextProvider>
+
     </div>
 
 

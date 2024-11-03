@@ -18,11 +18,12 @@
    flex-direction: row;
    flex-wrap: wrap;
    justify-content: center;
-   width: 99%;
-   color: teal;
+   margin-top: 1em;
+   width: 97%;
+   color:#00808050;
    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   border-radius: 10px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
    
 }
 
