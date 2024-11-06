@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 
 
 const FollowUp = () => {
-
+  //here is displayed the progress and follow up
   
     const [progresses, setProgresses] = useState([]);
     const [historials, setHistorial ] = useState([]);

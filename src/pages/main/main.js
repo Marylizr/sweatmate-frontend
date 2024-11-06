@@ -21,7 +21,7 @@ const Main = () => {
 
       <div className={styles.wrap}>
         <div className={styles.header}>
-          <h1> Personal Trainer Dashboard</h1>
+          <h1> PT Dashboard</h1>
         </div>
         <Routes>
           <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />

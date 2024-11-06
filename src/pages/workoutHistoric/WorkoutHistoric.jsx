@@ -8,6 +8,7 @@ import arrow_left from '../../utils/arrow_left.svg';
 
 
 const TodayWorkout = () => {
+   // here is displayed the workout the user has done in the current year
    const [currentWorkout, setCurrentWorkout] = useState([]);
    const [formattedDate, setFormattedDate] = useState('');
    const { gender } = useContext(UserContext);

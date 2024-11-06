@@ -39,13 +39,16 @@ const UserDashboardMale = () => {
                <WeekStorical />
                <MacroCalculator />
                <div className={styles.save}>
-               <button><Link to="/allworkouts"> <img src={sports1} alt='icon'/>Customize Workout </Link> </button>
+                <button><Link to="/allworkouts"> <img src={sports1} alt='icon'/>Customize Workout </Link> </button>
                </div>
                <div className={styles.save}>
-               <button><Link to="/workoutsDashboard"> <img src={sports} alt='icon'/> my WorkOuts </Link> </button>
+                <button><Link to="/workoutsDashboard"> <img src={sports} alt='icon'/> my WorkOuts </Link> </button>
                </div>
                <div className={styles.progress}>
-               <button><Link to="/progress"> <img src={insight} alt='icon'/> my Progress </Link> </button>
+                <button><Link to="/progress"> <img src={insight} alt='icon'/> FollowUp </Link> </button>
+               </div>
+               <div className={styles.save}>
+                 <button><Link to="/personaltrainer"> <img src={insight} alt='icon'/> From PT </Link> </button>
                </div>
             
           </div>

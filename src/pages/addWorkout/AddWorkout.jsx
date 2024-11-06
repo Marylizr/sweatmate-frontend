@@ -1,13 +1,16 @@
-import React, { useRef, useContext} from 'react';
+import React, { useRef, useContext, useState} from 'react';
 import { UserContext } from '../../components/userContext/userContext';
 import customFetch from '../../api';
 import styles from '../addWorkout/addworkout.module.css';
 import pen from '../../pages/UserDashboard/images/pen.svg';
-import pic from "../../assets/person_1.svg";
+import pic from "../../assets/image.svg";
+import Card from '../addWorkout/Card';
+
 
 const AddWorkout = () => {
 
   const { workout, setWorkout } = useContext(UserContext);
+  const [lastData, setLastData] = useState('')
 
   const onSubmit = async () => {
 
@@ -35,6 +38,7 @@ const AddWorkout = () => {
 
     customFetch("POST", "workouts", { body: data })
     .then(() => {
+      setLastData(data)
       alert('workout saved')
     })
       .catch(err => console.log(err));
@@ -179,19 +183,10 @@ const inputFileVideo = useRef(null);
           </div>
 
         </form>
-      
-          <div className={styles.profile}>
-            <h3>new created workout</h3>
-            <div className={styles.box}>
-              <img src={workout.image ? workout.image : pic} alt="workout_Image" />
-              <div className={styles.elements}>
-                <p>workout name: {workout.name}</p>
-                <p>workout type: {workout.type}</p>
-                <p>workout description: {workout.description}</p>
-          </div>
 
-          </div>
-        </div>
+        {lastData && <Card item={lastData}/>}
+
+      
       </div>
     </div>
 );

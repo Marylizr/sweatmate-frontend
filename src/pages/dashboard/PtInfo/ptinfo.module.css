@@ -126,4 +126,9 @@
    .namesinput > input, textarea {
       width: 80%;
    }
+
+   .userimage{
+      display: flex;
+      flex-direction: column;
+   }
 }

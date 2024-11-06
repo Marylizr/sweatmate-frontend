@@ -8,7 +8,7 @@ const PredesignWorkout = () => {
   return (
     <div className={styles.container}>
       <img src={fit} alt='fit-icon'/>
-      <h2>Pre design workouts</h2>
+      <h2>PreDesign workouts</h2>
     </div>
   )
 }

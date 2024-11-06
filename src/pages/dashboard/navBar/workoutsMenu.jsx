@@ -48,16 +48,21 @@ const WorkoutsMenu = () => {
               <Link to='/main/dashboard'> Dashboard </Link>
             </div>
             <div className={styles.side_menu}>
-              <Link to='/main/addworkout'><img src={plus} alt=''/> Add Workout </Link>
+              <img src={plus} alt=''/>
+              <Link to='/main/addworkout'> Add Workout </Link>
+              
             </div>
             <div className={styles.side_menu}>
-              <Link to='/main/workouts'><img src={edit} alt=''/> Edit Workout </Link> <br />
+              <img src={edit} alt=''/>
+              <Link to='/main/workouts'> Edit Workout </Link> <br />
             </div>
             <div className={styles.side_menu}>
-              <Link to='/main/training'><img src={fit} alt='icon'/> Training </Link>
+              <img src={fit} alt='icon'/>
+              <Link to='/main/training'> Training </Link>
             </div>
             <div className={styles.side_menu}>
-              <Link to='/main/userList'><img src={person} alt=''/> User List </Link>
+              <img src={person} alt=''/>
+              <Link to='/main/userList'> User List </Link>
             </div>
             <div className={styles.side_menu}>
             { role === 'admin' && <Link to="/dashboard/female"><img src={woman} alt='icon'/> | </Link> }
@@ -65,7 +70,8 @@ const WorkoutsMenu = () => {
 
             </div>
             <div className={styles.side_menu}>
-              <Link to='/main/openAi'><img src={bot} alt='icon'/> ChatBot </Link>
+              <img src={bot} alt='icon'/>
+              <Link to='/main/openAi'> ChatBot </Link>
             </div>
             <div className={styles.side_menu}>
               <button onClick={() => {onLogOut()}}>
@@ -105,7 +111,7 @@ const NavContainer = styled.nav`
        color: grey;
        display: block;
        margin-right:1em;
-       font-size: 12px;
+       font-size: 1.5em;
        text-decoration: none;
      }
 
@@ -122,21 +128,26 @@ const NavContainer = styled.nav`
 
 
   .links.active {
-    width: 88%;
-    display: block;
+    width: 90vw;
+    display: flex;
     margin-left: auto;
     margin-right: auto;
-    top: 10%;
+    top: 5em;
     left: 0;
     right: 0;
     text-align: center;
-    background: white;
-    z-index:100;
+    background: #f7f7f7;
+    z-index: 100;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 8px #80808042;
     
-    a{
-      font-size: 1.2rem;
-      color: grey;
-    }
+  }
+  .links.active >  a {
+    font-size: 1.2rem;
+    color: grey;
   }
 
   .links > button {

@@ -27,7 +27,7 @@ import WorkoutDash from './pages/workoutsDash/WorkoutDash';
 import Main from './pages/main/main';
 import FollowUp from './components/followUp/FollowUp';
 import TodayWorkout from './pages/workoutHistoric/WorkoutHistoric';
-import DesignedByPt from './components/designedByPt/DesignedByPt';
+import DesignedByPt from './pages/designedByPt/DesignedByPt';
 
 
 // import PrivateRoute from "./api/auth/privateRoute";

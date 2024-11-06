@@ -88,3 +88,23 @@ form > button.submit{
   
  
  }
+
+
+ @media (max-width:375px){
+
+   .container {
+     width: 96vw;
+     margin: 0.5em 0em 0 0;
+     height: auto;
+     padding: 16px;
+     display: flex;
+     flex-direction: column;
+     flex-wrap: wrap;
+   }
+ 
+   .title {
+     font-size: 20px;
+   }
+ 
+ 
+ }

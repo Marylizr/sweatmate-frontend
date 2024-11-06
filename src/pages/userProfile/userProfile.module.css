@@ -18,7 +18,7 @@
    align-content: center;
    align-items: center;
    width: 75vw;
-   justify-content: center;
+   justify-content: flex-start;
 }
 
 .small_header {
@@ -85,3 +85,43 @@
    display: flex;
    flex-direction: column;
 }
+
+/*mobile*/
+@media (max-width:768px){
+   .container {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-content: center;
+      align-items: center;
+      width: 90vw;
+   }
+
+  .wrap {
+   width: 90vw;
+  }
+   
+}
+
+@media (max-width:375px){
+
+   .container {
+     width: 97vw;
+     margin: 0.5em 0em 0 0;
+     height: auto;
+     padding: 16px;
+     display: flex;
+     flex-direction: column;
+     flex-wrap: wrap;
+   }
+ 
+   .title {
+     font-size: 20px;
+   }
+ 
+
+   .wrap {
+      width: 97vw;
+   }
+ 
+ }

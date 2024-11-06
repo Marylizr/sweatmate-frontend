@@ -149,3 +149,43 @@
    }
  
  }
+
+ @media (max-width:375px){
+
+   .container {
+     width: 96vw;
+     margin: 0.5em 0em 0 0;
+     height: auto;
+     padding: 16px;
+     display: flex;
+     flex-direction: column;
+     flex-wrap: wrap;
+   }
+ 
+   .title {
+     font-size: 20px;
+   }
+
+   .userList {
+      width: 90vw;
+      display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-content: center;
+        align-items: center;
+        padding: 0.5em;
+        background-color: #fff;
+        border-radius: 10px;
+   }
+   
+   .userItem {
+      width: 90vw;
+   }
+
+   .userDetails > p {
+      margin: 0 3em 0;
+      font-size: 2em;
+   }
+ 
+ 
+ }
