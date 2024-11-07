@@ -1,236 +1,159 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
 import styles from "../settings.module.css";
-import userimg from '../../../assets/person_1.svg';
+import { useEffect , useState, useRef} from "react";
+import userimg from '../images/userimg.svg'
 import customFetch from '../../../api';
 import pen from '../../../assets/pen_white.svg';
 import eye from '../../../assets/eye.svg';
-import Cropper from 'react-easy-crop';
-import { getCroppedImg } from '../../../components/imageCropper/CropImage';
+
 
 const Settings = () => {
-    const [passwordShown, setPasswordShown] = useState(false);
-    const [user, setUser] = useState({
-        name: "name",
-        email: "email",
-        password: "",
-        image: "",
-        age: "",
-        height: "",
-        weight: "",
-        goal: "Fat-Lost"
-    });
 
-    const [image, setImage] = useState(null); // Uploaded image for cropping
-    const [croppedImage, setCroppedImage] = useState(null); // Final cropped image
-    const [crop, setCrop] = useState({ x: 0, y: 0 });
-    const [zoom, setZoom] = useState(1);
-    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+    const [passwordShown, setPasswordShown] = useState(false);
+
+    const togglePasswordVisiblity = () => { 
+      setPasswordShown(passwordShown ? false : true); 
+    };
+
+    const [user, setUser] = useState(
+      { 
+         name:"name", 
+         email: "email", 
+         password:"pass", 
+         image:"image", 
+         age:"age", 
+         height:"height",
+         weight:"weight",
+         goal:"goal"
+      });
+   
+
+    const getUser = () => {
+      customFetch("GET", "user/me")
+      .then((json) => { 
+         setUser({...json, password:""});  
+         }); }
+    
+      useEffect(() => {
+      getUser() 
+    },[]);
+
+
+    const onSubmit = async() => {
+      
+      const imagen = fileUpload();
+      let resultado;
+      await imagen.then(result => { resultado = result; }) 
+      const data = {
+        name: user.name, 
+        email:user.email, 
+        password:user.password,
+        image:resultado ? resultado : user.image, 
+        age:user.age,
+        height: user.height,
+        weight:user.weight,
+        goal:user.goal
+      }
+
+      
+      customFetch("PUT", "user", {body:data})
+      .then(alert('Information Updated'))
+      .catch(err => console.log(err, 'Its not possible to update the info'));  
+
+    }
+
+    const fileUpload = async () => {
+        const files = inputFile.current.files;
+        const formData = new FormData();
+        const url = `https://api.cloudinary.com/v1_1/da6il8qmv/image/upload`;
+        let imagen;
+      
+        let file = files[0];
+        formData.append("file", file);
+        formData.append("upload_preset", 'h9rhkl6h');
+        console.log(formData, files)
+        await fetch(url, {
+          method: "POST",
+          header: {
+              'Content-Type': 'multipart/form-data'
+          },
+          body: formData
+        })
+        .then((response) => {
+          console.log(response);
+          return response.json();
+          
+        })
+        .then((photo) => {
+          imagen = photo.url;
+        })
+        .catch((data) => {
+          console.log(data);
+        });
+       
+        return imagen;
+    }
 
     const inputFile = useRef(null);
 
-    // Toggle password visibility
-    const togglePasswordVisibility = () => {
-        setPasswordShown(!passwordShown);
-    };
-
-    // Fetch user data on mount
-    useEffect(() => {
-        const getUser = async () => {
-            try {
-                const json = await customFetch("GET", "user/me");
-                setUser({ ...json, password: "" });
-            } catch (error) {
-                console.error("Error fetching user:", error);
-            }
-        };
-        getUser();
-    }, []);
-
-    // Handles image upload
-    const handleFileChange = (e) => {
-        if (e.target.files && e.target.files.length > 0) {
-            const file = e.target.files[0];
-            setImage(URL.createObjectURL(file)); // Set image for cropping
-        }
-    };
-
-    // Handle crop complete and get cropped image
-    const onCropComplete = useCallback((_, croppedAreaPixels) => {
-        setCroppedAreaPixels(croppedAreaPixels);
-    }, []);
-
-    // Save the cropped image
-    const handleSaveCroppedImage = useCallback(async () => {
-        try {
-            const croppedImageUrl = await getCroppedImg(image, croppedAreaPixels);
-            setCroppedImage(croppedImageUrl);
-            setUser((prev) => ({ ...prev, image: croppedImageUrl })); // Update user image
-            setImage(null); // Close the cropper modal
-        } catch (error) {
-            console.error("Error cropping image:", error);
-        }
-    }, [image, croppedAreaPixels]);
-
-    // Handles form submission
-    const onSubmit = async (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-  
-      const imageUrl = await fileUpload();
-      const data = {
-          ...user,
-          image: imageUrl || user.image,
-      };
-  
-      try {
-          await customFetch("PUT", "user", { body: data });
-          alert("Information Updated");
-      } catch (error) {
-          console.error("Failed to update information:", error);
-          alert(`Error updating information: ${error.message}`);
-      }
-  };
-  
-
-    // Handles file upload to Cloudinary
-    const fileUpload = async () => {
-        const files = inputFile.current.files;
-        if (!files.length) return null;
-
-        const formData = new FormData();
-        const url = "https://api.cloudinary.com/v1_1/da6il8qmv/image/upload";
-        formData.append("file", files[0]);
-        formData.append("upload_preset", "h9rhkl6h");
-
-        try {
-            const response = await fetch(url, {
-                method: "POST",
-                body: formData,
-            });
-            const photo = await response.json();
-            return photo.url;
-        } catch (error) {
-            console.error("Error uploading image:", error);
-            return null;
-        }
-    };
-
-    return (
-        <div className={styles.editbox}>
-            <form className={styles.form} onSubmit={onSubmit}>
-                <p>Edit Profile</p>
-
+    return(
+      <div className = {styles.editbox}>
+          <form className= {styles.form} >
+              <p>Edit profile </p>
+                  
                 <div className={styles.images}>
-                    <div className={styles.userimage}>
-                        <img src={croppedImage || user.image || userimg} className={styles.imagen} alt="userImage" />
-                    </div>
+                  <div className={styles.userimage}><img src={user.image ? user.image : userimg } 
+                    className = {styles.imagen} alt="userImage"/></div>
                     <div className={styles.editimg}>
-                        <label>
-                            <input
-                                type="file"
-                                ref={inputFile}
-                                onChange={handleFileChange}
-                                className={styles.uploading}
-                            />
-                            <img src={pen} alt="pen icon" />
-                        </label>
+                      
+                      <label>
+                        <input type='file' ref={inputFile} 
+                        onChange={(e) => setUser({...user, image: URL.createObjectURL(e.target.files[0])}) }
+                        className={styles.uploading}></input>
+                        <img src={pen} alt="penlogo"/>
+                      </label>
                     </div>
-                </div>
+                  </div>
 
-                {/* Modal Cropper UI */}
-                {image && (
-                    <div className={styles.overlay}>
-                        <div className={styles.cropContainer}>
-                            <div className={styles.cropArea}>
-                                <Cropper
-                                    image={image}
-                                    crop={crop}
-                                    zoom={zoom}
-                                    aspect={1} // Square crop
-                                    onCropChange={setCrop}
-                                    onZoomChange={setZoom}
-                                    onCropComplete={onCropComplete}
-                                />
-                            </div>
-                            <button
-                                type="button"
-                                onClick={handleSaveCroppedImage}
-                                className={styles.saveCropButton}
-                            >
-                                Save Cropped Image
-                            </button>
-                        </div>
-                    </div>
-                )}
+                  <div className= {styles.namesinput}>
+                  
+                    <input className = {styles.names} type='text' value={user.name} 
+                    onChange={(e) =>setUser({...user,name: e.target.value })} placeholder={user.name} />
 
-                {/* User information inputs */}
-                <div className={styles.namesinput}>
-                    <input
-                        className={styles.names}
-                        type="text"
-                        value={user.name}
-                        onChange={(e) => setUser({ ...user, name: e.target.value })}
-                        placeholder="Name"
-                    />
-                    <input
-                        className={styles.email}
-                        type="email"
-                        value={user.email}
-                        onChange={(e) => setUser({ ...user, email: e.target.value })}
-                        placeholder="Email"
-                    />
-                    <input
-                        className={styles.names}
-                        type="number"
-                        value={user.age}
-                        onChange={(e) => setUser({ ...user, age: e.target.value })}
-                        placeholder="Age"
-                    />
-                    <input
-                        className={styles.names}
-                        type="number"
-                        value={user.height}
-                        onChange={(e) => setUser({ ...user, height: e.target.value })}
-                        placeholder="Height (cm)"
-                    />
-                    <input
-                        className={styles.names}
-                        type="number"
-                        value={user.weight}
-                        onChange={(e) => setUser({ ...user, weight: e.target.value })}
-                        placeholder="Weight (kg)"
-                    />
-                    <select
-                        className={styles.names}
-                        value={user.goal}
-                        onChange={(e) => setUser({ ...user, goal: e.target.value })}
-                    >
-                        <option value="Fat-Lost">Fat Lost</option>
-                        <option value="Gain-Muscle-Mass">Gain Muscle Mass</option>
-                        <option value="Maintenance">Maintenance</option>
-                    </select>
-                </div>
+                  <input className= {styles.email} type="email" 
+                  onChange={(e) =>setUser({...user,email: e.target.value})} placeholder={user.email}  />
+                  {!user.email && <span><h3>X</h3></span>}
 
-                {/* Password input with toggle visibility */}
-                <div className={styles.passwordeye}>
-                    <input
-                        className={styles.password}
-                        type={passwordShown ? "text" : "password"}
-                        value={user.password}
-                        onChange={(e) => setUser({ ...user, password: e.target.value })}
-                        placeholder="Password"
-                    />
-                    <i className={styles.eye} onClick={togglePasswordVisibility}>
-                        <img src={eye} alt="eye-icon" />
+                  <input className= {styles.names} type="number"  
+                    onChange={(e) =>setUser({...user, age: e.target.value})} placeholder={`${user.age} years old `}  />
+
+                  <input className= {styles.names} type="number" 
+                    onChange={(e) =>setUser({...user, height: e.target.value})} placeholder={`${user.height} Cm`}  />
+
+                  <input className= {styles.names} type="number" 
+                    onChange={(e) =>setUser({...user, weight: e.target.value})} placeholder={`${user.weight} Kg`} />
+
+                  <select className= {styles.names} type="text" value={user.goal} onChange={(e) =>setUser({...user, goal: e.target.value})} >
+                    <option value="Fat-Lost">Fat Lost</option>
+                    <option value="Gain-Muscle-Mass">Gain Muscle Mass</option>
+                    <option value="Manteninance">Manteninance</option>
+                  </select>    
+
+                  </div>
+                  
+                  <div className={styles.passwordeye}>
+                    <input className = {styles.password} type={passwordShown ? "text" : "password"} 
+                    onChange={(e) =>setUser({...user,password: e.target.value})} placeholder="Password"  />
+                    <i className={styles.eye} onClick={togglePasswordVisiblity}>
+                      <img src={eye} alt='eye-icon'/>
                     </i>
-                </div>
+                  </div>
 
-                <button type="submit" className={styles.submit}>
-                    Save
-                </button>
+                  <button className = {styles.submit} 
+                  onClick={(e) => {e.preventDefault();e.stopPropagation();onSubmit();}}>Save</button>
             </form>
-        </div>
-    );
-};
+          </div>
+    )
+}
 
 export default Settings;
+
