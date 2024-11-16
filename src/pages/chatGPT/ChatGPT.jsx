@@ -1,167 +1,212 @@
-import React, {useRef,useState, useContext, useEffect } from 'react';
-import { UserContext } from '../../components/userContext/userContext';
-import axios from 'axios';
-import styles from '../chatGPT/search.module.css';
-import customFetch from '../../api';
-import bot from '../../assets/bot.svg'
+import React, { useRef, useState, useContext, useEffect } from "react";
+import { UserContext } from "../../components/userContext/userContext";
+import axios from "axios";
+import styles from "../chatGPT/search.module.css";
+import customFetch from "../../api";
+import bot from "../../assets/bot.svg";
+import Modal from './Modal/Modal';
 
 
 const ChatComponent = () => {
-
-  const [prompt, setPrompt] = useState();
-  const [response, setResponse] = useState();
-  const { name  } = useContext(UserContext);
-  const [getResponse, setGetResponse] = useState(
-    {
+  const [prompt, setPrompt] = useState(""); // Stores the user input prompt
+  const [response, setResponse] = useState(""); // Stores the response from the backend
+  const [status, setStatus] = useState(null); // Stores status messages
+  const { name } = useContext(UserContext); // Fetches the user's name from context
+  const [showModal, setShowModal] = useState(false);
+  const [getResponse, setGetResponse] = useState({
     userName: name,
-    content: response,
-  })
-  
-  const handleInputChange = (event) => {
-      setPrompt(event.target.value);
-    };
+    content: "",
+    infotype: "", // Single string value for infotype
+    picture: "",
+  });
 
-  const onReload = () => {
-    window.location.reload()
-  }
-  const fileUpload = async () => {
-    const files = inputFile.current.files;
-    const formData = new FormData();
-    const url = `https://api.cloudinary.com/v1_1/da6il8qmv/image/upload`;
-
-    let imagen;
-    let file = files[0];
-    formData.append("file", file);
-    formData.append("upload_preset", 'h9rhkl6h');
-    console.log(formData, files);
-    await fetch(url, {
-      method: "POST",
-      header: {
-        'Content-Type': 'multipart/form-data'
-      },
-      body: formData
-    })
-      .then((response) => {
-        console.log(response);
-        return response.json();
-      })
-      .then((photo) => {
-        imagen = photo.url;
-
-      })
-      .catch((data) => {
-        console.log(data);
-      });
-
-    return imagen;
+  const openModal = () => {
+    setShowModal(true); // Open the modal
+   
   };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault()
-
-    try {
-      const response = await axios.post('http://localhost:3001/chat', { prompt });
-      setResponse(response.data);
-    } catch (error) {
-      console.error('Error:', error);
-    }
+  // Close the modal
+  const closeModal = () => {
+    setShowModal(false); // Close the modal
   };
 
   const inputFile = useRef(null);
 
-  const onSave = async () => {
-    alert('saving')
-    const imagen = fileUpload();
-    let resultado;
-    await imagen.then(result => { resultado = result; });
+  const handleInputChange = (event) => {
+    setPrompt(event.target.value);
+  };
 
-    const data = {
-      userName: name,
-      infotype: getResponse.infotype,
-      content: response,
-      picture: resultado ? resultado : getResponse.picture,
+  const handleInfotypeChange = (event) => {
+    const { value } = event.target;
+    setGetResponse((prevState) => ({
+      ...prevState,
+      infotype: value, // Set infotype directly as a string
+    }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const apiResponse = await axios.post("http://localhost:3001/chatCompletion", { prompt });
+      setResponse(apiResponse.data.response || "No response from server.");
+      setStatus({ type: "success", message: "Prompt sent successfully!" });
+    } catch (error) {
+      console.error("Error:", error);
+      setStatus({ type: "error", message: "Failed to fetch response from the server." });
     }
-    customFetch ("POST", "savePrompt", {body: data})
-    .then((json) => {
+  };
+
+  const fileUpload = async () => {
+    const files = inputFile.current.files;
+    if (files.length === 0) return "";
+
+    const formData = new FormData();
+    formData.append("file", files[0]);
+    formData.append("upload_preset", "h9rhkl6h");
+
+    try {
+      const uploadResponse = await fetch("https://api.cloudinary.com/v1_1/da6il8qmv/image/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await uploadResponse.json();
+      return data.url || "";
+    } catch (error) {
+      console.error("Image upload failed:", error);
+      setStatus({ type: "error", message: "Image upload failed. Please try again." });
+      return "";
+    }
+  };
+
+  const onSave = async () => {
+    if (!name || !response || !getResponse.infotype) {
+      setStatus({ type: "error", message: "Please ensure all required fields are filled." });
+      return;
+    }
+
+    try {
+      const picture = await fileUpload();
+
+      const data = {
+        userName: name,
+        content: response, // Response from the backend
+        infotype: getResponse.infotype, // Selected infotype (string)
+        picture: picture || getResponse.picture, // Uploaded picture or existing one
+      };
+
+      console.log("Data being sent:", data);
+
+      const savedResponse = await customFetch("POST", "savePrompt", { body: data });
+      setGetResponse(savedResponse);
+
+      setStatus({ type: "success", message: "Prompt saved successfully!" });
+    } catch (error) {
+      console.error("Error saving prompt:", error);
+      setStatus({ type: "error", message: "Failed to save the prompt. Please try again." });
+    }
+  };
+
+  useEffect(() => {
+    customFetch("GET", "create").then((json) => {
       setGetResponse(json);
-    })
-    .then( window.location.reload())
-    .catch((error) => {
-      console.log(error, 'it hasn´t been possible to save the prompt');
-    })
-  }
-
-    useEffect(() => {
-    customFetch("GET", "savePrompt")
-    .then((json) => {
-    setGetResponse(json);
-    })
-  }, [setGetResponse]);
-
-
-  
+    });
+  }, []);
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-      <div className={styles.img}>
-          <img src={bot}
-          alt='ai-woman' />
+        <div className={styles.img}>
+          <img src={bot} alt="ai-woman" />
+        </div>
+        <form onSubmit={handleSubmit} className={styles.prompt}>
+          <textarea
+            value={prompt}
+            onChange={handleInputChange}
+            placeholder="Enter your prompt"
+          ></textarea>
+
+          <div className={styles.check}>
+            <label>
+              <input
+                type="radio"
+                name="infotype"
+                value="healthy-tips"
+                onChange={handleInfotypeChange}
+              />
+              Healthy Tips
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="infotype"
+                value="recipes"
+                onChange={handleInfotypeChange}
+              />
+              Recipes
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="infotype"
+                value="workouts"
+                onChange={handleInfotypeChange}
+              />
+              Workouts
+            </label>
           </div>
-        <form onSubmit={handleSubmit} className={styles.prompt} id="promp_machine">
-            <textarea defaultValue={prompt}
-            onChange={handleInputChange} placeholder="prompt">
-            </textarea>
-            
-            <input type="hidden" value={response}
-            onChange={(e) => setGetResponse({ ...getResponse, content: response })} />
-            <input type="hidden" 
-            onChange={(e) => setGetResponse({ ...getResponse, userName: e.target.value })} placeholder="name" />
-          
-            <div className={styles.check}>
-              <input type="checkbox" infotype="infotype" value='healthy-tips' id="flexCheckDefault"
-                onChange={(e) => setGetResponse({ ...getResponse, infotype: e.target.value })}
-              />
-              <label htmlFor="flexCheckDefault"> Healthy Tips </label>
 
-              <input type="checkbox" infotype="infotype" value="recipes" id="flexCheckDefault"
-                onChange={(e) => setGetResponse({ ...getResponse, infotype: e.target.value })}
+          <div className={styles.upload}>
+            <label>
+              <input
+                type="file"
+                ref={inputFile}
+                className={styles.uploading}
               />
-              <label htmlFor="flexCheckDefault"> Recipes </label>
-
-              <input type="checkbox" infotype="infotype" value="workouts" id="flexCheckDefault"
-                onChange={(e) => setGetResponse({ ...getResponse, infotype: e.target.value })}
-              />
-              <label htmlFor="flexCheckDefault"> workouts </label>
-            </div>
-
-            {/* upload image */}
-            <div className={styles.upload}>
-              <label>
-                <input type='file' ref={inputFile}
-                  onChange={(e) => setGetResponse({ ...getResponse, image: URL.createObjectURL(e.target.files[0]) })}
-                  className={styles.uploading}></input>
-              </label>
-            </div>
-            
-            <div className={styles.buttons}>
-              <button className={styles.send} type="submit">Send</button>
-              <button className={styles.reset} onClick={onReload}>Reset</button>
-            </div>
-          </form>
-    
-          <div className={styles.chat}>
-            <p>
-              {response}
-            </p>
+              Upload Image
+            </label>
           </div>
-          <button className={styles.save} onClick={() => {onSave()}}>Save</button>
-    </div> 
-    {/* wrapper */}
-    
+
+          <div className={styles.buttons}>
+            <button className={styles.send} type="submit">
+              Send
+            </button>
+            <button
+              className={styles.reset}
+              type="button"
+              onClick={() => setPrompt("")}
+            >
+              Reset
+            </button>
+          </div>
+        </form>
+
+        <div className={styles.chat}>
+          <div>{response}</div>
+        </div>
+
+        <button className={styles.save} 
+          onClick={() => 
+          {
+            openModal()
+            onSave
+          }
+          }
+          >Save
+        </button>
+
+        {/* Status Message */}
+        {status && showModal && (
+           <Modal isClose={closeModal} isOpen={showModal}>
+            <div
+              className={`${styles.statusMessage} ${
+                status.type === "success" ? styles.success : styles.error
+              }`}
+            >
+              {status.message}
+            </div>
+         </Modal>
+        )}
+      </div>
     </div>
-    
-    
   );
 };
 

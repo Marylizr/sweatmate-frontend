@@ -18,7 +18,8 @@ const ClientList = () => {
     const fetchUsers = async () => {
       try {
         const data = await fetchResource('GET', 'user'); // Fetch users
-        setUsers(data);
+        const nonAdminUsers = data.filter((user) => user.role !== "admin"); // Exclude admin users
+        setUsers(nonAdminUsers);
       } catch (error) {
         console.error('Error fetching users:', error);
       }
