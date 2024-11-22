@@ -2,7 +2,7 @@ import React, { useRef, useContext, useState} from 'react';
 import { UserContext } from '../../components/userContext/userContext';
 import customFetch from '../../api';
 import styles from '../addWorkout/addworkout.module.css';
-import pen from '../../pages/UserDashboard/images/pen.svg';
+import pen from '../../assets/edit.svg';
 import pic from "../../assets/image.svg";
 import Card from '../addWorkout/Card';
 
@@ -127,10 +127,11 @@ const inputFileVideo = useRef(null);
         <form className={styles.form}>
           <div className={styles.media}>
             <div className={styles.images}>
-              <div className={styles.userimage}><img src={workout.image ? workout.image : pic} 
+              <div className={styles.userimage}>
+                <img src={workout.image ? workout.image : pic} 
                 className={styles.imagen} alt="userImage" /></div>
-              <div className={styles.editimg}>
 
+              <div className={styles.editimg}>
                 <label>
                   <input type='file' ref={inputFile}
                     onChange={(e) => setWorkout({ ...workout, image: URL.createObjectURL(e.target.files[0]) })}

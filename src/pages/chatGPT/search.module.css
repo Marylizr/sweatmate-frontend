@@ -4,7 +4,7 @@
    flex-wrap: wrap;
    align-content: center;
    align-items: center;
-   width: 57vw;
+   width: 80vw;
    padding: 2em;
    margin: 1em;
    background: white;
@@ -58,6 +58,10 @@
    margin: 1em;
 }
 
+
+.upload > label > input[type="file" i]  {
+background-color: transparent !important;
+}
 
 
 .prompt > textarea {
@@ -120,10 +124,22 @@ button.save {
    background-color: #f9f9f9; /* Subtle background for readability */
    border-radius: 8px;
  }
+
+ .upload {
+   background: white;
+   padding: 1em;
+   border-radius: 0.5em;
+   margin: 1em 0 0;
+   align-items: center;
+   display: flex;
+   justify-content: center;
+   box-shadow: 0px 0px 8px #80808042;
+ }
  
  .uploading {
    margin: 10px 0;
    cursor: pointer;
+   display: none;
  }
  
  .prompt textarea {
@@ -169,16 +185,32 @@ button.save {
    border: 1px solid #f5c6cb;
  }
  
+ .check > label {
+   margin-right: 2.5em;
+   color: teal;
+ }
  
 @media (max-width:768px){
+
+   .container {
+      width: 76vw;
+   }
+
+
    .prompt > textarea {
-      width: 25em;
+      
+      width: 22em;
    }
 
    .chat {
       width: 20em;
       height: 8em;
    }
+
+   .check > label {
+      margin-right: 1.5em;
+      color: teal;
+  }
 }
 
 @media (min-width: 769px) and (max-width: 1181px) {

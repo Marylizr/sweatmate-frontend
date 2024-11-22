@@ -50,7 +50,7 @@ const UserDashboardFemale = () => {
                <button><Link to="/"> <img src={insight} alt='icon'/> find a SweatMate </Link> </button>
                </div>
                <div className={styles.save}>
-               <button><Link to="/"> <img src={insight} alt='icon'/> my Progress </Link> </button>
+               <button><Link to="/progress"> <img src={insight} alt='icon'/> my Progress </Link> </button>
                </div>
                <div className={styles.save}>
                <button><Link to="/personaltrainer"> <img src={insight} alt='icon'/> From PT </Link> </button>

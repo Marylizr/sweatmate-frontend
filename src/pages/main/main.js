@@ -9,6 +9,9 @@ import styles from '../main/main.module.css';
 import Chat from '../chatGPT/ChatGPT';
 import Training from '../training/Training';
 import Dashboard from '../dashboard/Dashboard';
+import Predesigned from '../dashboard/predesignWorkout/PreDegined';
+import MealList from '../dashboard/mealPlans/MealList';
+
 
 
 
@@ -30,6 +33,8 @@ const Main = () => {
           <Route path="/workouts" element={<PrivateRoute><EditWorkouts/></PrivateRoute>} />
           <Route path="/openAi" element={<PrivateRoute><Chat /></PrivateRoute> } />
           <Route path="/training" element={<PrivateRoute><Training /></PrivateRoute> } />
+          <Route path="/predesigned" element={<PrivateRoute><Predesigned/></PrivateRoute> } />
+          <Route path="/mealplan" element={<PrivateRoute><MealList/></PrivateRoute> } />
         </Routes>
       </div>
      

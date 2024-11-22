@@ -1,45 +1,41 @@
-import React, { useRef, useState, useContext, useEffect } from "react";
+import React, { useRef, useState, useContext } from "react";
 import { UserContext } from "../../components/userContext/userContext";
 import axios from "axios";
 import styles from "../chatGPT/search.module.css";
 import customFetch from "../../api";
 import bot from "../../assets/bot.svg";
-import Modal from './Modal/Modal';
-
 
 const ChatComponent = () => {
   const [prompt, setPrompt] = useState(""); // Stores the user input prompt
   const [response, setResponse] = useState(""); // Stores the response from the backend
   const [status, setStatus] = useState(null); // Stores status messages
   const { name } = useContext(UserContext); // Fetches the user's name from context
-  const [showModal, setShowModal] = useState(false);
+  
   const [getResponse, setGetResponse] = useState({
     userName: name,
     content: "",
-    infotype: "", // Single string value for infotype
+    infotype: "", // Main category: "healthy-tips", "recipes", "workouts"
+    subCategory: "", // Subcategory based on infotype
     picture: "",
   });
 
-  const openModal = () => {
-    setShowModal(true); // Open the modal
-   
-  };
-  // Close the modal
-  const closeModal = () => {
-    setShowModal(false); // Close the modal
-  };
-
   const inputFile = useRef(null);
 
-  const handleInputChange = (event) => {
-    setPrompt(event.target.value);
-  };
-
+  // Input Handlers
+  const handleInputChange = (event) => setPrompt(event.target.value);
   const handleInfotypeChange = (event) => {
-    const { value } = event.target;
+    const value = event.target.value;
     setGetResponse((prevState) => ({
       ...prevState,
-      infotype: value, // Set infotype directly as a string
+      infotype: value, // Set infotype directly
+      subCategory: "", // Reset subcategory when infotype changes
+    }));
+  };
+  const handleSubCategoryChange = (event) => {
+    const value = event.target.value;
+    setGetResponse((prevState) => ({
+      ...prevState,
+      subCategory: value,
     }));
   };
 
@@ -48,7 +44,7 @@ const ChatComponent = () => {
     try {
       const apiResponse = await axios.post("http://localhost:3001/chatCompletion", { prompt });
       setResponse(apiResponse.data.response || "No response from server.");
-      setStatus({ type: "success", message: "Prompt sent successfully!" });
+      setStatus({ type: "success", message: "Prompt generated successfully!" });
     } catch (error) {
       console.error("Error:", error);
       setStatus({ type: "error", message: "Failed to fetch response from the server." });
@@ -78,8 +74,8 @@ const ChatComponent = () => {
   };
 
   const onSave = async () => {
-    if (!name || !response || !getResponse.infotype) {
-      setStatus({ type: "error", message: "Please ensure all required fields are filled." });
+    if (!name || !response || !getResponse.infotype || !getResponse.subCategory) {
+      setStatus({ type: "error", message: "Please ensure all fields are filled." });
       return;
     }
 
@@ -89,7 +85,8 @@ const ChatComponent = () => {
       const data = {
         userName: name,
         content: response, // Response from the backend
-        infotype: getResponse.infotype, // Selected infotype (string)
+        infotype: getResponse.infotype, // Main category
+        subCategory: getResponse.subCategory, // Subcategory
         picture: picture || getResponse.picture, // Uploaded picture or existing one
       };
 
@@ -105,11 +102,12 @@ const ChatComponent = () => {
     }
   };
 
-  useEffect(() => {
-    customFetch("GET", "create").then((json) => {
-      setGetResponse(json);
-    });
-  }, []);
+  // Predefined Subcategories Based on Infotype
+  const subCategories = {
+    recipes: ["vegan", "vegetarian", "keto", "paleo", "gluten-free", "mediterranean", "low-carb"],
+    workouts: ["basic", "medium", "advanced"],
+    "healthy-tips": [], // No subcategories for healthy-tips
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -121,9 +119,10 @@ const ChatComponent = () => {
           <textarea
             value={prompt}
             onChange={handleInputChange}
-            placeholder="Enter your prompt"
+            placeholder="example: please create a paleo recipe for a 70 years old woman in menopause, please give me direct answer..."
           ></textarea>
 
+          {/* Infotype Selection */}
           <div className={styles.check}>
             <label>
               <input
@@ -154,20 +153,39 @@ const ChatComponent = () => {
             </label>
           </div>
 
+          {/* Subcategory Dropdown (conditional based on infotype) */}
+          {getResponse.infotype && subCategories[getResponse.infotype].length > 0 && (
+            <div className={styles.subCategorySelector}>
+              <label>
+                Select Subcategory:
+                <select value={getResponse.subCategory} onChange={handleSubCategoryChange}>
+                  <option value="">Select...</option>
+                  {subCategories[getResponse.infotype].map((sub) => (
+                    <option key={sub} value={sub}>
+                      {sub}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+          )}
+
+          {/* File Upload */}
           <div className={styles.upload}>
             <label>
+              Upload Image
               <input
                 type="file"
                 ref={inputFile}
                 className={styles.uploading}
               />
-              Upload Image
             </label>
           </div>
 
+          {/* Submit Buttons */}
           <div className={styles.buttons}>
             <button className={styles.send} type="submit">
-              Send
+              Generate
             </button>
             <button
               className={styles.reset}
@@ -179,31 +197,25 @@ const ChatComponent = () => {
           </div>
         </form>
 
+        {/* Generated Response */}
         <div className={styles.chat}>
           <div>{response}</div>
         </div>
 
-        <button className={styles.save} 
-          onClick={() => 
-          {
-            openModal()
-            onSave
-          }
-          }
-          >Save
+        {/* Save Button */}
+        <button className={styles.save} onClick={onSave}>
+          Save
         </button>
 
         {/* Status Message */}
-        {status && showModal && (
-           <Modal isClose={closeModal} isOpen={showModal}>
-            <div
-              className={`${styles.statusMessage} ${
-                status.type === "success" ? styles.success : styles.error
-              }`}
-            >
-              {status.message}
-            </div>
-         </Modal>
+        {status && (
+          <div
+            className={`${styles.statusMessage} ${
+              status.type === "success" ? styles.success : styles.error
+            }`}
+          >
+            {status.message}
+          </div>
         )}
       </div>
     </div>

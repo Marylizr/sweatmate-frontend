@@ -36,12 +36,12 @@
    display: flex;
     align-items: center;
     border: lightgray 1px solid;
-    width: 300px;
-    height: 300px;
+    width: 14em;
+    height: 14em;
     border-radius: 0 0px 15px 15px;
     margin-bottom: 10px;
     flex-direction: column;
-    margin-right: 1.5em;
+    margin: 0 1em 0 1em;
     overflow-y: scroll;
     align-content: center;
     flex-wrap: wrap;
@@ -433,10 +433,10 @@
    }
   
    .save{
-      width: 22em;
+      width: 11.5em;
       height: 13em;
       margin-bottom: 1em;
-      margin-right: 0;
+      margin-right: 0.5em;
 }
    .progress{
       width: 22em;

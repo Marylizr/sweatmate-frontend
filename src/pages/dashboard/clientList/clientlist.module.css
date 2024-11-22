@@ -92,6 +92,7 @@
 .historyItem > p.time {
    font-size: 20px;
    margin: 0.3em 0 0 0;
+   font-size: 1.1em;
 }
 
 .block {
@@ -101,10 +102,12 @@
     align-content: flex-start;
     align-items: flex-start;
     margin: 0 1em 0 1em;
+    width: 11em;
 }
 
 .block > p {
    margin: 0.3em 0 0 0;
+   font-size: 1.1em;
 }
 
 .block2 {
@@ -118,6 +121,7 @@
 
 .block2 > p {
    margin: 0.3em 0 0 0;
+   font-size: 1.1em;
 }
 
 .modalstyle{
@@ -125,6 +129,11 @@
    flex-direction: row;
    flex-wrap: wrap;
    justify-content: center;
+}
+
+.modalHeader > img {
+   width: 5em;
+   border-radius: 5em;
 }
 
 @media (max-width:768px){

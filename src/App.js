@@ -28,6 +28,9 @@ import Main from './pages/main/main';
 import FollowUp from './components/followUp/FollowUp';
 import TodayWorkout from './pages/workoutHistoric/WorkoutHistoric';
 import DesignedByPt from './pages/designedByPt/DesignedByPt';
+import Predesigned from './pages/dashboard/predesignWorkout/PredesignWorkout';
+import Products from './pages/dashboard/products/Products';
+import MealList from './pages/dashboard/mealPlans/MealList';
 
 
 // import PrivateRoute from "./api/auth/privateRoute";
@@ -68,6 +71,9 @@ function App() {
           <Route path="/progress" element={<FollowUp/>} />
           <Route path='/todayworkout' element={<TodayWorkout />} />
           <Route path='/personaltrainer' element={<DesignedByPt />} />
+          <Route path='/preworkout' element={<Predesigned />} />
+          <Route path='/mealplan' element={<MealList />} />
+          <Route path='/products' element={<Products/>} />
         </Routes>
       </BrowserRouter>
     </UserContextProvider>

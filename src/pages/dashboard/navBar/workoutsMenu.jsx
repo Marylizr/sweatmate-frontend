@@ -34,7 +34,7 @@ const WorkoutsMenu = () => {
     //when the value is true will passed it false and all over
     setClicked(!clicked)
  }
- console.log(`my role is ${role} and name ${name}`)
+ 
 
   return (
     <div className={styles.menu}>

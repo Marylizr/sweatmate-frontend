@@ -9,6 +9,7 @@
    border-radius: 10px;
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
    margin: 1em;
+   padding: 0 0 2em;
 }
 
 .form {
@@ -73,11 +74,20 @@
     justify-content: center;
 }
 
+
+.editimg > label > input[type=file]{
+   width: 14em !important;
+}
+
+.editimg > label > img {
+   width: 1.5em;
+}
+
 .worksinput {
    display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    margin-top: 1.5em;
+    margin: 2em;
     align-items: center;
 }
 
