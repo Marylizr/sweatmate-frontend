@@ -70,7 +70,7 @@ const WeekStorical = () => {
     <div className={styles.container}>
       <img  src={fitness} alt='fit-icon'/>
       <h2>Weekly Workouts</h2>
-      <p>Haz entrenado: {entrenamientos} días esta semana!</p>
+      <p>You have trained: {entrenamientos} days this week!</p>
       <p>{days }</p>
 {/* 
       {historial.filter(item => item.userName === `${email}`).map(item => (

@@ -1,13 +1,20 @@
 // SignUpForm.js
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './signup.module.css';
 import { useForm } from 'react-hook-form';
 import customFetch from '../../api';
 import { setUserSession } from "../../api/auth"; // Importing session management functions
 import { useNavigate } from 'react-router';
+import eye from '../../assets/eye.svg';
 
 const SignUpForm = () => {
   const navigate = useNavigate();
+
+  const [passwordShown, setPasswordShown] = useState(false);
+
+  const togglePasswordVisiblity = () => {
+    setPasswordShown(!passwordShown);
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -46,9 +53,18 @@ const SignUpForm = () => {
         <input type="text" placeholder='example@mail.com' {...register("email", { required: true })} />
         {errors.email && <p className={styles.error}>This field is required</p>}
 
-        <input type="password" placeholder='password minLength: 8 ' {...register("password", { required: true, minLength: 8 })} />
-        {errors.password?.type === 'required' && <p className={styles.error}>This field is required</p>}
-        {errors.password?.type === 'minLength' && <p className={styles.error}>Password should be longer than 8 characters</p>}
+        <div className={styles.pass}>
+          <input
+            type={passwordShown ? "text" : "password"}
+            placeholder='Longitud mínima: 8'
+            {...register("password", { required: true, minLength: 8 })}
+            />
+          <i className={styles.eye} onClick={togglePasswordVisiblity}>
+            <img src={eye} alt='eye-icon' />
+          </i>
+          {errors.password?.type === 'required' && <p className={styles.error}>This field is required</p>}
+          {errors.password?.type === 'minLength' && <p className={styles.error}>Password should be longer than 8 characters</p>}
+        </div>
 
         <input type="number" placeholder='height: 167' {...register("height", { required: true })} />
         {errors.height && <p className={styles.error}>This field is required</p>}

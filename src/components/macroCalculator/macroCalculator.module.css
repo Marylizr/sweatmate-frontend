@@ -1,13 +1,12 @@
-.macros {
+.container {
    display: flex;
-    align-items: center;
-    border: lightgray 1px solid;
-    width: 24em;
-    height: 24em;
+   align-items: center;
+   border: lightgray 1px solid;
+   width: 18em;
+   height: 20em;
     border-radius: 0 0px 15px 15px;
-    margin-bottom: 10px;
+    margin: 0 1em 1em 0;
     flex-direction: column;
-    margin-right: 1.5em;
     overflow-y: scroll;
     align-content: center;
     flex-wrap: wrap;
@@ -15,7 +14,7 @@
     box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
 }
 
-.macros:hover {
+.container:hover {
    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
    border: teal 1.5px solid;
 }
@@ -53,18 +52,22 @@
     cursor: pointer;
 }
 
+
 @media(max-width:800px) {
-   .macros {
-      width: 87vw;
-      height: 20em;
+   .container{
+      width: 21em;
+      height: 22em;
+      padding: 1em;
       margin-bottom: 1em;
       margin-right: 0;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
    }
 }
 
 @media (min-width: 768px) and (max-width: 1180px) {
-.macros {
-   margin:0.5em;
-}
-
+   .container{
+      margin: 0.5em;
+   }
 }

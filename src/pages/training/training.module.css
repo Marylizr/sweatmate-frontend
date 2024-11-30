@@ -78,7 +78,11 @@ button.toggleButton {
       flex-wrap: wrap;
       align-content: center;
       align-items: center;
-      width: 90vw;
+      width: 19em;
+      height: 20em;
+      margin-bottom: 1em;
+      margin-right: 0;
+      padding: 2em;
    }
 
    .userSelection{

@@ -23,7 +23,7 @@ function MacroCalculator() {
   };
 
   return (
-    <div className={styles.macros}>
+    <div className={styles.container}>
       <h3> Macronutrients Calculator</h3>
       <form className={styles.form}>
         

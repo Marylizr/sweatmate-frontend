@@ -41,7 +41,7 @@
     border-radius: 0 0px 15px 15px;
     margin-bottom: 10px;
     flex-direction: column;
-    margin: 0 1em 0 1em;
+    margin: 0 1em 1em 0em;
     overflow-y: scroll;
     align-content: center;
     flex-wrap: wrap;
@@ -49,11 +49,44 @@
     box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
  }
 
+ .saved {
+   display: flex;
+    align-items: center;
+    border: lightgray 1px solid;
+    width: 18em;
+    height: 20em;
+    border-radius: 0 0px 15px 15px;
+    margin-bottom: 10px;
+    flex-direction: column;
+    overflow-y: scroll;
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
+ }
+ .saved > button {
+   background: transparent;
+   border: none;
+   box-shadow: none;
+ }
+
  .save > button {
    background: transparent;
    border: none;
    box-shadow: none;
  }
+
+ .saved > button > a {
+   color: teal;
+   text-decoration: none;
+   font-size: 20px;
+   display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+   align-content: center;
+   align-items: center;
+ }
+
 
  .save > button > a {
    color: teal;
@@ -70,6 +103,12 @@
    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
    border: teal 1.5px solid;
 }
+
+.saved:hover {
+   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
+   border: teal 1.5px solid;
+}
+
 .progress:hover {
    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
    border: teal 1.5px solid;
@@ -119,7 +158,7 @@
 
 .editbox{
    display: flex;
-   width: 300px;
+   width: 19em;
    height: auto;
    left: 0px;
    top: 0px;
@@ -130,7 +169,7 @@
    border: 1px solid #E9E9E9;
    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
    border-radius: 4px;
-   padding: 20px;
+   padding: 2em;
 }
 
 .form{
@@ -429,7 +468,7 @@
       flex-wrap: wrap;
       flex-direction: row;
       width: 100vw;
-      margin-top: 2%;
+      margin:1em 0 0 ;
    }
   
    .save{

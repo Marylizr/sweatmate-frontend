@@ -9,6 +9,9 @@ import customFetch from '../../api';
 import insight from '../../assets/insight.svg';
 import sports from '../../assets/sports.svg';
 import sports1 from '../../assets/sports1.svg';
+import fruit from '../../assets/fruit.svg';
+import donut from '../../assets/donut.svg';
+import map from '../../assets/map.svg'
 
 
 const UserDashboardMale = () => {
@@ -36,20 +39,26 @@ const UserDashboardMale = () => {
             <Settings />
             <div className={styles.rearrange}>
                {/* rest of the small blocks */}
-               <WeekStorical />
-               <MacroCalculator />
-               <div className={styles.save}>
+              <WeekStorical />
+              <MacroCalculator />
+              <div className={styles.saved}>
                 <button><Link to="/allworkouts"> <img src={sports1} alt='icon'/>Customize Workout </Link> </button>
-               </div>
-               <div className={styles.save}>
+              </div>
+              <div className={styles.save}>
                 <button><Link to="/workoutsDashboard"> <img src={sports} alt='icon'/> my WorkOuts </Link> </button>
-               </div>
-               <div className={styles.progress}>
-                <button><Link to="/progress"> <img src={insight} alt='icon'/> FollowUp </Link> </button>
-               </div>
-               <div className={styles.save}>
-                 <button><Link to="/personaltrainer"> <img src={insight} alt='icon'/> From PT </Link> </button>
-               </div>
+              </div>
+              <div className={styles.save}>
+                <button><Link to="/"> <img src={map} alt='icon'/> find a SweatMate </Link> </button>
+              </div>
+              <div className={styles.save}>
+                <button><Link to="/progress"> <img src={donut} alt='icon'/> my Progress </Link> </button>
+              </div>
+              <div className={styles.save}>
+                <button><Link to="/personaltrainer"> <img src={insight} alt='icon'/> From PT </Link> </button>
+              </div>
+              <div className={styles.save}>
+                <button><Link to="/mealPlanner"> <img src={fruit} alt='icon'/> Meal Plan </Link> </button>
+              </div>
             
           </div>
         </div>

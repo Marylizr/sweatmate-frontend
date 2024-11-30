@@ -85,7 +85,6 @@ const DesignedByPt = () => {
 
       {/* Pre-Designed Workouts Section */}
       <div className={styles.section}>
-        <h4>Pre-Designed Workouts</h4>
         <div className={styles.wrap}>
           {preWorkouts.length > 0 ? (
             preWorkouts.map((item) => (
@@ -93,7 +92,7 @@ const DesignedByPt = () => {
             ))
           ) : (
             <div className={styles.message}>
-              <p>No workouts for today yet!</p>
+             
             </div>
           )}
         </div>

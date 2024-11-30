@@ -1,48 +1,222 @@
 .container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  align-items: center;
+  width: 17vw;
+  height: 21vh;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 0.5em 0.5em 1em 0;
+  padding: 1em;
+  justify-content: center;
+}
+
+.container2 {
+ display: flex;
+ flex-direction: column;
+ flex-wrap: nowrap;
+ align-content: center;
+ align-items: center;
+ width: 64.5em;
+ height: auto;
+ background-color: #fff;
+ border-radius: 10px;
+ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+ margin: 0.5em 0.5em 1em 0;
+ padding: 1em;
+ justify-content: flex-start;
+}
+
+.container > a {
+ text-decoration: none;
+ color:gray;
+}
+
+.filterButtons {
+ display: flex;
+ justify-content: center;
+ gap: 10px;
+ margin-bottom: 20px;
+ flex-wrap: wrap;
+}
+
+.filterButton {
    display: flex;
-   flex-direction: column;
+   flex-direction: row;
+   flex-wrap: wrap;
    align-content: center;
    align-items: center;
    width: 17vw;
-   height: 21vh;
+   height: 10vh;
    background-color: #fff;
    border-radius: 10px;
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
    margin: 0.5em 0.5em 1em 0;
    padding: 1em;
    justify-content: center;
+   border:none;
+   color: gray;
+   font-size: 1.2em;
+   flex-wrap: wrap;
 }
 
-.container > a {
-  color: gray;
-  text-decoration: none;
+.filterButton:hover {
+ width: 18vw;
+ height: 11vh;
+}
+
+.filterButton.active {
+ background-color: teal;
+ color:white;
+}
+
+.workouts {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 20px;
+ justify-content: center;
+}
+
+.emptyState {
+ font-size: 16px;
+ color: #999;
+ text-align: center;
+ margin-top: 20px;
+}
+
+.modalContent {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ flex-wrap: wrap;
+ align-content: center;
+ justify-content: flex-start;
+}
+
+.editText > textarea {
+ width: 23em;
+ height: 12em;
+}
+
+.mealPlans {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: flex-start;
+  align-content: center;
+  margin: 0.5em;
+}
+
+
+.buttonWrap {
+ display: flex;
+ flex-direction: row;
+ align-content: center;
+ align-items: center;
+ flex-wrap: wrap;
+}
+
+.buttonWrap > div > button {
+  height: 3em;
+  background-color: white;
+  color: teal;
+  border: 1px solid teal;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  width: 10em;
 }
 
 @media (max-width:768px){
 
-   .container {
-      width: 39vw;
-      margin: 0.5em 0.5em 0 0;
-      height: 9em;
-   }
+  .container {
+    width: 39vw;
+    margin: 0.5em 0 0 0;
+    height: 9em;
+  }
 
+  .container2 {
+   width: 83vw;
+   margin: 0.5em 0 1em 0;
+   height: auto;
  }
 
- @media (max-width:375px){
-
-   .container {
-     width: 96vw;
-     margin: 0.5em 0em 0 0;
-     height: auto;
-     padding: 16px;
-     display: flex;
-     flex-direction: column;
-     flex-wrap: wrap;
-   }
- 
-   .title {
-     font-size: 20px;
-   }
- 
- 
+ .filterButtons > button {
+   display: flex;
+   margin-bottom: 1em;
+   width: 77vw;
+   height: 10vh;
+   flex-direction: column;
+}
+ .filterButtons {
+   display: flex;
+   justify-content: center;
+   margin-bottom: 20px;
+   flex-direction: column;
+   align-items: center;
  }
+
+ .filterButton:hover {
+   display: flex;
+   margin-bottom: 1em;
+   width: 77vw;
+   height: 10vh;
+   flex-direction: column;
+ }
+
+}
+
+
+@media (max-width:375px){
+
+ .container {
+   width: 96vw;
+   margin: 0.5em 0em 0 0;
+   height: auto;
+   padding: 16px;
+   display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+ }
+
+ .container2 {
+   width: 96vw;
+   margin: 0.5em 0em 0 0;
+   height: 100vh;
+   padding: 16px;
+   display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+ }
+
+ .title {
+   font-size: 20px;
+ }
+ .filterButtons > button{
+   display: flex;
+   margin-bottom: 1em;
+   width: 77vw;
+   height: 10vh;
+   flex-direction: column;
+ }
+
+ .filterButtons {
+   display: flex;
+   justify-content: center;
+   margin-bottom: 20px;
+   flex-direction: column;
+   align-items: center;
+ }
+
+ .filterButton:hover {
+   display: flex;
+   margin-bottom: 1em;
+   width: 77vw;
+   height: 10vh;
+   flex-direction: column;
+ }
+
+}

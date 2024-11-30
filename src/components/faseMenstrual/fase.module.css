@@ -2,8 +2,9 @@
    display: flex;
    align-items: center;
    border: lightgray 1px solid;
-   width: 300px;
-   height: 300px;
+   width: 17em;
+   height: 18em;
+   padding: 1em;
    border-radius: 0 0px 15px 15px;
    margin-bottom: 10px;
    flex-direction: column;
@@ -88,8 +89,8 @@
 
 @media(max-width:800px) {
    .container{
-      width: 87vw;
-      height: 20em;
+      height: 16em;
+      width: 21em;
       margin-bottom: 1em;
       margin-right: 0;
    }

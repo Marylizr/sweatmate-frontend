@@ -31,6 +31,7 @@ import DesignedByPt from './pages/designedByPt/DesignedByPt';
 import Predesigned from './pages/dashboard/predesignWorkout/PredesignWorkout';
 import Products from './pages/dashboard/products/Products';
 import MealList from './pages/dashboard/mealPlans/MealList';
+import MealPlanner from './pages/mealPlanner/MealPlanner';
 
 
 // import PrivateRoute from "./api/auth/privateRoute";
@@ -74,6 +75,7 @@ function App() {
           <Route path='/preworkout' element={<Predesigned />} />
           <Route path='/mealplan' element={<MealList />} />
           <Route path='/products' element={<Products/>} />
+          <Route path='/mealPlanner' element={<MealPlanner/>} />
         </Routes>
       </BrowserRouter>
     </UserContextProvider>
