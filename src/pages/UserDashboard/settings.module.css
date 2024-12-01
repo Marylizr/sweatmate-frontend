@@ -149,6 +149,9 @@
     align-items: center;
  }
 
+.closeButton{
+
+}
 
 .settings{
    display: flex;
@@ -450,7 +453,7 @@
    position: absolute;
    top: 15px;
    right: 15px;
-   background-color: #f44336;
+   background-color: teal;
    color: white;
    border: none;
    border-radius: 5px;

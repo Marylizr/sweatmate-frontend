@@ -1,66 +1,80 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import customFetch from "../../api";
 import styles from "./moodTracker.module.css";
 
 const MoodTrackerModal = ({ isOpen, closeModal }) => {
   const [mood, setMood] = useState("");
   const [comments, setComments] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [name, setName] = useState(""); // User's display name
+  const [userName, setUserName] = useState(""); // User's unique ID
+  const [isLoading, setIsLoading] = useState(true); // Loading state for user data
 
   const moods = ["Happy", "Sad", "Stressed", "Anxious", "Excited", "Tired"];
 
+  // Fetch the logged-in user's details
+  useEffect(() => {
+    customFetch("GET", "user/me")
+      .then((json) => {
+        if (json && json._id) {
+          setUserName(json._id); // Set user ID
+          setName(json.name || "User"); // Set display name (fallback to "User")
+        } else {
+          console.error("Invalid user data received:", json);
+        }
+      })
+      .catch((error) => console.error("Error fetching user data:", error))
+      .finally(() => setIsLoading(false));
+  }, []);
+
   const handleSubmit = () => {
     if (!mood) return alert("Please select a mood!");
+    if (!userName) return alert("User information is missing. Please try again later.");
 
-    const data = { mood, comments, date: new Date().toISOString() };
-    customFetch("POST", "logMood", { body: data })
+    const data = {
+      userName, // Include user ID in the payload
+      mood,
+      comments,
+      date: new Date().toISOString(),
+    };
+
+    customFetch("POST", "moodTracker", { body: data })
       .then(() => {
-        setIsSubmitted(true); // Mark as submitted
-        setTimeout(closeModal, 2000); // Close modal after 2 seconds
+        closeModal(); // Close modal on successful submission
+        setMood(); // Reset mood
+        setComments(""); // Reset comments
       })
       .catch((error) => console.error("Error logging mood:", error));
+
+      console.log(data)
   };
 
-  if (!isOpen) return null;
+  
+
+  if (!isOpen || isLoading) return null; // Don't render modal if not open or loading
 
   return (
     <div className={styles.modal}>
       <div className={styles.modalContent}>
-        {!isSubmitted ? (
-          <>
-            <h2>How do you feel today?</h2>
-            <div className={styles.moods}>
-              {moods.map((item) => (
-                <button
-                  key={item}
-                  className={`${styles.moodButton} ${
-                    mood === item ? styles.selected : ""
-                  }`}
-                  onClick={() => setMood(item)}
-                >
-                  {item}
-                </button>
-              ))}
-            </div>
-            <textarea
-              placeholder="Any additional comments?"
-              value={comments}
-              onChange={(e) => setComments(e.target.value)}
-            />
+        <h2>{name}, How do you feel today?</h2>
+        <div className={styles.moods}>
+          {moods.map((item) => (
             <button
-              className={styles.submitButton}
-              onClick={handleSubmit}
-              disabled={isSubmitted} // Disable button after submission
+              key={item}
+              className={`${styles.moodButton} ${mood === item ? styles.selected : ""}`}
+              onClick={() => setMood(item)}
             >
-              Submit
+              {item}
             </button>
-          </>
-        ) : (
-          <div className={styles.successMessage}>
-            <h3>Thank you for sharing your mood!</h3>
-            <p>Your mood has been logged successfully.</p>
-          </div>
-        )}
+          ))}
+        </div>
+        <textarea
+          placeholder="Any additional comments?"
+          value={comments}
+          onChange={(e) => setComments(e.target.value)}
+        />
+        <button className={styles.submitButton} onClick={handleSubmit}>
+          Submit
+        </button>
       </div>
     </div>
   );
