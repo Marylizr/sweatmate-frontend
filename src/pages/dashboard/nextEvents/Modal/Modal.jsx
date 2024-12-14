@@ -1,17 +1,55 @@
 import React from 'react';
-import  '../Modal/modal.css';
+import styles from './modal.css';
+import fetchResource from '../../../../api';
+import { useNavigate } from 'react-router-dom';
 
+const Modal = ({ event, onClose }) => {
+  const navigate = useNavigate();
 
+  const handleConfirm = async () => {
+    try {
+      await fetchResource('PUT', `events/${event._id}/confirm`);
+      alert('Event confirmed and email sent!');
+      onClose();
+    } catch (error) {
+      console.error('Error confirming event:', error);
+    }
+  };
 
-const Modal = ({children, isOpen, isClose }) => {
+  const handleReschedule = () => {
+    // Navigate to the form with the current event's ID for rescheduling
+    navigate(`/main/reschedule/${event._id}`);
+  };
 
-  return(
-    <div className={`modal ${isOpen && "is-open"}`} >
-      <div className="modalContainer">
-        <button className="modalClose" onClick={isClose}>X</button>
-        
-        {children}
-      
+  const handleCancel = async () => {
+    console.log(`Attempting to cancel event with ID: ${event._id}`);
+  
+    try {
+      await fetchResource('DELETE', `events/${event._id}`);
+      alert('Event canceled successfully!');
+      onClose();
+    } catch (error) {
+      console.error('Error canceling event:', error);
+    }
+  };
+  
+
+  return (
+    <div className={styles.modalOverlay}>
+      <div className={styles.modalContent}>
+        <h2>{new Date(event.date).toDateString()}</h2>
+        <p><strong>Time:</strong> {new Date(event.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+        <p><strong>Title:</strong> {event.title}</p>
+        <p><strong>Customer:</strong> {event.userId?.name}</p>
+        <p><strong>Email:</strong> {event.userId?.email || 'No email available'}</p>
+
+        <div className={styles.buttons}>
+          <button className={styles.confirmButton} onClick={handleConfirm}>Confirm</button>
+          <button className={styles.rescheduleButton} onClick={handleReschedule}>Re-schedule</button>
+          <button className={styles.cancelButton} onClick={handleCancel}>Cancel</button>
+        </div>
+
+        <button className={styles.closeButton} onClick={onClose}>Close</button>
       </div>
     </div>
   );

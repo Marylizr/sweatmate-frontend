@@ -10,8 +10,8 @@ import logo from '../../../utils/logo_new.png';
 import plus from '../../../assets/plus.svg';
 import edit from '../../../assets/edit.svg';
 import person from '../../../assets/person.svg';
-import woman from '../../../assets/woman.svg';
 import man from '../../../assets/man.svg';
+import woman from '../../../assets/woman.svg';
 import bot from '../../../assets/bot.svg';
 import exit from '../../../assets/exit.svg';
 import fit from '../../../assets/fit.svg';
@@ -56,27 +56,40 @@ const WorkoutsMenu = () => {
               <img src={edit} alt=''/>
               <Link to='/main/workouts'> Edit Workout </Link> <br />
             </div>
+
             <div className={styles.side_menu}>
               <img src={fit} alt='icon'/>
               <Link to='/main/training'> Training </Link>
             </div>
-            <div className={styles.side_menu}>
-              <img src={person} alt=''/>
-              <Link to='/main/userList'> User List </Link>
-            </div>
-            <div className={styles.side_menu}>
-            { role === 'admin' && <Link to="/dashboard/female"><img src={woman} alt='icon'/> | </Link> }
-            {role === 'admin' && <Link to="/dashboard/male"><img src={man} alt='icon'/></Link>}
 
+            <div className={styles.side_menu}>
+              {(role === 'admin' || role === 'personal-trainer') && (
+                <>
+                  <Link to="/dashboard/female">
+                    <img src={woman} alt='icon' /> 
+                  </Link>
+                  <Link to="/dashboard/male">
+                    <img src={man} alt='icon' /> 
+                  </Link>
+                </>
+              )}
             </div>
+
+            <div className={styles.side_menu}> 
+              {role === 'admin' && <Link to="/main/admin-userProfiles"><img src={person} alt=''/> Only Admin </Link>}
+              {role === 'personal-trainer' && <Link to="/main/userProfiles"><img src={person} alt=''/> User Profiles </Link>}
+            </div>
+
             <div className={styles.side_menu}>
               <img src={bot} alt='icon'/>
               <Link to='/main/openAi'> ChatBot </Link>
             </div>
+
             <div className={styles.side_menu}>
               <button onClick={() => {onLogOut()}}>
                  <img className={styles.exit} src={exit} alt='icon'/> Log Out </button>
             </div>
+
         </div>
         <div className='burger'>
           <NavButton clicked={clicked} handleClick={handleClick}/>

@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import fetchResource from '../../../api'; // Assuming fetchResource is imported from the correct path
 import styles from './nextEvents.module.css';
 
 const Form = () => {
+  const { eventId } = useParams(); // Get eventId from the URL
+  const navigate = useNavigate();
+
   const [eventType, setEventType] = useState('personal_training');
   const [title, setTitle] = useState('');
   const [date, setDate] = useState('');
@@ -14,8 +18,8 @@ const Form = () => {
   const [selectAll, setSelectAll] = useState(false);
   const [trainerOnly, setTrainerOnly] = useState(false);
 
+  // Fetch existing users to populate the dropdown
   useEffect(() => {
-    // Fetch existing users to populate the dropdown
     const fetchUsers = async () => {
       try {
         const users = await fetchResource('GET', 'user');
@@ -32,39 +36,67 @@ const Form = () => {
     fetchUsers();
   }, []);
 
+  // Fetch existing event data if eventId is present (for rescheduling)
+  useEffect(() => {
+    if (eventId) {
+      const fetchEvent = async () => {
+        try {
+          const event = await fetchResource('GET', `events/${eventId}`);
+          setEventType(event.eventType);
+          setTitle(event.title);
+          setDate(event.date.split('.')[0]); // Format date for input field
+          setDuration(event.duration);
+          setLocation(event.location);
+          setDescription(event.description);
+          setTrainerOnly(event.trainerOnly);
+          setSelectedUsers(event.userId || []);
+        } catch (err) {
+          console.error('Error fetching event data:', err);
+        }
+      };
+      fetchEvent();
+    }
+  }, [eventId]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-      let usersToAssign = [];
-    
-      if (trainerOnly) {
-        usersToAssign = null; // Trainer-only event
-      } else if (selectAll) {
-        usersToAssign = existingUsers.map(user => user._id); // Assign to all users
-      } else if (selectedUsers.length > 0) {
-        usersToAssign = selectedUsers; // Assign to selected users
-      }
-    
-      const newEvent = {
-        eventType,
-        title,
-        date,
-        duration,
-        location,
-        description,
-        userId: trainerOnly ? null : usersToAssign, // Assigning event to selected users
-        trainerOnly,
-      };
-    
-      try {
-        const response = await fetchResource('POST', 'events', { body: newEvent });
-        alert('Event successfully created!');
-        window.location.reload();
-      } catch (err) {
-        console.error('Error creating event:', err);
-      }
+
+    let usersToAssign = [];
+
+    if (trainerOnly) {
+      usersToAssign = null; // Trainer-only event
+    } else if (selectAll) {
+      usersToAssign = existingUsers.map(user => user._id); // Assign to all users
+    } else if (selectedUsers.length > 0) {
+      usersToAssign = selectedUsers; // Assign to selected users
+    }
+
+    const newEvent = {
+      eventType,
+      title,
+      date,
+      duration,
+      location,
+      description,
+      userId: trainerOnly ? null : usersToAssign,
+      trainerOnly,
     };
-    
+
+    try {
+      if (eventId) {
+        // Update the existing event
+        await fetchResource('PUT', `events/${eventId}`, { body: newEvent });
+        alert('Event successfully updated!');
+      } else {
+        // Create a new event
+        await fetchResource('POST', 'events', { body: newEvent });
+        alert('Event successfully created!');
+      }
+      navigate('/main/plannextevents'); // Redirect back to the NextEvents page
+    } catch (err) {
+      console.error('Error creating/updating event:', err);
+    }
+  };
 
   const handleUserSelection = (e) => {
     const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
@@ -73,9 +105,7 @@ const Form = () => {
 
   return (
     <div className={styles.wrap}>
-      <h2>Plan Next Events</h2>
       <form onSubmit={handleSubmit} className={styles.styleinput}>
-        
         <select value={eventType} onChange={(e) => setEventType(e.target.value)}>
           <option value="personal_training">Personal Training</option>
           <option value="group_class">Group Class</option>
@@ -169,7 +199,9 @@ const Form = () => {
           </>
         )}
 
-        <button type="submit" className={styles.submit}>Create Event</button>
+        <button type="submit" className={styles.submit}>
+          {eventId ? 'Update Event' : 'Create Event'}
+        </button>
       </form>
     </div>
   );

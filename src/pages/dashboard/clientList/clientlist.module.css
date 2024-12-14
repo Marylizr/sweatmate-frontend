@@ -53,10 +53,12 @@
    justify-content: flex-start;
    align-items: flex-start;
    flex-wrap: wrap;
+   width: 9em;
 }
 
 .userDetails > p {
    margin: 0;
+   text-align: left;
 }
 
 .monthButtons{

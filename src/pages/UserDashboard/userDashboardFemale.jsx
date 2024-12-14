@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import MacroCalculator from "../../components/macroCalculator/MacroCalculator";
 import WeekStorical from "../../components/trainingStorical/WeekStorical";
 import customFetch from "../../api";
-import MoodTrackerModal from "../../components/moodTracker/MoodTracker";
 import insight from "../../assets/insight.svg";
 import sports from "../../assets/sports.svg";
 import sports1 from "../../assets/sports1.svg";
@@ -15,18 +14,25 @@ import fruit from "../../assets/fruit.svg";
 import donut from "../../assets/donut.svg";
 import map from "../../assets/map.svg";
 import Modal from './Modal/Modal';
-
-
+import axios from 'axios';
 
 const UserDashboardFemale = () => {
-  const [name, setName] = useState();
+  const [name, setName] = useState("");
   const [isMoodModalOpen, setIsMoodModalOpen] = useState(false);
+  const [mood, setMood] = useState("");
+  const [comments, setComments] = useState("");
+  const [userName, setUserName] = useState("");
+  const [suggestions, setSuggestions] = useState([]); // Changed from null to []
+  const [isLoading, setIsLoading] = useState(false);
+
+  const moods = ["Happy", "Sad", "Stressed", "Anxious", "Excited", "Tired"];
 
   useEffect(() => {
     customFetch("GET", "user/me")
       .then((json) => {
         setName(json.name);
-        setIsMoodModalOpen(true); // Open mood tracker modal on dashboard load
+        setUserName(json._id);
+        setIsMoodModalOpen(true);
       })
       .catch((e) => {
         console.log(e);
@@ -34,25 +40,141 @@ const UserDashboardFemale = () => {
   }, []);
 
   const closeMoodModal = () => {
-    setIsMoodModalOpen(false); // Close the modal
+    setIsMoodModalOpen(false);
+    setMood("");
+    setComments("");
+    setSuggestions([]);
+  };
+
+  const handleMoodClick = async (selectedMood) => {
+    setMood(selectedMood);
+    setIsLoading(true);
+
+    try {
+      const response = await axios.post(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          model: "gpt-4",
+          messages: [
+            {
+              role: "system",
+              content: "Act as the best personal trainer and wellness coach.",
+            },
+            {
+              role: "user",
+              content: `I am feeling ${selectedMood}. Can you suggest a motivational message for me?`,
+            },
+          ],
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer `, // Add your API key here
+          },
+        }
+      );
+
+      const suggestionText = response.data.choices[0].message.content;
+
+      // Parse the ChatGPT response into sections
+      const formattedSuggestions = formatSuggestions(suggestionText);
+      setSuggestions(formattedSuggestions);
+    } catch (error) {
+      console.error("Error fetching suggestions from ChatGPT:", error);
+      setSuggestions([]); // Ensure suggestions is reset to an empty array on error
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSubmit = () => {
+    if (!mood) return alert("Please select a mood!");
+    if (!userName) return alert("User information is missing. Please try again later.");
+
+    const data = {
+      userName,
+      mood,
+      comments,
+      date: new Date().toISOString(),
+    };
+
+    customFetch("POST", "moodTracker", { body: data })
+      .then(() => {
+        console.log("Mood logged successfully:", data);
+      })
+      .catch((error) => console.error("Error logging mood:", error));
+  };
+
+  const formatSuggestions = (text) => {
+    const sections = text.split("\n\n");
+    const formatted = sections.map((section, index) => {
+      const titleMatch = section.match(/^(.+?):/); // Extract section title (e.g., "Workout:")
+      const title = titleMatch ? titleMatch[1] : `Section ${index + 1}`;
+      const content = section.replace(/^.+?:\s*/, ""); // Remove the title from the content
+      return { title, content };
+    });
+    return formatted;
   };
 
   return (
     <div className={styles.container}>
       <NavBar />
 
-      <Modal isOpen={isMoodModalOpen} closeModal={closeMoodModal}>
-        <MoodTrackerModal  />
+      <Modal isOpen={isMoodModalOpen} isClosed={closeMoodModal}>
+        <div className={styles.modal}>
+          <div className={styles.modalContent}>
+            {!suggestions.length ? (
+              <div className={styles.wrapper}>
+                <h2>{name}, How do you feel today?</h2>
+                <div className={styles.moods}>
+                  {moods.map((item) => (
+                    <button
+                      key={item}
+                      className={`${styles.moodButton} ${mood === item ? styles.selected : ""}`}
+                      onClick={() => handleMoodClick(item)}
+                    >
+                      {item}
+                    </button>
+                  ))}
+                </div>
+                <textarea
+                  placeholder="Any additional comments?"
+                  value={comments}
+                  onChange={(e) => setComments(e.target.value)}
+                  className={styles.moods}
+                />
+                <button className={styles.submitButton} onClick={handleSubmit}>
+                  Submit
+                </button>
+              </div>
+            ) : (
+              <>
+                <h2>Suggestions Based on Your Mood</h2>
+                {isLoading ? (
+                  <p>Loading suggestions...</p>
+                ) : (
+                  Array.isArray(suggestions) && suggestions.map((section, index) => (
+                    <div key={index} className={styles.suggestionSection}>
+                      <h3>{section.title}</h3>
+                      <p>{section.content}</p>
+                    </div>
+                  ))
+                )}
+                <button className={styles.closeButton} onClick={closeMoodModal}>
+                  Close
+                </button>
+              </>
+            )}
+          </div>
+        </div>
       </Modal>
 
       <div>
         <h2>Welcome to your Dashboard {name}!</h2>
       </div>
       <div className={styles.apps}>
-        {/* Settings is the box to edit the user data */}
         <Settings />
         <div className={styles.rearrange}>
-          {/* rest of the small blocks */}
           <FaseMenstrual />
           <WeekStorical />
           <MacroCalculator />
@@ -106,7 +228,7 @@ const UserDashboardFemale = () => {
           </div>
         </div>
       </div>
-    </div> // close principal div
+    </div> 
   );
 };
 

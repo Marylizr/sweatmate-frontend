@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import MacroCalculator from "../../components/macroCalculator/MacroCalculator";
 import WeekStorical from "../../components/trainingStorical/WeekStorical";
 import customFetch from "../../api";
+import axios from "axios";
 import insight from "../../assets/insight.svg";
 import sports from "../../assets/sports.svg";
 import sports1 from "../../assets/sports1.svg";
@@ -19,51 +20,18 @@ const UserDashboardMale = () => {
   const [isMoodModalOpen, setIsMoodModalOpen] = useState(false);
   const [mood, setMood] = useState("");
   const [comments, setComments] = useState("");
-  const [userName, setUserName] = useState(""); // User's unique ID
-  const [suggestions, setSuggestions] = useState(null); // Mood suggestions
+  const [userName, setUserName] = useState("");
+  const [suggestions, setSuggestions] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const moods = ["Happy", "Sad", "Stressed", "Anxious", "Excited", "Tired"];
-
-  // Suggestions for each mood
-  const moodSuggestions = {
-    Happy: {
-      workout: "High-intensity interval training (HIIT) or dancing.",
-      playlist: "Upbeat and energetic tracks.",
-      motivationalMessage: "Keep spreading your positivity! You're doing amazing.",
-    },
-    Sad: {
-      workout: "Gentle yoga or a slow walk outdoors.",
-      playlist: "Relaxing and uplifting tunes.",
-      motivationalMessage: "It's okay to feel down sometimes. Take it one step at a time.",
-    },
-    Stressed: {
-      workout: "Meditative yoga or light stretching.",
-      playlist: "Calming and soothing music.",
-      motivationalMessage: "Breathe deeply. You're stronger than your stress.",
-    },
-    Anxious: {
-      workout: "Deep breathing exercises or a grounding workout like pilates.",
-      playlist: "Instrumental or nature sounds.",
-      motivationalMessage: "Focus on the present moment. You've got this.",
-    },
-    Excited: {
-      workout: "Cardio or high-energy workouts.",
-      playlist: "Pump-up anthems.",
-      motivationalMessage: "Channel your excitement into achieving your goals!",
-    },
-    Tired: {
-      workout: "Gentle stretching or restorative yoga.",
-      playlist: "Soft and calming music.",
-      motivationalMessage: "Rest and recharge. Your energy will return soon.",
-    },
-  };
 
   useEffect(() => {
     customFetch("GET", "user/me")
       .then((json) => {
         setName(json.name);
-        setUserName(json._id); // Set user ID
-        setIsMoodModalOpen(true); // Open mood tracker modal on dashboard load
+        setUserName(json._id);
+        setIsMoodModalOpen(true);
       })
       .catch((e) => {
         console.log(e);
@@ -71,10 +39,51 @@ const UserDashboardMale = () => {
   }, []);
 
   const closeMoodModal = () => {
-    setIsMoodModalOpen(false); // Close the modal
-    setMood(""); // Reset mood
-    setComments(""); // Reset comments
-    setSuggestions(null); // Reset suggestions
+    setIsMoodModalOpen(false);
+    setMood("");
+    setComments("");
+    setSuggestions(null);
+  };
+
+  const handleMoodClick = async (selectedMood) => {
+    setMood(selectedMood);
+    setIsLoading(true);
+
+    try {
+      const response = await axios.post(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          model: "gpt-4",
+          messages: [
+            {
+              role: "system",
+              content: "You are a personal trainer and wellness coach.",
+            },
+            {
+              role: "user",
+              content: `I am feeling ${selectedMood}. Can you suggest a workout, and a motivational message for me?`,
+            },
+          ],
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer `,
+          },
+        }
+      );
+
+      const suggestionText = response.data.choices[0].message.content;
+
+      // Parse the ChatGPT response into sections
+      const formattedSuggestions = formatSuggestions(suggestionText);
+      setSuggestions(formattedSuggestions);
+    } catch (error) {
+      console.error("Error fetching suggestions from ChatGPT:", error);
+      setSuggestions("Could not fetch suggestions at this time. Please try again later.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleSubmit = () => {
@@ -82,20 +91,28 @@ const UserDashboardMale = () => {
     if (!userName) return alert("User information is missing. Please try again later.");
 
     const data = {
-      userName, // Include user ID in the payload
+      userName,
       mood,
       comments,
       date: new Date().toISOString(),
-      suggestions: moodSuggestions[mood], // Attach suggestions based on mood
     };
 
     customFetch("POST", "moodTracker", { body: data })
       .then(() => {
-        setSuggestions(moodSuggestions[mood]); // Display suggestions in the modal
+        console.log("Mood logged successfully:", data);
       })
       .catch((error) => console.error("Error logging mood:", error));
+  };
 
-    console.log(data);
+  const formatSuggestions = (text) => {
+    const sections = text.split("\n\n");
+    const formatted = sections.map((section, index) => {
+      const titleMatch = section.match(/^(.+?):/); // Extract section title (e.g., "Workout:")
+      const title = titleMatch ? titleMatch[1] : `Section ${index + 1}`;
+      const content = section.replace(/^.+?:\s*/, ""); // Remove the title from the content
+      return { title, content };
+    });
+    return formatted;
   };
 
   return (
@@ -113,7 +130,7 @@ const UserDashboardMale = () => {
                     <button
                       key={item}
                       className={`${styles.moodButton} ${mood === item ? styles.selected : ""}`}
-                      onClick={() => setMood(item)}
+                      onClick={() => handleMoodClick(item)}
                     >
                       {item}
                     </button>
@@ -131,9 +148,16 @@ const UserDashboardMale = () => {
             ) : (
               <>
                 <h2>Suggestions Based on Your Mood</h2>
-                <p><strong>Workout:</strong> {suggestions.workout}</p>
-                <p><strong>Playlist:</strong> {suggestions.playlist}</p>
-                <h2>"{suggestions.motivationalMessage}"</h2>
+                {isLoading ? (
+                  <p>Loading suggestions...</p>
+                ) : (
+                  suggestions.map((section, index) => (
+                    <div key={index} className={styles.suggestionSection}>
+                      <h3>{section.title}</h3>
+                      <p>{section.content}</p>
+                    </div>
+                  ))
+                )}
                 <button className={styles.closeButton} onClick={closeMoodModal}>
                   Close
                 </button>

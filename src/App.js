@@ -32,6 +32,8 @@ import Predesigned from './pages/dashboard/predesignWorkout/PredesignWorkout';
 import Products from './pages/dashboard/products/Products';
 import MealList from './pages/dashboard/mealPlans/MealList';
 import MealPlanner from './pages/mealPlanner/MealPlanner';
+import PlanNextEvents from './pages/dashboard/nextEvents/PlanNextEvents';
+import Form from './pages/dashboard/nextEvents/Form';
 
 
 // import PrivateRoute from "./api/auth/privateRoute";
@@ -76,6 +78,9 @@ function App() {
           <Route path='/mealplan' element={<MealList />} />
           <Route path='/products' element={<Products/>} />
           <Route path='/mealPlanner' element={<MealPlanner/>} />
+          <Route path="/plannextevents" element={<PlanNextEvents/> } />
+          <Route path="/reschedule/:eventId" element={<Form />} />
+
         </Routes>
       </BrowserRouter>
     </UserContextProvider>

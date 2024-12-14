@@ -149,10 +149,6 @@
     align-items: center;
  }
 
-.closeButton{
-
-}
-
 .settings{
    display: flex;
    align-content: center;
@@ -461,8 +457,73 @@
    cursor: pointer;
    z-index: 1010; /* Ensures it is on top of the cropper image */
 }
+.moods > button {
+   display: flex;
+   align-items: center;
+   border: lightgray 1px solid;
+   width: 6.5em;
+   background: white;
+   height: 2em;
+   border-radius: 0.5em;
+   margin-bottom: 10px;
+   flex-direction: row;
+   margin: 0 1em 1em 0em;
+   overflow-y: scroll;
+   align-content: center;
+   color: teal;
+   justify-content: center;
+   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
+}
 
+.moods {
+   display: flex;
+   flex-wrap: wrap;
+   flex-direction: row;
+   justify-content: center;
+}
 
+textarea.moods{
+   display: flex;
+   align-items: center;
+   border: lightgray 1px solid;
+   width: 30em;
+   background: white;
+   height: 3em;
+   border-radius: 0.5em;
+   margin-bottom: 10px;
+   flex-direction: row;
+   margin: 0 1em 1em 0em;
+   overflow-y: scroll;
+   align-content: center;
+   color: teal;
+   justify-content: center;
+   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+.submitButton{
+   display: flex;
+   align-items: center;
+   border: teal 1px solid;
+   width: 6.5em;
+   background: white;
+   height: 2em;
+   border-radius: 0.5em;
+   margin-bottom: 10px;
+   flex-direction: row;
+   margin: 0 1em 1em 0em;
+   overflow-y: scroll;
+   align-content: center;
+   color: teal;
+   justify-content: center;
+   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+.wrapper {
+   display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+   align-items: center;
+}
 
 @media(max-width: 800px) {
    .rearrange{

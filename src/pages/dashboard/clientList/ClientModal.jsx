@@ -8,28 +8,48 @@ const ClientModal = ({ user, activityHistory, setActivityHistory }) => {
   const [lastEvent, setLastEvent] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(null); // Track selected month
 
+
+  
   // Fetch today's event specifically for the selected user
   const fetchLastEvent = async () => {
-   try {
-     const response = await fetchResource('GET', `events?userId=${user._id}`); // Fetch only this user's events
-     const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
-     const todayEvent = response.find(
-       (event) => event.status === 'pending' && event.userId._id === user._id && event.date.split('T')[0] === today
-     ); // Fetch only today's pending event for the specific user
-     setLastEvent(todayEvent || null); // Set today's event if available
-   } catch (error) {
-     console.error('Error fetching today\'s event:', error);
-   }
- };
-fetchLastEvent()
+    try {
+      const response = await fetchResource('GET', `events?userId=${user._id}`);
+  
+      if (!response || !Array.isArray(response)) {
+        console.error('Invalid response format:', response);
+        setLastEvent(null);
+        return;
+      }
+  
+      const today = new Date().toISOString().split('T')[0];
+      const todayEvent = response.find(
+        (event) =>
+          event.status === 'pending' &&
+          event.userId &&
+          event.userId._id === user._id &&
+          event.date.split('T')[0] === today
+      );
+  
+      setLastEvent(todayEvent || null);
+    } catch (error) {
+      console.error("Error fetching today's event:", error);
+    }
+  };
+     
+    
+    useEffect(() => {
+      if (user && user._id) {
+        fetchLastEvent();
+      }
+    }, [user]);
 
 // Fetch activity history for the selected month and user
-useEffect(() => {
-   if (selectedMonth === null) {
-     setActivityHistory([]); // Reset activity history if no month is selected
-     return;
-   }
- 
+    useEffect(() => {
+      if (selectedMonth === null) {
+        setActivityHistory([]); // Reset activity history if no month is selected
+        return;
+      }
+    
       const fetchActivityHistory = async () => {
       try {
          const year = new Date().getFullYear();

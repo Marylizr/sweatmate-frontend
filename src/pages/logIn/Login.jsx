@@ -41,7 +41,7 @@ const Login = () => {
 
    // Navigate based on role and gender
    const navigateBasedOnRole = (userRole, userGender) => {
-      if (userRole === "admin") {
+      if (userRole === "admin" || userRole === "personal-trainer") {
          navigate("/main/dashboard");
       } else if (["basic", "medium", "advance"].includes(userRole)) {
          if (userGender === "female") {

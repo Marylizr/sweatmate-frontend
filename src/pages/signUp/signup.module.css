@@ -85,6 +85,11 @@
    margin-bottom: 3em;
 }
 
+.form_styles > form > input > p {
+   color: red;
+   font-size: 1em;
+}
+
 .form_styles > form > input.submit:hover {
    width: 14em;
    height: 3em;
@@ -114,6 +119,7 @@
 .pass {
    display: flex;
    align-items: center;
+   flex-direction: row;
 }
 
 @media(max-width: 600px) {

@@ -1,68 +1,60 @@
-import React, { useEffect, useState } from "react";
-import styles from "./signup.module.css";
+import React, { useState } from "react";
+import styles from "./userProfile.module.css";
 import { useForm } from "react-hook-form";
 import customFetch from "../../api";
-import { setUserSession } from "../../api/auth";
-import { useNavigate } from "react-router";
 import eye from "../../assets/eye.svg";
 
-const SignUpForm = () => {
-  const navigate = useNavigate();
+const CreateUserForm = ({users, setUsers, trainers}) => {
   const [passwordShown, setPasswordShown] = useState(false);
-  const [trainers, setTrainers] = useState([]); // State to store the list of trainers
+  const [loading, setLoading] = useState(false);
 
-  const togglePasswordVisibility = () => {
-    setPasswordShown(!passwordShown);
-  };
+   const togglePasswordVisibility = () => {
+      setPasswordShown(!passwordShown);
+   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) navigate("/");
-  }, [navigate]);
 
-  useEffect(() => {
-    // Fetch the list of available personal trainers
-    customFetch("GET", "user/trainers")
-      .then((data) => {
-        setTrainers(data);
-      })
-      .catch((error) => console.error("Error fetching trainers:", error));
-  }, []);
+   const {
+      register,
+      handleSubmit,
+      formState: { errors },
+   } = useForm();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+   const onSubmit = async (data) => {
 
-  const onSubmit = (data) => {
-    customFetch("POST", "user", { body: data })
-      .then((userSession) => {
-        console.log("API response:", userSession);
-        setUserSession(userSession);
-
-        if (data.role === "admin" || "personal-trainer") {
-          navigate("/main/dashboard");
-        } else if (data.gender === "female") {
-          navigate("/dashboard/female");
-        } else if (data.gender === "male") {
-          navigate("/dashboard/male");
-        } else {
-          console.error("Invalid gender");
-        }
-      })
-      .catch((error) => {
-        console.error("API error:", error);
-      });
-  };
+      setLoading(true);
+      const userData = {
+        userName: data.name,
+        email: data.email,
+        age: data.age,
+        height: data.height,
+        weight: data.weight,
+        goal: data.goal,
+        password: data.password,
+        role: data.role,
+        gender: data.gender,
+        trainerId: data.trainerId,
+      };
+    
+      try {
+        await customFetch("POST", "user", { body: userData });
+        alert('User profile created successfully');
+        setUsers((prevUsers) => [...prevUsers, userData]); // Update the user list
+      } catch (err) {
+        console.error('Unable to create user profile:', err);
+      } finally {
+         setLoading(false);
+       }
+    };
+    
+   
 
   return (
-    <div className={styles.form_styles}>
+    <div className={styles.users_form}>
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Name Field */}
         <input
           type="text"
-          placeholder="Your Name"
+          placeholder="User's Name"
           {...register("name", { required: "This field is required" })}
         />
         {errors.name && <p className={styles.error}>{errors.name.message}</p>}
@@ -83,22 +75,22 @@ const SignUpForm = () => {
 
         {/* Password Field */}
         <div className={styles.pass}>
-          <input
+         <input
             type={passwordShown ? "text" : "password"}
             placeholder="Minimum length: 8"
             {...register("password", {
-              required: "This field is required",
-              minLength: {
-                value: 8,
-                message: "Password must be at least 8 characters long",
-              },
+               required: "This field is required",
+               minLength: {
+               value: 8,
+               message: "Password must be at least 8 characters long",
+               },
             })}
-          />
-          <i className={styles.eye} onClick={togglePasswordVisibility}>
+         />
+         <button type="button" className={styles.eye} onClick={togglePasswordVisibility}>
             <img src={eye} alt="eye-icon" />
-          </i>
-          {errors.password && <p className={styles.error}>{errors.password.message}</p>}
-        </div>
+         </button>
+         {errors.password && <p className={styles.error}>{errors.password.message}</p>}
+         </div>
 
         {/* Height Field */}
         <input
@@ -173,7 +165,7 @@ const SignUpForm = () => {
 
 
         {/* Personal Trainer Selection */}
-        <label>Select Your Personal Trainer</label>
+        <label>Select the Personal Trainer</label>
         <select {...register("trainerId", { required: "Please select a personal trainer" })}>
           <option value="">Select a Personal Trainer</option>
           {trainers.map((trainer) => (
@@ -186,10 +178,10 @@ const SignUpForm = () => {
 
         <br />
 
-        <input className={styles.submit} type="submit" value="Sign me up!" />
+        <input className={styles.submit} type="submit" value={loading ? "Submitting..." : "Create"} disabled={loading} />
       </form>
     </div>
   );
 };
 
-export default SignUpForm;
+export default CreateUserForm;

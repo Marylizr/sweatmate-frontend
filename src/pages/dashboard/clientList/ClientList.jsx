@@ -13,19 +13,22 @@ const ClientList = () => {
   const [showModal, setShowModal] = useState(false); // Control modal visibility
   const [activityHistory, setActivityHistory] = useState([]);
 
-  // Fetch user data
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const data = await fetchResource('GET', 'user'); // Fetch users
-        const nonAdminUsers = data.filter((user) => user.role !== "admin"); // Exclude admin users
-        setUsers(nonAdminUsers);
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
-    };
-    fetchUsers();
-  }, []);
+// Fetch user data
+    useEffect(() => {
+      const fetchUsers = async () => {
+        try {
+          const data = await fetchResource('GET', 'user'); // Fetch users
+          const nonAdminAndNonTrainerUsers = data.filter(
+            (user) => user.role !== "admin" && user.role !== "personal-trainer"
+          ); // Exclude admin and personal-trainer users
+          setUsers(nonAdminAndNonTrainerUsers);
+        } catch (error) {
+          console.error('Error fetching users:', error);
+        }
+      };
+      fetchUsers();
+    }, []);
+
 
   // Fetch user-specific events
   const fetchUserEvents = async (userId) => {
