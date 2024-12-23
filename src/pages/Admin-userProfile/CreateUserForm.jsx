@@ -1,52 +1,78 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./userProfile.module.css";
 import { useForm } from "react-hook-form";
 import customFetch from "../../api";
 import eye from "../../assets/eye.svg";
 
-const CreateUserForm = ({users, setUsers, trainers}) => {
+const CreateUserForm = ({ users, setUsers }) => {
   const [passwordShown, setPasswordShown] = useState(false);
   const [loading, setLoading] = useState(false);
-
-   const togglePasswordVisibility = () => {
-      setPasswordShown(!passwordShown);
-   };
+  const [trainers, setTrainers] = useState([]);
 
 
-   const {
-      register,
-      handleSubmit,
-      formState: { errors },
-   } = useForm();
+  // Toggle password visibility
+  const togglePasswordVisibility = () => setPasswordShown(!passwordShown);
 
-   const onSubmit = async (data) => {
-
-      setLoading(true);
-      const userData = {
-        userName: data.name,
-        email: data.email,
-        age: data.age,
-        height: data.height,
-        weight: data.weight,
-        goal: data.goal,
-        password: data.password,
-        role: data.role,
-        gender: data.gender,
-        trainerId: data.trainerId,
-      };
-    
+  // Fetch trainers list (only users with role "personal-trainer")
+  useEffect(() => {
+    const fetchTrainers = async () => {
       try {
-        await customFetch("POST", "user", { body: userData });
-        alert('User profile created successfully');
-        setUsers((prevUsers) => [...prevUsers, userData]); // Update the user list
-      } catch (err) {
-        console.error('Unable to create user profile:', err);
-      } finally {
-         setLoading(false);
-       }
+        const response = await customFetch("GET", "user/trainers");
+        console.log("Trainer list response:", response);
+  
+        if (Array.isArray(response)) {
+          setTrainers(response);
+        } else if (response && typeof response === "object") {
+          setTrainers([response]); // Wrap single object in an array as a fallback
+        } else {
+          console.error("Unexpected data format for trainers:", response);
+        }
+      } catch (error) {
+        console.error("Error fetching trainers:", error);
+      }
     };
-    
-   
+  
+    fetchTrainers();
+  }, []);
+  
+
+  // Form handling using react-hook-form
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async (data) => {
+    setLoading(true);
+
+    const userData = {
+      name: data.name,
+      email: data.email,
+      age: data.age,
+      height: data.height,
+      weight: data.weight,
+      goal: data.goal,
+      password: data.password,
+      role: data.role,
+      gender: data.gender,
+      trainerId: data.trainerId,
+    };
+
+    try {
+      await customFetch("POST", "user", { body: userData });
+      alert("User profile created successfully");
+      setUsers((prevUsers) => [...prevUsers, userData]); // Update the user list
+    } catch (err) {
+      console.error("Unable to create user profile:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Watch the role field to dynamically show/hide the personal trainer selection
+  const role = watch("role");
 
   return (
     <div className={styles.users_form}>
@@ -75,22 +101,22 @@ const CreateUserForm = ({users, setUsers, trainers}) => {
 
         {/* Password Field */}
         <div className={styles.pass}>
-         <input
+          <input
             type={passwordShown ? "text" : "password"}
             placeholder="Minimum length: 8"
             {...register("password", {
-               required: "This field is required",
-               minLength: {
-               value: 8,
-               message: "Password must be at least 8 characters long",
-               },
+              required: "This field is required",
+              minLength: {
+                value: 8,
+                message: "Password must be at least 8 characters long",
+              },
             })}
-         />
-         <button type="button" className={styles.eye} onClick={togglePasswordVisibility}>
+          />
+          <button type="button" className={styles.eye} onClick={togglePasswordVisibility}>
             <img src={eye} alt="eye-icon" />
-         </button>
-         {errors.password && <p className={styles.error}>{errors.password.message}</p>}
-         </div>
+          </button>
+          {errors.password && <p className={styles.error}>{errors.password.message}</p>}
+        </div>
 
         {/* Height Field */}
         <input
@@ -152,33 +178,33 @@ const CreateUserForm = ({users, setUsers, trainers}) => {
         {errors.gender && <p className={styles.error}>{errors.gender.message}</p>}
 
         {/* Role Field */}
-        <select
-          className={styles.role}
-          {...register("role", { required: "This field is mandatory" })}
-        >
+        <select className={styles.role} {...register("role", { required: "This field is mandatory" })}>
           <option value="">Select Role</option>
-          <option value="basic">Basic</option>
-          <option value="medium">Medium</option>
-          <option value="advanced">Advanced</option>
+          <option value="basic">User</option>
+          <option value="personal-trainer">Personal Trainer</option>
+          <option value="admin">Admin</option>
         </select>
         {errors.role && <p className={styles.error}>{errors.role.message}</p>}
 
-
-        {/* Personal Trainer Selection */}
-        <label>Select the Personal Trainer</label>
-        <select {...register("trainerId", { required: "Please select a personal trainer" })}>
-          <option value="">Select a Personal Trainer</option>
-          {trainers.map((trainer) => (
-            <option key={trainer._id} value={trainer._id}>
-              {trainer.name}
-            </option>
-          ))}
-        </select>
-        {errors.trainerId && <p className={styles.error}>{errors.trainerId.message}</p>}
+        {/* Personal Trainer Selection (shown only if role is not personal-trainer) */}
+        {role === "basic" && (
+          <>
+            <select {...register("trainerId", { required: "Please select a personal trainer" })}>
+              <option value="">Select a Personal Trainer</option>
+              {trainers.map((trainer) => (
+                <option key={trainer._id} value={trainer._id}>
+                  {trainer.name}
+                </option>
+              ))}
+            </select>
+            {errors.trainerId && <p className={styles.error}>{errors.trainerId.message}</p>}
+          </>
+        )}
 
         <br />
-
-        <input className={styles.submit} type="submit" value={loading ? "Submitting..." : "Create"} disabled={loading} />
+        <div className={styles.submited}>
+          <input  type="submit" value={loading ? "Submitting..." : "Create"} disabled={loading} />
+        </div>
       </form>
     </div>
   );

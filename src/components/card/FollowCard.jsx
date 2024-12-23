@@ -13,7 +13,7 @@ const FollowCard = ({ item }) => {
      const curretDate = newDate.toDateString();
     
 
-   console.log(item.id)
+   console.log(item.weight)
    return(
       <div className={styles.cardWrap}  >
           <div className={styles.follow}>

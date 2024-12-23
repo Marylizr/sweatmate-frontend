@@ -14,6 +14,7 @@ import Predesigned from '../dashboard/predesignWorkout/PreDegined';
 import MealList from '../dashboard/mealPlans/MealList';
 import PlanNextEvents from '../dashboard/nextEvents/PlanNextEvents';
 import Form from '../dashboard/nextEvents/Form';
+import EditUserProfile from '../Admin-userProfile/EditUserProfile';
 
 
 
@@ -40,7 +41,8 @@ const Main = () => {
           <Route path="/mealplan" element={<PrivateRoute><MealList/></PrivateRoute> } />
           <Route path="/plannextevents" element={<PrivateRoute><PlanNextEvents/></PrivateRoute> } />
           <Route path="/reschedule/:eventId" element={<Form />} />
-
+          <Route path="/edituserprofile/:id" element={<EditUserProfile />} />
+          
         </Routes>
       </div>
      

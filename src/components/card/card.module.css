@@ -168,9 +168,9 @@
 /*follow card*/
 
 .follow > img {
-   width: 60%;
-   margin-top: 5%;
-   box-shadow: 20px -16px teal;
+   width: 18em;
+   height: 18em;
+    margin-top: 1em;
 }
 
 .follow > p{
@@ -185,10 +185,20 @@
 
 .cardWrap {
    border: 1px solid lightgray;
-    padding: 1em;
-    width: 17em;
-    height: 30em;
-    margin: 0 1em;
+   padding: 1em;
+   width: 13em;
+   height: auto;
+   font-size: 12px;
+   margin: 0 1em;
+   display: flex;
+   align-content: center;
+   align-items: center;
+   width: 20em;
+   background-color: #fff;
+   border-radius: 10px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   margin: 1em;
+   flex-direction: column;
 }
 
 .cardWrap > button {

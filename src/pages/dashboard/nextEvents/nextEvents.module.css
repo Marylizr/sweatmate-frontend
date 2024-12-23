@@ -165,6 +165,12 @@ form > button.submit{
       height: auto;
     }
 
+    .container {
+      width: 38vw;
+      margin: 0.5em 0 0 0.5em;
+      height: 9em;
+    }
+
     .styleinput {
       display: flex;
       justify-content: center;
@@ -177,6 +183,8 @@ form > button.submit{
     select.selection {
       width: 24em;
     }
+
+
   
  
  }
@@ -197,6 +205,11 @@ form > button.submit{
    .title {
      font-size: 20px;
    }
+
+   .container {
+    width: 96vw;
+    height: 9em;
+  }
  
  
  }

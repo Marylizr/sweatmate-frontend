@@ -62,7 +62,7 @@ const UserDashboardFemale = () => {
             },
             {
               role: "user",
-              content: `I am feeling ${selectedMood}. Can you suggest a motivational message for me?`,
+              content: `I am feeling ${selectedMood}. Can you suggest a motivational message for me?, please give me directly the message`,
             },
           ],
         },
@@ -92,7 +92,7 @@ const UserDashboardFemale = () => {
     if (!userName) return alert("User information is missing. Please try again later.");
 
     const data = {
-      userName,
+      name,
       mood,
       comments,
       date: new Date().toISOString(),
@@ -109,7 +109,7 @@ const UserDashboardFemale = () => {
     const sections = text.split("\n\n");
     const formatted = sections.map((section, index) => {
       const titleMatch = section.match(/^(.+?):/); // Extract section title (e.g., "Workout:")
-      const title = titleMatch ? titleMatch[1] : `Section ${index + 1}`;
+      const title = titleMatch ? titleMatch[1] : ` ${index + 1}`;
       const content = section.replace(/^.+?:\s*/, ""); // Remove the title from the content
       return { title, content };
     });
@@ -149,7 +149,7 @@ const UserDashboardFemale = () => {
               </div>
             ) : (
               <>
-                <h2>Suggestions Based on Your Mood</h2>
+                <h2>I have a message for you because you are {mood}</h2>
                 {isLoading ? (
                   <p>Loading suggestions...</p>
                 ) : (

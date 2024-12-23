@@ -1,86 +1,81 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { UserContext } from '../../components/userContext/userContext';
-import Form from '../Admin-userProfile/Form';
+import React, { useState, useEffect } from 'react';
 import styles from './userProfile.module.css';
-import Card from '../Admin-userProfile/Card';
-import Modal from "../Admin-userProfile/Modal/Modal";
-import { useModal } from "../../hooks/useModal";
 import customFetch from '../../api';
 import CreateUserForm from './CreateUserForm';
-
+import Card from './Card';
+import { useNavigate } from 'react-router-dom';
 
 const AdminUserProfile = () => {
 
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [isOpenModal, openModal, closeModal] = useModal(false);
-  const [displayLimit, setDisplayLimit] = useState(10); // Limit to display users
-  const [searchTerm, setSearchTerm] = useState(''); // Search term state
-  const { users, setUsers } = useContext(UserContext);
-  const [trainers, setTrainers] = useState([])
+    const [users, setUsers] = useState([]);
+    const [displayLimit, setDisplayLimit] = useState(2); // Limit to display users
+    const [searchTerm, setSearchTerm] = useState(''); // Search term state
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    customFetch("GET", "user")
-      .then((json) => setUsers(json))
-      .catch((e) => console.log(e, 'cannot retrieve users'));
-  }, [setUsers]);
+    // Fetch users from the backend
+    useEffect(() => {
+      const fetchUsers = async () => {
+        try {
+          const response = await customFetch('GET', 'user');
+          setUsers(response);
+        } catch (error) {
+          console.error('Error fetching users:', error);
+        }
+      };
 
-  useEffect(() => {
-    // Fetch the list of available personal trainers
-    customFetch("GET", "user/trainers")
-      .then((data) => {
-        setTrainers(data);
-      })
-      .catch((error) => console.error("Error fetching trainers:", error));
-  }, []);
+      fetchUsers();
+    }, []);
 
-  const handleEditUser = (user) => {
-    setSelectedUser(user); // Set the selected user
-    openModal();
-  };
+      // Handle user deletion
+      const onDelete = async (userId) => {
+        try {
+          await customFetch('DELETE', `user/${userId}`);
+          setUsers(users.filter((user) => user._id !== userId));
+          alert('User deleted successfully');
+        } catch (error) {
+          console.error('Error deleting user:', error);
+          alert('Failed to delete user');
+        }
+      };
 
-  const handleDeleteUser = (userId) => {
-    customFetch("DELETE", `user/${userId}`)
-      .then(() => {
-        setUsers((prevUsers) => prevUsers.filter((user) => user && user._id !== userId));
-      })
-      .catch(error => console.error("Error deleting user:", error));
-  };
+      // Handle user editing
+      const onEdit = (userId) => {
+        if (!userId) {
+          console.error("Invalid user ID passed to handleEditClick");
+          return;
+        }
+        navigate(`/main/edituserprofile/${userId}`);
+      };
 
-  const handleUpdateUser = (updatedUser) => {
-    setUsers((prevUsers) =>
-      prevUsers.map((user) =>
-        user._id === updatedUser._id ? updatedUser : user
-      )
-    );
-    closeModal();
-  };
+      // Filter users based on search term
+        const filteredUsers = users.filter(
+          (user) =>
+            user.role !== 'admin' &&
+            user.name?.toLowerCase().includes(searchTerm.toLowerCase())
+        );
 
-  // Filter and paginate users
-  const filteredUsers = users
-    .filter((user) => user.role !== "admin" && user.name.toLowerCase().includes(searchTerm.toLowerCase())) // Exclude admin and apply search filter
-    .slice(0, displayLimit); // Display limited number of users
-
-  const handleShowMore = () => setDisplayLimit(displayLimit + 10); // Show more users
+        // Show More / Show Less toggle function
+        const toggleShowMore = () => {
+          setDisplayLimit((prevLimit) => (prevLimit === 2 ? filteredUsers.length : 2));
+        };
+  
 
   return (
     <div className={styles.container}>
-      <div className={styles.small_header}> 
-        <h2>User Profiles</h2>
-      </div>
-      {/* create a new user*/}
-      <div>
-        <CreateUserForm users={users} setUsers={setUsers} trainers={trainers} />
-      </div>
-      
-      {/* Search Box */}
-      <input
-        type="text"
-        placeholder="Search users..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className={styles.searchBox}
-      />
+      <h1>Admin User Profiles</h1>
 
+      <CreateUserForm users={users} setUsers={setUsers} />
+
+             {/* Search Box */}
+      <div>
+        <input
+          type="text"
+          placeholder="Search users..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className={styles.searchBox}
+        />
+      </div>
 
       <div className={styles.wrap}>
         {filteredUsers.length > 0 ? (
@@ -89,8 +84,8 @@ const AdminUserProfile = () => {
               <Card 
                 key={user._id} 
                 user={user} 
-                onEdit={() => handleEditUser(user)} 
-                onDelete={() => handleDeleteUser(user._id)} 
+                onEdit={() => onEdit(user._id)}
+                onDelete={() => onDelete(user._id)}
               />
             )
           ))
@@ -99,19 +94,14 @@ const AdminUserProfile = () => {
         )}
       </div>
 
-      {/* Show More Button */}
-      {displayLimit < users.filter((user) => user.role !== "admin").length && (
-        <button onClick={handleShowMore} className={styles.showMoreButton}>
-          Show More
-        </button>
-      )}
 
-      {selectedUser && (
-        <Modal isOpen={isOpenModal} closeModal={closeModal}>
-          <Form selectedItem={selectedUser} onUpdate={handleUpdateUser} />
-        </Modal>
-      )}
-    </div> 
+         {filteredUsers.length > 2 && (
+        <button onClick={toggleShowMore} className={styles.showMoreButton}>
+          {displayLimit === 2 ? 'Show More' : 'Show Less'}
+        </button>
+          )}
+
+    </div>
   );
 };
 

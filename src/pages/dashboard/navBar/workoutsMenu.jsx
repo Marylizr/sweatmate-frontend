@@ -1,5 +1,4 @@
-import React, { useState, useContext} from 'react';
-import { UserContext } from '../../../components/userContext/userContext';
+import React, { useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../navBar/navbar.module.css';
 import { useNavigate } from "react-router-dom";
@@ -15,6 +14,7 @@ import woman from '../../../assets/woman.svg';
 import bot from '../../../assets/bot.svg';
 import exit from '../../../assets/exit.svg';
 import fit from '../../../assets/fit.svg';
+import customFetch from '../../../api'
 
 
 const WorkoutsMenu = () => {
@@ -23,7 +23,24 @@ const WorkoutsMenu = () => {
   const navigate = useNavigate();
   const [clicked, setClicked] = useState(false);
 
-  const { name, role } = useContext(UserContext);
+  const [user, setUser] = useState('')
+  const [role, setRole] = useState('')
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await customFetch('GET', 'user/me');
+        setUser(response.name);
+        setRole(response.role)
+        console.log(response)
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
 
   const onLogOut = () => {
     removeSession()
@@ -42,7 +59,7 @@ const WorkoutsMenu = () => {
 
         <div className={`links ${clicked ? 'active' : ''}`}>
           <img src={logo} alt=''/>
-          <h2>Hi, {name}!</h2>
+          <h2>Hi, {user}!</h2>
 
            <div className={styles.side_menu}>
               <Link to='/main/dashboard'> Dashboard </Link>
@@ -76,7 +93,7 @@ const WorkoutsMenu = () => {
             </div>
 
             <div className={styles.side_menu}> 
-              {role === 'admin' && <Link to="/main/admin-userProfiles"><img src={person} alt=''/> Only Admin </Link>}
+              {role === 'admin' && <Link to="/main/admin-userProfiles"><img src={person} alt=''/> Admin's Only </Link>}
               {role === 'personal-trainer' && <Link to="/main/userProfiles"><img src={person} alt=''/> User Profiles </Link>}
             </div>
 

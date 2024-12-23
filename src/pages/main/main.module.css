@@ -36,7 +36,7 @@
       align-items: center;
    }
    .header {
-      width: 91vw;
+      width: 94vw;
       margin-top:1em;
    }
 }
@@ -49,4 +49,16 @@
       align-content: center;
       align-items: center;
    }
+
 }
+
+@media (max-width:375px){
+   
+   .header {
+      width: 95vw;
+      margin-top:1em;
+   }
+
+ 
+ 
+ }

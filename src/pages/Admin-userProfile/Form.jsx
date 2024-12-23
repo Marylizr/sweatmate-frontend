@@ -1,133 +1,126 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './userProfile.module.css';
 import customFetch from '../../api';
 import eye from '../../assets/eye.svg';
-
+import { useNavigate } from 'react-router-dom';
 
 const Form = ({ selectedItem, onUpdate }) => {
+  const [passwordShown, setPasswordShown] = useState(false);
+  const togglePasswordVisibility = () => setPasswordShown(!passwordShown);
+  const navigate = useNavigate();
 
-    const [passwordShown, setPasswordShown] = useState(false);
-    const togglePasswordVisibility = () => setPasswordShown(!passwordShown);
+  const [getUser, setGetUser] = useState({
+    name: '',
+    email: '',
+    age: '',
+    height: '',
+    weight: '',
+    goal: '',
+    password: '',
+    fitness_level: '',
+    medical_history: '',
+    preferences: '',
+    session_notes: [],
+  });
 
-    const [getUser, setGetUser] = useState({
-      name: selectedItem.name,
-      email: selectedItem.email,
-      age: selectedItem.age,
-      height: selectedItem.height,
-      weight: selectedItem.weight,
-      goal: selectedItem.goal,
-      password: "", // Initialize with an empty string for security
-    });
+  // Populate getUser when selectedItem is available
+  useEffect(() => {
+    if (selectedItem) {
+      setGetUser({
+        name: selectedItem.name || '',
+        email: selectedItem.email || '',
+        age: selectedItem.age || '',
+        height: selectedItem.height || '',
+        weight: selectedItem.weight || '',
+        goal: selectedItem.goal || '',
+        password: '', // For security reasons, don't pre-fill the password
+        fitness_level: selectedItem.fitness_level || '',
+        medical_history: selectedItem.medical_history || '',
+        preferences: selectedItem.preferences || '',
+        session_notes: selectedItem.session_notes || [],
+      });
+    }
+  }, [selectedItem]);
 
-    const handleInputChange = (e) => {
-      const { name, value } = e.target;
-      setGetUser(prev => ({ ...prev, [name]: value }));
-    };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setGetUser((prev) => ({
+      ...prev,
+      [name]: name === 'session_notes' ? value.split('\n') : value,
+    }));
+  };
 
-    const onSubmit = async (e) => {
-      e.preventDefault();
-      console.log("Updating user ID:", selectedItem._id); // Confirm the correct ID is used
-    
-      const updateData = { ...getUser };
-      if (!updateData.password) {
-        delete updateData.password;
-      }
-    
-      try {
-        await customFetch("PUT", `user/${selectedItem._id}`, { body: updateData });
-        onUpdate(updateData);
-        alert("Information Updated");
-        window.location.reload(); // Refresh the page to see immediate updates
-      } catch (err) {
-        console.error("Failed to update information:", err);
-        alert("Failed to update information.");
-      }
-    };
-    
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    console.log('Updating user ID:', selectedItem._id); // Confirm the correct ID is used
+
+    const updateData = { ...getUser };
+    if (!updateData.password) {
+      delete updateData.password;
+    }
+
+    try {
+      await customFetch('PUT', `user/${selectedItem._id}`, { body: updateData });
+      onUpdate(updateData);
+      alert("User's Information Updated");
+      navigate('/main/admin-userProfiles');
+    } catch (err) {
+      console.error('Failed to update information:', err);
+      alert('Failed to update information.');
+    }
+  };
 
   return (
-    <div className={styles.wrap_form}>
-      <p>Edit {selectedItem.name}’s Profile</p>
-
+    <div className={styles.namesinput}>
       <form onSubmit={onSubmit}>
-        <div className={styles.namesinput}>
-          <label>Name</label>
-          <input
-            type="text"
-            name="name"
-            value={getUser.name}
-            onChange={handleInputChange}
-          />
-        </div>
+      
+        <label>Name</label>
+        <input type="text" name="name" value={getUser.name} onChange={handleInputChange} />
 
-        <div className={styles.namesinput}>
-          <label>Email</label>
+        <label>Email</label>
+        <input type="email" name="email" value={getUser.email} onChange={handleInputChange} />
+      
+        {/* Password Field */}
+        <div className={styles.pass}>
           <input
-            type="email"
-            name="email"
-            value={getUser.email}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div className={styles.namesinput}>
-          <label>Age</label>
-          <input
-            type="number"
-            name="age"
-            value={getUser.age}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div className={styles.namesinput}>
-          <label>Height</label>
-          <input
-            type="number"
-            name="height"
-            value={getUser.height}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div className={styles.namesinput}>
-          <label>Weight</label>
-          <input
-            type="number"
-            name="weight"
-            value={getUser.weight}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div className={styles.namesinput}>
-          <label>Goal</label>
-          <select
-            name="goal"
-            value={getUser.goal}
-            onChange={handleInputChange}
-          >
-            <option value="Fat-Lost">Fat Lost</option>
-            <option value="Gain-Muscle-Mass">Gain Muscle Mass</option>
-            <option value="Maintenance">Maintenance</option>
-          </select>
-        </div>
-
-        <div className={styles.namesinput}>
-          <label>Password</label>
-          <input
-            type={passwordShown ? "text" : "password"}
+            type={passwordShown ? 'text' : 'password'}
             name="password"
             placeholder="Enter a new password"
             value={getUser.password}
             onChange={handleInputChange}
           />
-           <i className={styles.eye} onClick={togglePasswordVisibility}>
-              <img src={eye} alt="eye-icon" />
-          </i>
+          <button type="button" className={styles.eye} onClick={togglePasswordVisibility}>
+            <img src={eye} alt="eye-icon" />
+          </button>
         </div>
 
-        <button type="submit" className={styles.submit}>Save</button>
+        <label>Age</label>
+        <input type="number" name="age" value={getUser.age} onChange={handleInputChange} />
+       
+        <label>Height</label>
+        <input type="number" name="height" value={getUser.height} onChange={handleInputChange} />
+        
+        <label>Weight</label>
+        <input type="number" name="weight" value={getUser.weight} onChange={handleInputChange} />
+        
+        <label>Goal</label>
+        <select name="goal" value={getUser.goal} onChange={handleInputChange}>
+          <option value="Fat-Lost">Fat Lost</option>
+          <option value="Gain-Muscle-Mass">Gain Muscle Mass</option>
+          <option value="Maintenance">Maintenance</option>
+        </select>
+    
+        <label>Fitness Level</label>
+        <select name="fitness_level" value={getUser.fitness_level} onChange={handleInputChange}>
+          <option value="">Select Fitness Level</option>
+          <option value="beginner">Beginner</option>
+          <option value="intermediate">Intermediate</option>
+          <option value="advanced">Advanced</option>
+        </select>
+      
+        <button type="submit" className={styles.submit}>
+          Save
+        </button>
       </form>
     </div>
   );

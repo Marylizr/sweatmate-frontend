@@ -141,7 +141,7 @@
 @media (max-width:768px){
 
    .container {
-     width: 42vw;
+     width: 41vw;
      margin: 0.5em 0.5em 0 0;
      height: 10em;
    }
@@ -199,8 +199,22 @@
    }
 
    .userDetails > p {
-      margin: 0 3em 0;
+      margin: 0;
       font-size: 2em;
+   }
+
+   .userItem > img {
+      width: 4em;
+   }
+
+   .userDetails {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      width: 10em;
+      overflow-y: hidden;
    }
  
  

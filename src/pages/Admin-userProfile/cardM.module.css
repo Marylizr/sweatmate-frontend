@@ -114,5 +114,9 @@ form {
    .info {
       margin: 0.5em 0 0;
    }
+
+   .imagen > img {
+      width: 5em;
+   }
  
  }
