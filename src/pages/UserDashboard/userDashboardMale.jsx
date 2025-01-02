@@ -81,7 +81,7 @@ const UserDashboardMale = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer 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`, // Add your API key here
+            Authorization: `Bearer `, // Add your API key here
           },
         }
       );
