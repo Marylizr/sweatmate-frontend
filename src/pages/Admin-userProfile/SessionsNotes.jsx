@@ -1,63 +1,53 @@
 import React, { useState, useEffect } from 'react';
-import customFetch from '../../api';
+import fetchResource from '../../api';
 import styles from './userProfile.module.css';
 
-
-const SessionsNotes = ({ userId, initialNotes = [] }) => {
-  const [sessionNotes, setSessionNotes] = useState(initialNotes);
+const SessionNotes = ({ userId }) => {
+  const [sessionNotes, setSessionNotes] = useState([]);
   const [newNote, setNewNote] = useState('');
-  const [showAll, setShowAll] = useState(false);
+  const [noteDate, setNoteDate] = useState('');
+  const [showAll, setShowAll] = useState(false); // Toggle for showing more/less history
 
-
-  // Fetch existing session notes when the component mounts
+  // Fetch session notes on component mount
   useEffect(() => {
     const fetchSessionNotes = async () => {
       try {
-        const response = await customFetch('GET', `user/${userId}`);
-        if (response.sessionNotes) {
-          setSessionNotes(response.sessionNotes);
-        }
+        const response = await fetchResource('GET', `user/${userId}/session-notes`);
+        setSessionNotes(response);
       } catch (err) {
         console.error('Error fetching session notes:', err);
       }
     };
 
-    if (userId) {
-      fetchSessionNotes();
-    }
+    if (userId) fetchSessionNotes();
   }, [userId]);
 
-  // Handle input change for new session note
-  const handleInputChange = (e) => {
-    setNewNote(e.target.value);
-  };
-
-  // Handle form submission to add new session note
-  const onSubmit = async (e) => {
+  // Add a new session note
+  const handleAddNote = async (e) => {
     e.preventDefault();
-    if (!newNote.trim()) {
-      alert('Please enter a session note before saving.');
+
+    if (!newNote || !noteDate) {
+      alert('Both note and date are required.');
       return;
     }
-
-    const newNoteEntry = { note: newNote }; // Wrap the new note in an object with 'note' key
-    const updatedNotes = [...sessionNotes, newNoteEntry];
-
+  
+    const newRecord = { note: newNote, date: noteDate };
+    console.log('Sending newRecord:', newRecord);
+  
     try {
-      await customFetch('POST', `user/${userId}/session-notes`, {
-        body: JSON.stringify({ session_notes: updatedNotes }),
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetchResource('POST', `user/${userId}/session-notes`, {
+        body: newRecord,
       });
-      setSessionNotes(updatedNotes);
+      setSessionNotes(response.sessionNotes);
       setNewNote('');
-      alert('Session information created');
+      setNoteDate('');
     } catch (err) {
-      console.error('Failed to create session information:', err);
-      alert('Failed to update information.');
+      console.error('Error adding session note:', err);
+      alert('Failed to add session note.');
     }
   };
 
-  // Toggle function for showing all or showing less
+  // Toggle function for showing all or hiding
   const toggleShowAll = () => {
     setShowAll((prev) => !prev);
   };
@@ -65,42 +55,40 @@ const SessionsNotes = ({ userId, initialNotes = [] }) => {
   return (
     <div className={styles.sessionForm}>
       <h2>Session Notes</h2>
-      <form onSubmit={onSubmit}>
-        <div>
-          <textarea
-            name="newNote"
-            value={newNote}
-            onChange={handleInputChange}
-            placeholder="Enter session note"
-          />
-        </div>
-        <button type="submit" className={styles.submit}>
-          Save
-        </button>
+      <form onSubmit={handleAddNote}>
+        <textarea
+          placeholder="Write about the session"
+          value={newNote}
+          onChange={(e) => setNewNote(e.target.value)}
+        />
+        <input
+          type="date"
+          value={noteDate}
+          onChange={(e) => setNoteDate(e.target.value)}
+        />
+        <button type="submit">Add Note</button>
       </form>
-
-      {/* Display existing session notes with toggle functionality */}
-      <div className={styles.notesList}>
-        <h3>Existing Session Notes</h3>
-        {sessionNotes.length > 0 ? (
-          <>
-            <ul>
-              {(showAll ? sessionNotes : sessionNotes.slice(0, 3)).map((noteObj, index) => (
-                <li key={index}>{noteObj.note}</li>
-              ))}
-            </ul>
-            {sessionNotes.length > 3 && (
-              <button onClick={toggleShowAll} className={styles.toggleButton}>
-                {showAll ? 'Show Less' : 'Show All'}
-              </button>
-            )}
-          </>
-        ) : (
-          <p>No session notes yet.</p>
-        )}
-      </div>
+      <h3>Notes History</h3>
+      {sessionNotes.length > 0 ? (
+        <>
+          <ul>
+            {(showAll ? sessionNotes : sessionNotes.slice(0, 0)).map((note, index) => (
+              <li key={index}>
+                <strong>{new Date(note.date).toLocaleDateString()}</strong>: {note.note}
+              </li>
+            ))}
+          </ul>
+          {sessionNotes.length > 0 && (
+            <button onClick={toggleShowAll} className={styles.toggleButton}>
+              {showAll ? 'Hide History' : 'Show More'}
+            </button>
+          )}
+        </>
+      ) : (
+        <p>No session notes available.</p>
+      )}
     </div>
   );
 };
 
-export default SessionsNotes;
+export default SessionNotes;

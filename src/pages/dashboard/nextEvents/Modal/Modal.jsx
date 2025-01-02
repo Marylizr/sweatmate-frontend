@@ -23,7 +23,6 @@ const Modal = ({ event, onClose }) => {
 
   const handleCancel = async () => {
     console.log(`Attempting to cancel event with ID: ${event._id}`);
-  
     try {
       await fetchResource('DELETE', `events/${event._id}`);
       alert('Event canceled successfully!');
@@ -32,24 +31,48 @@ const Modal = ({ event, onClose }) => {
       console.error('Error canceling event:', error);
     }
   };
-  
 
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
         <h2>{new Date(event.date).toDateString()}</h2>
-        <p><strong>Time:</strong> {new Date(event.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-        <p><strong>Title:</strong> {event.title}</p>
-        <p><strong>Customer:</strong> {event.userId?.name}</p>
-        <p><strong>Email:</strong> {event.userId?.email || 'No email available'}</p>
+        <p>
+          <strong>Time:</strong>{' '}
+          {new Date(event.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+        </p>
+        <p>
+          <strong>Title:</strong> {event.title}
+        </p>
+        <p>
+          <strong>Participants:</strong>
+        </p>
+        {event.userId && event.userId.length > 0 ? (
+          <ul>
+            {event.userId.map((user) => (
+              <li key={user._id}>
+                {user.name} ({user.email || 'No email available'})
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No participants assigned.</p>
+        )}
 
         <div className={styles.buttons}>
-          <button className={styles.confirmButton} onClick={handleConfirm}>Confirm</button>
-          <button className={styles.rescheduleButton} onClick={handleReschedule}>Re-schedule</button>
-          <button className={styles.cancelButton} onClick={handleCancel}>Cancel</button>
+          <button className={styles.confirmButton} onClick={handleConfirm}>
+            Confirm
+          </button>
+          <button className={styles.rescheduleButton} onClick={handleReschedule}>
+            Re-schedule
+          </button>
+          <button className={styles.cancelButton} onClick={handleCancel}>
+            Cancel
+          </button>
         </div>
 
-        <button className={styles.closeButton} onClick={onClose}>Close</button>
+        <button className={styles.closeButton} onClick={onClose}>
+          Close
+        </button>
       </div>
     </div>
   );

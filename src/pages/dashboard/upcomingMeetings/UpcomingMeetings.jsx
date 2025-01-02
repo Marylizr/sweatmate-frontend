@@ -3,7 +3,7 @@ import fetchResource from '../../../api'; // Assume fetchResource is available f
 import styles from './upcomingmeetings.module.css'; // Custom CSS module
 import person from '../../../assets/person_1.svg';
 
-const UpcomingMeetings = ({ userId }) => {
+const UpcomingMeetings = () => {
   const [meetings, setMeetings] = useState([]);
   const [showAll, setShowAll] = useState(false);
 
@@ -24,41 +24,61 @@ const UpcomingMeetings = ({ userId }) => {
     const interval = setInterval(fetchMeetings, 60000);
 
     return () => clearInterval(interval);
-    }, []);
+  }, []);
 
+  // Filter the meetings to show only today's meetings and exclude trainer-only events for general users
+  const filterTodayMeetings = (meetings) => {
+    const today = new Date();
+    return meetings
+      .filter((meeting) => {
+        const meetingDate = new Date(meeting.date);
+        // Check if the meeting date matches today's year, month, and day
+        return (
+          meetingDate.getFullYear() === today.getFullYear() &&
+          meetingDate.getMonth() === today.getMonth() &&
+          meetingDate.getDate() === today.getDate()
+        );
+      })
+      .filter((meeting) => !meeting.trainerOnly) // Exclude trainer-only meetings
+      .sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort meetings by time
+  };
 
- // Filter the meetings to show only today's meetings and exclude trainer-only events for general users
-const filterTodayMeetings = (meetings) => {
-  const today = new Date();
-  return meetings
-    .filter(meeting => {
-      const meetingDate = new Date(meeting.date);
-      // Check if the meeting date matches today's year, month, and day
-      return (
-        meetingDate.getFullYear() === today.getFullYear() &&
-        meetingDate.getMonth() === today.getMonth() &&
-        meetingDate.getDate() === today.getDate()
+  // Mark a meeting as `completed` or `canceled`
+  const updateMeetingStatus = async (meetingId, status) => {
+    try {
+      await fetchResource('PUT', `events/${meetingId}/status`, { body: { status } });
+      setMeetings((prevMeetings) =>
+        prevMeetings.map((meeting) =>
+          meeting._id === meetingId ? { ...meeting, status } : meeting
+        )
       );
-    })
-    .filter(meeting => {
-      // Check if the meeting is NOT trainer-only and has a user assigned
-      return !meeting.trainerOnly && meeting.userId;
-    })
-    .filter(meeting => {
-      // Check if the meeting time has passed (exclude ended meetings)
-      const meetingStartTime = new Date(meeting.date).getTime();
-      const meetingEndTime = meetingStartTime + meeting.duration * 60000;
-      const currentTime = Date.now();
-      return currentTime < meetingEndTime; // Only show meetings that haven't ended yet
-    })
-    .sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort meetings by time
-};
+    } catch (error) {
+      console.error(`Error updating meeting status (${status}):`, error);
+    }
+  };
 
+  // Automatically remove meetings at the end of the day
+  useEffect(() => {
+    const removeMeetings = () => {
+      const now = new Date();
+      setMeetings((prevMeetings) =>
+        prevMeetings.filter((meeting) => {
+          const meetingDate = new Date(meeting.date);
+          return (
+            meetingDate.getFullYear() === now.getFullYear() &&
+            meetingDate.getMonth() === now.getMonth() &&
+            meetingDate.getDate() === now.getDate()
+          );
+        })
+      );
+    };
+
+    const interval = setInterval(removeMeetings, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Toggle the view of meetings (3 or all)
-  const toggleShowAll = () => {
-    setShowAll((prevShowAll) => !prevShowAll);
-  };
+  const toggleShowAll = () => setShowAll((prevShowAll) => !prevShowAll);
 
   // Get current date in readable format
   const getCurrentDate = () => {
@@ -83,18 +103,27 @@ const filterTodayMeetings = (meetings) => {
 
       <div className={styles.meetingsList}>
         {displayedMeetings.length > 0 ? (
-          displayedMeetings.map((meeting, index) => (
-            <div key={index} className={styles.meetingItem}>
+          displayedMeetings.map((meeting) => (
+            <div key={meeting._id} className={styles.meetingItem}>
               <div className={styles.userInfo}>
                 <img
-                  src={meeting.user ? meeting.user.image : person} 
-                  alt={`${meeting.userId?.name || 'User'}'s profile`}
+                  src={
+                    meeting.userId && meeting.userId.length > 0 && meeting.userId[0].image
+                      ? meeting.userId[0].image
+                      : person
+                  }
+                  alt={
+                    meeting.userId && meeting.userId.length > 0
+                      ? meeting.userId[0].name || 'User'
+                      : 'Unknown User'
+                  }
                   className={styles.userImage}
                 />
                 <div className={styles.userDetails}>
                   <p className={styles.userName}>
-                    {meeting.userId?.name || 'Unknown User'}
-                    {meeting.userId === 'all' && <span className={styles.allUsersLabel}> (All Users)</span>}
+                    {meeting.userId && meeting.userId.length > 0
+                      ? meeting.userId.map((user) => user.name).join(', ')
+                      : 'No User Assigned'}
                   </p>
                   <p className={styles.workoutType}>{meeting.eventType}</p>
                 </div>
@@ -104,6 +133,26 @@ const filterTodayMeetings = (meetings) => {
                   {new Date(meeting.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </p>
                 <p className={styles.meetingDuration}>{meeting.duration} min Session</p>
+                {meeting.status === 'pending' ? (
+                  <div className={styles.statusButtons}>
+                    <button
+                      className={styles.checkInButton}
+                      onClick={() => updateMeetingStatus(meeting._id, 'completed')}
+                    >
+                      Check-In
+                    </button>
+                    <button
+                      className={styles.noShowButton}
+                      onClick={() => updateMeetingStatus(meeting._id, 'canceled')}
+                    >
+                      No-Show
+                    </button>
+                  </div>
+                ) : (
+                  <p className={styles.meetingStatus}>
+                    {meeting.status.charAt(0).toUpperCase() + meeting.status.slice(1)}
+                  </p>
+                )}
               </div>
             </div>
           ))

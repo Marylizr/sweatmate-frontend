@@ -13,8 +13,14 @@ import sports1 from "../../assets/sports1.svg";
 import fruit from "../../assets/fruit.svg";
 import donut from "../../assets/donut.svg";
 import map from "../../assets/map.svg";
-import Modal from './Modal/Modal';
-import axios from 'axios';
+import Modal from "./Modal/Modal";
+import axios from "axios";
+import happy from "../../assets/happy.svg";
+import sad from "../../assets/sad.svg";
+import stressed from "../../assets/stressed.svg";
+import excited from "../../assets/exited.svg";
+import anxious from "../../assets/anxious.svg";
+import tired from "../../assets/tired.svg";
 
 const UserDashboardFemale = () => {
   const [name, setName] = useState("");
@@ -22,10 +28,17 @@ const UserDashboardFemale = () => {
   const [mood, setMood] = useState("");
   const [comments, setComments] = useState("");
   const [userName, setUserName] = useState("");
-  const [suggestions, setSuggestions] = useState([]); // Changed from null to []
+  const [suggestions, setSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const moods = ["Happy", "Sad", "Stressed", "Anxious", "Excited", "Tired"];
+  const moods = [
+    { name: "Happy", emoji: happy },
+    { name: "Sad", emoji: sad },
+    { name: "Stressed", emoji: stressed },
+    { name: "Anxious", emoji: anxious },
+    { name: "Excited", emoji: excited },
+    { name: "Tired", emoji: tired },
+  ];
 
   useEffect(() => {
     customFetch("GET", "user/me")
@@ -58,30 +71,27 @@ const UserDashboardFemale = () => {
           messages: [
             {
               role: "system",
-              content: "Act as the best personal trainer and wellness coach.",
+              content: "You are a personal trainer and wellness coach.",
             },
             {
               role: "user",
-              content: `I am feeling ${selectedMood}. Can you suggest a motivational message for me?, please give me directly the message`,
+              content: `I am feeling ${selectedMood}. Can you suggest a motivational message for me? Please provide only the message.`,
             },
           ],
         },
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer `, // Add your API key here
+            Authorization: `Bearer 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`, // Add your API key here
           },
         }
       );
 
       const suggestionText = response.data.choices[0].message.content;
-
-      // Parse the ChatGPT response into sections
-      const formattedSuggestions = formatSuggestions(suggestionText);
-      setSuggestions(formattedSuggestions);
+      setSuggestions([{ title: "Motivational Message", content: suggestionText }]);
     } catch (error) {
       console.error("Error fetching suggestions from ChatGPT:", error);
-      setSuggestions([]); // Ensure suggestions is reset to an empty array on error
+      setSuggestions([]);
     } finally {
       setIsLoading(false);
     }
@@ -106,14 +116,7 @@ const UserDashboardFemale = () => {
   };
 
   const formatSuggestions = (text) => {
-    const sections = text.split("\n\n");
-    const formatted = sections.map((section, index) => {
-      const titleMatch = section.match(/^(.+?):/); // Extract section title (e.g., "Workout:")
-      const title = titleMatch ? titleMatch[1] : ` ${index + 1}`;
-      const content = section.replace(/^.+?:\s*/, ""); // Remove the title from the content
-      return { title, content };
-    });
-    return formatted;
+    return [{ title: "Motivational Message", content: text }];
   };
 
   return (
@@ -129,19 +132,24 @@ const UserDashboardFemale = () => {
                 <div className={styles.moods}>
                   {moods.map((item) => (
                     <button
-                      key={item}
-                      className={`${styles.moodButton} ${mood === item ? styles.selected : ""}`}
-                      onClick={() => handleMoodClick(item)}
+                      key={item.name}
+                      className={`${styles.moodButton} ${mood === item.name ? styles.selected : ""}`}
+                      onClick={() => handleMoodClick(item.name)}
                     >
-                      {item}
+                      <img
+                        src={item.emoji}
+                        alt={item.name}
+                        className={`${styles.moodEmoji} ${mood === item.name ? styles.selectedEmoji : ""}`}
+                      />
                     </button>
                   ))}
                 </div>
+
                 <textarea
                   placeholder="Any additional comments?"
                   value={comments}
                   onChange={(e) => setComments(e.target.value)}
-                  className={styles.moods}
+                  className={styles.comments}
                 />
                 <button className={styles.submitButton} onClick={handleSubmit}>
                   Submit
@@ -153,7 +161,7 @@ const UserDashboardFemale = () => {
                 {isLoading ? (
                   <p>Loading suggestions...</p>
                 ) : (
-                  Array.isArray(suggestions) && suggestions.map((section, index) => (
+                  suggestions.map((section, index) => (
                     <div key={index} className={styles.suggestionSection}>
                       <h3>{section.title}</h3>
                       <p>{section.content}</p>
@@ -190,7 +198,7 @@ const UserDashboardFemale = () => {
             <button>
               <Link to="/workoutsDashboard">
                 <img src={sports} alt="icon" />
-                my WorkOuts
+                My Workouts
               </Link>
             </button>
           </div>
@@ -198,7 +206,7 @@ const UserDashboardFemale = () => {
             <button>
               <Link to="/">
                 <img src={map} alt="icon" />
-                find a SweatMate
+                Find a SweatMate
               </Link>
             </button>
           </div>
@@ -206,7 +214,7 @@ const UserDashboardFemale = () => {
             <button>
               <Link to="/progress">
                 <img src={donut} alt="icon" />
-                my Progress
+                My Progress
               </Link>
             </button>
           </div>
@@ -228,7 +236,7 @@ const UserDashboardFemale = () => {
           </div>
         </div>
       </div>
-    </div> 
+    </div>
   );
 };
 

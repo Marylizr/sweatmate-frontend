@@ -14,6 +14,12 @@ import fruit from "../../assets/fruit.svg";
 import donut from "../../assets/donut.svg";
 import map from "../../assets/map.svg";
 import Modal from "./Modal/Modal";
+import happy from "../../assets/happy.svg";
+import sad from "../../assets/sad.svg";
+import stressed from "../../assets/stressed.svg";
+import excited from "../../assets/exited.svg";
+import anxious from "../../assets/anxious.svg";
+import tired from "../../assets/tired.svg";
 
 const UserDashboardMale = () => {
   const [name, setName] = useState("");
@@ -24,7 +30,14 @@ const UserDashboardMale = () => {
   const [suggestions, setSuggestions] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const moods = ["Happy", "Sad", "Stressed", "Anxious", "Excited", "Tired"];
+  const moods = [
+    { name: "Happy", emoji: happy },
+    { name: "Sad", emoji: sad },
+    { name: "Stressed", emoji: stressed },
+    { name: "Anxious", emoji: anxious },
+    { name: "Excited", emoji: excited },
+    { name: "Tired", emoji: tired },
+  ];
 
   useEffect(() => {
     customFetch("GET", "user/me")
@@ -61,14 +74,14 @@ const UserDashboardMale = () => {
             },
             {
               role: "user",
-              content: `I am feeling ${selectedMood}. Can you suggest a workout, and a motivational message for me?`,
+              content: `I am feeling ${selectedMood}. Can you suggest a workout and a motivational message for me?`,
             },
           ],
         },
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer`,
+            Authorization: `Bearer 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`, // Add your API key here
           },
         }
       );
@@ -106,13 +119,12 @@ const UserDashboardMale = () => {
 
   const formatSuggestions = (text) => {
     const sections = text.split("\n\n");
-    const formatted = sections.map((section, index) => {
-      const titleMatch = section.match(/^(.+?):/); // Extract section title (e.g., "Workout:")
+    return sections.map((section, index) => {
+      const titleMatch = section.match(/^(.+?):/); // Extract section title
       const title = titleMatch ? titleMatch[1] : `Section ${index + 1}`;
       const content = section.replace(/^.+?:\s*/, ""); // Remove the title from the content
       return { title, content };
     });
-    return formatted;
   };
 
   return (
@@ -123,19 +135,24 @@ const UserDashboardMale = () => {
         <div className={styles.modal}>
           <div className={styles.modalContent}>
             {!suggestions ? (
-              <>
+              <div className={styles.wrapper}>
                 <h2>{name}, How do you feel today?</h2>
                 <div className={styles.moods}>
                   {moods.map((item) => (
                     <button
-                      key={item}
-                      className={`${styles.moodButton} ${mood === item ? styles.selected : ""}`}
-                      onClick={() => handleMoodClick(item)}
+                      key={item.name}
+                      className={`${styles.moodButton} ${mood === item.name ? styles.selected : ""}`}
+                      onClick={() => handleMoodClick(item.name)}
                     >
-                      {item}
+                      <img
+                        src={item.emoji}
+                        alt={item.name}
+                        className={`${styles.moodEmoji} ${mood === item.name ? styles.selectedEmoji : ""}`}
+                      />
                     </button>
                   ))}
                 </div>
+
                 <textarea
                   placeholder="Any additional comments?"
                   value={comments}
@@ -144,7 +161,7 @@ const UserDashboardMale = () => {
                 <button className={styles.submitButton} onClick={handleSubmit}>
                   Submit
                 </button>
-              </>
+              </div>
             ) : (
               <>
                 <h2>Suggestions Based on Your Mood</h2>

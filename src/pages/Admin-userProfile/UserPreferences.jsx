@@ -1,94 +1,92 @@
-import React, { useState } from 'react';
-import customFetch from '../../api';
+import React, { useState, useEffect } from 'react';
+import fetchResource from '../../api';
 import styles from './userProfile.module.css';
-import {  useParams } from 'react-router-dom';
 
-const UserPreferences = ({ userId: propUserId, initialPreferences = [] }) => {
-  const { id: paramUserId } = useParams();
-  const userId = propUserId || paramUserId;
-  const [preferences, setPreferences] = useState(initialPreferences);
+const UserPreferences = ({ userId }) => {
+  const [preferences, setPreferences] = useState([]);
   const [newPreference, setNewPreference] = useState('');
-  const [showAll, setShowAll] = useState(false);
+  const [preferenceDate, setPreferenceDate] = useState('');
+  const [showAll, setShowAll] = useState(false); // Toggle for showing more/less history
 
+  // Fetch user preferences on component mount
+  useEffect(() => {
+    const fetchPreferences = async () => {
+      try {
+        const response = await fetchResource('GET', `user/${userId}/user-preferences`);
+        setPreferences(response);
+      } catch (err) {
+        console.error('Error fetching user preferences:', err);
+      }
+    };
 
-  console.log("User ID:", userId);
+    if (userId) fetchPreferences();
+  }, [userId]);
 
-  // Handle input change for new preference
-  const handleInputChange = (e) => {
-    setNewPreference(e.target.value);
-  };
-
-  // Handle form submission to add new preference
-  const onSubmit = async (e) => {
+  // Add a new user preference
+  const handleAddPreference = async (e) => {
     e.preventDefault();
-    if (!newPreference.trim()) {
-      alert('Please enter a user preference before saving.');
+
+    if (!newPreference || !preferenceDate) {
+      alert('Both preference and date are required.');
       return;
     }
-
-    const newPreferenceEntry = { preference: newPreference };
-    const updatedPreferences = [...preferences, newPreferenceEntry];
-
+  
+    const newRecord = { preference: newPreference, date: preferenceDate };
+    console.log('Sending newRecord:', newRecord);
+  
     try {
-      await customFetch('POST', `user/${userId}/user-preferences`, {
-        body: JSON.stringify({ preferences: updatedPreferences }),
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetchResource('POST', `user/${userId}/user-preferences`, {
+        body: newRecord,
       });
-      setPreferences(updatedPreferences);
+      setPreferences(response.preferences);
       setNewPreference('');
-      alert('User preferences information created');
+      setPreferenceDate('');
     } catch (err) {
-      console.error('Failed to create user preferences information:', err);
-      alert('Failed to update information.');
+      console.error('Error adding user preference:', err);
+      alert('Failed to add user preference.');
     }
   };
 
-  // Toggle function for showing all or showing less
+  // Toggle function for showing all or hiding
   const toggleShowAll = () => {
     setShowAll((prev) => !prev);
   };
 
-  if (!userId) {
-    return <p>Error: User ID is missing. Cannot save preferences.</p>;
-  }
-
   return (
     <div className={styles.sessionForm}>
-      <h2>User's Preferences</h2>
-      <form onSubmit={onSubmit}>
-        <div>
-          <textarea
-            name="newPreference"
-            value={newPreference}
-            onChange={handleInputChange}
-            placeholder="Enter user's preferences"
-          />
-        </div>
-        <button type="submit" className={styles.submit}>
-          Save
-        </button>
+      <h2>User Preferences</h2>
+      <form onSubmit={handleAddPreference}>
+        <textarea
+          placeholder="Enter user preference details"
+          value={newPreference}
+          onChange={(e) => setNewPreference(e.target.value)}
+        />
+        <input
+          type="date"
+          value={preferenceDate}
+          onChange={(e) => setPreferenceDate(e.target.value)}
+        />
+        <button type="submit">Add Preference</button>
       </form>
-
-      {/* Display existing user preferences with toggle functionality */}
-      <div className={styles.notesList}>
-        <h3>Existing User's Preferences</h3>
-        {preferences.length > 0 ? (
-          <>
-            <ul>
-              {(showAll ? preferences : preferences.slice(0, 3)).map((prefObj, index) => (
-                <li key={index}>{prefObj.preference}</li>
-              ))}
-            </ul>
-            {preferences.length > 3 && (
-              <button onClick={toggleShowAll} className={styles.toggleButton}>
-                {showAll ? 'Show Less' : 'Show All'}
-              </button>
-            )}
-          </>
-        ) : (
-          <p>No preferences uploaded yet.</p>
-        )}
-      </div>
+      <h3>Preferences History</h3>
+      {preferences.length > 0 ? (
+        <>
+          <ul>
+            {(showAll ? preferences : preferences.slice(0, 3)).map((pref, index) => (
+              <li key={index}>
+                <strong>{new Date(pref.date).toLocaleDateString()}</strong>: {pref.preference}
+              </li>
+            ))}
+          </ul>
+          {preferences.length > 3 && (
+            <button onClick={toggleShowAll} className={styles.toggleButton}>
+              {showAll ? 'Hide History' : 'Show More'}
+            </button>
+          )}
+        </>
+      ) : (
+        <p>No user preferences available.</p>
+      )}
     </div>
   );
 };

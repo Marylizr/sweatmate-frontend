@@ -6,10 +6,8 @@ import face from '../../../assets/mood_bad.svg';
 
 const ClientModal = ({ user, activityHistory, setActivityHistory }) => {
   const [lastEvent, setLastEvent] = useState(null);
-  const [selectedMonth, setSelectedMonth] = useState(null); // Track selected month
+  const [selectedMonth, setSelectedMonth] = useState(null);
 
-
-  
   // Fetch today's event specifically for the selected user
   const fetchLastEvent = async () => {
     try {
@@ -25,8 +23,7 @@ const ClientModal = ({ user, activityHistory, setActivityHistory }) => {
       const todayEvent = response.find(
         (event) =>
           event.status === 'pending' &&
-          event.userId &&
-          event.userId._id === user._id &&
+          event.userId.some((u) => u._id === user._id) && // Check if any userId matches the user's ID
           event.date.split('T')[0] === today
       );
   
@@ -35,48 +32,41 @@ const ClientModal = ({ user, activityHistory, setActivityHistory }) => {
       console.error("Error fetching today's event:", error);
     }
   };
-     
-    
-    useEffect(() => {
-      if (user && user._id) {
-        fetchLastEvent();
-      }
-    }, [user]);
+  
 
-// Fetch activity history for the selected month and user
-    useEffect(() => {
-      if (selectedMonth === null) {
-        setActivityHistory([]); // Reset activity history if no month is selected
-        return;
-      }
-    
-      const fetchActivityHistory = async () => {
+  // Fetch activity history for the selected month and user
+  useEffect(() => {
+    if (selectedMonth === null) {
+      setActivityHistory([]); // Reset activity history if no month is selected
+      return;
+    }
+
+    const fetchActivityHistory = async () => {
       try {
-         const year = new Date().getFullYear();
-         const monthStart = new Date(year, selectedMonth, 1).toISOString();
-         const monthEnd = new Date(year, selectedMonth + 1, 0, 23, 59, 59).toISOString();
-   
-         // Fetch events for the selected user and filter by the selected month
-         const monthlyEventsResponse = await fetchResource(
-            'GET',
-            `events?userId=${user._id}&start=${monthStart}&end=${monthEnd}`
-         );
-   
-         // Check if userId is an object, and filter accordingly
-         const filteredEvents = monthlyEventsResponse.filter(event => {
-            return event.userId._id === user._id; // Ensure the user ID matches correctly
-         });
-   
-         // Sort events by date and update activity history
-         setActivityHistory(filteredEvents.sort((a, b) => new Date(a.date) - new Date(b.date)));
+        const year = new Date().getFullYear();
+        const monthStart = new Date(year, selectedMonth, 1).toISOString();
+        const monthEnd = new Date(year, selectedMonth + 1, 0, 23, 59, 59).toISOString();
+    
+        const monthlyEventsResponse = await fetchResource(
+          'GET',
+          `events?userId=${user._id}&start=${monthStart}&end=${monthEnd}`
+        );
+    
+        const filteredEvents = monthlyEventsResponse.filter((event) =>
+          event.userId.some((u) => u._id === user._id) // Check if any userId matches the user's ID
+        );
+    
+        setActivityHistory(
+          filteredEvents.sort((a, b) => new Date(a.date) - new Date(b.date))
+        );
       } catch (error) {
-         console.error('Error fetching activity history:', error);
+        console.error('Error fetching activity history:', error);
       }
-      };
-   
-      fetchActivityHistory();
-   }, [selectedMonth, user._id]); // Fetch only for the selected user and month
- 
+    };
+    
+
+    fetchActivityHistory();
+  }, [selectedMonth, user._id]);
 
   // Handle status change for the last event (completed or canceled)
   const handleStatusChange = async (status) => {
@@ -104,10 +94,21 @@ const ClientModal = ({ user, activityHistory, setActivityHistory }) => {
     setSelectedMonth(selectedMonth === index ? null : index); // Toggle between opening/closing the month
   };
 
+  // Fetch today's event when the user is loaded
+  useEffect(() => {
+    if (user && user._id) {
+      fetchLastEvent();
+    }
+  }, [user]);
+
   return (
     <div className={styles.modalContainer}>
       <div className={styles.modalHeader}>
-        <img src={user.image || userIcon} alt={`${user.name}'s profile`} className={styles.modalUserImage} />
+        <img
+          src={user.image || userIcon}
+          alt={`${user.name}'s profile`}
+          className={styles.modalUserImage}
+        />
         <div className={styles.head}>
           <h2>{user.name}</h2>
           <p>{user.role} Level</p>
@@ -116,14 +117,33 @@ const ClientModal = ({ user, activityHistory, setActivityHistory }) => {
 
       {/* Display today's event */}
       <div className={styles.currentActivity}>
-        <p>{new Date().toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'numeric' })}</p>
+        <p>
+          {new Date().toLocaleDateString('en-GB', {
+            weekday: 'short',
+            day: 'numeric',
+            month: 'numeric',
+          })}
+        </p>
         {lastEvent ? (
           <div>
             <div className={styles.modalstyle}>
-              <p><b>Activity: </b>{lastEvent.eventType}</p>
-              <p><b>Workout for:</b> {lastEvent.userId.name}</p>
-              <p><b>for:</b> {lastEvent.duration} min</p>
-              <p><b>at:</b> {new Date(lastEvent.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+              <p>
+                <b>Activity: </b>
+                {lastEvent.eventType}
+              </p>
+              <p>
+                <b>Workout for:</b> {lastEvent.userId.name}
+              </p>
+              <p>
+                <b>for:</b> {lastEvent.duration} min
+              </p>
+              <p>
+                <b>at:</b>{' '}
+                {new Date(lastEvent.date).toLocaleTimeString([], {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}
+              </p>
             </div>
 
             <div className={styles.radioButtons}>
@@ -133,7 +153,8 @@ const ClientModal = ({ user, activityHistory, setActivityHistory }) => {
                   name="status"
                   value="completed"
                   onChange={() => handleStatusChange('completed')}
-                /> Completed
+                />{' '}
+                Completed
               </label>
               <label>
                 <input
@@ -141,14 +162,14 @@ const ClientModal = ({ user, activityHistory, setActivityHistory }) => {
                   name="status"
                   value="canceled"
                   onChange={() => handleStatusChange('canceled')}
-                /> Canceled
+                />{' '}
+                Canceled
               </label>
             </div>
-            
           </div>
         ) : (
           <div>
-            <img src={face} alt='emoji' />
+            <img src={face} alt="emoji" />
             <p>No activities today</p>
           </div>
         )}
@@ -157,8 +178,18 @@ const ClientModal = ({ user, activityHistory, setActivityHistory }) => {
       {/* Display month buttons */}
       <div className={styles.monthButtons}>
         {[
-          'January', 'February', 'March', 'April', 'May', 'June',
-          'July', 'August', 'September', 'October', 'November', 'December',
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December',
         ].map((monthName, index) => (
           <div key={index}>
             <button
@@ -174,11 +205,21 @@ const ClientModal = ({ user, activityHistory, setActivityHistory }) => {
                   activityHistory.map((activity, i) => (
                     <div key={i} className={styles.historyItem}>
                       <p className={styles.time}>
-                        {new Date(activity.date).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'numeric' })}
+                        {new Date(activity.date).toLocaleDateString('en-GB', {
+                          weekday: 'short',
+                          day: 'numeric',
+                          month: 'numeric',
+                        })}
                       </p>
                       <div className={styles.block}>
                         <p>{activity.eventType}</p>
-                        <p> at: {new Date(activity.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                        <p>
+                          at:{' '}
+                          {new Date(activity.date).toLocaleTimeString([], {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          })}
+                        </p>
                       </div>
                       <div className={styles.block2}>
                         <p>{activity.duration} min</p>
@@ -188,7 +229,7 @@ const ClientModal = ({ user, activityHistory, setActivityHistory }) => {
                   ))
                 ) : (
                   <div>
-                    <img src={face} alt='emoji' />
+                    <img src={face} alt="emoji" />
                     <p>No activity yet</p>
                   </div>
                 )}
@@ -199,6 +240,6 @@ const ClientModal = ({ user, activityHistory, setActivityHistory }) => {
       </div>
     </div>
   );
-}
+};
 
 export default ClientModal;

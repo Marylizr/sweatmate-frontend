@@ -5,7 +5,7 @@
  import Modal from "../../components/Modal/Modal";
  import { useModal } from "../../hooks/useModal";
  import pen from '../../pages/UserDashboard/images/pen.svg';
-import pic from "../../utils/back1.jpg";
+ import pic from "../../assets/person.svg";
 
 
  const Workouts = () => {

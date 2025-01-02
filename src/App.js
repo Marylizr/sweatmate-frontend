@@ -35,6 +35,7 @@ import MealPlanner from './pages/mealPlanner/MealPlanner';
 import PlanNextEvents from './pages/dashboard/nextEvents/PlanNextEvents';
 import Form from './pages/dashboard/nextEvents/Form';
 import EditUserProfile from './pages/Admin-userProfile/EditUserProfile';
+import MedicalHistory from './pages/Admin-userProfile/MedicalHistory';
 
 // import PrivateRoute from "./api/auth/privateRoute";
 
@@ -81,7 +82,8 @@ function App() {
           <Route path="/plannextevents" element={<PlanNextEvents/> } />
           <Route path="/reschedule/:eventId" element={<Form />} />
           <Route path="/edituserprofile/:id" element={<EditUserProfile />} />
-      
+          <Route path="/:id/medical-history" element={<MedicalHistory />} />
+
 
         </Routes>
       </BrowserRouter>

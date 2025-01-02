@@ -4,7 +4,7 @@ import customFetch from '../../api';
 import eye from '../../assets/eye.svg';
 import { useNavigate } from 'react-router-dom';
 
-const Form = ({ selectedItem, onUpdate }) => {
+const Form = ({ selectedItem, onUpdate, trainers }) => {
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePasswordVisibility = () => setPasswordShown(!passwordShown);
   const navigate = useNavigate();
@@ -18,6 +18,7 @@ const Form = ({ selectedItem, onUpdate }) => {
     goal: '',
     password: '',
     fitness_level: '',
+    trainerId: '', // Added trainerId
     medical_history: '',
     preferences: '',
     session_notes: [],
@@ -35,6 +36,7 @@ const Form = ({ selectedItem, onUpdate }) => {
         goal: selectedItem.goal || '',
         password: '', // For security reasons, don't pre-fill the password
         fitness_level: selectedItem.fitness_level || '',
+        trainerId: selectedItem.trainerId || '', // Pre-fill trainerId
         medical_history: selectedItem.medical_history || '',
         preferences: selectedItem.preferences || '',
         session_notes: selectedItem.session_notes || [],
@@ -63,7 +65,7 @@ const Form = ({ selectedItem, onUpdate }) => {
       await customFetch('PUT', `user/${selectedItem._id}`, { body: updateData });
       onUpdate(updateData);
       alert("User's Information Updated");
-      navigate('/main/admin-userProfiles');
+      navigate('/main/edituserprofile/:id');
     } catch (err) {
       console.error('Failed to update information:', err);
       alert('Failed to update information.');
@@ -73,13 +75,12 @@ const Form = ({ selectedItem, onUpdate }) => {
   return (
     <div className={styles.namesinput}>
       <form onSubmit={onSubmit}>
-      
         <label>Name</label>
         <input type="text" name="name" value={getUser.name} onChange={handleInputChange} />
 
         <label>Email</label>
         <input type="email" name="email" value={getUser.email} onChange={handleInputChange} />
-      
+
         {/* Password Field */}
         <div className={styles.pass}>
           <input
@@ -116,6 +117,18 @@ const Form = ({ selectedItem, onUpdate }) => {
           <option value="beginner">Beginner</option>
           <option value="intermediate">Intermediate</option>
           <option value="advanced">Advanced</option>
+        </select>
+
+        {/* Trainer ID Field */}
+        <label>Assigned Trainer</label>
+        <select name="trainerId" value={getUser.trainerId} onChange={handleInputChange}>
+          <option value="">Select a Trainer</option>
+          {trainers &&
+            trainers.map((trainer) => (
+              <option key={trainer._id} value={trainer._id}>
+                {trainer.name}
+              </option>
+            ))}
         </select>
       
         <button type="submit" className={styles.submit}>

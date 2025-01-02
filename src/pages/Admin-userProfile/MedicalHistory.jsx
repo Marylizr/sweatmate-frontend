@@ -1,95 +1,92 @@
-import React, { useState } from 'react';
-import customFetch from '../../api';
+import React, { useState, useEffect } from 'react';
+import fetchResource from '../../api';
 import styles from './userProfile.module.css';
-import { useNavigate, useParams } from 'react-router-dom';
 
-const MedicalHistory = ({ userId: propUserId, initialMedicalHistory = [] }) => {
-  const { id: paramUserId } = useParams();
-  const userId = propUserId || paramUserId;
-  const [medicalHistory, setMedicalHistory] = useState(initialMedicalHistory);
-  const [newMedicalHistory, setNewMedicalHistory] = useState('');
-  const [showAll, setShowAll] = useState(false);
-  const navigate = useNavigate();
+const MedicalHistory = ({ userId }) => {
+  const [medicalHistory, setMedicalHistory] = useState([]);
+  const [newEntry, setNewEntry] = useState('');
+  const [entryDate, setEntryDate] = useState('');
+  const [showAll, setShowAll] = useState(false); // Toggle for showing more/less history
 
-  console.log("User ID:", userId);
+  // Fetch medical history on component mount
+  useEffect(() => {
+    const fetchMedicalHistory = async () => {
+      try {
+        const response = await fetchResource('GET', `user/${userId}/medical-history`);
+        setMedicalHistory(response);
+      } catch (err) {
+        console.error('Error fetching medical history:', err);
+      }
+    };
 
-  // Handle input change for new medical history entry
-  const handleInputChange = (e) => {
-    setNewMedicalHistory(e.target.value);
-  };
+    if (userId) fetchMedicalHistory();
+  }, [userId]);
 
-  // Handle form submission to add new medical history entry
-  const onSubmit = async (e) => {
+  // Add a new medical history record
+  const handleAddEntry = async (e) => {
     e.preventDefault();
-    if (!newMedicalHistory.trim()) {
-      alert('Please enter a medical history entry before saving.');
+
+    if (!newEntry || !entryDate) {
+      alert('Both medical history and date are required.');
       return;
     }
-
-    const newMedicalHistoryEntry = { entry: newMedicalHistory }; // Wrap new entry in an object
-    const updatedMedicalHistory = [...medicalHistory, newMedicalHistoryEntry];
-
+  
+    const newRecord = { history: newEntry, date: entryDate };
+    console.log('Sending newRecord:', newRecord);
+  
     try {
-      await customFetch('POST', `user/${userId}/medical-history`, {
-        body: JSON.stringify({ medicalHistory: updatedMedicalHistory }),
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetchResource('POST', `user/${userId}/medical-history`, {
+        body: newRecord,
       });
-      setMedicalHistory(updatedMedicalHistory);
-      setNewMedicalHistory('');
-      alert('User medical history created');
-      navigate('/main/admin-userProfiles');
+      setMedicalHistory(response.medicalHistory);
+      setNewEntry('');
+      setEntryDate('');
     } catch (err) {
-      console.error('Failed to create user medical history information:', err);
-      alert('Failed to update information.');
+      console.error('Error adding medical history:', err);
+      alert('Failed to add medical history.');
     }
   };
 
-  // Toggle function for showing all or showing less
+  // Toggle function for showing all or hiding
   const toggleShowAll = () => {
     setShowAll((prev) => !prev);
   };
 
-  if (!userId) {
-    return <p>Error: User ID is missing. Cannot save medical history.</p>;
-  }
-
   return (
     <div className={styles.sessionForm}>
-      <h2>User's Medical History</h2>
-      <form onSubmit={onSubmit}>
-        <div>
-          <textarea
-            name="newMedicalHistory"
-            value={newMedicalHistory}
-            onChange={handleInputChange}
-            placeholder="Enter user's medical history"
-          />
-        </div>
-        <button type="submit" className={styles.submit}>
-          Save
-        </button>
+      <h2>Medical History</h2>
+      <form onSubmit={handleAddEntry}>
+        <textarea
+          placeholder="Enter medical history details"
+          value={newEntry}
+          onChange={(e) => setNewEntry(e.target.value)}
+        />
+        <input
+          type="date"
+          value={entryDate}
+          onChange={(e) => setEntryDate(e.target.value)}
+        />
+        <button type="submit">Add Medical History</button>
       </form>
-
-      {/* Display existing medical history with toggle functionality */}
-      <div className={styles.notesList}>
-        <h3>Existing User's Medical History</h3>
-        {medicalHistory.length > 0 ? (
-          <>
-            <ul>
-              {(showAll ? medicalHistory : medicalHistory.slice(0, 3)).map((entryObj, index) => (
-                <li key={index}>{entryObj.entry}</li>
-              ))}
-            </ul>
-            {medicalHistory.length > 3 && (
-              <button onClick={toggleShowAll} className={styles.toggleButton}>
-                {showAll ? 'Show Less' : 'Show All'}
-              </button>
-            )}
-          </>
-        ) : (
-          <p>No medical history uploaded yet.</p>
-        )}
-      </div>
+      <h3>Medical History Records</h3>
+      {medicalHistory.length > 0 ? (
+        <>
+          <ul>
+            {(showAll ? medicalHistory : medicalHistory.slice(0, 3)).map((entry, index) => (
+              <li key={index}>
+                <strong>{new Date(entry.date).toLocaleDateString()}</strong>: {entry.history}
+              </li>
+            ))}
+          </ul>
+          {medicalHistory.length > 3 && (
+            <button onClick={toggleShowAll} className={styles.toggleButton}>
+              {showAll ? 'Hide History' : 'Show More'}
+            </button>
+          )}
+        </>
+      ) : (
+        <p>No medical records available.</p>
+      )}
     </div>
   );
 };

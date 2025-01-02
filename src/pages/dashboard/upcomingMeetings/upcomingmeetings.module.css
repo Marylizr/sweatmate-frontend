@@ -15,6 +15,32 @@
    flex-wrap: nowrap;
 }
 
+.attendanceButtons {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+button.checkInButton {
+  background-color: transparent;
+  border: teal 1px solid;
+  color: teal;
+  padding: 3px;
+  margin: 3px;
+}
+
+button.noShowButton {
+  background-color: transparent;
+  border: red 1px solid;
+  color: red;
+  padding: 3px;
+  margin: 3px;
+}
+
+p.meetingStatus {
+  margin:0;
+}
+
 /* .meetingsContainer {
    border-radius: 10px;
    padding: 20px;

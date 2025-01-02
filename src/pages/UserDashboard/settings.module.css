@@ -457,23 +457,58 @@
    cursor: pointer;
    z-index: 1010; /* Ensures it is on top of the cropper image */
 }
+
+.wrapper {
+   display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
 .moods > button {
    display: flex;
    align-items: center;
-   border: lightgray 1px solid;
+   border: transparent;
    width: 6.5em;
-   background: white;
-   height: 2em;
-   border-radius: 0.5em;
+   background: transparent;
    margin-bottom: 10px;
    flex-direction: row;
    margin: 0 1em 1em 0em;
    overflow-y: scroll;
    align-content: center;
    color: teal;
-   justify-content: center;
-   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
 }
+
+.moodButton {
+   background: none;
+   border: none;
+   padding: 0;
+   cursor: pointer;
+   outline: none;
+   transition: transform 0.2s ease;
+ }
+ 
+ .moodButton:hover {
+   transform: scale(1.1); /* Slightly enlarge on hover */
+ }
+ 
+ .moodEmoji {
+   width: 50px;
+   height: 50px;
+   transition: filter 0.3s ease, transform 0.3s ease;
+ }
+ 
+ .moodEmoji.selectedEmoji {
+   filter: brightness(1.2) hue-rotate(45deg) saturate(1.5); /* Change emoji color */
+   transform: scale(1.2); /* Enlarge selected emoji */
+ }
+ 
+ .moodButton.selected {
+   border: 2px solid #4caf50; /* Add border to the selected button */
+   border-radius: 50%;
+ }
+ 
+
 
 .moods {
    display: flex;
@@ -481,6 +516,7 @@
    flex-direction: row;
    justify-content: center;
 }
+
 
 textarea.moods{
    display: flex;

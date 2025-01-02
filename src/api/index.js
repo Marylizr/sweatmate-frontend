@@ -38,20 +38,20 @@ const fetchResource = (method = "GET", path, userOptions = {}) => {
 
     // Define default headers
     const defaultHeaders = {
-        "content-type": 'application/json',
-        ...(token && { "authorization": `Bearer ${token}` }), // Only add Authorization header if the token is present
+        ...(token && { "authorization": `Bearer ${token}` }),
     };
-
+    
     const options = {
-        // Merge options
         ...defaultOptions,
         ...userOptions,
-        // Merge headers
         headers: {
             ...defaultHeaders,
+            ...(userOptions.headers?.['content-type'] ? {} : { "content-type": "application/json" }),
             ...userOptions.headers,
         },
     };
+    console.log('Request Headers:', options.headers);
+
 
     // Build URL
     const url = `${API_URL}/${path}`;
