@@ -61,12 +61,14 @@ const MedicalHistory = ({ userId }) => {
           value={newEntry}
           onChange={(e) => setNewEntry(e.target.value)}
         />
-        <input
-          type="date"
-          value={entryDate}
-          onChange={(e) => setEntryDate(e.target.value)}
-        />
-        <button type="submit">Add Medical History</button>
+        <div className={styles.bttn}>
+          <input
+            type="date"
+            value={entryDate}
+            onChange={(e) => setEntryDate(e.target.value)}
+          />
+          <button type="submit">Add Medical History</button>
+        </div>
       </form>
       <h3>Medical History Records</h3>
       {medicalHistory.length > 0 ? (

@@ -8,16 +8,30 @@
    width: 80vw;
 }
 
-@media(max-width: 800px) {
+/* Extra Small Devices (Portrait Phones, less than 576px) */
+@media only screen and (max-width: 575.98px) {
    .container {
-      margin-bottom: 2em;
-      width: 90vw;
+      width: 100vw;
    }
-}
-
-@media (min-width: 769px) and (max-width: 1181px) {
+ }
+ 
+ /* Small Devices (Landscape Phones, 576px and up) */
+ @media only screen and (min-width: 576px) and (max-width: 767.98px) {
    .container {
-      margin-bottom: 2em;
-      width: 90vw;
+      width: 100vw;
    }
-}
+ }
+ 
+ /* Medium Devices (Tablets, 768px and up) */
+ @media only screen and (min-width: 768px) and (max-width: 991.98px) {
+   .container {
+      width: 100vw;
+   }
+ }
+ 
+ /* Large Devices (Desktops, 992px and up) */
+ @media only screen and (min-width: 992px) and (max-width: 1199.98px) {
+   .container {
+      width: 100vw;
+   }
+ }

@@ -8,7 +8,7 @@
    background-color: #fff;
    border-radius: 10px;
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-   margin: 0.5em 0.5em 0 0;
+   margin: 1em 0.5em 0 0;
    padding: 1em;
    height: 21.5em;
    overflow-y: auto;
@@ -142,9 +142,11 @@ p.meetingStatus {
  @media (max-width:768px){
 
   .container {
-    width: 36vw;
+    width: 90vw;
+    width: 90vw;
     margin: 0.5em 0 0 0;
     height: 17em;
+    overflow-x: hidden;
   }
   .header{
     display: flex;
@@ -162,7 +164,12 @@ p.meetingStatus {
   .header > p {
     font-size: 15px;
   }
-
+  .meetingsList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 90vw;
+  }
 }
 
 @media (max-width:375px){
@@ -179,6 +186,13 @@ p.meetingStatus {
 
   .title {
     font-size: 20px;
+  }
+
+  .meetingsList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 90vw;
   }
 
 

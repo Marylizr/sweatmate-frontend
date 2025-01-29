@@ -1,45 +1,148 @@
-import React from 'react';
-import NavBar from '../../components/navBar/navBar';
-import styles from '../aboutUS/about.module.css';
-
+import React from "react";
+import { ParallaxProvider, Parallax } from "react-scroll-parallax";
+import NavBar from "../../components/navBar/navBar";
+import styles from "../aboutUS/about.module.css";
 
 export const AboutUs = () => {
   return (
-    <div className={styles.container}>
-      <NavBar />
-      <h2>AboutUs</h2>
-      <div className={styles.img}>
-         <img src= 'https://res.cloudinary.com/da6il8qmv/image/upload/v1695127637/group5_rrew5h.png' alt=''/>
-      </div>
-      <div className={styles.wrap}>
-      <p>
-         Welcome to beFit, your ultimate online resource for all things fitness! 
-         Our website is dedicated to providing you with accurate and reliable information on 
-         everything related to health, fitness, and nutrition.
-         Our team of experts is passionate about helping people achieve their health and 
-         fitness goals, and we're committed to providing you with the most up-to-date and effective 
-         fitness advice. Whether you're looking to lose weight, build muscle, or just improve your 
-         overall health, we have the tools and resources you need to succeed.
-      </p>
-      
-      <p>
-         At beFit, we believe that fitness is not just about physical activity, but it's 
-         also about mental and emotional well-being. That's why we offer a variety of articles, guides, 
-         and resources to help you achieve a healthy balance in your life.
-         Our website features a wide range of content, including workout plans, nutrition advice, healthy recipes, 
-         and wellness tips. We also have a community forum where you can connect with other fitness enthusiasts, 
-         share your progress, and get support and encouragement.
-      </p>
-      <p>
-         Our team is composed of certified fitness trainers, nutritionists, and health experts who have years of 
-         experience in the fitness industry. We pride ourselves on providing you with scientifically-backed 
-         information, so you can be confident that you're getting the most accurate and effective advice.
-         We're excited to be your go-to resource for all things fitness, and we look forward to helping you achieve 
-         your health and wellness goals. Thanks for visiting beFit, and happy training!
-      </p>
-      </div>
-     
+    <ParallaxProvider>
+      <div className={styles.container}>
+        <NavBar />
 
-    </div>
-  )
-}
+         <div className={styles.wrapper}>
+
+            {/* Hero Section */}
+            <header className={styles.header}>
+               
+                  <h1 className={styles.heroTitle}>Turning Passion Into Purpose</h1>
+              
+               <Parallax speed={-10}>
+                  <img
+                  src="https://res.cloudinary.com/da6il8qmv/image/upload/v1695127637/group5_rrew5h.png"
+                  alt="About Us"
+                  className={styles.headerImage}
+                  />
+               </Parallax>
+            </header>
+
+            {/* Story Section */}
+            <section className={styles.section}>
+               <Parallax speed={5}>
+                  <h2>Our Story</h2>
+               </Parallax>
+               <Parallax speed={3}>
+                  <p>
+                  Over a decade ago, I embarked on a journey that would forever
+                  transform my life. My fitness journey started as a personal goal
+                  but quickly grew into something much bigger—a passion for
+                  inspiring others to embrace a healthier and more fulfilling
+                  lifestyle. Along the way, I shared my progress and tips on social
+                  media, and soon, friends, family, and even acquaintances began
+                  reaching out for advice on how they could achieve the same
+                  results.
+                  </p>
+               </Parallax>
+               <Parallax speed={1}>
+                  <p>
+                  At first, I was overjoyed to help. I created personalized routines
+                  and adapted them to each person’s needs, but I soon realized this
+                  approach wasn’t sustainable. Each person’s fitness journey is
+                  unique, and I wanted to create something that could provide
+                  lasting support—not just a one-time solution.
+                  </p>
+               </Parallax>
+            </section>
+
+            {/* Problem Section */}
+            <section className={styles.section}>
+               <Parallax speed={-5}>
+                  <h2>The Problem We’re Solving</h2>
+               </Parallax>
+               <Parallax speed={-3}>
+                  <p>
+                  At the gym, I saw countless women and young adults who looked lost
+                  and overwhelmed. They came with the best intentions but lacked
+                  guidance—no workout plans, no clear starting point, and no idea
+                  how to progress. This often led to frustration, discouragement,
+                  and, ultimately, quitting before they ever had the chance to see
+                  results.
+                  </p>
+               </Parallax>
+               <Parallax speed={-1}>
+                  <p>
+                  On the flip side, personal trainers worked tirelessly but often
+                  without structure. Most didn’t track their clients’ progress or
+                  create personalized plans, making it difficult to celebrate
+                  achievements or optimize workouts. This inspired me to build a
+                  solution—a platform that bridges the gap between personal trainers
+                  and clients, empowering both to achieve their goals.
+                  </p>
+               </Parallax>
+            </section>
+
+            {/* Mission Section */}
+            <section className={styles.missionSection}>
+               <Parallax speed={-7}>
+                  <h2>Our Mission</h2>
+               </Parallax>
+               <Parallax speed={-5}>
+                  <ul>
+                  <li>
+                     <strong>Guide and Inspire:</strong> Helping people start their
+                     healthy journey with confidence.
+                  </li>
+                  <li>
+                     <strong>Connect and Empower:</strong> Building a supportive
+                     community where trainers and clients work together to achieve
+                     incredible results.
+                  </li>
+                  <li>
+                     <strong>Create Change:</strong> Helping as many people as
+                     possible feel strong, positive, and capable of achieving their
+                     best selves.
+                  </li>
+                  </ul>
+               </Parallax>
+            </section>
+
+            {/* Vision Section */}
+            <section className={styles.visionSection}>
+               <Parallax speed={-10}>
+                  <h2>A Vision for the Future</h2>
+               </Parallax>
+               <Parallax speed={-7}>
+                  <p>
+                  This app isn’t just a product—it’s a passion project born out of
+                  love for health, fitness, and helping others. I dream of reaching
+                  people across the world, changing lives one workout at a time, and
+                  fostering a community where knowledge and encouragement flow
+                  freely.
+                  </p>
+               </Parallax>
+               <Parallax speed={-5}>
+                  <p>
+                  Your journey starts here, and I couldn’t be more excited to walk
+                  this path with you. Together, let’s build a healthier, happier,
+                  and stronger future.
+                  </p>
+               </Parallax>
+            </section>
+
+            {/* Call to Action */}
+            <footer className={styles.footer}>
+               <Parallax speed={-5}>
+                  <p>
+                  Ready to start your journey?{" "}
+                  <a href="/signup" className={styles.ctaLink}>
+                     Join Us Today!
+                  </a>
+                  </p>
+               </Parallax>
+            </footer>
+         </div>
+      </div>
+    </ParallaxProvider>
+  );
+};
+
+export default AboutUs;

@@ -1,25 +1,36 @@
+.container {
+  display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+   align-content: center;
+   justify-content: center;
+   align-items: center;
+   margin-top: 2em;
+}
 
 .nameserror {
    display: flex;
    flex-direction: row;
    justify-content: left;
 }
- .container {
-   display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
-    margin-top: 2em;
- }
 
  .apps {
    display: flex;
    flex-direction: row;
    flex-wrap: wrap;
+   background: linear-gradient(to top, #c3dedb, #f8f8f8);
+   padding: 2em 1em 1em 1em;
    justify-content: center;
-   margin-top: 2%;
+ }
+
+ .theWrapper{
+   display: flex;
+   flex-wrap: wrap;
+   flex-direction: row;
+   align-items: flex-start;
+   margin-top: 1em;
+   justify-content: center;
+
  }
 
  .rearrange {
@@ -27,10 +38,20 @@
    justify-content: flex-start;
    flex-wrap: wrap;
    flex-direction: row;
-   width: 70%;
-   margin-left: 2%;
+   width: 22%;
+   margin-left: 1em;
    align-content: flex-start;
  }
+
+ .smallApps {
+   display: flex;
+   justify-content: flex-start;
+   flex-wrap: wrap;
+   flex-direction: row;
+   width: 35%;
+   align-content: flex-start;
+ }
+
 
  .save {
    display: flex;
@@ -46,7 +67,8 @@
     align-content: center;
     flex-wrap: wrap;
     justify-content: center;
-    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
+    box-shadow: 1px 2px 4px rgb(0 0 0 / 21%);
+    background-color: white;
  }
 
  .saved {
@@ -166,7 +188,8 @@
    align-items: center;
    background: #FFFFFF;
    border: 1px solid #E9E9E9;
-   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
+   box-shadow: 1px 2px 4px rgb(0 0 0 / 21%);
+   background-color: white;
    border-radius: 4px;
    padding: 2em;
 }
@@ -315,13 +338,13 @@
  }
 
 .submit{
-   border: none;
-   background: teal;
+   background: white;
+   border: 1px solid teal;
    height: 50px;
    width: 140px;
    border-radius: 8px;
    margin: 2em 0 0em 0em;
-   color: white;
+   color: teal;
    text-transform: capitalize;
    cursor: pointer;
 }
@@ -489,7 +512,7 @@
  }
  
  .moodButton:hover {
-   transform: scale(1.1); /* Slightly enlarge on hover */
+   transform: scale(1.2); /* Slightly enlarge on hover */
  }
  
  .moodEmoji {
@@ -502,13 +525,6 @@
    filter: brightness(1.2) hue-rotate(45deg) saturate(1.5); /* Change emoji color */
    transform: scale(1.2); /* Enlarge selected emoji */
  }
- 
- .moodButton.selected {
-   border: 2px solid #4caf50; /* Add border to the selected button */
-   border-radius: 50%;
- }
- 
-
 
 .moods {
    display: flex;
@@ -516,7 +532,6 @@
    flex-direction: row;
    justify-content: center;
 }
-
 
 textarea.moods{
    display: flex;
@@ -561,73 +576,149 @@ textarea.moods{
    align-items: center;
 }
 
-@media(max-width: 800px) {
-   .rearrange{
+/* Extra Small Devices (Portrait Phones, less than 576px) */
+@media only screen and (max-width: 575.98px) {
+   .container {
       display: flex;
+       flex-direction: column;
+       flex-wrap: wrap;
+       align-content: center;
+       justify-content: center;
+       align-items: center;
+       margin-top: 2em;
+    }
+    .theWrapper {
+      width: 95vw;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 1em;
+    }
+    .editbox{
+      width: 80%;
+    }
+    .rearrange {
+      margin-left: 0;
+      width: 93vw;
+    }
+    .save{
+      width: 45%;
+      height: 10em;
+      margin: 0.5em;
+    }
+    .smallApps{
+      width: 95vw;
       justify-content: center;
+
+    }
+ }
+ 
+ /* Small Devices (Landscape Phones, 576px and up) */
+ @media only screen and (min-width: 576px) and (max-width: 767.98px) {
+   .container {
+      display: flex;
+       flex-direction: column;
+       flex-wrap: wrap;
+       align-content: center;
+       justify-content: center;
+       align-items: center;
+       margin-top: 2em;
+    }
+    .theWrapper {
+      justify-content: center;
+    }
+    .rearrange {
+      margin-left: 0;
+      width: 60vw;
+    }
+    .save{
+      width: 28em;
+      height: 10em;
+      margin: 1em 0;
+    }
+
+   .editbox{
+   display: flex;
+   width: 35em;
+   }
+
+   .namesinput{
+      width: 80%;
+   }
+
+   .passwordeye {
+      width: 70%;
+  }
+ 
+ }
+ 
+ /* Medium Devices (Tablets, 768px and up) */
+ @media only screen and (min-width: 768px) and (max-width: 991.98px) {
+   .container {
+      display: flex;
+       flex-direction: column;
+       flex-wrap: wrap;
+       align-content: center;
+       justify-content: center;
+       align-items: center;
+       margin-top: 2em;
+    }
+    .theWrapper {
+      justify-content: center;
+      display: flex;
       flex-wrap: wrap;
       flex-direction: row;
-      width: 100vw;
-      margin:1em 0 0 ;
-   }
-  
-   .save{
-      width: 11.5em;
-      height: 13em;
-      margin-bottom: 1em;
-      margin-right: 0.5em;
-}
-   .progress{
-      width: 22em;
-      height: 13em;
-      margin-bottom: 1em;
-      margin-right: 0;
-      background-color: white;
-   }
-
-}
-
-@media (min-width: 768px) and (max-width: 1180px) {
-   .settings {
+    }
+    .rearrange {
       display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 90vw;
-    height: 100vh;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: center;
-    background-color: #F8FBFF;
-    margin-top: 7em;
-   }
-
-   .rearrange {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
       flex-direction: row;
-      width: 100vw;
-      align-content: center;
-      margin: 0;
-   }
-
-   .editbox {
+      width: 44%;
+      margin-left: 0;
+      align-content: flex-start;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .editbox {
       width: 17em;
-   }
-
-   .save {
-      width: 22em;
-      height: 13em;
+      height: 60em;
       margin-bottom: 1em;
-      margin-right: 0;
-   }
+    }
+    .save{
+      width: 40%;
+      height: 19em;
+      margin: 1em;
+    }
 
-   .progress {
-      width: 22em;
-      height: 13em;
+    .smallApps{
+      width: 95%;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      flex-direction: row;
+      align-content: flex-start;
+    }
+ }
+
+ /* Large Devices (Desktops, 992px and up) */
+@media only screen and (min-width: 992px) and (max-width: 1199.98px) {
+   .rearrange {
+      width: 40%;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      flex-direction: row;
+      margin-left: 1em;
+      align-content: flex-start;
+    }
+
+    .editbox {
+      width: 45%;
+      height: 63em;
       margin-bottom: 1em;
-      margin-right: 0;
-   }
-   
-}
+    }
 
+    .smallApps{
+      width: 99%;
+    }
+ }

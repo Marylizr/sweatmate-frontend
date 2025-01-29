@@ -1,0 +1,144 @@
+.modal {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   margin-top: 24em;
+}
+
+.modal > img {
+   width: 12em;
+   margin-top: 1em;
+}
+
+.inputGroup > input, select {
+   margin: 0.5em;
+   width: 9em;
+   height: 3em;
+   border-radius: 3px;
+   border: none;
+   box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04), 0px 4px 16px rgba(51, 51, 51, 0.18);
+   padding: 5px;
+   color: #888;
+}
+
+.roundBlock{
+   box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04), 0px 4px 16px rgba(51, 51, 51, 0.18);
+   border-bottom: 0.1em lightgrey solid;
+   padding-bottom: 1em;
+   margin-bottom: 0.1em;
+   width: 30em;
+}
+
+.roundBlock  > button {
+   background: white;
+    border: 1px solid teal;
+    height: 50px;
+    width: 140px;
+    border-radius: 8px;
+    margin: 2em 0 0em 0em;
+    color: teal;
+    text-transform: capitalize;
+    cursor: pointer;
+}
+
+button.addButton {
+   background: white;
+   border: 1px solid teal;
+   height: 50px;
+   width: 140px;
+   border-radius: 8px;
+   margin: 2em 0 0em 0em;
+   color: teal;
+   text-transform: capitalize;
+   cursor: pointer;
+}
+
+.buttons {
+   display: flex;
+   align-items: center;
+   align-content: center;
+   flex-wrap: wrap;
+   flex-direction: row;
+}
+
+.buttons > input[type="date" i] {
+   margin: 1em;
+   width: 9em;
+   height: 3em;
+   border-radius: 3px;
+   border: none;
+   box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04), 0px 4px 16px rgba(51, 51, 51, 0.18);
+   padding: 5px;
+   color: #888;
+}
+
+.buttons > button {
+   background: teal;
+   height: 50px;
+   width: 140px;
+   border-radius: 8px;
+   margin: 1em;
+   color: white;
+   text-transform: capitalize;
+   cursor: pointer;
+}
+
+
+.infoCard {
+   border: lightgray 1px solid;
+    width: 18em;
+    height: 27em;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 1em 0.5em 0 0.5em;
+    padding: 0.5em;
+}
+
+.infoCard > p{
+   text-align: left;
+}
+
+.infoCard > img {
+   width: 10em;
+}
+
+.infoCard > div > button {
+   background: white;
+   border: 1px solid teal;
+   height: 50px;
+   width: 140px;
+   border-radius: 8px;
+   margin: 1em 0 0em 0em;
+   color: teal;
+   text-transform: capitalize;
+   cursor: pointer;
+}
+
+.roundDetails{
+   background: white;
+    width: 19em;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.roundsSection > button {
+   background: white;
+   border: 1px solid teal;
+   height: 50px;
+   width: 140px;
+   border-radius: 8px;
+   margin: 2em 0 0em 0em;
+   color: teal;
+   text-transform: capitalize;
+   cursor: pointer;
+}

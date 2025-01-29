@@ -5,6 +5,7 @@ import CardPt from "../designedByPt/CardPt";
 import Card from './card/Card';
 import NavBar from "../../components/navBar/navBar";
 
+
 const DesignedByPt = () => {
   const [personalTrainerWorkouts, setPersonalTrainerWorkouts] = useState([]); // Workouts from /personalTrainer
   const [preWorkouts, setPreWorkouts] = useState([]); // Workouts from /preWorkout
@@ -63,40 +64,42 @@ const DesignedByPt = () => {
 
   return (
     <div className={styles.container}>
-      <NavBar />
-      <div className={styles.headline}>
-        <h3>Today’s Workouts - {formattedDate}</h3>
-      </div>
+     <NavBar />
+     <div className={styles.wrap}>
+        <div className={styles.headline}>
+            <h3>Today’s Workouts - {formattedDate}</h3>
+          </div>
 
-      {/* Manually Assigned Workouts Section */}
-      <div className={styles.section}>
-        <div className={styles.wrap}>
-          {personalTrainerWorkouts.length > 0 ? (
-            personalTrainerWorkouts.map((item) => (
-              <CardPt item={item} id={item._id} key={item._id} />
-            ))
-          ) : (
-            <div className={styles.message}>
-              <p>your PT hasn't sent you a workout yet!</p>
+          {/* Manually Assigned Workouts Section */}
+          <div className={styles.section}>
+            <div className={styles.wrapper}>
+              {personalTrainerWorkouts.length > 0 ? (
+                personalTrainerWorkouts.map((item) => (
+                  <CardPt item={item} id={item._id} key={item._id} />
+                ))
+              ) : (
+                <div className={styles.message}>
+                  <p>your PT hasn't sent you a workout yet!</p>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      </div>
+          </div>
 
-      {/* Pre-Designed Workouts Section */}
-      <div className={styles.section}>
-        <div className={styles.wrap}>
-          {preWorkouts.length > 0 ? (
-            preWorkouts.map((item) => (
-              <Card item={item} id={item._id} key={item._id} />
-            ))
-          ) : (
-            <div className={styles.message}>
-             
+          {/* Pre-Designed Workouts Section */}
+          <div className={styles.section}>
+            <div className={styles.wrap}>
+              {preWorkouts.length > 0 ? (
+                preWorkouts.map((item) => (
+                  <Card item={item} id={item._id} key={item._id} />
+                ))
+              ) : (
+                <div className={styles.message}>
+                
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      </div>
+          </div>
+     </div>
     </div>
   );
 };

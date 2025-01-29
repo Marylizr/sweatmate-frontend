@@ -4,8 +4,8 @@ import { removeSession } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
 import styles from './allWorkoutsList.module.css';
 import { Link } from 'react-router-dom';
-import NavBar from '../../components/navBar/navBar';
 import { UserContext } from '../../components/userContext/userContext';
+import NavBar from '../../components/navBar/navBar';
 
 
 const AllWorkoutsList = () => {
@@ -68,77 +68,76 @@ const AllWorkoutsList = () => {
 
    return (
       <div className={styles.container}> 
-      <NavBar />
-      <div className={styles.small_header}>
-         <h2>Hello, {name}</h2>
-      </div>
-        
-         <h3>What do you want to workout today?</h3>
-
+        <NavBar />
          <div className={styles.wrap}>
-
-            <div className={styles.workouts}>
-            <Link to='/arms'>
-               <p>{workout.arms.name}</p>
-               <img className={styles.work} src={workout.arms.url} alt='body part'/>
-            </Link>
+            <div className={styles.small_header}>
+               <h3>{name}, What do you want to workout today?</h3>
             </div>
 
+           <div className={styles.theWrapper}>
             <div className={styles.workouts}>
-            <Link to='/back'>
-            <p>{workout.back.name}</p>
-            <img className={styles.work} src={workout.back.url} alt='body part'/>
-            </Link>
-            </div>
+               <Link to='/arms'>
+                  <p>{workout.arms.name}</p>
+                  <img className={styles.work} src={workout.arms.url} alt='body part'/>
+               </Link>
+               </div>
 
-            <div className={styles.workouts}>
-            <Link to='/chest' >
-            <p>{workout.chest.name}</p>
-            <img className={styles.work} src={workout.chest.url} alt='body part'/>
-            </Link>
-            </div>
+               <div className={styles.workouts}>
+               <Link to='/back'>
+               <p>{workout.back.name}</p>
+               <img className={styles.work} src={workout.back.url} alt='body part'/>
+               </Link>
+               </div>
 
-            <div className={styles.workouts}>
-            <Link to='/glutes' >
-            <p>{workout.glutes.name}</p>
-            <img className={styles.work} src={workout.glutes.url} alt='body part'/>
-            </Link>
-            </div>
+               <div className={styles.workouts}>
+               <Link to='/chest' >
+               <p>{workout.chest.name}</p>
+               <img className={styles.work} src={workout.chest.url} alt='body part'/>
+               </Link>
+               </div>
 
-            <div className={styles.workouts}>
-            <Link to='/hamstrings' >
-            <p>{workout.hamstrings.name}</p>
-            <img className={styles.work} src={workout.hamstrings.url} alt='body part'/>
-            </Link>
-            </div>
+               <div className={styles.workouts}>
+               <Link to='/glutes' >
+               <p>{workout.glutes.name}</p>
+               <img className={styles.work} src={workout.glutes.url} alt='body part'/>
+               </Link>
+               </div>
 
-            <div className={styles.workouts}>
-            <Link to='/quadriceps' >
-            <p>{workout.quadriceps.name}</p>
-            <img className={styles.work} src={workout.quadriceps.url} alt='body part'/>
-            </Link>
-            </div>
+               <div className={styles.workouts}>
+               <Link to='/hamstrings' >
+               <p>{workout.hamstrings.name}</p>
+               <img className={styles.work} src={workout.hamstrings.url} alt='body part'/>
+               </Link>
+               </div>
 
-            <div className={styles.workouts}>
-            <Link to='/abs' >
-            <p>{workout.abs.name}</p>
-            <img className={styles.work} src={workout.abs.url} alt='body part'/>
-            </Link>
-            </div>
+               <div className={styles.workouts}>
+               <Link to='/quadriceps' >
+               <p>{workout.quadriceps.name}</p>
+               <img className={styles.work} src={workout.quadriceps.url} alt='body part'/>
+               </Link>
+               </div>
 
-            <div className={styles.workouts}>
-            <Link to='/shoulders'>
-               <p>{workout.shoulders.name}</p>
-               <img className={styles.work} src={workout.shoulders.url} alt='body part'/>
-            </Link>
-            </div>
+               <div className={styles.workouts}>
+               <Link to='/abs' >
+               <p>{workout.abs.name}</p>
+               <img className={styles.work} src={workout.abs.url} alt='body part'/>
+               </Link>
+               </div>
 
-            <div className={styles.workouts}>
-            <Link to='/fullbody' >
-            <p>{workout.fullbody.name}</p>
-            <img className={styles.work} src={workout.fullbody.url} alt='body part'/>
-            </Link>
-            </div>
+               <div className={styles.workouts}>
+               <Link to='/shoulders'>
+                  <p>{workout.shoulders.name}</p>
+                  <img className={styles.work} src={workout.shoulders.url} alt='body part'/>
+               </Link>
+               </div>
+
+               <div className={styles.workouts}>
+               <Link to='/fullbody' >
+               <p>{workout.fullbody.name}</p>
+               <img className={styles.work} src={workout.fullbody.url} alt='body part'/>
+               </Link>
+               </div>
+           </div>
          </div>
          
       </div>

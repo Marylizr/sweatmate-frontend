@@ -61,29 +61,32 @@ const SessionNotes = ({ userId }) => {
           value={newNote}
           onChange={(e) => setNewNote(e.target.value)}
         />
-        <input
-          type="date"
-          value={noteDate}
-          onChange={(e) => setNoteDate(e.target.value)}
-        />
-        <button type="submit">Add Note</button>
+        <div className={styles.bttn}>
+          <input
+            type="date"
+            value={noteDate}
+            onChange={(e) => setNoteDate(e.target.value)}
+          />
+          <button type="submit">Add Note</button>
+        </div>
       </form>
+
       <h3>Notes History</h3>
       {sessionNotes.length > 0 ? (
-        <>
+        <div className={styles.list}>
           <ul>
-            {(showAll ? sessionNotes : sessionNotes.slice(0, 0)).map((note, index) => (
+            {(showAll ? sessionNotes : sessionNotes.slice(0, 1)).map((note, index) => (
               <li key={index}>
                 <strong>{new Date(note.date).toLocaleDateString()}</strong>: {note.note}
               </li>
             ))}
           </ul>
-          {sessionNotes.length > 0 && (
+          {sessionNotes.length > 1 && (
             <button onClick={toggleShowAll} className={styles.toggleButton}>
               {showAll ? 'Hide History' : 'Show More'}
             </button>
           )}
-        </>
+        </div>
       ) : (
         <p>No session notes available.</p>
       )}

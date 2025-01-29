@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import fetchResource from '../../../api';
 import styles from '../clientList/clientlist.module.css';
 import userIcon from '../../../assets/person_1.svg';
@@ -9,30 +9,36 @@ const ClientModal = ({ user, activityHistory, setActivityHistory }) => {
   const [selectedMonth, setSelectedMonth] = useState(null);
 
   // Fetch today's event specifically for the selected user
-  const fetchLastEvent = async () => {
+  const fetchLastEvent = useCallback(async () => {
     try {
       const response = await fetchResource('GET', `events?userId=${user._id}`);
-  
+
       if (!response || !Array.isArray(response)) {
         console.error('Invalid response format:', response);
         setLastEvent(null);
         return;
       }
-  
+
       const today = new Date().toISOString().split('T')[0];
       const todayEvent = response.find(
         (event) =>
           event.status === 'pending' &&
-          event.userId.some((u) => u._id === user._id) && // Check if any userId matches the user's ID
+          event.userId.some((u) => u._id === user._id) &&
           event.date.split('T')[0] === today
       );
-  
+
       setLastEvent(todayEvent || null);
     } catch (error) {
       console.error("Error fetching today's event:", error);
     }
-  };
-  
+  }, [user._id]);
+
+  // Fetch today's event when the user is loaded
+  useEffect(() => {
+    if (user && user._id) {
+      fetchLastEvent();
+    }
+  }, [user, fetchLastEvent]);
 
   // Fetch activity history for the selected month and user
   useEffect(() => {
@@ -46,16 +52,16 @@ const ClientModal = ({ user, activityHistory, setActivityHistory }) => {
         const year = new Date().getFullYear();
         const monthStart = new Date(year, selectedMonth, 1).toISOString();
         const monthEnd = new Date(year, selectedMonth + 1, 0, 23, 59, 59).toISOString();
-    
+
         const monthlyEventsResponse = await fetchResource(
           'GET',
           `events?userId=${user._id}&start=${monthStart}&end=${monthEnd}`
         );
-    
+
         const filteredEvents = monthlyEventsResponse.filter((event) =>
-          event.userId.some((u) => u._id === user._id) // Check if any userId matches the user's ID
+          event.userId.some((u) => u._id === user._id)
         );
-    
+
         setActivityHistory(
           filteredEvents.sort((a, b) => new Date(a.date) - new Date(b.date))
         );
@@ -63,9 +69,9 @@ const ClientModal = ({ user, activityHistory, setActivityHistory }) => {
         console.error('Error fetching activity history:', error);
       }
     };
-    
 
     fetchActivityHistory();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedMonth, user._id]);
 
   // Handle status change for the last event (completed or canceled)
@@ -93,13 +99,6 @@ const ClientModal = ({ user, activityHistory, setActivityHistory }) => {
   const handleMonthClick = (index) => {
     setSelectedMonth(selectedMonth === index ? null : index); // Toggle between opening/closing the month
   };
-
-  // Fetch today's event when the user is loaded
-  useEffect(() => {
-    if (user && user._id) {
-      fetchLastEvent();
-    }
-  }, [user]);
 
   return (
     <div className={styles.modalContainer}>

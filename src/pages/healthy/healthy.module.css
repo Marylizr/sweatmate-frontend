@@ -5,19 +5,21 @@
    align-content: center;
    justify-content: center;
    align-items: center;
-   width: 71vw;
+   width: 100vw;
    margin-top: 2em;
    
 }
 
 .cardWrap {
    display: flex;
+   width: 100vw;
+   height: auto;
+   background: linear-gradient(to top, #c3dedb, #f8f8f8);
+   padding: 2em 1em 1em 1em;
    flex-direction: row;
    flex-wrap: wrap;
    align-items: center;
-   width: 80vw;
    justify-content: center;
-   margin-top: 3em;
 }
 
 .tips {
@@ -36,6 +38,43 @@
    height: auto;
 }
 
+ .style {
+   padding: 1rem;
+ }
+ 
+ h3 {
+   font-size: 1.5rem;
+   margin-bottom: 1rem;
+   color: #333;
+   text-align: center;
+ }
+ 
+ .wrapper {
+   display: flex;
+   gap: 1rem;
+   align-items: flex-start;
+ }
+ 
+
+ 
+ .content {
+   font-size: 1rem;
+   line-height: 1.6;
+   color: #555;
+ }
+ 
+ /* Paragraph spacing for formatted content */
+ .content p {
+   margin-bottom: 1rem;
+ }
+ 
+ /* Add list styles */
+ .content ul {
+   margin-left: 1rem;
+   padding-left: 1rem;
+   list-style: disc;
+ }
+ 
 @media(max-width:768px) {
    .tips > img {
       width: 285px;

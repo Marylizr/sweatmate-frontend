@@ -66,7 +66,7 @@ const MealList = () => {
       const plan = mealPlans.find((item) => item._id === planId);
 
       return {
-        userName: selectedUser,
+        name: selectedUser,
         infotype: "recipes",
         content: plan.content,
         date: new Date().toISOString(),

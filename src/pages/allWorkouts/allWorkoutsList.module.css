@@ -10,15 +10,19 @@
 }
 
 .workouts {
-   display: flex;
-   align-items: center;
-   border: gray 1px solid;
+   border: lightgray 1px solid;
    width: 18em;
    height: 20em;
-   border-radius: 0 0px 15px 15px;
-   /* margin-top: 10px; */
+   display: flex;
    flex-direction: column;
-   margin: 1em;
+   flex-wrap: wrap;
+   align-content: center;
+   align-items: center;
+   background-color: #fff;
+   border-radius: 10px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   margin: 1em 0.5em 0 0.5em;
+   padding: 0.5em;
    
 }
 .workouts:hover {
@@ -57,10 +61,12 @@
 }
 
 .workouts > a > p {
-   z-index: 1;
    font-weight: bold;
    position: relative;
-  text-transform: uppercase;
+   text-transform: uppercase;
+   font-size: 3em;
+   margin: 2px 0 0 0;
+   color: #eaeaea !important;
 }
 
 
@@ -69,15 +75,35 @@
   color: teal;
 }
 
+.workouts > a > img {
+   width: 12em;
+   height: auto;
+   margin-top: 1em;
+   box-shadow: 32px -16px #ffffff;
+   border-radius: 1em;
+   box-shadow: none;
+}
+
+
 .wrap {
    display: flex;
    flex-direction: row;
    flex-wrap: wrap;
+   background: linear-gradient(to top, #c3dedb, #f8f8f8);
+   padding: 2em 1em 1em 1em;
    justify-content: center;
-   align-items: center;
-   align-content: center;
-   margin-top: 2em;
+   width: 100vw;
+   min-height: 100vh;
   
+}
+
+.theWrapper {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   align-items: center;
+   justify-content: center;
+   margin-top: 1em;
 }
 
 .small_header > img{
@@ -96,35 +122,8 @@
     align-items: center;
 }
 
-@media (max-width: 768px) {
-   .container{
-      width: 99vw;
-   }
-   .wrap {
-      margin-top: 0;
-   }
-
-   .workouts{
-      display: flex;
-      align-items: center;
-      border: gray 1px solid;
-      width: 9.5em;
-      height: 15em;
-      border-radius: 0 0px 15px 15px;
-      /* margin-top: 10px; */
-      flex-direction: column;
-      margin: 0.5em;
-   }
-
-   .work {
-      width: 8em;
-      height: auto;
-      margin-top: 1em;
-      box-shadow: 22px -16px teal;
-   }
-}
-
-@media (min-width: 769px) and (max-width: 1181px) {
+/* Extra Small Devices (Portrait Phones, less than 576px) */
+@media only screen and (max-width: 575.98px) {
    .container {
       display: flex;
       flex-direction: column;
@@ -132,27 +131,93 @@
       align-content: center;
       justify-content: center;
       align-items: center;
-      width: 99vw;
+      width: 100vw;
       margin-top: 2em;
    }
-
-   .workouts{
-      display: flex;
-      align-items: center;
-      border: gray 1px solid;
-      width: 9.5em;
+   .workouts {
+      width: 9em;
       height: 15em;
-      border-radius: 0 0px 15px 15px;
-      /* margin-top: 10px; */
-      flex-direction: column;
-      margin: 0.5em;
    }
-
-   .work {
-      width: 8em;
+   .workouts > a > p {
+      font-weight: bold;
+      position: relative;
+      text-transform: uppercase;
+      font-size: 1.5em;
+      margin: 2px 0 0 0;
+      color: #eaeaea !important;
+   }
+   .workouts > a > img {
+      width: 9em;
       height: auto;
       margin-top: 1em;
-      box-shadow: 22px -16px teal;
+      border-radius: 1em;
    }
+ }
+ 
+ /* Small Devices (Landscape Phones, 576px and up) */
+ @media only screen and (min-width: 576px) and (max-width: 767.98px) {
+   .container {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-content: center;
+      justify-content: center;
+      align-items: center;
+      width: 100vw;
+      margin-top: 2em;
+   }
+   .workouts {
+      width: 11em;
+      height: 15em;
+   }
+   .workouts > a > p {
+      font-weight: bold;
+      position: relative;
+      text-transform: uppercase;
+      font-size: 1.5em;
+      margin: 2px 0 0 0;
+      color: #eaeaea !important;
+   }
+   .workouts > a > img {
+      width: 9em;
+      height: auto;
+      margin-top: 1em;
+      border-radius: 1em;
+   }
+ }
+ 
+ /* Medium Devices (Tablets, 768px and up) */
+ @media only screen and (min-width: 768px) and (max-width: 991.98px) {
+   .container {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-content: center;
+      justify-content: center;
+      align-items: center;
+      width: 100vw;
+      margin-top: 2em;
+   }
+   .workouts {
+      width: 11em;
+      height: 15em;
+   }
+   .workouts > a > p {
+      font-weight: bold;
+      position: relative;
+      text-transform: uppercase;
+      font-size: 1.5em;
+      margin: 2px 0 0 0;
+      color: #eaeaea !important;
+   }
+   .workouts > a > img {
+      width: 9em;
+      height: auto;
+      margin-top: 1em;
+      border-radius: 1em;
+   }
+ }
+ 
 
-}
+
+ 

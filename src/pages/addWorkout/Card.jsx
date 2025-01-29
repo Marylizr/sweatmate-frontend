@@ -13,10 +13,10 @@ const Card = ({ item }) => {
                 <div className={styles.box}>
                     <img src={item.image ? item.image : pic} alt="workout_Image" />
                          <div className={styles.elements}>
-                         <p>workout name: {item.name}</p>
-                         <p>workout type: {item.type}</p>
-                         <p>workout description: {item.description}</p>
-                    </div> 
+                              <p>workout name: {item.name}</p>
+                              <p>workout type: {item.type}</p>
+                              <p>workout description: {item.description}</p>
+                         </div> 
                </div>
           </div>
 
@@ -26,3 +26,5 @@ const Card = ({ item }) => {
 
 
 export default Card;
+
+

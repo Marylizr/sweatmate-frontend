@@ -1,15 +1,17 @@
 .container {
-   display: flex;
-   flex-direction: column;
-   flex-wrap: wrap;
-   align-content: center;
-   align-items: center;
-   width: 32vw;
-   margin: 0 1em 0;
-   padding: 20px;
-   background-color: #fff;
-   border-radius: 10px;
-   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    width: 32vw;
+    min-height: 27.7em;
+    margin: 0 1em 0;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    justify-content: center;
 }
 
 .chartContainer {
@@ -45,23 +47,23 @@
  @media (max-width:768px){
 
   .container {
-    width: 40vw;
-    margin: 0.5em 0.5em 0 0;
-    height: 17em;
+    width: 90vw;
+    margin: 0.5em;
+    height: 0em;
     padding: 16px;
+
   }
 
   .title {
     font-size: 20px;
   }
 
-
 }
 
 @media (max-width:375px){
 
   .container {
-    width: 96vw;
+    width: 86vw;
     margin: 0.5em 0em 0 0;
     height: auto;
     padding: 16px;

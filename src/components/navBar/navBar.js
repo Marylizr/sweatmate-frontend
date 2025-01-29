@@ -1,207 +1,93 @@
-import React, { useState, useContext} from 'react';
-import { UserContext } from '../../components/userContext/userContext';
-import styles from '../navBar/navbar.module.css';
-import { Link } from 'react-router-dom';
-import { useNavigate } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { UserContext } from "../../components/userContext/userContext";
 import { removeSession } from "../../api/auth";
-import logo from '../../utils/logo_new.png';
-import NavButton from '../navButton/navButton';
-import styled from 'styled-components';
-
-
+import logo from "../../utils/logo_new.png";
+import styles from "./navbar.module.css";
 
 const NavBar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const { gender, role } = useContext(UserContext);
+  const navigate = useNavigate();
 
-   const [clicked, setClicked] = useState(false);
-   const { gender, role } = useContext(UserContext);
+  const onLogOut = () => {
+    removeSession();
+    navigate("/");
+  };
 
-   const navigate = useNavigate();
-   const onLogOut = () => {
-        removeSession()
-        navigate("/");
-      };
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
 
-
-   const handleClick = () => {
-      //when the value is true will passed it false and all over
-      setClicked(!clicked)
-   }
-
-   console.log(` soy el ${gender}`)
-
-   return (
-      <div className={styles.container}>
-       <NavContainer>
-         <div className='logo'>
-            <img src={logo} alt='logo'/>
-         </div>
-         <div className={`links ${clicked ? 'active' : ''}`}>
-            { gender === 'female' ? <Link to="/dashboard/female">Home | </Link> : <Link to="/dashboard/male">Home |</Link> }
-            <Link to="/aboutUs">About Us |</Link>
-            <Link to="/healthyTips">Health |</Link>
-            <Link to="/workoutsDashboard">My Profile |</Link>
-            <Link to="/contact">Contact |</Link>
-            { role === 'admin' ? <Link to="/main/dashboard"> Admin | </Link> : '' }
-            <button onClick={() => {onLogOut()}}>Log out</button>
-         </div>
-         <div className='burger'>
-            <NavButton clicked={clicked} handleClick={handleClick}/>
-         </div>
-      </NavContainer>
-      </div>
-     
-         
-      
-   )
-}
+  return (
+    <div className={styles.container}>
+      <nav className={styles.navContainer}>
+        <div className={styles.logo}>
+          <img src={logo} alt="logo" />
+        </div>
+        <div className={`${styles.links} ${menuOpen ? styles.active : ""}`}>
+          <NavLink
+            to={gender === "female" ? "/dashboard/female" : "/dashboard/female"}
+            className={({ isActive }) =>
+              `${styles.link} ${isActive ? styles.activeLink : ""}`
+            }
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/aboutUs"
+            className={({ isActive }) =>
+              `${styles.link} ${isActive ? styles.activeLink : ""}`
+            }
+          >
+            About Us
+          </NavLink>
+          <NavLink
+            to="/healthyTips"
+            className={({ isActive }) =>
+              `${styles.link} ${isActive ? styles.activeLink : ""}`
+            }
+          >
+            Health
+          </NavLink>
+          <NavLink
+            to="/workoutsDashboard"
+            className={({ isActive }) =>
+              `${styles.link} ${isActive ? styles.activeLink : ""}`
+            }
+          >
+            My Profile
+          </NavLink>
+          <NavLink
+            to="/contact"
+            className={({ isActive }) =>
+              `${styles.link} ${isActive ? styles.activeLink : ""}`
+            }
+          >
+            Contact
+          </NavLink>
+          {role === "admin" && (
+            <NavLink
+              to="/main/dashboard"
+              className={({ isActive }) =>
+                `${styles.link} ${isActive ? styles.activeLink : ""}`
+              }
+            >
+              Admin
+            </NavLink>
+          )}
+          <button className={styles.logoutButton} onClick={onLogOut}>
+            Log out
+          </button>
+        </div>
+        <div className={styles.burger} onClick={toggleMenu}>
+          <div className={`${styles.bar} ${menuOpen ? styles.open : ""}`} />
+          <div className={`${styles.bar} ${menuOpen ? styles.open : ""}`} />
+          <div className={`${styles.bar} ${menuOpen ? styles.open : ""}`} />
+        </div>
+      </nav>
+    </div>
+  );
+};
 
 export default NavBar;
-
-const NavContainer = styled.nav`
-/* Estilos para móviles */
-
-   display: flex;
-   align-items: center;
-   align-content: center
-   justify-content: space-between;
-   z-index: 100;
-   background-color: white;
-
-
-.logo > img {
-   width: 10em;
-   margin-right:0;
-
-  @media(min-width:768px){
-   margin-right:3em;
-   width: 10em;
- }
-}
-
-.links > a {
-   text-decoration: none;
-   color: grey;
-   margin-right:1em;
-   font-size: 12px;
-}
-
-.links {
-   position: absolute;
-    top: -700px;
-    left: -2000px;
-    right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    transition: all .5s ease;
-   z-index:100;
-   padding-bottom: 2em;
-    a{
-      color: grey;
-      display: block;
-    }
-    a:hover {
-      color:teal;
-      font-size:20px;
-      font-weight:bold;
-    }
-   @media(min-width:768px){
-      margin: 0;
-      position: initial;
-    display: flex;
-    flex-direction: row;
-    align-content: center;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 0;
-      a{
-         font-size: 1.2em;
-         color: grey;
-         display: inline;
-      }
-    }
-
-    @media(max-width: 1024px) {
-      font-size: 13px;
-    }
-   }
-
-   .links.active {
-      width: 100%;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      top: 10%;
-      left: 0;
-      right: 0;
-      text-align: center;
-      background-color: white;
-      z-index:100;
-      
-      a{
-        font-size: 1.2rem;
-        margin-top: 1rem;
-        color: grey;
-      }
-      @media(min-width:768px){
-         display: flex;
-         flex-wrap: wrap;
-         flex-direction: row;
-         align-content: center;
-         justify-content: center;
-         align-items: center;
-         padding-bottom: 0;
-         a{
-            font-size: 1.2rem;
-            margin-top: 0;
-            color: grey;
-          }
-      }
-      @media(max-width:667px){
-         top: 14%;
-      }
-    }
-
-    .links > button{
-      Background-color: transparent;
-      border: none;
-      color: teal;
-      font-size: 1.3em;
-      margin-top: 1rem;
-      margin-right: 1em;
-      margin-bottom: 1em;
-      
-      @media(min-width:768px){
-         display: flex;
-         flex-wrap: wrap;
-         flex-direction: row;
-         align-content: center;
-         justify-content: center;
-         align-items: center;
-         font-size: 1.3em;
-         Background-color: transparent;
-         border: none;
-         color: teal;
-         margin: 0;
-      }
-    }
-    .links > button:hover{
-      border: 1px solid teal;
-      border-radius:5px;
-      width:100px;
-      height: 40px;
-    }
-  
-.burger {
-   display: flex;
-   position: relative;
-   right: -15px;
-   @media(min-width:768px){
-      display: none;
-   }
-}
-
-
-
-`

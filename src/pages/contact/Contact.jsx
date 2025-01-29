@@ -1,5 +1,4 @@
 import React, { useState , useEffect} from 'react';
-import NavBar from '../../components/navBar/navBar';
 import styles from '../contact/contact.module.css';
 import customFetch from '../../api';
 import Modal from "../../components/Modal/Modal";
@@ -51,7 +50,7 @@ const ContactForm = () => {
 
   return (
    <div className={styles.container}>
-      <NavBar />
+
 
       <h2>Hello {user.name} Do you have a request?</h2>
       <h3>Fill our contact form</h3>

@@ -10,9 +10,12 @@
   color: gray;
   flex-direction: column;
   overflow-x: hidden;
+  font-family: 'roboto';
 }
 
-
+h1, h2, h3, h4, h5, h6, p {
+  color: gray !important;
+}
 
 p {
   font-size: 1.2em;

@@ -23,8 +23,11 @@ const UpcomingMeetings = () => {
     // Auto-refresh the meeting list every minute
     const interval = setInterval(fetchMeetings, 60000);
 
+
     return () => clearInterval(interval);
   }, []);
+
+  
 
   // Filter the meetings to show only today's meetings and exclude trainer-only events for general users
   const filterTodayMeetings = (meetings) => {
@@ -33,6 +36,7 @@ const UpcomingMeetings = () => {
       .filter((meeting) => {
         const meetingDate = new Date(meeting.date);
         // Check if the meeting date matches today's year, month, and day
+        console.log('User Data:', meeting.userId[0]);
         return (
           meetingDate.getFullYear() === today.getFullYear() &&
           meetingDate.getMonth() === today.getMonth() &&
@@ -104,21 +108,23 @@ const UpcomingMeetings = () => {
       <div className={styles.meetingsList}>
         {displayedMeetings.length > 0 ? (
           displayedMeetings.map((meeting) => (
+            
             <div key={meeting._id} className={styles.meetingItem}>
               <div className={styles.userInfo}>
-                <img
+              <img
                   src={
                     meeting.userId && meeting.userId.length > 0 && meeting.userId[0].image
                       ? meeting.userId[0].image
-                      : person
+                      : person // Fallback to the placeholder image
                   }
                   alt={
                     meeting.userId && meeting.userId.length > 0
-                      ? meeting.userId[0].name || 'User'
-                      : 'Unknown User'
+                      ? meeting.userId[0].name || 'User' // Fallback to 'User' if name is unavailable
+                      : 'Unknown User' // Fallback alt text
                   }
                   className={styles.userImage}
                 />
+
                 <div className={styles.userDetails}>
                   <p className={styles.userName}>
                     {meeting.userId && meeting.userId.length > 0

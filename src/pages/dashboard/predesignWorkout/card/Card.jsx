@@ -108,13 +108,13 @@ const Card = ({ item, onEdit, onSelect }) => {
             {isExpanded ? "Close" : "Show More"}
           </button>
         )}
+        <button onClick={handleEdit} className={styles.editButton}>
+          Edit
+        </button>
       </div>
 
       {/* Edit Button */}
       <div className={styles.buttons}>
-        <button onClick={handleEdit} className={styles.editButton}>
-          Edit
-        </button>
       </div>
 
       {/* Modal for Editing */}

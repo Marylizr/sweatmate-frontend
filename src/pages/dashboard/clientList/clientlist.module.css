@@ -7,7 +7,7 @@
    background-color: #fff;
    border-radius: 10px;
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-   margin: 0.5em;
+   margin: 1em 0.5em 0 0.5em;
    padding: 0.5em;
    height: 22.5em;
    overflow-y: auto;
@@ -141,19 +141,20 @@
 @media (max-width:768px){
 
    .container {
-     width: 41vw;
-     margin: 0.5em 0.5em 0 0;
-     height: 10em;
+      width: 90vw;
+      margin: 0.5em 0 0 0;
+      height: 17em;
+      overflow-x: hidden;
    }
    .userList {
-      width: 40vw;
+      width: 80vw;
    }
 
    .userItem > img {
       width: 2em;
    }
    .userDetails > p {
-      font-size: 14px;
+      font-size: 1.3em;
    }
 
    img.chevronIcon {
@@ -161,7 +162,7 @@
    }
 
    .userItem {
-      width: 40vw;
+      width: 80vw;
    }
  
  }

@@ -1,0 +1,546 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+  background: linear-gradient(to top, #c3dedb, #f8f8f8);
+  padding: 2em 1em 1em 1em;
+  justify-content: center;
+}
+
+.mainContainer{
+   display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+   align-items: center;
+   align-content: center;
+  margin-top:2em
+}
+
+ .section {
+   margin-bottom: 30px;
+ 
+ }
+ 
+ .error {
+   color: red;
+   font-weight: bold;
+   text-align: center;
+ }
+ 
+ .section h2 {
+   font-size: 22px;
+   margin-bottom: 10px;
+   color: #333;
+ }
+ 
+
+.dashboard {
+   padding: 20px;
+   background: linear-gradient(135deg, #c3dedb, #f8f8f8);
+   border-radius: 8px;
+ }
+ 
+ .title {
+   font-size: 24px;
+   color: #333;
+ }
+ 
+ .progressSection, .milestoneSection, .goalFormSection {
+   margin-top: 20px;
+ }
+ 
+ .goalTitle {
+   font-size: 18px;
+   font-weight: bold;
+ }
+ 
+ .chartContainer {
+   margin-bottom: 30px;
+ }
+ 
+ .notificationsContainer {
+   padding: 10px;
+ }
+ 
+ .milestonesList {
+   list-style: none;
+   padding: 0;
+ }
+ 
+ .achieved {
+   color: teal;
+ }
+ 
+ .pending {
+   color: red;
+ }
+ 
+ .notificationsContainer {
+   display: flex;
+   flex-direction: column;
+   align-content: center;
+   align-items: center;
+   width: 26vw;
+   max-height: 26em;
+   overflow-x: scroll;
+   background-color: #fff;
+   border-radius: 10px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   margin: 1em;
+   padding: 2em;
+ }
+ 
+ .notification {
+   margin-bottom: 20px;
+   border-bottom: 1px solid #ccc;
+   padding-bottom: 10px;
+ }
+ 
+ .goalTitle {
+   font-weight: bold;
+   margin-bottom: 10px;
+ }
+ 
+ .milestonesList {
+   list-style-type: none;
+   padding: 0;
+ }
+ 
+ .milestoneInfo {
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+}
+ 
+ .milestoneNote {
+   font-style: italic;
+   color: #555;
+ }
+ 
+ .pending {
+   color: #888;
+ }
+ 
+ .achieved {
+   color: teal;
+ }
+ 
+ .editMilestone {
+   display: flex;
+   flex-direction: column;
+   margin-top: 10px;
+   flex-wrap: wrap;
+   align-content: center;
+   align-items: center;
+ }
+ 
+ .saveButton {
+   background: white;
+   border: 1px solid teal;
+   height: 50px;
+   width: 140px;
+   border-radius: 8px;
+   margin: 2em 0 0em 0em;
+   color: teal;
+   text-transform: capitalize;
+   cursor: pointer;
+ }
+ 
+ .cancelButton {
+   background-color: red;
+   color: white;
+   padding: 5px 10px;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+ }
+ 
+ .logButton {
+   background: white;
+   border: 1px solid teal;
+   height: 50px;
+   width: 140px;
+   border-radius: 8px;
+   margin: 2em 0 0em 0em;
+   color: teal;
+   text-transform: capitalize;
+   cursor: pointer;
+ }
+ 
+ .targetInputGroup > form > input, select {
+   margin: 10px;
+    width: 11em;
+    height: 3em;
+    border-radius: 3px;
+    border: none;
+    box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04), 0px 4px 16px rgba(51, 51, 51, 0.18);
+    padding: 5px;
+    color: #888;
+ }
+
+ .targetInputGroup > form > textarea {
+   margin: 10px;
+    width: 16em;
+    height: 3em;
+    border-radius: 3px;
+    border: none;
+    box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04), 0px 4px 16px rgba(51, 51, 51, 0.18);
+    padding: 5px;
+ }
+
+ .targetInputGroup > form > div > input[type="number" i] {
+   margin: 10px;
+   width: 11em;
+   height: 2em;
+   border-radius: 3px;
+   border: none;
+   box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04), 0px 4px 16px rgba(51, 51, 51, 0.18);
+   padding: 5px;
+   color: #888;
+ }
+
+ .container > form > label {
+   display: flex;
+ }
+
+
+
+.buttonStyles {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: center;
+   margin: 1em;
+}
+
+.buttonStyles > button.saveButton {
+   background: white;
+    border: 1px solid teal;
+    height: 50px;
+    width: 140px;
+    border-radius: 8px;
+    margin: 2em 0 0em 0em;
+    color: teal;
+    text-transform: capitalize;
+    cursor: pointer;
+    margin: 1em;
+}
+
+.buttonStyles > button.cancelButton {
+   background: white;
+    border: 1px solid red;
+    height: 50px;
+    width: 140px;
+    border-radius: 8px;
+    margin: 2em 0 0em 0em;
+    color: red;
+    text-transform: capitalize;
+    cursor: pointer;
+    margin: 1em;
+}
+
+.editMilestone > label > input[type="date" i] {
+   margin: 10px;
+    width: 11em;
+    height: 2em;
+    border-radius: 3px;
+    border: none;
+    box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04), 0px 4px 16px rgba(51, 51, 51, 0.18);
+    padding: 5px;
+    color: #888;
+}
+
+
+.editMilestone > textarea {
+   margin: 0.5em;
+   width: 23em;
+   height: 3em;
+   border-radius: 3px;
+   border: none;
+   box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04), 0px 4px 16px rgba(51, 51, 51, 0.18);
+   padding: 5px;
+}
+
+.progresses {
+   display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+   margin-top: 1%;
+   width: 90vw;
+   background: linear-gradient(to top, #bebebe, #f8f8f8);
+   padding: 2em 1em 1em 1em;
+   justify-content: center;
+}
+
+.goalSection {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   align-items: flex-start;
+   display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.chart {
+   width: 20em;
+   height: 20em;
+}
+
+.chartStyle{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+}
+
+.updateProgress{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.updateProgress > input[type="number" i] {
+   margin: 10px;
+   width: 13em;
+    height: 3em;
+   border-radius: 3px;
+   border: none;
+   box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04), 0px 4px 16px rgba(51, 51, 51, 0.18);
+   padding: 5px;
+   color: #888;
+ }
+
+ .updateProgress > button {
+   background: white;
+    border: 1px solid teal;
+    height: 50px;
+    width: 140px;
+    border-radius: 8px;
+    margin: 2em 0 0em 0em;
+    color: teal;
+    text-transform: capitalize;
+    cursor: pointer;
+    margin: 1em;
+ }
+ .chartContainer {
+   background-color: #ffffff;
+   border-radius: 12px;
+   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+   padding: 1em;
+   margin: 0.5em;
+}
+.chartTitle {
+   font-size: 1rem;
+   font-weight: bold;
+   color: #555;
+   margin-bottom: 10px;
+}
+
+.updateProgress {
+   margin-top: 20px;
+}
+
+
+.progresses {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   margin-top: 1%;
+   width: 90vw;
+   background: linear-gradient(to top, #c3dedb, #f8f8f8);
+   padding: 2em 1em 1em 1em;
+   justify-content: center;
+}
+
+.chartContainer {
+  width: 28%;
+  max-width: 30em;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.chartTitle {
+  font-size: 1.3em;
+  margin-bottom: 1rem;
+  font-weight: 400;
+  color: teal;
+}
+
+.responsiveChart {
+  width: 100%;
+  height: auto;
+}
+
+.chart{
+  display: flex;
+}
+
+.noDataMessage {
+  color: #888;
+  font-size: 1rem;
+}
+
+.updateProgress {
+  margin-top: 1rem;
+}
+
+.updateProgress input {
+  width: calc(100% - 100px);
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.wrapSection{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+
+
+/* Extra Small Devices (Portrait Phones, less than 576px) */
+@media only screen and (max-width: 575.98px) {
+  .container{
+    width: 100vw;
+    margin: 0 0;
+  }
+  .mainContainer{
+    margin-top: 2em;
+  }
+  .notificationsContainer{
+    width: 76vw;
+  }
+  .progresses{
+    width: 92vw;
+  }
+  .goalSection{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: center;
+    width: 88vw;
+    align-items: center;
+  }
+  .chartContainer {
+    width: 88vw;
+    max-width: 400px;
+    height: auto;
+    margin: 0.5em;
+    position: relative;
+}
+.updateProgress{
+    margin-top: 1rem;
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
+.targetInputGroup {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+}
+
+/* Small Devices (Landscape Phones, 576px and up) */
+@media only screen and (min-width: 576px) and (max-width: 767.98px) {
+  .mainContainer{
+    width: 100%;
+    margin-top: 2em;
+  }
+  .container {
+    width: 94%;
+     margin: 1em 0 0;
+  }
+  
+  .updateProgress > input[type="number" i] {
+    width: 20em;
+  }
+
+  .targetInputGroup > form > input, select {
+    width: 20em;
+  }
+
+  .notificationsContainer{
+    width: 76%;
+    margin: 1em 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .section {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
+  }
+
+  .progresses {
+    display: flex;
+    flex-direction: row;
+    margin-top: 1%;
+    width: 97vw;
+    background: linear-gradient(to top, #c3dedb, #f8f8f8);
+    padding: 2em 1em 1em 1em;
+    justify-content: center;
+  }
+
+  .updateProgress {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .chartContainer {
+    width: 42%;
+    max-width: 30em;
+    margin: 0.5em;
+    text-align: center;
+}
+
+
+}
+
+/* Medium Devices (Tablets, 768px and up) */
+@media only screen and (min-width: 768px) and (max-width: 991.98px) {
+
+  .mainContainer{
+    max-width: 95%;
+    margin-top: 2em;
+ }
+
+  .container {
+     width: 100%;
+     margin: 0 1em 1em;
+  }
+  .updateProgress{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+}
+
+  /* Large Devices (Desktops, 992px and up) */
+@media only screen and (min-width: 992px) and (max-width: 1199.98px) {
+
+  .mainContainer{
+    max-width: 95%;
+    margin-top: 2em;
+ }
+    .container {
+    width: 100%;
+    margin: 0 1em 1em;
+    }
+
+}
+

@@ -4,10 +4,13 @@ import Card from './card/Card';
 import customFetch from '../../api';
 import { useForm } from 'react-hook-form';
 
+
+//THIS COMPONENT IS FOR THE PT DESIGN A PERSONALIZED TRAINING PROGRAM
 const Training = ({ onClick }) => {
    const [selectedWorkouts, setSelectedWorkouts] = useState([]); // Track multiple selected workouts
    const [users, setUsers] = useState([]);
    const [data, setData] = useState([]);
+   const [filteredData, setFilteredData] = useState([]); // New state to store filtered workouts
    const [searchValue, setSearchValue] = useState('');
    const [email, setEmail] = useState(''); // User email to assign session
    const [showWorkouts, setShowWorkouts] = useState(true); // Control visibility of workout cards
@@ -23,19 +26,24 @@ const Training = ({ onClick }) => {
    // Fetch available workouts on mount
    useEffect(() => {
       customFetch("GET", "workouts")
-         .then((json) => setData(json))
+         .then((json) => {
+            setData(json); // Set full workout data
+            setFilteredData(json); // Initialize filteredData with full data
+         })
          .catch((error) => console.log("Error fetching workouts:", error));
    }, []);
 
    // Filter workouts based on search input
    useEffect(() => {
-      if (searchValue) {
-         const filteredData = data.filter(({ type }) =>
+      if (!searchValue) {
+         setFilteredData(data); // Reset to full data if no search query
+      } else {
+         const filtered = data.filter(({ type }) =>
             type.toLowerCase().includes(searchValue.toLowerCase())
          );
-         setData(filteredData);
+         setFilteredData(filtered);
       }
-   }, [searchValue]);
+   }, [searchValue, data]); // Include both `searchValue` and `data` in the dependency array
 
    // Function to handle form submission and save all selected workouts as a session
    const onSubmit = () => {
@@ -64,7 +72,6 @@ const Training = ({ onClick }) => {
       reset(); // Reset the form
       setSelectedWorkouts([]); // Clear selected workouts
    };
-   
 
    // Function to handle adding/removing workouts in the selection
    const toggleWorkoutSelection = (workout) => {
@@ -141,7 +148,7 @@ const Training = ({ onClick }) => {
                {/* Workout selection area */}
                {showWorkouts && (
                   <div className={styles.wrap}>
-                     {data && data.length > 0 && data.map(item => (
+                     {filteredData && filteredData.length > 0 && filteredData.map(item => (
                         <div 
                            key={item._id}
                            onClick={() => toggleWorkoutSelection(item)}

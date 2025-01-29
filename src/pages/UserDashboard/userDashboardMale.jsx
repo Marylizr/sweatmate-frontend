@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styles from "./settings.module.css";
-import NavBar from "../../components/navBar/navBar";
 import Settings from "./settings/Settings";
 import { Link } from "react-router-dom";
 import MacroCalculator from "../../components/macroCalculator/MacroCalculator";
@@ -20,15 +19,20 @@ import stressed from "../../assets/stressed.svg";
 import excited from "../../assets/exited.svg";
 import anxious from "../../assets/anxious.svg";
 import tired from "../../assets/tired.svg";
+import NavBar from "../../components/navBar/navBar";
 
 const UserDashboardMale = () => {
-  const [name, setName] = useState("");
+  const [userName, setUserName] = useState("");
   const [isMoodModalOpen, setIsMoodModalOpen] = useState(false);
   const [mood, setMood] = useState("");
   const [comments, setComments] = useState("");
-  const [userName, setUserName] = useState("");
-  const [suggestions, setSuggestions] = useState(null);
+  const [name, setName] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isMoodLogged, setIsMoodLogged] = useState(false);
+  const [isMessageDisplayed, setIsMessageDisplayed] = useState(false);
+
+  const REACT_API_KEY = process.env.REACT_APP_CHAT_API_KEY;
 
   const moods = [
     { name: "Happy", emoji: happy },
@@ -40,22 +44,33 @@ const UserDashboardMale = () => {
   ];
 
   useEffect(() => {
-    customFetch("GET", "user/me")
-      .then((json) => {
-        setName(json.name);
-        setUserName(json._id);
-        setIsMoodModalOpen(true);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    const loadUserData = async () => {
+      try {
+        const json = await customFetch("GET", "user/me");
+        setUserName(json.name);
+        setName(json._id);
+
+        const today = new Date().toISOString().split("T")[0];
+        const lastLoggedDate = localStorage.getItem("moodLoggedDate");
+
+        if (lastLoggedDate !== today) {
+          setIsMoodModalOpen(true);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    loadUserData();
   }, []);
 
   const closeMoodModal = () => {
     setIsMoodModalOpen(false);
     setMood("");
     setComments("");
-    setSuggestions(null);
+    setSuggestions([]);
+    setIsMoodLogged(false);
+    setIsMessageDisplayed(false);
   };
 
   const handleMoodClick = async (selectedMood) => {
@@ -70,30 +85,28 @@ const UserDashboardMale = () => {
           messages: [
             {
               role: "system",
-              content: "You are a personal trainer and wellness coach.",
+              content: "Act as the best personal trainer and wellness coach.",
             },
             {
               role: "user",
-              content: `I am feeling ${selectedMood}. Can you suggest a workout and a motivational message for me?`,
+              content: `I am feeling ${selectedMood}. Can you suggest a motivational message for me? Please provide only the message.`,
             },
           ],
         },
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer `, // Add your API key here
+            Authorization: `Bearer ${REACT_API_KEY}`,
           },
         }
       );
 
       const suggestionText = response.data.choices[0].message.content;
-
-      // Parse the ChatGPT response into sections
-      const formattedSuggestions = formatSuggestions(suggestionText);
-      setSuggestions(formattedSuggestions);
+      setSuggestions([{ title: "Motivational Message", content: suggestionText }]);
+      setIsMessageDisplayed(true);
     } catch (error) {
       console.error("Error fetching suggestions from ChatGPT:", error);
-      setSuggestions("Could not fetch suggestions at this time. Please try again later.");
+      setSuggestions([]);
     } finally {
       setIsLoading(false);
     }
@@ -101,10 +114,10 @@ const UserDashboardMale = () => {
 
   const handleSubmit = () => {
     if (!mood) return alert("Please select a mood!");
-    if (!userName) return alert("User information is missing. Please try again later.");
+    if (!name) return alert("User information is missing. Please try again later.");
 
     const data = {
-      userName,
+      name,
       mood,
       comments,
       date: new Date().toISOString(),
@@ -113,18 +126,13 @@ const UserDashboardMale = () => {
     customFetch("POST", "moodTracker", { body: data })
       .then(() => {
         console.log("Mood logged successfully:", data);
+
+        const today = new Date().toISOString().split("T")[0];
+        localStorage.setItem("moodLoggedDate", today);
+
+        setIsMoodLogged(true);
       })
       .catch((error) => console.error("Error logging mood:", error));
-  };
-
-  const formatSuggestions = (text) => {
-    const sections = text.split("\n\n");
-    return sections.map((section, index) => {
-      const titleMatch = section.match(/^(.+?):/); // Extract section title
-      const title = titleMatch ? titleMatch[1] : `Section ${index + 1}`;
-      const content = section.replace(/^.+?:\s*/, ""); // Remove the title from the content
-      return { title, content };
-    });
   };
 
   return (
@@ -134,20 +142,24 @@ const UserDashboardMale = () => {
       <Modal isOpen={isMoodModalOpen} isClosed={closeMoodModal}>
         <div className={styles.modal}>
           <div className={styles.modalContent}>
-            {!suggestions ? (
+            {!suggestions.length ? (
               <div className={styles.wrapper}>
-                <h2>{name}, How do you feel today?</h2>
+                <h2>{userName}, How do you feel today?</h2>
                 <div className={styles.moods}>
                   {moods.map((item) => (
                     <button
                       key={item.name}
-                      className={`${styles.moodButton} ${mood === item.name ? styles.selected : ""}`}
+                      className={`${styles.moodButton} ${
+                        mood === item.name ? styles.selected : ""
+                      }`}
                       onClick={() => handleMoodClick(item.name)}
                     >
                       <img
                         src={item.emoji}
                         alt={item.name}
-                        className={`${styles.moodEmoji} ${mood === item.name ? styles.selectedEmoji : ""}`}
+                        className={`${styles.moodEmoji} ${
+                          mood === item.name ? styles.selectedEmoji : ""
+                        }`}
                       />
                     </button>
                   ))}
@@ -157,14 +169,20 @@ const UserDashboardMale = () => {
                   placeholder="Any additional comments?"
                   value={comments}
                   onChange={(e) => setComments(e.target.value)}
+                  className={styles.textarea}
                 />
-                <button className={styles.submitButton} onClick={handleSubmit}>
+
+                <button
+                  className={styles.submitButton}
+                  onClick={handleSubmit}
+                  disabled={isLoading || isMoodLogged}
+                >
                   Submit
                 </button>
               </div>
             ) : (
               <>
-                <h2>Suggestions Based on Your Mood</h2>
+                <h2>I have a message for you because you are {mood}</h2>
                 {isLoading ? (
                   <p>Loading suggestions...</p>
                 ) : (
@@ -175,7 +193,11 @@ const UserDashboardMale = () => {
                     </div>
                   ))
                 )}
-                <button className={styles.closeButton} onClick={closeMoodModal}>
+                <button
+                  className={styles.closeButton}
+                  onClick={closeMoodModal}
+                  disabled={!isMoodLogged || !isMessageDisplayed}
+                >
                   Close
                 </button>
               </>
@@ -184,61 +206,63 @@ const UserDashboardMale = () => {
         </div>
       </Modal>
 
-      <div>
-        <h2>Welcome to your Dashboard {name}!</h2>
-      </div>
       <div className={styles.apps}>
-        <Settings />
-        <div className={styles.rearrange}>
-          <WeekStorical />
-          <MacroCalculator />
-          <div className={styles.saved}>
-            <button>
-              <Link to="/allworkouts">
-                <img src={sports1} alt="icon" />
-                Customize Workout
-              </Link>
-            </button>
-          </div>
-          <div className={styles.save}>
-            <button>
-              <Link to="/workoutsDashboard">
-                <img src={sports} alt="icon" />
-                My WorkOuts
-              </Link>
-            </button>
-          </div>
-          <div className={styles.save}>
-            <button>
-              <Link to="/">
-                <img src={map} alt="icon" />
-                Find a SweatMate
-              </Link>
-            </button>
-          </div>
-          <div className={styles.save}>
-            <button>
-              <Link to="/progress">
-                <img src={donut} alt="icon" />
-                My Progress
-              </Link>
-            </button>
-          </div>
-          <div className={styles.save}>
-            <button>
-              <Link to="/personaltrainer">
-                <img src={insight} alt="icon" />
-                From PT
-              </Link>
-            </button>
-          </div>
-          <div className={styles.save}>
-            <button>
-              <Link to="/mealPlanner">
-                <img src={fruit} alt="icon" />
-                Meal Plan
-              </Link>
-            </button>
+        <div>
+          <h2>Welcome to your Dashboard {userName}!</h2>
+        </div>
+        <div className={styles.theWrapper}>
+          <Settings />
+          <div className={styles.rearrange}>
+            <WeekStorical />
+            <MacroCalculator />
+            <div className={styles.save}>
+              <button>
+                <Link to="/allworkouts">
+                  <img src={sports1} alt="icon" />
+                  Customize Workout
+                </Link>
+              </button>
+            </div>
+            <div className={styles.save}>
+              <button>
+                <Link to="/workoutsDashboard">
+                  <img src={sports} alt="icon" />
+                  My Workouts
+                </Link>
+              </button>
+            </div>
+            <div className={styles.save}>
+              <button>
+                <Link to="/progress">
+                  <img src={donut} alt="icon" />
+                  My Progress
+                </Link>
+              </button>
+            </div>
+            <div className={styles.save}>
+              <button>
+                <Link to="/personaltrainer">
+                  <img src={insight} alt="icon" />
+                  From PT
+                </Link>
+              </button>
+            </div>
+            <div className={styles.save}>
+              <button>
+                <Link to="/mealPlanner">
+                  <img src={fruit} alt="icon" />
+                  Meal Plan
+                </Link>
+              </button>
+            </div>
+            <div className={styles.save}>
+              <button>
+                <Link to="/">
+                  <img src={map} alt="icon" />
+                  Find a SweatMate
+                </Link>
+              </button>
+            </div>
           </div>
         </div>
       </div>

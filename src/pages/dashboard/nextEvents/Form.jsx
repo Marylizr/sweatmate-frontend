@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import fetchResource from '../../../api'; // Assuming fetchResource is imported from the correct path
+import fetchResource from '../../../api';
 import styles from './nextEvents.module.css';
+import CustomDropdown from './CustomDropdown';
 
-const Form = () => {
+const Form = ({ refreshEvents }) => {
   const { eventId } = useParams(); // Get eventId from the URL
   const navigate = useNavigate();
 
@@ -17,6 +18,16 @@ const Form = () => {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [trainerOnly, setTrainerOnly] = useState(false);
+
+  const WORKING_HOURS_START = 8; // 8:00 AM
+  const WORKING_HOURS_END = 20; // 8:00 PM
+
+  // Check if the selected time is within working hours
+  const isTimeWithinWorkingHours = (selectedDateTime) => {
+    const selectedDate = new Date(selectedDateTime);
+    const hours = selectedDate.getHours();
+    return hours >= WORKING_HOURS_START && hours < WORKING_HOURS_END;
+  };
 
   // Fetch existing users to populate the dropdown
   useEffect(() => {
@@ -61,15 +72,17 @@ const Form = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let usersToAssign = [];
-
-    if (trainerOnly) {
-      usersToAssign = null; // Trainer-only event
-    } else if (selectAll) {
-      usersToAssign = existingUsers.map(user => user._id); // Assign to all users
-    } else if (selectedUsers.length > 0) {
-      usersToAssign = selectedUsers; // Assign to selected users
+    // Check if the selected time is within working hours
+    if (!isTimeWithinWorkingHours(date)) {
+      alert(`Please select a time between ${WORKING_HOURS_START}:00 and ${WORKING_HOURS_END}:00.`);
+      return;
     }
+
+    let usersToAssign = trainerOnly
+      ? null
+      : selectAll
+      ? existingUsers.map((user) => user._id)
+      : selectedUsers;
 
     const newEvent = {
       eventType,
@@ -84,23 +97,22 @@ const Form = () => {
 
     try {
       if (eventId) {
-        // Update the existing event
         await fetchResource('PUT', `events/${eventId}`, { body: newEvent });
         alert('Event successfully updated!');
       } else {
-        // Create a new event
         await fetchResource('POST', 'events', { body: newEvent });
         alert('Event successfully created!');
       }
-      navigate('/main/plannextevents'); // Redirect back to the NextEvents page
+
+      // Refresh events in the parent component
+      if (typeof refreshEvents === 'function') {
+        refreshEvents();
+      }
+
+      navigate('/main/plannextevents');
     } catch (err) {
       console.error('Error creating/updating event:', err);
     }
-  };
-
-  const handleUserSelection = (e) => {
-    const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
-    setSelectedUsers(selectedOptions);
   };
 
   return (
@@ -149,6 +161,16 @@ const Form = () => {
           onChange={(e) => setDescription(e.target.value)}
         />
 
+        {!trainerOnly && !selectAll && (
+          <div className={styles.dropDown}>
+            <CustomDropdown
+              users={existingUsers}
+              selectedUsers={selectedUsers}
+              setSelectedUsers={setSelectedUsers}
+            />
+          </div>
+        )}
+
         <div className={styles.checkboxes}>
           <label>
             <input
@@ -180,24 +202,6 @@ const Form = () => {
             Select All Users
           </label>
         </div>
-
-        {!trainerOnly && !selectAll && (
-          <>
-            <label>Select Users:</label>
-            <select
-              className={styles.selection}
-              multiple
-              value={selectedUsers}
-              onChange={handleUserSelection}
-            >
-              {existingUsers.map(user => (
-                <option key={user._id} value={user._id}>
-                  {user.name}
-                </option>
-              ))}
-            </select>
-          </>
-        )}
 
         <button type="submit" className={styles.submit}>
           {eventId ? 'Update Event' : 'Create Event'}

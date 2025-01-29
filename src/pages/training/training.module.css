@@ -9,6 +9,7 @@
    border-radius: 10px;
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
    margin: 1em;
+   background: linear-gradient(to top, #c3dedb, #f8f8f8);
 }
 
 .wrap{
@@ -18,6 +19,7 @@
    align-content: center;
    align-items: center;
    width: 75vw;
+   justify-content: center;
 }
 
 .search > input, select{

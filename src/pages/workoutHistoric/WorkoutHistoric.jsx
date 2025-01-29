@@ -1,62 +1,51 @@
-import React, { useState, useContext, useEffect} from 'react';
-import { UserContext } from '../../components/userContext/userContext';
+import React, { useEffect, useState } from 'react';
 import customFetch from '../../api';
 import CardWorkout from '../../components/card/CardWorkouts';
 import styles from '../workoutHistoric/workoutHistoric.module.css';
-import { Link } from 'react-router-dom';
-import arrow_left from '../../utils/arrow_left.svg';
 
+const TodayWorkout = ({ user }) => {
+  const [currentWorkout, setCurrentWorkout] = useState([]);
+  const [formattedDate, setFormattedDate] = useState('');
 
-const TodayWorkout = () => {
-   // here is displayed the workout the user has done in the current year
-   const [currentWorkout, setCurrentWorkout] = useState([]);
-   const [formattedDate, setFormattedDate] = useState('');
-   const { gender } = useContext(UserContext);
+  // Format current date
+  useEffect(() => {
+    const today = new Date();
+    setFormattedDate(today.toLocaleDateString());
+  }, []);
 
-   // get current date and turn it into local date
-   useEffect(() => {
-      const today = new Date();
-      const formattedDate = today.toLocaleDateString();
-      setFormattedDate(formattedDate);
-   }, []);
+  // Fetch workouts for the current date and user
+  useEffect(() => {
+    if (!user || !formattedDate) return;
 
-   // get workouts and filter by date and user
-   useEffect(() => {
-      customFetch("GET", "saveworkout")
-         .then((json) => {
-            // filter workout by date and user
-            const filteredWorkouts = json.filter(item => {
-               const workoutDate = new Date(item.date).toLocaleDateString();
-               return workoutDate === formattedDate;
-            });
+    const fetchWorkouts = async () => {
+      try {
+        const workouts = await customFetch('GET', `saveworkout?userId=${user._id}`);
+        const todayWorkouts = workouts.filter((item) => {
+          const workoutDate = new Date(item.date).toLocaleDateString();
+          return workoutDate === formattedDate;
+        });
+        setCurrentWorkout(todayWorkouts);
+      } catch (error) {
+        console.error('Error fetching workouts:', error);
+      }
+    };
 
-            setCurrentWorkout(filteredWorkouts);
-         })
-         .catch((error) => {
-            console.log(error);
-         })
-   }, [formattedDate]);
+    fetchWorkouts();
+  }, [user, formattedDate]);
 
-   return (
-      <div className={styles.container}>
-         <div className={styles.headline}>
-
-               { gender === 'female' ? <Link to="/dashboard/female"> <img className={styles.arrow}  src={arrow_left} alt='' /></Link> : 
-               <Link to="/dashboard/male"><img className={styles.arrow} src={arrow_left} alt='' /></Link> }
-
-               <h3> Today´s Workout {formattedDate}</h3>
-         </div>
-            <div className={styles.wrap}>
-               {
-                  currentWorkout && currentWorkout.length > 0 &&
-                  currentWorkout.map(item =>
-                     <CardWorkout item={item} id={item._id} key={item._id} />
-                  )
-               }
-            </div>
-         <div className={styles.message}>{(!currentWorkout || currentWorkout.length === 0) && (<p>no Workouts today yet!</p>)}</div>
+  return (
+    <div className={styles.container}>
+      <h2>{user.name}, Let's wrap a workout!</h2>
+      <h3>Today’s Workout {formattedDate}</h3>
+      <div className={styles.wrap}>
+        {currentWorkout.length > 0 ? (
+          currentWorkout.map((item) => <CardWorkout item={item} key={item._id} />)
+        ) : (
+          <p>No Workouts for today yet!</p>
+        )}
       </div>
-   )
-}
+    </div>
+  );
+};
 
 export default TodayWorkout;

@@ -65,7 +65,7 @@ const Form = ({ selectedItem, onUpdate, trainers }) => {
       await customFetch('PUT', `user/${selectedItem._id}`, { body: updateData });
       onUpdate(updateData);
       alert("User's Information Updated");
-      navigate('/main/edituserprofile/:id');
+      navigate('/main/admin-userProfiles');
     } catch (err) {
       console.error('Failed to update information:', err);
       alert('Failed to update information.');

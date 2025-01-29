@@ -42,7 +42,7 @@ const Main = () => {
           <Route path="/plannextevents" element={<PrivateRoute><PlanNextEvents/></PrivateRoute> } />
           <Route path="/reschedule/:eventId" element={<Form />} />
           <Route path="/edituserprofile/:id" element={<EditUserProfile />} />
-          
+        
         </Routes>
       </div>
      

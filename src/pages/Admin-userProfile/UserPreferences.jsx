@@ -61,12 +61,15 @@ const UserPreferences = ({ userId }) => {
           value={newPreference}
           onChange={(e) => setNewPreference(e.target.value)}
         />
-        <input
-          type="date"
-          value={preferenceDate}
-          onChange={(e) => setPreferenceDate(e.target.value)}
-        />
-        <button type="submit">Add Preference</button>
+        <div className={styles.bttn}>
+          <input
+            type="date"
+            value={preferenceDate}
+            onChange={(e) => setPreferenceDate(e.target.value)}
+          />
+          <button type="submit">Add Preference</button>
+        </div>
+
       </form>
       <h3>Preferences History</h3>
       {preferences.length > 0 ? (

@@ -4,12 +4,12 @@
   flex-wrap: wrap;
   align-content: center;
   align-items: center;
-  width: 17vw;
+  width: 15vw;
   height: 21vh;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 0.5em 0.5em 1em 0;
+  margin: 1em 0.5em 1em 0.5em;
   padding: 1em;
   justify-content: center;
 }
@@ -133,7 +133,7 @@
 @media (max-width:768px){
 
   .container {
-    width: 38vw;
+    width: 37vw;
     margin: 0.5em 0 0 0;
     height: 9em;
   }

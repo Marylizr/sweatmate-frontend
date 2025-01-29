@@ -93,7 +93,7 @@ const PreDesigned = () => {
       }
   
       return {
-        userName: selectedUser,
+        name: selectedUser,
         infotype: "workouts",
         content: workout.content || "No content available",
         date: new Date().toISOString(),

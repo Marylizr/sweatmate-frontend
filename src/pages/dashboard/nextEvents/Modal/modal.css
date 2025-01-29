@@ -96,7 +96,6 @@ form > .buttons {
 }
 
 /* modal.css */
-
 .modalOverlay {
   position: fixed;
   top: 0;
@@ -111,15 +110,38 @@ form > .buttons {
 }
 
 .modalContent {
-  background-color: #fff;
+  background: #fff;
   padding: 20px;
-  border-radius: 10px;
-  width: 400px;
-  max-width: 90%;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  animation: fadeIn 0.3s ease-in-out;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 500px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
+
+.modalContent h2 {
+  margin-top: 0;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.confirmButton {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.confirmButton:hover {
+  background-color: #0056b3;
+}
+
 
 .modalContent h2 {
   margin-bottom: 15px;

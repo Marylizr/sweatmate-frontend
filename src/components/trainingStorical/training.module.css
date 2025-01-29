@@ -1,3 +1,6 @@
+
+/* THIS IS THE DASHBOARD MODULE!! */
+
 .container{
    display: flex;
     align-items: center;
@@ -13,7 +16,8 @@
     align-content: center;
     flex-wrap: wrap;
     justify-content: center;
-    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
+    box-shadow: 1px 2px 4px rgb(0 0 0 / 21%);
+    background-color: white;
 }
 
 .container:hover {
@@ -22,17 +26,43 @@
 }
 
 
-@media(max-width:800px) {
+/* Extra Small Devices (Portrait Phones, less than 576px) */
+@media only screen and (max-width: 575.98px) {
    .container{
-      width: 21em;
+      width: 28em;
+      height: 22em;
+      margin: 1em 0 0;
+   }
+ }
+ 
+ /* Small Devices (Landscape Phones, 576px and up) */
+ @media only screen and (min-width: 576px) and (max-width: 767.98px) {
+   .container {
+      width: 90%;
+      height: 16em;
+      margin: 1em 0 0;
+   }
+ }
+ 
+ /* Medium Devices (Tablets, 768px and up) */
+ @media only screen and (min-width: 768px) and (max-width: 991.98px) {
+   .container {
+      width: 80%;
       height: 15em;
-      margin-bottom: 1em;
-      margin-right: 0;
+      margin: 0 1em 1em;
    }
-}
 
-@media (min-width: 768px) and (max-width: 1180px) {
-   .container{
-      margin: 0.5em;
+
+ }
+
+   /* Large Devices (Desktops, 992px and up) */
+@media only screen and (min-width: 992px) and (max-width: 1199.98px) {
+   .container {
+      width: 80%;
+      height: 18em;
+      margin: 1em;
    }
-}
+ }
+ 
+
+ /* THIS IS THE DASHBOARD MODULE!! */

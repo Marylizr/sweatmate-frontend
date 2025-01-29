@@ -1,6 +1,7 @@
-import { React } from 'react';
+import React from 'react';
 import './App.css';
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { UserContextProvider } from './components/userContext/userContext';
 import Home from './pages/home/Home';
 import AllWorkoutsList from './pages/allWorkouts/AllWorkoutsList';
 import Arms from './pages/arms/Arms';
@@ -17,7 +18,6 @@ import Login from './pages/login/Login';
 import AddWorkout from './pages/addWorkout/AddWorkout';
 import UserDashboardFemale from './pages/UserDashboard/userDashboardFemale';
 import UserDashboardMale from './pages/UserDashboard/userDashboardMale';
-import { UserContextProvider } from './components/userContext/userContext';
 import { AboutUs } from './pages/aboutUS/AboutUs';
 import HealthyTips from './pages/healthy/HealthyTips';
 import ContactForm from './pages/contact/Contact';
@@ -36,62 +36,61 @@ import PlanNextEvents from './pages/dashboard/nextEvents/PlanNextEvents';
 import Form from './pages/dashboard/nextEvents/Form';
 import EditUserProfile from './pages/Admin-userProfile/EditUserProfile';
 import MedicalHistory from './pages/Admin-userProfile/MedicalHistory';
+import UserGoal from './pages/userGoals/UserGoal';
+import VerifyEmail from './components/VerifyEmail'
+import RedirectPlaceholder from './components/RedirectPlaceholder';
+import NotFound from './components/NotFound';
 
-// import PrivateRoute from "./api/auth/privateRoute";
 
 function App() {
-
-
   return (
-    <div className='App'> 
-   
-   
-    <UserContextProvider>
-      <BrowserRouter >
-        <Routes> 
-          <Route path="/" element={ <Home />} />
-          <Route path="/aboutUs" element={ <AboutUs /> } />
-          <Route path="healthyTips" element={ <HealthyTips />} />
-          <Route path="contact" element={ <ContactForm />} />
-          <Route path="/allworkouts" element={ <AllWorkoutsList />} />
-          <Route path="/arms" element={ <Arms />} />
-          <Route path="/back" element={ <Back />} />
-          <Route path="/chest" element={ <Chest />} />
-          <Route path="/glutes" element={ <Glutes />} />
-          <Route path="/hamstrings" element={ <Hamstrings />} />
-          <Route path="/quadriceps" element={ <Quadriceps />} />
-          <Route path="/abs" element={ <Abs />} />
-          <Route path="/shoulders" element={ <Shoulders />} />
-          <Route path="/fullbody" element={ <Fullbody />} />
-          <Route path="/signup" element={ <SignUp />} />
-          <Route path="/login"  element={ <Login/> }/>
-          <Route path="/addworkout" element={ <AddWorkout />} />
-          <Route path="/dashboard/male" element={ <UserDashboardMale />} />
-          <Route path="/dashboard/female" element={ <UserDashboardFemale />} />
-          <Route path="/messages" element={ <UserProfile />} />
-          <Route path="/workouts" element={ <EditWorkouts />} />
-          <Route path="/workoutsDashboard" element={ <WorkoutDash />} />
-          <Route path="/main/*" element={<Main />} />
-          <Route path="/progress" element={<FollowUp/>} />
-          <Route path='/todayworkout' element={<TodayWorkout />} />
-          <Route path='/personaltrainer' element={<DesignedByPt />} />
-          <Route path='/preworkout' element={<Predesigned />} />
-          <Route path='/mealplan' element={<MealList />} />
-          <Route path='/products' element={<Products/>} />
-          <Route path='/mealPlanner' element={<MealPlanner/>} />
-          <Route path="/plannextevents" element={<PlanNextEvents/> } />
-          <Route path="/reschedule/:eventId" element={<Form />} />
-          <Route path="/edituserprofile/:id" element={<EditUserProfile />} />
-          <Route path="/:id/medical-history" element={<MedicalHistory />} />
+    <div className="App">
+      <UserContextProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/aboutUs" element={<AboutUs />} />
+            <Route path="/healthyTips" element={<HealthyTips />} />
+            <Route path="/contact" element={<ContactForm />} />
+            <Route path="/allworkouts" element={<AllWorkoutsList />} />
+            <Route path="/arms" element={<Arms />} />
+            <Route path="/back" element={<Back />} />
+            <Route path="/chest" element={<Chest />} />
+            <Route path="/glutes" element={<Glutes />} />
+            <Route path="/hamstrings" element={<Hamstrings />} />
+            <Route path="/quadriceps" element={<Quadriceps />} />
+            <Route path="/abs" element={<Abs />} />
+            <Route path="/shoulders" element={<Shoulders />} />
+            <Route path="/fullbody" element={<Fullbody />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/addworkout" element={<AddWorkout />} />
+            <Route path="/messages" element={<UserProfile />} />
+            <Route path="/workouts" element={<EditWorkouts />} />
+            <Route path="/workoutsDashboard" element={<WorkoutDash />} />
+            <Route path="/main/*" element={<Main />} />
+            <Route path="/dashboard/male" element={<UserDashboardMale />} />
+            <Route path="/dashboard/female" element={<UserDashboardFemale />} />
+            <Route path="/progress" element={<FollowUp />} />
+            <Route path="/todayworkout" element={<TodayWorkout />} />
+            <Route path="/personaltrainer" element={<DesignedByPt />} />
+            <Route path="/preworkout" element={<Predesigned />} />
+            <Route path="/mealplan" element={<MealList />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/mealPlanner" element={<MealPlanner />} />
+            <Route path="/plannextevents" element={<PlanNextEvents />} />
+            <Route path="/reschedule/:eventId" element={<Form />} />
+            <Route path="/edituserprofile/:id" element={<EditUserProfile />} />
+            <Route path="/:id/medical-history" element={<MedicalHistory />} />
+            <Route path="/mygoals" element={<UserGoal />} />
+            <Route path="/verify-email" element={<VerifyEmail />} />
+            <Route path="/auth/oauth2callback" element={<RedirectPlaceholder />} />
+            <Route path="*" element={<NotFound />} />
 
-
-        </Routes>
-      </BrowserRouter>
-    </UserContextProvider>
-
+          </Routes>
+        </BrowserRouter>
+      </UserContextProvider>
     </div>
-
-
   );
 }
 

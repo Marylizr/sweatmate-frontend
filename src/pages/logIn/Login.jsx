@@ -47,7 +47,7 @@ const Login = () => {
          if (userGender === "female") {
             navigate("/dashboard/female");
          } else if (userGender === "male") {
-            navigate("/dashboard/male");
+            navigate("/dashboard/female");
          } else {
             console.error(`Invalid gender: ${userGender}`);
          }

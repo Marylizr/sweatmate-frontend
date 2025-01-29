@@ -4,7 +4,6 @@ import React from 'react'
 
 const Card = ({ item }) => {
 
-console.log('yo soy item', item)
      return(
         <div className={styles.container} > 
           <div className={styles.info}>
