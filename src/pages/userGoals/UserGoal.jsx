@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ Import for redirection
 import GoalForm from "./GoalForm";
 import MilestoneNotifications from "./MilestoneNotifications";
 import GoalProgressChart from "./GoalProgressChart";
@@ -7,6 +8,7 @@ import styles from "./goals.module.css";
 import NavBar from "../../components/navBar/navBar";
 
 const UserGoal = () => {
+  const navigate = useNavigate(); // ✅ Hook for redirection
   const [goals, setGoals] = useState([]);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -20,9 +22,16 @@ const UserGoal = () => {
       setUser(response);
     } catch (error) {
       console.error("Error fetching user data:", error);
-      setError("Failed to fetch user data. Please try refreshing the page.");
+
+      // ✅ Check if the error is an expired session (401 Unauthorized)
+      if (error.message.includes("401")) {
+        localStorage.removeItem("token"); // Clear token
+        navigate("/"); // Redirect to login page
+      } else {
+        setError("Failed to fetch user data. Please try refreshing the page.");
+      }
     }
-  }, []);
+  }, [navigate]);
 
   // Fetch user goals
   const fetchUserGoals = useCallback(async () => {

@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import styles from "../settings.module.css";
-import userimg from '../images/userimg.svg';
+import userimg from '../../../assets/person.svg';
 import customFetch from '../../../api';
 import pen from '../../../assets/pen_white.svg';
 import eye from '../../../assets/eye.svg';

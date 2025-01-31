@@ -4,11 +4,11 @@ import { deleteStorageObject, getStorageObject, setStorageObject } from "./stora
 // Function to get the user's token from the session
 export const getUserToken = () => {
     const session = getStorageObject("user-session");
-    if (session) {
-        return session.token;
-    }
-    return undefined;
+    console.log("Retrieved session data:", session);
+    return session?.token;
 };
+
+
 
 // Function to get the user object from the session
 export const getSessionUser = () => {
@@ -48,9 +48,13 @@ export const getUserId = () => {
 
 // Function to store the user session in localStorage
 export const setUserSession = (sessionData) => {
-    console.log("Storing session data:", sessionData); // Debugging log to check the session data
+    console.log("Storing session data:", sessionData);
     setStorageObject("user-session", sessionData);
+
+    // Immediately verify the stored session
+    console.log("Checking stored session:", getStorageObject("user-session"));
 };
+
 
 // Function to remove the user session from localStorage
 export const removeSession = () => {

@@ -40,6 +40,14 @@ import UserGoal from './pages/userGoals/UserGoal';
 import VerifyEmail from './components/VerifyEmail'
 import RedirectPlaceholder from './components/RedirectPlaceholder';
 import NotFound from './components/NotFound';
+import MenstrualCycle from './components/faseMenstrual/menstrualCycle';
+import Cookies from './components/cookiesPreferences/Cookies';
+import Terms from './components/cookiesPreferences/Termns';
+import PrivacyPolicy from './components/cookiesPreferences/PrivacyPolicy';
+import AcceptableUse from './components/cookiesPreferences/AcceptableUse';
+import ResetPassword from './pages/login/ResetPassword';
+import ForgotPassword from './pages/login/ForgotPassword';
+
 
 
 function App() {
@@ -48,6 +56,7 @@ function App() {
       <UserContextProvider>
         <BrowserRouter>
           <Routes>
+            <Route path="/cookiePreferences" element={<Cookies />} />
             <Route path="/" element={<Home />} />
             <Route path="/aboutUs" element={<AboutUs />} />
             <Route path="/healthyTips" element={<HealthyTips />} />
@@ -86,6 +95,14 @@ function App() {
             <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path="/auth/oauth2callback" element={<RedirectPlaceholder />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/menstrualCycle" element={<MenstrualCycle />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/acceptable-use" element={<AcceptableUse />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
+
+
 
           </Routes>
         </BrowserRouter>

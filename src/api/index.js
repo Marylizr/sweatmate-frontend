@@ -49,6 +49,7 @@ const fetchResource = (method = "GET", path, userOptions = {}) => {
             ...(userOptions.headers?.['content-type'] ? {} : { "content-type": "application/json" }),
             ...userOptions.headers,
         },
+        
     };
     console.log('Request Headers:', options.headers);
 

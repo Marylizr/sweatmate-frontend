@@ -22,6 +22,7 @@ import anxious from "../../assets/anxious.svg";
 import tired from "../../assets/tired.svg";
 import goals from "../../assets/goals.svg";
 import NavBar from "../../components/navBar/navBar";
+import CookieConsent from "../../components/cookiesPreferences/Cookies";
 
 const UserDashboardFemale = () => {
   const [userName, setUserName] = useState("");
@@ -136,6 +137,11 @@ const UserDashboardFemale = () => {
         localStorage.setItem("moodLoggedDate", today);
 
         setIsMoodLogged(true);
+
+        // If no AI-generated message is requested, close modal immediately
+        if (!isMessageDisplayed) {
+          closeMoodModal();
+        }
       })
       .catch((error) => console.error("Error logging mood:", error));
   };
@@ -143,7 +149,7 @@ const UserDashboardFemale = () => {
   return (
     <div className={styles.container}>
       <NavBar />
-
+      <CookieConsent />
       <Modal isOpen={isMoodModalOpen} isClosed={closeMoodModal}>
         <div className={styles.modal}>
           <div className={styles.modalContent}>
@@ -198,11 +204,7 @@ const UserDashboardFemale = () => {
                     </div>
                   ))
                 )}
-                <button
-                  className={styles.closeButton}
-                  onClick={closeMoodModal}
-                  disabled={!isMoodLogged || !isMessageDisplayed}
-                >
+                <button className={styles.closeButton} onClick={closeMoodModal}>
                   Close
                 </button>
               </>
@@ -280,6 +282,7 @@ const UserDashboardFemale = () => {
               </button>
             </div>
           </div>
+        
         </div>
       </div>
     </div>
@@ -287,3 +290,8 @@ const UserDashboardFemale = () => {
 };
 
 export default UserDashboardFemale;
+
+
+
+
+

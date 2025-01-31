@@ -217,7 +217,7 @@ const SignUpForm = () => {
         {/* Fitness Level Field */}
         <select {...register("fitness_level", { required: "This field is required" })}>
           <option value="">Select Level</option>
-          <option value="basic">Basic</option>
+          <option value="beginner">beginner</option>
           <option value="intermediate">Intermediate</option>
           <option value="advanced">Advanced</option>
         </select>
@@ -250,7 +250,7 @@ const SignUpForm = () => {
 
       {/* Resend Verification Email */}
       {!isVerified && (
-        <div>
+        <div className={styles.verificationButton}>
           <p>Haven't received the verification email?</p>
           <button onClick={resendVerificationEmail}>Resend Verification Email</button>
         </div>

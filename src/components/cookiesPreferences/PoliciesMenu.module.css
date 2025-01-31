@@ -1,0 +1,50 @@
+.container {
+   text-align: left;
+   padding: 20px;
+   background-color: #edf8f7;
+ }
+ 
+ .heading {
+   font-size: 12px;
+   font-weight: bold;
+   color: #1a2a6c;
+   text-transform: uppercase;
+   letter-spacing: 1px;
+ }
+ 
+ .subtitle {
+   font-size: 28px;
+   font-weight: 700;
+   color: #0b0b0b;
+   margin-bottom: 15px;
+ }
+ 
+ .nav {
+   display: flex;
+   gap: 15px;
+   font-size: 14px;
+   font-weight: 500;
+   color: #333;
+ }
+ 
+ .menuItem {
+   cursor: pointer;
+   padding-bottom: 5px;
+   transition: color 0.3s ease-in-out;
+   color: gray;
+   font-size: 1em;
+   font-size: 1.3em;
+    font-weight: 800;
+ }
+
+
+ .menuItem:hover {
+   color:teal; /* Blue hover effect */
+ }
+ 
+ .active {
+   border-bottom: 2px solid teal; /* Underline active menu item */
+   color: teal;
+   font-weight: bold;
+ }
+ 

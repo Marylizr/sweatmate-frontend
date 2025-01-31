@@ -6,7 +6,6 @@ import MacroCalculator from "../../components/macroCalculator/MacroCalculator";
 import WeekStorical from "../../components/trainingStorical/WeekStorical";
 import customFetch from "../../api";
 import axios from "axios";
-import insight from "../../assets/insight.svg";
 import sports from "../../assets/sports.svg";
 import sports1 from "../../assets/sports1.svg";
 import fruit from "../../assets/fruit.svg";
@@ -20,17 +19,17 @@ import excited from "../../assets/exited.svg";
 import anxious from "../../assets/anxious.svg";
 import tired from "../../assets/tired.svg";
 import NavBar from "../../components/navBar/navBar";
+import CookieConsent from "../../components/cookiesPreferences/Cookies";
 
 const UserDashboardMale = () => {
   const [userName, setUserName] = useState("");
   const [isMoodModalOpen, setIsMoodModalOpen] = useState(false);
   const [mood, setMood] = useState("");
   const [comments, setComments] = useState("");
-  const [name, setName] = useState("");
+  const [userId, setUserId] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isMoodLogged, setIsMoodLogged] = useState(false);
-  const [isMessageDisplayed, setIsMessageDisplayed] = useState(false);
 
   const REACT_API_KEY = process.env.REACT_APP_CHAT_API_KEY;
 
@@ -48,7 +47,7 @@ const UserDashboardMale = () => {
       try {
         const json = await customFetch("GET", "user/me");
         setUserName(json.name);
-        setName(json._id);
+        setUserId(json._id);
 
         const today = new Date().toISOString().split("T")[0];
         const lastLoggedDate = localStorage.getItem("moodLoggedDate");
@@ -69,8 +68,7 @@ const UserDashboardMale = () => {
     setMood("");
     setComments("");
     setSuggestions([]);
-    setIsMoodLogged(false);
-    setIsMessageDisplayed(false);
+    setIsMoodLogged(true);
   };
 
   const handleMoodClick = async (selectedMood) => {
@@ -103,7 +101,6 @@ const UserDashboardMale = () => {
 
       const suggestionText = response.data.choices[0].message.content;
       setSuggestions([{ title: "Motivational Message", content: suggestionText }]);
-      setIsMessageDisplayed(true);
     } catch (error) {
       console.error("Error fetching suggestions from ChatGPT:", error);
       setSuggestions([]);
@@ -114,10 +111,10 @@ const UserDashboardMale = () => {
 
   const handleSubmit = () => {
     if (!mood) return alert("Please select a mood!");
-    if (!name) return alert("User information is missing. Please try again later.");
+    if (!userId) return alert("User information is missing. Please try again later.");
 
     const data = {
-      name,
+      userId,
       mood,
       comments,
       date: new Date().toISOString(),
@@ -138,6 +135,7 @@ const UserDashboardMale = () => {
   return (
     <div className={styles.container}>
       <NavBar />
+      <CookieConsent />
 
       <Modal isOpen={isMoodModalOpen} isClosed={closeMoodModal}>
         <div className={styles.modal}>
@@ -196,7 +194,6 @@ const UserDashboardMale = () => {
                 <button
                   className={styles.closeButton}
                   onClick={closeMoodModal}
-                  disabled={!isMoodLogged || !isMessageDisplayed}
                 >
                   Close
                 </button>
@@ -236,14 +233,6 @@ const UserDashboardMale = () => {
                 <Link to="/progress">
                   <img src={donut} alt="icon" />
                   My Progress
-                </Link>
-              </button>
-            </div>
-            <div className={styles.save}>
-              <button>
-                <Link to="/personaltrainer">
-                  <img src={insight} alt="icon" />
-                  From PT
                 </Link>
               </button>
             </div>

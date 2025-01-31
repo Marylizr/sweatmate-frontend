@@ -39,6 +39,9 @@ const Login = () => {
          });
    };
 
+   console.log(`my role is ${role} and gender ${gender}`)
+
+   
    // Navigate based on role and gender
    const navigateBasedOnRole = (userRole, userGender) => {
       if (userRole === "admin" || userRole === "personal-trainer") {

@@ -1,0 +1,107 @@
+.overlay {
+   position: fixed;
+   bottom: 20px;
+   left: 20px;
+   width: auto;
+   max-width: 350px;
+   background: white;
+   padding: 15px;
+   border-radius: 8px;
+   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+   z-index: 9999;
+   font-size: 14px;
+ }
+ 
+ .modal {
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+ }
+ 
+ .modal h2 {
+   font-size: 16px;
+   margin-bottom: 5px;
+ }
+ 
+ .modal p {
+   font-size: 12px;
+   color: #666;
+   margin-bottom: 10px;
+ }
+ 
+ .modal a {
+   color: teal;
+   text-decoration: none;
+ }
+ 
+ .buttonGroup {
+   display: flex;
+   justify-content: space-between;
+   width: 100%;
+   margin-top: 5px;
+ }
+ 
+ .acceptBtn {
+   background-color: teal;
+   color: white;
+   border: none;
+   padding: 8px 12px;
+   font-size: 12px;
+   cursor: pointer;
+   border-radius: 5px;
+   flex-grow: 1;
+   margin-right: 5px;
+ }
+ 
+ .declineBtn {
+   background-color: white;
+   border: 1px solid #333;
+   padding: 8px 12px;
+   font-size: 12px;
+   cursor: pointer;
+   border-radius: 5px;
+   flex-grow: 1;
+ }
+ 
+ .detailsToggle {
+   margin-top: 8px;
+   background: none;
+   border: none;
+   font-size: 12px;
+   font-weight: bold;
+   color: #555;
+   cursor: pointer;
+   display: flex;
+   align-items: center;
+ }
+ 
+ .detailsToggle::before {
+   content: "⚙️";
+   margin-right: 5px;
+ }
+ 
+ .detailsSection {
+   margin-top: 8px;
+   text-align: left;
+   display: none;
+ }
+ 
+ .detailsSection label {
+   display: flex;
+   align-items: center;
+   font-size: 12px;
+   margin-bottom: 5px;
+ }
+ 
+ .detailsSection input {
+   margin-right: 5px;
+ }
+ 
+ .cookieDeclaration {
+   background: #f5f5f5;
+   padding: 8px;
+   border-radius: 5px;
+   margin-top: 8px;
+   font-size: 12px;
+ }
+ 

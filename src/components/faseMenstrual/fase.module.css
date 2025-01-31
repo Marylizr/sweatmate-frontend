@@ -1,3 +1,4 @@
+/* small component */
 .container{
    display: flex;
    align-items: center;
@@ -63,31 +64,87 @@
    justify-content: center;
 }
 
-.yes {
-   border: none;
-    background: teal;
-    height: 50px;
-    width: 140px;
-    border-radius: 8px;
-    margin: 2em 0 0em 0em;
-    color: white;
-    text-transform: capitalize;
-    cursor: pointer;
-    margin-right: 2em;
+
+/* page component */
+.wrapper {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   justify-content: center;
+   align-content: center;
+
 }
 
-.no {
-   border: 1px solid teal;
-    background: white;
-    height: 50px;
-    width: 140px;
-    border-radius: 8px;
-    margin: 2em 0 0em 0em;
-    color: teal;
-    text-transform: capitalize;
-    cursor: pointer;
+.wrapper > img {
+   width: 20em;
 }
 
+.wrap {
+   display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+   background: linear-gradient(to top, #c3dedb, #f8f8f8);
+   padding: 2em 1em 1em 1em;
+   justify-content: center;
+   width: 100vw;
+
+}
+
+.wrapContainer {
+   display: flex;
+   flex-direction: column;
+    align-items: center;
+}
+
+.trainingSection {
+   border: lightgray 1px solid;
+   width: 23em;
+   height: 27em;
+   display: flex;
+   flex-direction: column;
+   align-content: center;
+   align-items: center;
+   background-color: #fff;
+   border-radius: 10px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   margin: 1em 0.5em 0 0.5em;
+   padding: 0.5em;
+   overflow-y: scroll;
+   text-align: left;
+ }
+ 
+ .nutritionSection {
+   border: lightgray 1px solid;
+   width: 23em;
+   height: 27em;
+   display: flex;
+   flex-direction: column;
+   align-content: center;
+   align-items: center;
+   background-color: #fff;
+   border-radius: 10px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   margin: 1em 0.5em 0 0.5em;
+   padding: 0.5em;
+   overflow-y: scroll;
+   text-align: left;
+ }
+
+ .chart {
+   border: lightgray 1px solid;
+    width: 30em;
+    height: 20em;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 1em 0.5em 0 0.5em;
+    padding: 0.5em;
+ }
+ 
 
 /* Extra Small Devices (Portrait Phones, less than 576px) */
 @media only screen and (max-width: 575.98px) {
@@ -95,6 +152,36 @@
       width: 90%;
       height: 18em;
       margin: 1em 0 0;
+   }
+
+   .nutritionSection{
+      width: 21em;
+      height: 18em;
+   }
+
+   .trainingSection{
+      width: 21em;
+       height: 18em;
+   }
+   .wrapper {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-content: center;
+   }
+   .wrap {
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(to top, #c3dedb, #f8f8f8);
+      padding: 2em 1em 1em 1em;
+      justify-content: center;
+      width: 100vw;
+      align-content: center;
+   }
+   .chart {
+      width: 21em;
+      height: 18em;
    }
  }
  
@@ -105,6 +192,14 @@
       height: 18em;
       margin: 1em 0;
    }
+   .wrapper {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-content: center;
+   
+   }
  }
  
  /* Medium Devices (Tablets, 768px and up) */
@@ -113,6 +208,14 @@
       width: 80%;
       height: 18em;
       margin: 0 1em 1em;
+   }
+   .wrapper {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-content: center;
+   
    }
 
  }
@@ -123,5 +226,13 @@
       height: 20em;
       margin: 0 0 0 1em;
       margin-right: 0;
+   }
+   .wrapper {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-content: center;
+   
    }
  }

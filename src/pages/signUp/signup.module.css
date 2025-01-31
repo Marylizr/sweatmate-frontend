@@ -122,6 +122,26 @@
    flex-direction: row;
 }
 
+.verificationButton {
+   display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.verificationButton > button {
+   width: 16em;
+    height: 3em;
+    background-color: white;
+    color: teal;
+    border-radius: 1.5em;
+    border: 1px teal solid;
+    cursor: pointer;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
 @media(max-width: 600px) {
 
    .wrapper {

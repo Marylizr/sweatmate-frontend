@@ -23,8 +23,7 @@
     padding-bottom: 2em;
     padding-left: 2em;
     margin: 2em;
-    width: 19em;
-    height: 27em;
+    height: 32em;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -96,6 +95,8 @@
 
 .log {
    display: flex;
+   flex-direction: row;
+   align-items: center;
 }
 
 .log > input {
