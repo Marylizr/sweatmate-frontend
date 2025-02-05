@@ -9,13 +9,11 @@ import eye from '../../assets/eye.svg';
 const Login = () => {
    const { register, handleSubmit, formState: { errors } } = useForm();
    const navigate = useNavigate();
-   const [gender, setGender] = useState('');
-   const [role, setRole] = useState('');
-
+   const [user, setUser] = useState(null);
    const [passwordShown, setPasswordShown] = useState(false);
 
    const togglePasswordVisiblity = () => {
-     setPasswordShown(!passwordShown);
+      setPasswordShown(!passwordShown);
    };
 
    // Check if user is already logged in
@@ -26,50 +24,69 @@ const Login = () => {
       }
    }, [navigate]);
 
-   // Fetch user data (gender and role) after login
-   const fetchUserData = () => {
-      customFetch("GET", "user/me")
-         .then((json) => {
-            setGender(json.gender);
-            setRole(json.role);
-            navigateBasedOnRole(json.role, json.gender);
-         })
-         .catch((e) => {
-            console.log(e,  `Error fetching user data ${gender}${role}`);
-         });
-   };
-
-   console.log(`my role is ${role} and gender ${gender}`)
-
-   
-   // Navigate based on role and gender
-   const navigateBasedOnRole = (userRole, userGender) => {
-      if (userRole === "admin" || userRole === "personal-trainer") {
-         navigate("/main/dashboard");
-      } else if (["basic", "medium", "advance"].includes(userRole)) {
-         if (userGender === "female") {
-            navigate("/dashboard/female");
-         } else if (userGender === "male") {
-            navigate("/dashboard/female");
+   // Fetch user data after login
+   const fetchUserData = async () => {
+      try {
+         const json = await customFetch("GET", "user/me");
+         if (json && json.role) {
+            setUser(json);
          } else {
-            console.error(`Invalid gender: ${userGender}`);
+            console.error("User data missing or invalid:", json);
          }
-      } else {
-         console.error(`Invalid role: ${userRole}`);
+      } catch (error) {
+         console.error("Error fetching user data:", error);
       }
    };
+
+   // Navigate based on role and gender AFTER user state is updated
+   useEffect(() => {
+      if (user) {
+         console.log(`My role is ${user.role} and gender is ${user.gender}`);
+
+         if (user.role === "admin" || user.role === "personal-trainer") {
+            navigate("/main/dashboard");
+         } else if (["basic", "medium", "advance"].includes(user.role)) {
+            if (user.gender === "female") {
+               navigate("/dashboard/female");
+            } else if (user.gender === "male") {
+               navigate("/dashboard/male");
+            } else {
+               console.error(`Invalid gender: ${user.gender}`);
+            }
+         } else {
+            console.error(`Invalid role: ${user.role}`);
+         }
+      }
+   }, [user, navigate]); // Runs only when `user` is updated
 
    // Handle login submission
    const onSubmit = (data) => {
       customFetch("POST", "login", { body: data })
-         .then(userSession => {
-            setUserSession(userSession); // Store user session in localStorage
-            fetchUserData(); // Fetch gender and role after login
-         })
-         .catch(error => {
-            console.error('Login failed:', error);
-         });
-   };
+          .then(userSession => {
+              if (!userSession || !userSession.token) {
+                  console.error("Login failed: No token received.");
+                  alert("Login failed. Please check your credentials.");
+                  return;
+              }
+  
+              console.log("Successful Login:", userSession);
+  
+              // Store session data
+              setUserSession(userSession);
+              localStorage.setItem("token", userSession.token);
+              localStorage.setItem("userRole", userSession.role);
+              localStorage.setItem("userId", userSession.id);
+  
+              console.log("User Logged In - Token Stored:", userSession.token);
+              fetchUserData();
+          })
+          .catch(error => {
+              console.error("Login failed:", error);
+              alert("Invalid credentials. Please try again.");
+          });
+  };
+  
+    
 
    return (
       <div className={styles.container}>
@@ -95,9 +112,9 @@ const Login = () => {
                   <div className={styles.log}>
                      <input
                         type={passwordShown ? "text" : "password"}
-                        placeholder='Longitud mínima: 8'
+                        placeholder='Minimum length: 8'
                         {...register("password", { required: true, minLength: 8 })}
-                        />
+                     />
                      <i className={styles.eye} onClick={togglePasswordVisiblity}>
                         <img src={eye} alt='eye-icon' />
                      </i>

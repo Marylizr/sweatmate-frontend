@@ -5,7 +5,7 @@ import customFetch from "../../api";
 import styles from "./resetPassword.module.css";
 
 const ResetPassword = () => {
-   const { token } = useParams(); // ✅ Get the reset token from URL
+   const { token } = useParams();
    const navigate = useNavigate();
    const { register, handleSubmit, formState: { errors } } = useForm();
    const [message, setMessage] = useState("");
@@ -14,14 +14,15 @@ const ResetPassword = () => {
    const onSubmit = async (data) => {
       setLoading(true);
       try {
-         await customFetch("POST", "auth/reset-password", {
-            body: { token, password: data.password }
+         await customFetch("POST", `reset-password/${token}`, {
+            body: { newPassword: data.password }
          });
-         setMessage("Your password has been reset successfully. Redirecting to login...");
-         setTimeout(() => navigate("/login"), 3000); // Redirect after 3s
+         
+         setMessage("Your password has been reset successfully. Redirecting...");
+         setTimeout(() => navigate("/login"), 3000);
+
       } catch (error) {
-         console.error("Password reset failed:", error);
-         setMessage("Reset failed. Please try again.");
+         setMessage("Invalid or expired token. Please request a new reset link.");
       }
       setLoading(false);
    };

@@ -5,31 +5,34 @@ import { Link } from "react-router-dom";
 import MacroCalculator from "../../components/macroCalculator/MacroCalculator";
 import WeekStorical from "../../components/trainingStorical/WeekStorical";
 import customFetch from "../../api";
-import axios from "axios";
+import insight from "../../assets/insight.svg";
 import sports from "../../assets/sports.svg";
 import sports1 from "../../assets/sports1.svg";
 import fruit from "../../assets/fruit.svg";
 import donut from "../../assets/donut.svg";
 import map from "../../assets/map.svg";
 import Modal from "./Modal/Modal";
+import axios from "axios";
 import happy from "../../assets/happy.svg";
 import sad from "../../assets/sad.svg";
 import stressed from "../../assets/stressed.svg";
 import excited from "../../assets/exited.svg";
 import anxious from "../../assets/anxious.svg";
 import tired from "../../assets/tired.svg";
+import goals from "../../assets/goals.svg";
 import NavBar from "../../components/navBar/navBar";
 import CookieConsent from "../../components/cookiesPreferences/Cookies";
 
-const UserDashboardMale = () => {
+const UserDashboardFemale = () => {
   const [userName, setUserName] = useState("");
   const [isMoodModalOpen, setIsMoodModalOpen] = useState(false);
   const [mood, setMood] = useState("");
   const [comments, setComments] = useState("");
-  const [userId, setUserId] = useState("");
+  const [name, setName] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isMoodLogged, setIsMoodLogged] = useState(false);
+  const [isMessageDisplayed, setIsMessageDisplayed] = useState(false);
 
   const REACT_API_KEY = process.env.REACT_APP_CHAT_API_KEY;
 
@@ -47,8 +50,9 @@ const UserDashboardMale = () => {
       try {
         const json = await customFetch("GET", "user/me");
         setUserName(json.name);
-        setUserId(json._id);
+        setName(json._id);
 
+        // Check if the user has logged their mood today
         const today = new Date().toISOString().split("T")[0];
         const lastLoggedDate = localStorage.getItem("moodLoggedDate");
 
@@ -68,7 +72,8 @@ const UserDashboardMale = () => {
     setMood("");
     setComments("");
     setSuggestions([]);
-    setIsMoodLogged(true);
+    setIsMoodLogged(false);
+    setIsMessageDisplayed(false);
   };
 
   const handleMoodClick = async (selectedMood) => {
@@ -83,7 +88,7 @@ const UserDashboardMale = () => {
           messages: [
             {
               role: "system",
-              content: "Act as the best personal trainer and wellness coach.",
+              content: "Act as the best personal trainer and motivational wellness coach.",
             },
             {
               role: "user",
@@ -100,7 +105,8 @@ const UserDashboardMale = () => {
       );
 
       const suggestionText = response.data.choices[0].message.content;
-      setSuggestions([{ title: "Motivational Message", content: suggestionText }]);
+      setSuggestions([{ content: suggestionText }]);
+      setIsMessageDisplayed(true);
     } catch (error) {
       console.error("Error fetching suggestions from ChatGPT:", error);
       setSuggestions([]);
@@ -108,35 +114,33 @@ const UserDashboardMale = () => {
       setIsLoading(false);
     }
   };
-
   const handleSubmit = () => {
     if (!mood) return alert("Please select a mood!");
-    if (!userId) return alert("User information is missing. Please try again later.");
-
+    if (!name) return alert("User information is missing. Please try again later.");
+  
     const data = {
-      userId,
+      name, 
       mood,
+      motivationalMessage: suggestions.length ? suggestions[0].content : "", 
       comments,
-      date: new Date().toISOString(),
     };
-
+  
     customFetch("POST", "moodTracker", { body: data })
       .then(() => {
-        console.log("Mood logged successfully:", data);
-
-        const today = new Date().toISOString().split("T")[0];
-        localStorage.setItem("moodLoggedDate", today);
-
+        console.log(" Mood logged successfully:", data);
+        localStorage.setItem("moodLoggedDate", new Date().toISOString().split("T")[0]);
         setIsMoodLogged(true);
+        setSuggestions([]);
+        closeMoodModal();
       })
       .catch((error) => console.error("Error logging mood:", error));
   };
+  console.log(isMessageDisplayed)
 
   return (
     <div className={styles.container}>
       <NavBar />
       <CookieConsent />
-
       <Modal isOpen={isMoodModalOpen} isClosed={closeMoodModal}>
         <div className={styles.modal}>
           <div className={styles.modalContent}>
@@ -164,10 +168,10 @@ const UserDashboardMale = () => {
                 </div>
 
                 <textarea
+                  className={styles.textarea}
                   placeholder="Any additional comments?"
                   value={comments}
                   onChange={(e) => setComments(e.target.value)}
-                  className={styles.textarea}
                 />
 
                 <button
@@ -191,10 +195,7 @@ const UserDashboardMale = () => {
                     </div>
                   ))
                 )}
-                <button
-                  className={styles.closeButton}
-                  onClick={closeMoodModal}
-                >
+                <button className={styles.closeButton} onClick={closeMoodModal}>
                   Close
                 </button>
               </>
@@ -210,8 +211,19 @@ const UserDashboardMale = () => {
         <div className={styles.theWrapper}>
           <Settings />
           <div className={styles.rearrange}>
+          
             <WeekStorical />
             <MacroCalculator />
+          </div>
+          <div className={styles.smallApps}>
+            <div className={styles.save}>
+              <button>
+                <Link to="/mygoals">
+                  <img src={goals} alt="icon" />
+                  My Goals
+                </Link>
+              </button>
+            </div>
             <div className={styles.save}>
               <button>
                 <Link to="/allworkouts">
@@ -238,6 +250,14 @@ const UserDashboardMale = () => {
             </div>
             <div className={styles.save}>
               <button>
+                <Link to="/personaltrainer">
+                  <img src={insight} alt="icon" />
+                  From PT
+                </Link>
+              </button>
+            </div>
+            <div className={styles.save}>
+              <button>
                 <Link to="/mealPlanner">
                   <img src={fruit} alt="icon" />
                   Meal Plan
@@ -253,10 +273,16 @@ const UserDashboardMale = () => {
               </button>
             </div>
           </div>
+        
         </div>
       </div>
     </div>
   );
 };
 
-export default UserDashboardMale;
+export default UserDashboardFemale;
+
+
+
+
+

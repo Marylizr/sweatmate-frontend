@@ -46,7 +46,7 @@ const CreateUserForm = ({ users, setUsers }) => {
 
   const onSubmit = async (data) => {
     setLoading(true);
-
+  
     const userData = {
       name: data.name,
       email: data.email,
@@ -59,9 +59,13 @@ const CreateUserForm = ({ users, setUsers }) => {
       gender: data.gender,
       trainerId: data.trainerId,
     };
-
+  
+    const token = localStorage.getItem("token");
+    console.log("Token before sending request:", token);
+  
     try {
-      await customFetch("POST", "user", { body: userData });
+      const response = await customFetch("POST", "user", { body: userData });
+      console.log("Response from API:", response);
       alert("User profile created successfully");
       setUsers((prevUsers) => [...prevUsers, userData]); // Update the user list
     } catch (err) {
@@ -70,6 +74,7 @@ const CreateUserForm = ({ users, setUsers }) => {
       setLoading(false);
     }
   };
+  
 
   // Watch the role field to dynamically show/hide the personal trainer selection
   const role = watch("role");

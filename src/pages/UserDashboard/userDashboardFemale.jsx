@@ -23,13 +23,14 @@ import tired from "../../assets/tired.svg";
 import goals from "../../assets/goals.svg";
 import NavBar from "../../components/navBar/navBar";
 import CookieConsent from "../../components/cookiesPreferences/Cookies";
+import MoodHistory from "../../components/moodHistory/MoodHistory";
 
 const UserDashboardFemale = () => {
   const [userName, setUserName] = useState("");
   const [isMoodModalOpen, setIsMoodModalOpen] = useState(false);
   const [mood, setMood] = useState("");
   const [comments, setComments] = useState("");
-  const [name, setName] = useState("");
+  const [userId, setUserId] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isMoodLogged, setIsMoodLogged] = useState(false);
@@ -51,7 +52,7 @@ const UserDashboardFemale = () => {
       try {
         const json = await customFetch("GET", "user/me");
         setUserName(json.name);
-        setName(json._id);
+        setUserId(json._id);
 
         // Check if the user has logged their mood today
         const today = new Date().toISOString().split("T")[0];
@@ -117,11 +118,10 @@ const UserDashboardFemale = () => {
   };
 
   const handleSubmit = () => {
-    if (!mood) return alert("Please select a mood!");
-    if (!name) return alert("User information is missing. Please try again later.");
+
 
     const data = {
-      name,
+      userId,
       mood,
       suggestions,
       comments,
@@ -136,6 +136,7 @@ const UserDashboardFemale = () => {
         const today = new Date().toISOString().split("T")[0];
         localStorage.setItem("moodLoggedDate", today);
 
+        setSuggestions(suggestions)
         setIsMoodLogged(true);
 
         // If no AI-generated message is requested, close modal immediately
@@ -145,6 +146,7 @@ const UserDashboardFemale = () => {
       })
       .catch((error) => console.error("Error logging mood:", error));
   };
+  console.log(`AI suggestion ${suggestions}`)
 
   return (
     <div className={styles.container}>
@@ -226,6 +228,9 @@ const UserDashboardFemale = () => {
           </div>
           <div className={styles.smallApps}>
             <div className={styles.save}>
+              <MoodHistory />
+            </div>
+            <div className={styles.save}>
               <button>
                 <Link to="/mygoals">
                   <img src={goals} alt="icon" />
@@ -290,7 +295,6 @@ const UserDashboardFemale = () => {
 };
 
 export default UserDashboardFemale;
-
 
 
 

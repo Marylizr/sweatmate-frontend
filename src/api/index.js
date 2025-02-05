@@ -1,14 +1,15 @@
 import { getUserToken } from "./auth";
 
-export const API_URL = window.location.hostname === 'beFit-deployed-front' ? "beFit-deployed-backend" : "http://localhost:3001";
+export const API_URL = window.location.hostname === 'beFit-deployed-front' 
+    ? "beFit-deployed-backend" 
+    : "http://localhost:3001";
 
-// Custom API error to throw
+// Custom API error class
 class ApiError {
     constructor(message, data, status) {
         let response = null;
         let isObject = false;
 
-        // We are trying to parse response
         try {
             response = JSON.parse(data);
             isObject = true;
@@ -26,81 +27,77 @@ class ApiError {
 }
 
 // API wrapper function
-const fetchResource = (method = "GET", path, userOptions = {}) => {
+const fetchResource = async (method = "GET", path, userOptions = {}) => {
     // Define default options
     const defaultOptions = {
         mode: 'cors',
         method,
     };
 
-    // Get the user token
-    const token = getUserToken();
+    // Get the user token from storage
+    let token = getUserToken();
+    if (!token) {
+        token = localStorage.getItem("token");  // Fallback to local storage
+    }
+
+    console.log(`Token being used for request: ${token ? "Exists" : "Missing"}`);
 
     // Define default headers
     const defaultHeaders = {
-        ...(token && { "authorization": `Bearer ${token}` }),
+        ...(token ? { "Authorization": `Bearer ${token}` } : {}),
     };
-    
+
+    // Merge user-provided options with defaults
     const options = {
         ...defaultOptions,
         ...userOptions,
         headers: {
             ...defaultHeaders,
-            ...(userOptions.headers?.['content-type'] ? {} : { "content-type": "application/json" }),
+            ...(userOptions.headers?.['content-type'] ? {} : { "Content-Type": "application/json" }),
             ...userOptions.headers,
         },
-        
     };
-    console.log('Request Headers:', options.headers);
 
+    console.log("Final Request Headers:", options.headers);
 
-    // Build URL
+    // Build the request URL
     const url = `${API_URL}/${path}`;
 
-    // Detect if we are uploading a file
+    // Detect if the request body contains a file
     const isFile = options.body instanceof File;
 
-    // Stringify JSON data if the body is not a file
+    // Convert JSON data to string format if not a file
     if (options.body && typeof options.body === 'object' && !isFile) {
         options.body = JSON.stringify(options.body);
     }
 
-    // Variable to store response
     let response = null;
 
-    return fetch(url, options)
-        .then(responseObject => {
-            // Save response for later use in lower scopes
-            response = responseObject;
+    try {
+        response = await fetch(url, options);
 
-            // HTTP unauthorized
-            if (response.status === 401) {
-                // Handle unauthorized requests, maybe redirect to login page?
-                return { authError: true };
-            }
+        // Handle 401 Unauthorized
+        if (response.status === 401) {
+            console.warn("Unauthorized request (401). Token might be expired.");
+            return { authError: true };
+        }
 
-            // Get response as JSON
-            return response.json();
-        })
-        .then(parsedResponse => {
-            // Check for HTTP error codes
-            if (response.status < 200 || response.status >= 300) {
-                // Throw error
-                throw parsedResponse;
-            }
+        // Convert response to JSON
+        const parsedResponse = await response.json();
 
-            // Request succeeded
-            return parsedResponse;
-        })
-        .catch(error => {
-            // Throw custom API error
-            // If response exists, it means HTTP error occurred
-            if (response) {
-                throw new ApiError(`Request failed with status ${response.status}.`, error, response.status);
-            } else {
-                throw new ApiError(error.toString(), null, 'REQUEST_FAILED');
-            }
-        });
+        // Handle non-2xx status codes
+        if (response.status < 200 || response.status >= 300) {
+            throw parsedResponse;
+        }
+
+        return parsedResponse;
+    } catch (error) {
+        if (response) {
+            throw new ApiError(`Request failed with status ${response.status}.`, error, response.status);
+        } else {
+            throw new ApiError(error.toString(), null, 'REQUEST_FAILED');
+        }
+    }
 };
 
 export default fetchResource;

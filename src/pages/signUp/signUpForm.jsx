@@ -72,15 +72,21 @@ const SignUpForm = () => {
     verifyEmail();
   }, [currentLocation.pathname]);
 
+
   const onSubmit = async (data) => {
     setErrorMessage(""); // Reset the error message
     setEmail(data.email); // Save email for resending verification later
   
+    console.log("🔍 Sending Signup Data:", JSON.stringify(data, null, 2)); // Debug log
+  
     try {
-      const response = await customFetch("POST", "user", { body: data });
+      const response = await customFetch("POST", "user/create-profile", {
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" },
+      });
+  
       alert(response.message || "Signup successful! Please verify your email.");
   
-      // Example of using the response
       if (response.role === "admin") {
         navigate("/admin/dashboard");
       } else if (data.gender === "female") {
@@ -91,7 +97,7 @@ const SignUpForm = () => {
         navigate("/");
       }
     } catch (error) {
-      console.error("Error during signup:", error);
+      console.error(" Error during signup:", error);
   
       if (error.response && error.response.message) {
         setErrorMessage(error.response.message);
@@ -101,7 +107,7 @@ const SignUpForm = () => {
     }
   };
   
-
+  
   const resendVerificationEmail = async () => {
     if (!email) {
       alert("Please sign up or provide an email to resend the verification email.");
