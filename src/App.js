@@ -14,7 +14,6 @@ import Abs from './pages/abs/Abs';
 import Shoulders from './pages/shoulders/Shoulders';
 import Fullbody from './pages/fullbody/Fullbody';
 import SignUp from './pages/signUp/SignUp';
-import Login from '../src/pages/login/Login';
 import AddWorkout from './pages/addWorkout/AddWorkout';
 import UserDashboardFemale from './pages/UserDashboard/userDashboardFemale';
 import UserDashboardMale from './pages/UserDashboard/userDashboardMale';
@@ -47,6 +46,7 @@ import PrivacyPolicy from './components/cookiesPreferences/PrivacyPolicy';
 import AcceptableUse from './components/cookiesPreferences/AcceptableUse';
 import ResetPassword from './pages/login/ResetPassword';
 import ForgotPassword from './pages/login/ForgotPassword';
+import Login from './pages/login/Login';
 
 
 
@@ -72,7 +72,7 @@ function App() {
             <Route path="/shoulders" element={<Shoulders />} />
             <Route path="/fullbody" element={<Fullbody />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<Login />} />
+          <Route path="login" element={<Login />}/>
             <Route path="/addworkout" element={<AddWorkout />} />
             <Route path="/messages" element={<UserProfile />} />
             <Route path="/workouts" element={<EditWorkouts />} />
