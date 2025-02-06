@@ -14,7 +14,7 @@ import Abs from './pages/abs/Abs';
 import Shoulders from './pages/shoulders/Shoulders';
 import Fullbody from './pages/fullbody/Fullbody';
 import SignUp from './pages/signUp/SignUp';
-import Login from './pages/login/Login.jsx';
+import Login from '../src/pages/login/Login';
 import AddWorkout from './pages/addWorkout/AddWorkout';
 import UserDashboardFemale from './pages/UserDashboard/userDashboardFemale';
 import UserDashboardMale from './pages/UserDashboard/userDashboardMale';
