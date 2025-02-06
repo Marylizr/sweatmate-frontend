@@ -1,7 +1,8 @@
 import { getUserToken } from "./auth";
 
+
 export const API_URL = window.location.hostname === 'beFit-deployed-front' 
-    ? "beFit-deployed-backend" 
+    ? "https://sweatmate-app-b74e82edf23b.herokuapp.com/" 
     : "http://localhost:3001";
 
 // Custom API error class
