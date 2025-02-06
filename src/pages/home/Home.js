@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./home.module.css";
-import Login from "../login/Login";
+import Login from "../login/Login.jsx";
 import SignUp from "../signUp/SignUp";
 import MoodTrackerModal from "../../components/moodTracker/MoodTracker";
 import MoodSuggestion from "../../components/moodTracker/MoodSuggestion";
