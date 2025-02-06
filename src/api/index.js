@@ -1,7 +1,7 @@
 import { getUserToken } from "./auth";
 
 
-export const API_URL = window.location.hostname === 'beFit-deployed-front' 
+export const API_URL = window.location.hostname === 'sweatmateapp.netlify.app' 
     ? "https://sweatmate-app-b74e82edf23b.herokuapp.com/" 
     : "http://localhost:3001";
 
