@@ -1,9 +1,10 @@
 import { getUserToken } from "./auth";
 
 
-export const API_URL = window.location.hostname === 'sweatmateapp.netlify.app' 
-    ? "https://sweatmate-app-b74e82edf23b.herokuapp.com/" 
-    : "http://localhost:3001";
+export const API_URL = window.location.hostname === 'sweatmateapp.netlify.app'
+  ? "https://sweatmate-app-b74e82edf23b.herokuapp.com"
+  : "http://localhost:3001";
+
 
 // Custom API error class
 class ApiError {
