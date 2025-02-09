@@ -10,7 +10,7 @@ import Card from "../addWorkout/Card";
 const AddWorkout = () => {
   const { workout, setWorkout } = useContext(UserContext);
   const [lastData, setLastData] = useState("");
-
+  
   // Cropper States
   const [imageToCrop, setImageToCrop] = useState(null);
   const [videoToCrop, setVideoToCrop] = useState(null);
@@ -19,7 +19,8 @@ const AddWorkout = () => {
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [isCropModalOpen, setIsCropModalOpen] = useState(false);
   const [isVideoCrop, setIsVideoCrop] = useState(false);
-
+  
+ 
   const inputFile = useRef(null);
   const inputFileVideo = useRef(null);
 
@@ -94,46 +95,49 @@ const AddWorkout = () => {
   const fileUpload = async () => {
     const files = inputFile.current.files;
     const formData = new FormData();
-    const url = `https://api.cloudinary.com/v1_1/da6il8qmv/image/upload`;
-
-    let imagen;
+    const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+    const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
+    const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+  
+    let uploadedImage;
     let file = files[0];
     formData.append("file", file);
-    formData.append("upload_preset", "h9rhkl6h");
-    await fetch(url, {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((photo) => {
-        imagen = photo.url;
-      })
-      .catch((err) => console.error("Error uploading image:", err));
-
-    return imagen;
+    formData.append("upload_preset", uploadPreset);
+  
+    try {
+      const response = await fetch(url, { method: "POST", body: formData });
+      const photo = await response.json();
+      uploadedImage = photo.url;
+    } catch (err) {
+      console.error("Error uploading image:", err);
+    }
+  
+    return uploadedImage;
   };
-
+  
   const videoUpload = async () => {
     const files = inputFileVideo.current.files;
     const formData = new FormData();
-    const url = `https://api.cloudinary.com/v1_1/da6il8qmv/video/upload`;
-
-    let videoLoaded;
+    const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+    const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
+    const url = `https://api.cloudinary.com/v1_1/${cloudName}/video/upload`;
+  
+    let uploadedVideo;
     let file = files[0];
     formData.append("file", file);
-    formData.append("upload_preset", "h9rhkl6h");
-    await fetch(url, {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((media) => {
-        videoLoaded = media.url;
-      })
-      .catch((err) => console.error("Error uploading video:", err));
-
-    return videoLoaded;
+    formData.append("upload_preset", uploadPreset);
+  
+    try {
+      const response = await fetch(url, { method: "POST", body: formData });
+      const media = await response.json();
+      uploadedVideo = media.url;
+    } catch (err) {
+      console.error("Error uploading video:", err);
+    }
+  
+    return uploadedVideo;
   };
+  
 
   const onSubmit = async () => {
     const imagen = fileUpload();

@@ -16,6 +16,8 @@ const BeforeAndAfter = ({ userId }) => {
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [isCropModalOpen, setIsCropModalOpen] = useState(false);
   const inputFile = useRef(null);
+  
+
 
   useEffect(() => {
     customFetch("GET", `user/${userId}`)
@@ -63,20 +65,27 @@ const BeforeAndAfter = ({ userId }) => {
     }
   };
 
-  const fileUpload = async (base64Image) => {
+  const fileUpload = async () => {
+    const files = inputFile.current.files;
     const formData = new FormData();
-    formData.append("file", base64Image);
-    formData.append("upload_preset", 'h9rhkl6h');
-    const url = `https://api.cloudinary.com/v1_1/da6il8qmv/image/upload`;
-
+    const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+    const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
+    const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+  
+    let uploadedImage;
+    let file = files[0];
+    formData.append("file", file);
+    formData.append("upload_preset", uploadPreset);
+  
     try {
       const response = await fetch(url, { method: "POST", body: formData });
       const photo = await response.json();
-      return photo.url || null;
-    } catch (error) {
-      console.error("Error uploading the image:", error);
-      return null;
+      uploadedImage = photo.url;
+    } catch (err) {
+      console.error("Error uploading image:", err);
     }
+  
+    return uploadedImage;
   };
 
   const getCroppedImg = (imageSrc, pixelCrop) => {

@@ -100,35 +100,28 @@ const Settings = () => {
         }
     };
 
-    const fileUpload = async (base64Image) => {
+    const fileUpload = async () => {
+        const files = inputFile.current.files;
         const formData = new FormData();
-        formData.append("file", base64Image);  // Base64 image string
-        formData.append("upload_preset", "h9rhkl6h");
-
-        const url = `https://api.cloudinary.com/v1_1/da6il8qmv/image/upload`;
-
+        const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+        const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
+        const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+      
+        let uploadedImage;
+        let file = files[0];
+        formData.append("file", file);
+        formData.append("upload_preset", uploadPreset);
+      
         try {
-            const response = await fetch(url, {
-                method: "POST",
-                body: formData
-            });
-
-            const photo = await response.json();
-            console.log("Cloudinary Response:", photo);
-
-            if (photo.error) {
-                throw new Error(`Cloudinary Error: ${photo.error.message}`);
-            }
-
-            if (!photo.url) throw new Error("No URL returned from Cloudinary");
-
-            return photo.url;
-        } catch (error) {
-            console.error("Error uploading image:", error);
-            throw error;
+          const response = await fetch(url, { method: "POST", body: formData });
+          const photo = await response.json();
+          uploadedImage = photo.url;
+        } catch (err) {
+          console.error("Error uploading image:", err);
         }
-    };
-
+      
+        return uploadedImage;
+      };
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
