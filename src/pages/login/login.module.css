@@ -1,0 +1,132 @@
+
+
+.container {
+   display: flex;
+   align-items: center;
+   width: 22em;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   background-color: #fff;
+   border-radius: 10px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   margin: 1em;
+   padding-bottom: 1em;
+   align-content: center;
+}
+
+.wrapper {
+    border-radius: 1em;
+    padding: 2em;
+    padding-top: 2em;
+    padding-right: 2em;
+    padding-bottom: 2em;
+    padding-left: 2em;
+    margin: 2em;
+    height: 32em;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.header {
+   display: flex;
+   flex-wrap: wrap;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   align-items: center;
+   margin:2em;
+}
+
+.header > h1 {
+   font-weight: bolder;
+   color: teal;
+   font-size: 1.5em;
+}
+
+.form_styles > form{
+   display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+   align-content: center;
+   justify-content: center;
+   align-items: center;
+}
+
+.form_styles > form > input {
+   width: 18em;
+   height: 2em;
+   border: gray solid 1px;
+   border-radius: 0.5em;
+   text-align: center;
+   color: gray;
+}
+
+.form_styles > form > input.submit{
+   width: 10em;
+   height: 3em;
+   background-color: white;
+   color: teal;
+   border-radius: 1.5em;
+   border: 1px teal solid;
+   cursor: pointer;
+   display: flex;
+   align-content: center;
+   justify-content: center;
+   align-items: center;
+}
+
+.form_styles > form > input.submit:hover {
+   width: 14em;
+   height: 3em;
+   background-color: white;
+   border-radius: 1.5em;
+   border: 1px teal solid;
+   cursor: pointer;
+   display: flex;
+   align-content: center;
+   justify-content: center;
+   align-items: center;
+}
+
+.log {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+}
+
+.log > input {
+   width: 15em;
+   height: 2em;
+   margin-right: 1em;
+   border: gray solid 1px;
+   border-radius: 0.5em;
+   text-align: center;
+   color: gray;
+}
+
+@media(max-width: 768px) {
+
+   .wrapper {
+      margin: 0;
+      width: 15em;
+      height: auto;
+   }
+
+   .header {
+      margin-bottom: 2em;
+      margin-top: 0em;
+   }
+
+   .container {
+      margin-top: 0;
+   }
+}
+
+@media (min-width: 767px) and (max-width: 1181px) {
+   
+}
