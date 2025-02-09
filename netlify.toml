@@ -1,6 +1,5 @@
 [build]
-  command = "npm run build"
   publish = "build"
   environment = { 
-    REACT_APP_API_URL = "https://sweatmate-app-b74e82edf23b.herokuapp.com" 
+    REACT_APP_API_URL = "https://sweatmate-app-b74e82edf23b.herokuapp.com"
   }
