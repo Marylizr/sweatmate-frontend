@@ -44,7 +44,7 @@ import Cookies from './components/cookiesPreferences/Cookies.jsx';
 import Terms from './components/cookiesPreferences/Termns.jsx';
 import PrivacyPolicy from './components/cookiesPreferences/PrivacyPolicy.jsx';
 import AcceptableUse from './components/cookiesPreferences/AcceptableUse.jsx';
-import Login from './pages/login/Login.jsx';
+import Login from './pages/login/Login';
 
 
 
