@@ -44,8 +44,6 @@ import Cookies from './components/cookiesPreferences/Cookies.jsx';
 import Terms from './components/cookiesPreferences/Termns.jsx';
 import PrivacyPolicy from './components/cookiesPreferences/PrivacyPolicy.jsx';
 import AcceptableUse from './components/cookiesPreferences/AcceptableUse.jsx';
-import ResetPassword from './pages/login/ResetPassword.jsx';
-import ForgotPassword from './pages/login/ForgotPassword.jsx';
 import Login from './pages/login/Login.jsx';
 
 
@@ -99,10 +97,6 @@ function App() {
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/acceptable-use" element={<AcceptableUse />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/reset-password/:token" element={<ResetPassword />} />
-
-
 
           </Routes>
         </BrowserRouter>
