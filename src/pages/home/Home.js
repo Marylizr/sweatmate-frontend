@@ -5,6 +5,7 @@ import SignUp from "../signUp/SignUp";
 import MoodTrackerModal from "../../components/moodTracker/MoodTracker";
 import MoodSuggestion from "../../components/moodTracker/MoodSuggestion";
 import customFetch from '../../api'
+import Footer from "../../components/footer/Footer";
 
 
 const Home = () => {
@@ -48,6 +49,7 @@ const Home = () => {
           {mood && <MoodSuggestion mood={mood} />}
         </>
       )}
+      <Footer />
     </div>
   );
 };
