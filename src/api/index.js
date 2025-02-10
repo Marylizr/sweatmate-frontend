@@ -1,10 +1,6 @@
-import { getUserToken } from "./auth";
-
-
 export const API_URL = window.location.hostname === 'sweatmateapp.netlify.app'
   ? process.env.REACT_APP_API_URL
   : "http://localhost:3001";
-   
 
 // Custom API error class
 class ApiError {
@@ -30,35 +26,26 @@ class ApiError {
 
 // API wrapper function
 const fetchResource = async (method = "GET", path, userOptions = {}) => {
-    // Define default options
+    // Default fetch options
     const defaultOptions = {
         mode: 'cors',
         method,
+        credentials: 'include',  // Always include cookies in requests
     };
 
-    // Get the user token from storage
-    let token = getUserToken();
-    if (!token) {
-        token = localStorage.getItem("token");  // Fallback to local storage
-    }
-
-    console.log(`Token being used for request: ${token ? "Exists" : "Missing"}`);
-
-    // Define default headers
+    // Default headers
     const defaultHeaders = {
-        ...(token ? { "Authorization": `Bearer ${token}` } : {}),
+        "Content-Type": "application/json",
     };
 
-    // Merge user-provided options with defaults
+    // Merge default and user-provided options
     const options = {
         ...defaultOptions,
         ...userOptions,
         headers: {
             ...defaultHeaders,
-            ...(userOptions.headers?.['content-type'] ? {} : { "Content-Type": "application/json" }),
             ...userOptions.headers,
         },
-        credentials: 'include',  
     };
 
     console.log("Final Request Headers:", options.headers);
@@ -66,11 +53,8 @@ const fetchResource = async (method = "GET", path, userOptions = {}) => {
     // Build the request URL
     const url = `${API_URL}/${path}`;
 
-    // Detect if the request body contains a file
-    const isFile = options.body instanceof File;
-
-    // Convert JSON data to string format if not a file
-    if (options.body && typeof options.body === 'object' && !isFile) {
+    // Convert JSON body to string format (if not already done)
+    if (options.body && typeof options.body === 'object' && !(options.body instanceof File)) {
         options.body = JSON.stringify(options.body);
     }
 
@@ -85,10 +69,10 @@ const fetchResource = async (method = "GET", path, userOptions = {}) => {
             return { authError: true };
         }
 
-        // Convert response to JSON
+        // Parse JSON response
         const parsedResponse = await response.json();
 
-        // Handle non-2xx status codes
+        // Handle non-2xx responses
         if (response.status < 200 || response.status >= 300) {
             throw parsedResponse;
         }

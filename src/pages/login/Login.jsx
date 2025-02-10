@@ -73,33 +73,30 @@ const Login = () => {
    // Handle login submission
    const onSubmit = (data) => {
       customFetch("POST", "login", {
-          body: data,
-          credentials: 'include',  // Ensure cookies are sent and received
+        body: JSON.stringify(data),
       })
       .then(userSession => {
-          if (!userSession) {
-              console.error("Login failed: No session data received.");
-              alert("Login failed. Please check your credentials.");
-              return;
-          }
+        if (!userSession) {
+          console.error("Login failed: No session data received.");
+          alert("Login failed. Please check your credentials.");
+          return;
+        }
     
-          console.log("Successful Login:", userSession);
+        console.log("Successful Login:", userSession);
     
-          // Store user session data excluding token (since it's in the cookie)
-          setUserSession(userSession);
-          localStorage.setItem("userRole", userSession.role);
-          localStorage.setItem("userId", userSession.id);
+        // No token handling since it's in the cookie now
+        setUserSession(userSession);
+        localStorage.setItem("userRole", userSession.role);
+        localStorage.setItem("userId", userSession.id);
     
-          console.log("User Logged In - Session Data Stored");
-          fetchUserData();
+        fetchUserData();  // This will use the cookie for authentication
       })
       .catch(error => {
-          console.error("Login failed:", error);
-          alert("Invalid credentials. Please try again.");
+        console.error("Login failed:", error);
+        alert("Invalid credentials. Please try again.");
       });
     };
     
-  
     
 
    return (
