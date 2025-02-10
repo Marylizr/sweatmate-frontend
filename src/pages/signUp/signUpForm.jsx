@@ -7,15 +7,15 @@ import eye from "../../assets/eye.svg";
 
 const SignUpForm = () => {
   const navigate = useNavigate();
-  const currentLocation = useLocation(); // Renamed to avoid conflict with global 'location'
+  const currentLocation = useLocation();
 
-  const [passwordShown, setPasswordShown] = useState(false); // State for toggling password visibility
-  const [trainers, setTrainers] = useState([]); // State for trainers
-  const [isLoadingTrainers, setIsLoadingTrainers] = useState(true); // Loading state for trainers
-  const [isVerified] = useState(false); // State for email verification status
-  const [email, setEmail] = useState(""); // State to store user's email for resending verification
-  const [errorMessage, setErrorMessage] = useState(""); // State for error message display
-  const [verificationMessage, setVerificationMessage] = useState(""); // State to display verification feedback
+  const [passwordShown, setPasswordShown] = useState(false);
+  const [trainers, setTrainers] = useState([]);
+  const [isLoadingTrainers, setIsLoadingTrainers] = useState(true);
+  const [isVerified] = useState(false);
+  const [email, setEmail] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [verificationMessage, setVerificationMessage] = useState("");
 
   const togglePasswordVisibility = () => {
     setPasswordShown(!passwordShown);
@@ -42,16 +42,14 @@ const SignUpForm = () => {
     formState: { errors },
   } = useForm();
 
-  // Verification Logic
   useEffect(() => {
-    // Ensure this logic only runs on the /verify-email route
     if (!currentLocation.pathname.includes("/verify-email")) {
       return;
     }
 
     const verifyEmail = async () => {
       const urlParams = new URLSearchParams(window.location.search);
-      const token = urlParams.get("token"); // Extract token from the query
+      const token = urlParams.get("token");
 
       if (!token) {
         setVerificationMessage("Invalid verification link. Token is missing.");
@@ -72,21 +70,20 @@ const SignUpForm = () => {
     verifyEmail();
   }, [currentLocation.pathname]);
 
-
   const onSubmit = async (data) => {
-    setErrorMessage(""); // Reset the error message
-    setEmail(data.email); // Save email for resending verification later
-  
-    console.log("🔍 Sending Signup Data:", JSON.stringify(data, null, 2)); // Debug log
-  
+    setErrorMessage("");
+    setEmail(data.email);
+
     try {
       const response = await customFetch("POST", "user/create-profile", {
         body: JSON.stringify(data),
         headers: { "Content-Type": "application/json" },
       });
-  
+
+      document.cookie = `token=${response.token}; Secure; SameSite=None; Path=/`;
+
       alert(response.message || "Signup successful! Please verify your email.");
-  
+
       if (response.role === "admin") {
         navigate("/admin/dashboard");
       } else if (data.gender === "female") {
@@ -97,8 +94,8 @@ const SignUpForm = () => {
         navigate("/");
       }
     } catch (error) {
-      console.error(" Error during signup:", error);
-  
+      console.error("Error during signup:", error);
+
       if (error.response && error.response.message) {
         setErrorMessage(error.response.message);
       } else {
@@ -106,8 +103,7 @@ const SignUpForm = () => {
       }
     }
   };
-  
-  
+
   const resendVerificationEmail = async () => {
     if (!email) {
       alert("Please sign up or provide an email to resend the verification email.");
@@ -125,11 +121,9 @@ const SignUpForm = () => {
 
   return (
     <div className={styles.form_styles}>
-      {/* Email Verification Message */}
       {verificationMessage && <p className={styles.success}>{verificationMessage}</p>}
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        {/* Name Field */}
         <input
           type="text"
           placeholder="Your Name"
@@ -137,7 +131,6 @@ const SignUpForm = () => {
         />
         {errors.name && <p className={styles.error}>{errors.name.message}</p>}
 
-        {/* Email Field */}
         <input
           type="email"
           placeholder="example@mail.com"
@@ -151,7 +144,6 @@ const SignUpForm = () => {
         />
         {errors.email && <p className={styles.error}>{errors.email.message}</p>}
 
-        {/* Password Field */}
         <div className={styles.pass}>
           <input
             type={passwordShown ? "text" : "password"}
@@ -170,7 +162,6 @@ const SignUpForm = () => {
           {errors.password && <p className={styles.error}>{errors.password.message}</p>}
         </div>
 
-        {/* Height Field */}
         <input
           type="number"
           placeholder="Height (cm): 167"
@@ -181,7 +172,6 @@ const SignUpForm = () => {
         />
         {errors.height && <p className={styles.error}>{errors.height.message}</p>}
 
-        {/* Weight Field */}
         <input
           type="number"
           placeholder="Weight (kg): 60"
@@ -192,7 +182,6 @@ const SignUpForm = () => {
         />
         {errors.weight && <p className={styles.error}>{errors.weight.message}</p>}
 
-        {/* Age Field */}
         <input
           type="number"
           placeholder="Age: 30"
@@ -203,7 +192,6 @@ const SignUpForm = () => {
         />
         {errors.age && <p className={styles.error}>{errors.age.message}</p>}
 
-        {/* Goal Field */}
         <select {...register("goal", { required: "This field is required" })}>
           <option value="">Select Goal</option>
           <option value="Fat-Lost">Fat Lost</option>
@@ -212,7 +200,6 @@ const SignUpForm = () => {
         </select>
         {errors.goal && <p className={styles.error}>{errors.goal.message}</p>}
 
-        {/* Gender Field */}
         <select {...register("gender", { required: "This field is required" })}>
           <option value="">Select Gender</option>
           <option value="female">Female</option>
@@ -220,16 +207,14 @@ const SignUpForm = () => {
         </select>
         {errors.gender && <p className={styles.error}>{errors.gender.message}</p>}
 
-        {/* Fitness Level Field */}
         <select {...register("fitness_level", { required: "This field is required" })}>
           <option value="">Select Level</option>
-          <option value="beginner">beginner</option>
+          <option value="beginner">Beginner</option>
           <option value="intermediate">Intermediate</option>
           <option value="advanced">Advanced</option>
         </select>
         {errors.fitness_level && <p className={styles.error}>{errors.fitness_level.message}</p>}
 
-        {/* Personal Trainer Selection */}
         <label>Select Your Personal Trainer</label>
         {isLoadingTrainers ? (
           <p>Loading trainers...</p>
@@ -247,14 +232,11 @@ const SignUpForm = () => {
         )}
         {errors.trainerId && <p className={styles.error}>{errors.trainerId.message}</p>}
 
-        {/* Submit Button */}
         <input className={styles.submit} type="submit" value="Sign me up!" />
       </form>
 
-      {/* Error Message */}
       {errorMessage && <p className={styles.error}>{errorMessage}</p>}
 
-      {/* Resend Verification Email */}
       {!isVerified && (
         <div className={styles.verificationButton}>
           <p>Haven't received the verification email?</p>

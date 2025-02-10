@@ -58,6 +58,7 @@ const fetchResource = async (method = "GET", path, userOptions = {}) => {
             ...(userOptions.headers?.['content-type'] ? {} : { "Content-Type": "application/json" }),
             ...userOptions.headers,
         },
+        credentials: 'include',  
     };
 
     console.log("Final Request Headers:", options.headers);

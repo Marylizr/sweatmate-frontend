@@ -27,16 +27,27 @@ const Login = () => {
    // Fetch user data after login
    const fetchUserData = async () => {
       try {
-         const json = await customFetch("GET", "user/me");
-         if (json && json.role) {
-            setUser(json);
-         } else {
-            console.error("User data missing or invalid:", json);
-         }
+        const json = await customFetch("GET", "user/me", {
+          credentials: 'include',  // Ensure cookies (with token) are sent in the request
+        });
+    
+        if (json && json.role) {
+          setUser(json);  // Update user state with fetched data
+        } else {
+          console.error("User data missing or invalid:", json);
+          alert("Session expired. Please log in again.");
+        }
+    
       } catch (error) {
-         console.error("Error fetching user data:", error);
+        if (error.status === 401) {
+          console.warn("Unauthorized access - Token might be missing or expired.");
+          alert("Session expired. Please log in again.");
+        } else {
+          console.error("Error fetching user data:", error);
+        }
       }
-   };
+    };
+    
 
    // Navigate based on role and gender AFTER user state is updated
    useEffect(() => {
@@ -61,30 +72,33 @@ const Login = () => {
 
    // Handle login submission
    const onSubmit = (data) => {
-      customFetch("POST", "login", { body: data })
-          .then(userSession => {
-              if (!userSession || !userSession.token) {
-                  console.error("Login failed: No token received.");
-                  alert("Login failed. Please check your credentials.");
-                  return;
-              }
-  
-              console.log("Successful Login:", userSession);
-  
-              // Store session data
-              setUserSession(userSession);
-              localStorage.setItem("token", userSession.token);
-              localStorage.setItem("userRole", userSession.role);
-              localStorage.setItem("userId", userSession.id);
-  
-              console.log("User Logged In - Token Stored:", userSession.token);
-              fetchUserData();
-          })
-          .catch(error => {
-              console.error("Login failed:", error);
-              alert("Invalid credentials. Please try again.");
-          });
-  };
+      customFetch("POST", "login", {
+          body: data,
+          credentials: 'include',  // Ensure cookies are sent and received
+      })
+      .then(userSession => {
+          if (!userSession) {
+              console.error("Login failed: No session data received.");
+              alert("Login failed. Please check your credentials.");
+              return;
+          }
+    
+          console.log("Successful Login:", userSession);
+    
+          // Store user session data excluding token (since it's in the cookie)
+          setUserSession(userSession);
+          localStorage.setItem("userRole", userSession.role);
+          localStorage.setItem("userId", userSession.id);
+    
+          console.log("User Logged In - Session Data Stored");
+          fetchUserData();
+      })
+      .catch(error => {
+          console.error("Login failed:", error);
+          alert("Invalid credentials. Please try again.");
+      });
+    };
+    
   
     
 
