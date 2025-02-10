@@ -32,7 +32,7 @@ const Login = () => {
         });
     
         if (json && json.role) {
-          setUser(json);  // Update user state with fetched data
+          setUser(json);  
         } else {
           console.error("User data missing or invalid:", json);
           alert("Session expired. Please log in again.");
