@@ -38,6 +38,14 @@ const Login = () => {
     
           fetchUserData();
         })
+        .then(userSession => {
+         console.log("Successful Login:", userSession);
+         console.log("Cookies after login:", document.cookie);  // Check if token is here
+     
+         setUserSession(userSession);
+         fetchUserData();
+     })
+     
         .catch(error => {
           console.error("Login failed:", error);
           alert("Invalid credentials. Please try again.");

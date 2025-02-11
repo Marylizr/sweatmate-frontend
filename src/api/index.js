@@ -44,7 +44,7 @@ const fetchResource = async (method = "GET", path, userOptions = {}) => {
         ...userOptions,
         headers: {
             ...defaultHeaders,
-            ...userOptions.headers,
+            ...(userOptions.headers || {}),
         },
     };
 
