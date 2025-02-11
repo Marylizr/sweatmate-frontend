@@ -33,7 +33,7 @@ const fetchResource = async (method = "GET", path, userOptions = {}) => {
         mode: 'cors',
         method,
     };
-
+    
     // Retrieve token using getUserToken or fallback to localStorage
     let token = getUserToken();
     if (!token) {
@@ -46,6 +46,7 @@ const fetchResource = async (method = "GET", path, userOptions = {}) => {
     const headers = {
         ...(token && { Authorization: `Bearer ${token}` }),
         "Content-Type": "application/json",
+       
       };
 
 
