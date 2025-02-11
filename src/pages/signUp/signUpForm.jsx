@@ -3,6 +3,7 @@ import styles from "./signup.module.css";
 import { useForm } from "react-hook-form";
 import customFetch from "../../api";
 import { useNavigate, useLocation } from "react-router-dom";
+import { setUserSession } from "../../api/auth";
 import eye from "../../assets/eye.svg";
 
 const SignUpForm = () => {
@@ -80,18 +81,18 @@ const SignUpForm = () => {
         headers: { "Content-Type": "application/json" },
       });
 
-      // Store token in localStorage for future API requests using Authorization header
+      // Store token and session data
       if (response.token) {
-        localStorage.setItem("token", response.token);
+        setUserSession(response.token, response.role, response.id, response.user, response.gender);
       }
 
       alert(response.message || "Signup successful! Please verify your email.");
 
       if (response.role === "admin") {
         navigate("/admin/dashboard");
-      } else if (data.gender === "female") {
+      } else if (response.gender === "female") {
         navigate("/dashboard/female");
-      } else if (data.gender === "male") {
+      } else if (response.gender === "male") {
         navigate("/dashboard/male");
       } else {
         navigate("/");
@@ -114,7 +115,10 @@ const SignUpForm = () => {
     }
 
     try {
-      await customFetch("POST", "user/send-verification", { body: { email } });
+      await customFetch("POST", "user/send-verification", {
+        body: JSON.stringify({ email }),
+        headers: { "Content-Type": "application/json" },
+      });
       alert("Verification email resent. Check your inbox.");
     } catch (error) {
       console.error("Error resending verification email:", error);

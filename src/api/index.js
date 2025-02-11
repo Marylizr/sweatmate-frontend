@@ -91,6 +91,12 @@ const fetchResource = async (method = "GET", path, userOptions = {}) => {
             throw new ApiError(`Request failed with status ${response.status}.`, parsedResponse, response.status);
         }
 
+        // Store token from response if available (for cases like token refresh)
+        if (parsedResponse.token) {
+            localStorage.setItem("token", parsedResponse.token);
+            console.log("Token refreshed and stored.");
+        }
+
         return parsedResponse;
     } catch (error) {
         if (response) {
