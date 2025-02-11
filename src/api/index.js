@@ -54,11 +54,12 @@ const fetchResource = async (method = "GET", path, userOptions = {}) => {
         ...defaultOptions,
         ...userOptions,
         headers: {
-            ...defaultHeaders,
-            ...(userOptions.headers?.['Content-Type'] ? {} : { "Content-Type": "application/json" }),
-            ...userOptions.headers,
+          ...headers,  // Use 'headers' instead of 'defaultHeaders'
+          ...(userOptions.headers?.['Content-Type'] ? {} : { "Content-Type": "application/json" }),
+          ...userOptions.headers,
         },
-    };
+      };
+      
 
     console.log("Final Request Headers:", options.headers);
 
