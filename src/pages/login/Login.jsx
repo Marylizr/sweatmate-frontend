@@ -16,6 +16,33 @@ const Login = () => {
       setPasswordShown(!passwordShown);
    };
 
+    // Handle login submission
+    const onSubmit = (data) => {
+      customFetch("POST", "login", { body: data })
+          .then(userSession => {
+              if (!userSession || !userSession.token) {
+                  console.error("Login failed: No token received.");
+                  alert("Login failed. Please check your credentials.");
+                  return;
+              }
+  
+              console.log("Successful Login:", userSession);
+  
+              // Store session data
+              setUserSession(userSession);
+              localStorage.setItem("token", userSession.token);
+              localStorage.setItem("userRole", userSession.role);
+              localStorage.setItem("userId", userSession.id);
+  
+              console.log("User Logged In - Token Stored:", userSession.token);
+              fetchUserData();
+          })
+          .catch(error => {
+              console.error("Login failed:", error);
+              alert("Invalid credentials. Please try again.");
+          });
+      };
+
    // Check if user is already logged in
    useEffect(() => {
       const token = getUserToken();
@@ -60,32 +87,7 @@ const Login = () => {
       }
    }, [user, navigate]); // Runs only when `user` is updated
 
-   // Handle login submission
-   const onSubmit = (data) => {
-      customFetch("POST", "login", { body: data })
-          .then(userSession => {
-              if (!userSession || !userSession.token) {
-                  console.error("Login failed: No token received.");
-                  alert("Login failed. Please check your credentials.");
-                  return;
-              }
   
-              console.log("Successful Login:", userSession);
-  
-              // Store session data
-              setUserSession(userSession);
-              localStorage.setItem("token", userSession.token);
-              localStorage.setItem("userRole", userSession.role);
-              localStorage.setItem("userId", userSession.id);
-  
-              console.log("User Logged In - Token Stored:", userSession.token);
-              fetchUserData();
-          })
-          .catch(error => {
-              console.error("Login failed:", error);
-              alert("Invalid credentials. Please try again.");
-          });
-  };
   
     
 
