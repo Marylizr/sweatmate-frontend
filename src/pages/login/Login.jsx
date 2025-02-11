@@ -45,31 +45,27 @@ const Login = () => {
   };
 
   // Handle login submission
+  
   const onSubmit = async (data) => {
+   console.log("Form data being sent:", data);  // Ensure email and password exist
+ 
    try {
      const response = await customFetch("POST", "login", {
        body: JSON.stringify(data),
-       headers: { "Content-Type": "application/json" }
+       headers: { "Content-Type": "application/json" },
      });
  
-     if (!response.token) {
-       console.error("Login failed: No token received.");
-       alert("Login failed. Please check your credentials.");
-       return;
+     if (response.token) {
+       setUserSession(response.token, response.role, response.id, response.name, response.gender);
+       console.log("Token stored successfully:", response.token);
+     } else {
+       console.warn("No token received in the response");
      }
- 
-     // Store the token using setUserSession
-     setUserSession(response.token, response.role, response.id, response, response.gender);
- 
-     console.log("User Logged In - Token Stored:", response.token);
- 
-     // Fetch user data using the stored token
-     fetchUserData();
    } catch (error) {
      console.error("Login failed:", error);
-     alert("Invalid credentials. Please try again.");
    }
  };
+ 
  
 
   // Navigate based on role and gender AFTER user state is updated
