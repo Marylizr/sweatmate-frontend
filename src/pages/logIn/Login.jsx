@@ -19,29 +19,31 @@ const Login = () => {
     // Handle login submission
     const onSubmit = (data) => {
       customFetch("POST", "login", { body: data })
-          .then(userSession => {
-              if (!userSession || !userSession.token) {
-                  console.error("Login failed: No token received.");
-                  alert("Login failed. Please check your credentials.");
-                  return;
-              }
-  
-              console.log("Successful Login:", userSession);
-  
-              // Store session data
-              setUserSession(userSession);
-              localStorage.setItem("token", userSession.token);
-              localStorage.setItem("userRole", userSession.role);
-              localStorage.setItem("userId", userSession.id);
-  
-              console.log("User Logged In - Token Stored:", userSession.token);
-              fetchUserData();
-          })
-          .catch(error => {
-              console.error("Login failed:", error);
-              alert("Invalid credentials. Please try again.");
-          });
-      };
+        .then(userSession => {
+          if (!userSession || !userSession.token) {  // Ensure token exists in response
+            console.error("Login failed: No token received.");
+            alert("Login failed. Please check your credentials.");
+            return;
+          }
+    
+          console.log("Successful Login:", userSession);
+    
+          // Store session data
+          setUserSession(userSession);
+          localStorage.setItem("token", userSession.token);  // Save token to localStorage
+          localStorage.setItem("userRole", userSession.role);
+          localStorage.setItem("userId", userSession.id);
+    
+          console.log("User Logged In - Token Stored:", userSession.token);
+    
+          fetchUserData();
+        })
+        .catch(error => {
+          console.error("Login failed:", error);
+          alert("Invalid credentials. Please try again.");
+        });
+    };
+    
 
    // Check if user is already logged in
    useEffect(() => {
