@@ -12,52 +12,43 @@ const Login = () => {
    const [user, setUser] = useState(null);
    const [passwordShown, setPasswordShown] = useState(false);
 
-   const togglePasswordVisiblity = () => {
+   const togglePasswordVisibility = () => {
       setPasswordShown(!passwordShown);
    };
 
-    // Handle login submission
-    const onSubmit = (data) => {
+   // Handle login submission
+   const onSubmit = (data) => {
       customFetch("POST", "login", { body: data })
         .then(userSession => {
-          if (!userSession || !userSession.token) {  // Ensure token exists in response
+          if (!userSession || !userSession.token) {
             console.error("Login failed: No token received.");
             alert("Login failed. Please check your credentials.");
             return;
           }
-    
+
           console.log("Successful Login:", userSession);
-    
+
           // Store session data
           setUserSession(userSession);
-          localStorage.setItem("token", userSession.token);  // Save token to localStorage
+          localStorage.setItem("token", userSession.token);
           localStorage.setItem("userRole", userSession.role);
           localStorage.setItem("userId", userSession.id);
-    
+
           console.log("User Logged In - Token Stored:", userSession.token);
-    
+
           fetchUserData();
         })
-        .then(userSession => {
-         console.log("Successful Login:", userSession);
-         console.log("Cookies after login:", document.cookie);  // Check if token is here
-     
-         setUserSession(userSession);
-         fetchUserData();
-     })
-     
         .catch(error => {
           console.error("Login failed:", error);
           alert("Invalid credentials. Please try again.");
         });
     };
-    
 
    // Check if user is already logged in
    useEffect(() => {
       const token = getUserToken();
-      if (!token) {
-         navigate("/"); // Redirect to homepage if not logged in
+      if (token) {
+         fetchUserData();
       }
    }, [navigate]);
 
@@ -65,7 +56,7 @@ const Login = () => {
    const fetchUserData = async () => {
       try {
          const json = await customFetch("GET", "user/me");
-         if (json && json.role && json.gender) {  // Ensure gender is included
+         if (json && json.role && json.gender) {
             setUser(json);
          } else {
             console.error("User data missing or invalid:", json);
@@ -74,7 +65,6 @@ const Login = () => {
          console.error("Error fetching user data:", error);
       }
    };
-
 
    // Navigate based on role and gender AFTER user state is updated
    useEffect(() => {
@@ -95,11 +85,7 @@ const Login = () => {
             console.error(`Invalid role: ${user.role}`);
          }
       }
-   }, [user, navigate]); // Runs only when `user` is updated
-
-  
-  
-    
+   }, [user, navigate]);
 
    return (
       <div className={styles.container}>
@@ -117,8 +103,7 @@ const Login = () => {
                      {...register("email", { required: true })}
                   />
                   {errors.email && <p className={styles.error}>This field is mandatory</p>}
-                 
-                   <br />
+                  <br />
 
                   <label>Password</label>
                   <br />
@@ -128,12 +113,11 @@ const Login = () => {
                         placeholder='Minimum length: 8'
                         {...register("password", { required: true, minLength: 8 })}
                      />
-                     <i className={styles.eye} onClick={togglePasswordVisiblity}>
+                     <i className={styles.eye} onClick={togglePasswordVisibility}>
                         <img src={eye} alt='eye-icon' />
                      </i>
                      {errors.password?.type === 'required' && <p className={styles.error}>This field is mandatory</p>}
                      {errors.password?.type === 'minLength' && <p className={styles.error}>The password must have 8 characters min</p>}
-                  
                   </div>
                   <input className={styles.submit} type="submit" value="Let's Go!" />
                </form>
