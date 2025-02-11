@@ -4,10 +4,10 @@ import { deleteStorageObject, getStorageObject, setStorageObject } from "./stora
 // Function to get the user's token from the session
 export const getUserToken = () => {
     const session = getStorageObject("user-session");
-    console.log("Retrieved session data:", session);
-    return session?.token || localStorage.getItem("token");  // Fallback to token from localStorage
+    console.log("Retrieved session in getUserToken:", session);
+    return session ? session.token : null;
 };
-  
+
 
 // Function to get the user object from the session
 export const getSessionUser = () => {

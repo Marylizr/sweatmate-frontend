@@ -45,7 +45,7 @@ const Login = () => {
   };
 
   // Handle login submission
-  
+
   const onSubmit = async (data) => {
    console.log("Form data being sent:", data);  // Ensure email and password exist
  
@@ -57,6 +57,9 @@ const Login = () => {
  
      if (response.token) {
        setUserSession(response.token, response.role, response.id, response.name, response.gender);
+       console.log("Storing session data:", sessionData);
+      console.log("Data stored in localStorage:", localStorage.getItem("user-session"));
+
        console.log("Token stored successfully:", response.token);
      } else {
        console.warn("No token received in the response");

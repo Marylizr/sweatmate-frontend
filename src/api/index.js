@@ -38,7 +38,16 @@ const fetchResource = async (method = "GET", path, userOptions = {}) => {
     let token = getUserToken();
     if (!token) {
         token = localStorage.getItem("token");  // Fallback to local storage
+        console.log("Token retrieved from getUserToken:", token);
     }
+    
+
+
+if (!token) {
+    token = localStorage.getItem("token");
+    console.log("Fallback token from localStorage:", token);
+}
+
 
     console.log(`Token being used for request: ${token ? "Exists" : "Missing"}`);
 
