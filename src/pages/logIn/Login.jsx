@@ -36,6 +36,7 @@ const Login = () => {
 
       if (json && json.role && json.gender) {
         setUser(json);
+     
       } else {
         console.error("User data missing or invalid:", json);
       }
@@ -56,11 +57,25 @@ const Login = () => {
      });
  
      if (response.token) {
+       // Store session data
        setUserSession(response.token, response.role, response.id, response.name, response.gender);
+ 
+       // **Define sessionData and log it**
+       const sessionData = { token: response.token, user: response.name, role: response.role };
        console.log("Storing session data:", sessionData);
-      console.log("Data stored in localStorage:", localStorage.getItem("user-session"));
-
+ 
+       // Check if the session data is stored properly
+       console.log("Data stored in localStorage:", localStorage.getItem("user-session"));
        console.log("Token stored successfully:", response.token);
+ 
+       // Optionally, set user state if needed
+       setUser({
+         id: response.id,
+         name: response.name,
+         role: response.role,
+         gender: response.gender
+       });
+ 
      } else {
        console.warn("No token received in the response");
      }
@@ -68,7 +83,6 @@ const Login = () => {
      console.error("Login failed:", error);
    }
  };
- 
  
 
   // Navigate based on role and gender AFTER user state is updated
