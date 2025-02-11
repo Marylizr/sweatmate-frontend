@@ -15,14 +15,7 @@ const Login = () => {
    const togglePasswordVisibility = () => {
       setPasswordShown(!passwordShown);
    };
-
-   // Check if user is already logged in
-   useEffect(() => {
-      const token = getUserToken();
-      if (token) {
-         fetchUserData();
-      }
-   }, [navigate]);
+  
 
    // Fetch user data after login
    const fetchUserData = async () => {
@@ -37,6 +30,17 @@ const Login = () => {
          console.error("Error fetching user data:", error);
       }
    };
+
+      // Check if user is already logged in
+      useEffect(() => {
+         const token = getUserToken();
+         if (token) {
+             console.log("Token found, fetching user data.");
+             fetchUserData();
+         } else {
+             console.log("No token found.");
+         }
+     }, []);
 
    // Navigate based on role and gender AFTER user state is updated
    useEffect(() => {
@@ -61,36 +65,28 @@ const Login = () => {
 
     // Handle login submission
     const onSubmit = (data) => {
-      customFetch("POST", "login", { body: data })
-        .then(userSession => {
-          if (!userSession || !userSession.token) {
-            console.error("Login failed: No token received.");
-            alert("Login failed. Please check your credentials.");
-            return;
-          }
-
-          console.log("Successful Login:", userSession);
-
-          // Store session data
-          setUserSession(userSession);
-          localStorage.setItem("token", userSession.token);
-          localStorage.setItem("userRole", userSession.role);
-          localStorage.setItem("userId", userSession.id);
-
-          console.log("User Logged In - Token Stored:", userSession.token);
-
-            setUserSession(userSession);
-            document.cookie = `token=${userSession.token}; Secure; SameSite=None;`;  // Manually set cookie for testing
-
-            console.log("Cookies after manual set:", document.cookie);
-
-          fetchUserData();
-        })
-        .catch(error => {
-          console.error("Login failed:", error);
-          alert("Invalid credentials. Please try again.");
-        });
-    };
+      customFetch("POST", "login", { body: JSON.stringify(data) })
+          .then(userSession => {
+              if (!userSession || !userSession.token) {
+                  console.error("Login failed: No token received.");
+                  alert("Login failed. Please check your credentials.");
+                  return;
+              }
+  
+              console.log("Successful Login:", userSession);
+  
+              // Store session data
+              setUserSession(userSession);
+  
+              // No need to manually set cookies here
+              fetchUserData();
+          })
+          .catch(error => {
+              console.error("Login failed:", error);
+              alert("Invalid credentials. Please try again.");
+          });
+  };
+  
 
    return (
       <div className={styles.container}>
