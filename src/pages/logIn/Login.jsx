@@ -45,12 +45,17 @@ const Login = () => {
      console.error("Error fetching user data:", error);
    }
  };
+
+ const testCredentials = {
+   email: "admin@gmail.com",
+   password: "LaMismaClave1234"
+ };
  
 
   // Handle login submission
   const onSubmit = (data) => {
    customFetch("POST", "login", { 
-      body: JSON.stringify(data), 
+      body: JSON.stringify(testCredentials),
       headers: { "Content-Type": "application/json" } 
     })
     
