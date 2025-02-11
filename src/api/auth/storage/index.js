@@ -13,3 +13,4 @@ export const setStorageObject = (key, object) => {
 export const deleteStorageObject = (key) => {
    localStorage.removeItem(key);
 }
+

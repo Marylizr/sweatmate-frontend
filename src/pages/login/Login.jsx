@@ -26,49 +26,56 @@ const Login = () => {
 
   // Fetch user data after login
   const fetchUserData = async () => {
-    try {
-      const token = getUserToken();
-      const json = await customFetch("GET", "user/me", {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      if (json && json.role && json.gender) {
-        setUser(json);
-      } else {
-        console.error("User data missing or invalid:", json);
-      }
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  };
+   try {
+     const token = localStorage.getItem("token");
+     console.log("Retrieved Token:", token);  // Add this to debug
+ 
+     const json = await customFetch("GET", "user/me", {
+       headers: {
+         Authorization: `Bearer ${token}`
+       }
+     });
+ 
+     if (json && json.role && json.gender) {
+       setUser(json);
+     } else {
+       console.error("User data missing or invalid:", json);
+     }
+   } catch (error) {
+     console.error("Error fetching user data:", error);
+   }
+ };
+ 
 
   // Handle login submission
   const onSubmit = (data) => {
-    customFetch("POST", "login", { body: data })
-      .then(response => {
-        if (!response || !response.token) {
-          console.error("Login failed: No token received.");
-          alert("Login failed. Please check your credentials.");
-          return;
-        }
-
-        console.log("Successful Login:", response);
-
-        // Store token in localStorage
-        localStorage.setItem("token", response.token);
-        localStorage.setItem("userRole", response.role);
-        localStorage.setItem("userId", response.id);
-
-        console.log("User Logged In - Token Stored:", response.token);
-
-        fetchUserData();
-      })
-      .catch(error => {
-        console.error("Login failed:", error);
-        alert("Invalid credentials. Please try again.");
-      });
-  };
+   customFetch("POST", "login", { 
+      body: JSON.stringify(data), 
+      headers: { "Content-Type": "application/json" } 
+    })
+    
+     .then(response => {
+       if (!response || !response.token) {
+         console.error("Login failed: No token received.");
+         alert("Login failed. Please check your credentials.");
+         return;
+       }
+ 
+       console.log("Successful Login:", response);
+ 
+       // Use setUserSession to store token and user info
+       setUserSession(response.token, response.role, response.id);
+ 
+       console.log("User Logged In - Token Stored:", response.token);
+ 
+       fetchUserData();
+     })
+     .catch(error => {
+       console.error("Login failed:", error);
+       alert("Invalid credentials. Please try again.");
+     });
+ };
+ 
 
   // Navigate based on role and gender AFTER user state is updated
   useEffect(() => {
