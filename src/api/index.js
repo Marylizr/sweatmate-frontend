@@ -1,10 +1,8 @@
 import { getUserToken } from "./auth";
 
-
 export const API_URL = window.location.hostname === 'sweatmateapp.netlify.app'
   ? process.env.REACT_APP_API_URL
   : "http://localhost:3001";
-   
 
 // Custom API error class
 class ApiError {
@@ -36,7 +34,7 @@ const fetchResource = async (method = "GET", path, userOptions = {}) => {
         method,
     };
 
-    // Get the user token from storage
+    // Retrieve token using getUserToken or fallback to localStorage
     let token = getUserToken();
     if (!token) {
         token = localStorage.getItem("token");  // Fallback to local storage
@@ -44,18 +42,18 @@ const fetchResource = async (method = "GET", path, userOptions = {}) => {
 
     console.log(`Token being used for request: ${token ? "Exists" : "Missing"}`);
 
-    // Define default headers
+    // Define default headers with Authorization if token exists
     const defaultHeaders = {
         ...(token ? { "Authorization": `Bearer ${token}` } : {}),
     };
 
-    // Merge user-provided options with defaults
+    // Merge user-provided options with default options and headers
     const options = {
         ...defaultOptions,
         ...userOptions,
         headers: {
             ...defaultHeaders,
-            ...(userOptions.headers?.['content-type'] ? {} : { "Content-Type": "application/json" }),
+            ...(userOptions.headers?.['Content-Type'] ? {} : { "Content-Type": "application/json" }),
             ...userOptions.headers,
         },
     };
@@ -68,7 +66,7 @@ const fetchResource = async (method = "GET", path, userOptions = {}) => {
     // Detect if the request body contains a file
     const isFile = options.body instanceof File;
 
-    // Convert JSON data to string format if not a file
+    // Convert JSON data to string format if it's not a file
     if (options.body && typeof options.body === 'object' && !isFile) {
         options.body = JSON.stringify(options.body);
     }
@@ -78,10 +76,11 @@ const fetchResource = async (method = "GET", path, userOptions = {}) => {
     try {
         response = await fetch(url, options);
 
-        // Handle 401 Unauthorized
+        // Handle 401 Unauthorized responses
         if (response.status === 401) {
-            console.warn("Unauthorized request (401). Token might be expired.");
-            return { authError: true };
+            console.warn("Unauthorized request (401). Token might be expired or missing.");
+            localStorage.removeItem("token");  // Clear token if unauthorized
+            return { authError: true };  // Signal to the app that re-authentication is needed
         }
 
         // Convert response to JSON
@@ -89,7 +88,7 @@ const fetchResource = async (method = "GET", path, userOptions = {}) => {
 
         // Handle non-2xx status codes
         if (response.status < 200 || response.status >= 300) {
-            throw parsedResponse;
+            throw new ApiError(`Request failed with status ${response.status}.`, parsedResponse, response.status);
         }
 
         return parsedResponse;

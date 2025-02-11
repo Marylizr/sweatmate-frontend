@@ -80,7 +80,10 @@ const SignUpForm = () => {
         headers: { "Content-Type": "application/json" },
       });
 
-      document.cookie = `token=${response.token}; Secure; SameSite=None; Path=/`;
+      // Store token in localStorage for future API requests using Authorization header
+      if (response.token) {
+        localStorage.setItem("token", response.token);
+      }
 
       alert(response.message || "Signup successful! Please verify your email.");
 
