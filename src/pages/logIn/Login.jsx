@@ -12,16 +12,23 @@ const Login = () => {
    const [user, setUser] = useState(null);
    const [passwordShown, setPasswordShown] = useState(false);
 
-   const togglePasswordVisibility = () => {
+   const togglePasswordVisiblity = () => {
       setPasswordShown(!passwordShown);
    };
-  
+
+   // Check if user is already logged in
+   useEffect(() => {
+      const token = getUserToken();
+      if (!token) {
+         navigate("/"); // Redirect to homepage if not logged in
+      }
+   }, [navigate]);
 
    // Fetch user data after login
    const fetchUserData = async () => {
       try {
          const json = await customFetch("GET", "user/me");
-         if (json && json.role && json.gender) {
+         if (json && json.role) {
             setUser(json);
          } else {
             console.error("User data missing or invalid:", json);
@@ -30,17 +37,6 @@ const Login = () => {
          console.error("Error fetching user data:", error);
       }
    };
-
-      // Check if user is already logged in
-      useEffect(() => {
-         const token = getUserToken();
-         if (token) {
-             console.log("Token found, fetching user data.");
-             fetchUserData();
-         } else {
-             console.log("No token found.");
-         }
-     }, []);
 
    // Navigate based on role and gender AFTER user state is updated
    useEffect(() => {
@@ -61,11 +57,11 @@ const Login = () => {
             console.error(`Invalid role: ${user.role}`);
          }
       }
-   }, [user, navigate]);
+   }, [user, navigate]); // Runs only when `user` is updated
 
-    // Handle login submission
-    const onSubmit = (data) => {
-      customFetch("POST", "login", { body: JSON.stringify(data) })
+   // Handle login submission
+   const onSubmit = (data) => {
+      customFetch("POST", "login", { body: data })
           .then(userSession => {
               if (!userSession || !userSession.token) {
                   console.error("Login failed: No token received.");
@@ -77,8 +73,11 @@ const Login = () => {
   
               // Store session data
               setUserSession(userSession);
+              localStorage.setItem("token", userSession.token);
+              localStorage.setItem("userRole", userSession.role);
+              localStorage.setItem("userId", userSession.id);
   
-              // No need to manually set cookies here
+              console.log("User Logged In - Token Stored:", userSession.token);
               fetchUserData();
           })
           .catch(error => {
@@ -87,6 +86,7 @@ const Login = () => {
           });
   };
   
+    
 
    return (
       <div className={styles.container}>
@@ -104,7 +104,8 @@ const Login = () => {
                      {...register("email", { required: true })}
                   />
                   {errors.email && <p className={styles.error}>This field is mandatory</p>}
-                  <br />
+                 
+                   <br />
 
                   <label>Password</label>
                   <br />
@@ -114,11 +115,12 @@ const Login = () => {
                         placeholder='Minimum length: 8'
                         {...register("password", { required: true, minLength: 8 })}
                      />
-                     <i className={styles.eye} onClick={togglePasswordVisibility}>
+                     <i className={styles.eye} onClick={togglePasswordVisiblity}>
                         <img src={eye} alt='eye-icon' />
                      </i>
                      {errors.password?.type === 'required' && <p className={styles.error}>This field is mandatory</p>}
                      {errors.password?.type === 'minLength' && <p className={styles.error}>The password must have 8 characters min</p>}
+                  
                   </div>
                   <input className={styles.submit} type="submit" value="Let's Go!" />
                </form>
