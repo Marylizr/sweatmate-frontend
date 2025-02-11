@@ -7,6 +7,7 @@ export const getUserToken = () => {
     console.log("Retrieved session data:", session);
     return session?.token || localStorage.getItem("token");  // Fallback to token from localStorage
 };
+  
 
 // Function to get the user object from the session
 export const getSessionUser = () => {

@@ -43,9 +43,11 @@ const fetchResource = async (method = "GET", path, userOptions = {}) => {
     console.log(`Token being used for request: ${token ? "Exists" : "Missing"}`);
 
     // Define default headers with Authorization if token exists
-    const defaultHeaders = {
-        ...(token ? { "Authorization": `Bearer ${token}` } : {}),
-    };
+    const headers = {
+        ...(token && { Authorization: `Bearer ${token}` }),
+        "Content-Type": "application/json",
+      };
+
 
     // Merge user-provided options with default options and headers
     const options = {

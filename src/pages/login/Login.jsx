@@ -46,31 +46,29 @@ const Login = () => {
 
   // Handle login submission
   const onSubmit = (data) => {
-    customFetch("POST", "login", { 
-      body: JSON.stringify(data), 
-      headers: { "Content-Type": "application/json" } 
-    })
-    .then(response => {
-      if (!response || !response.token) {
-        console.error("Login failed: No token received.");
-        alert("Login failed. Please check your credentials.");
-        return;
-      }
-
-      console.log("Successful Login:", response);
-
-      // Use setUserSession to store token and user info
-      setUserSession(response.token, response.role, response.id);
-
-      console.log("User Logged In - Token Stored:", response.token);
-
-      // Pass the token directly to fetchUserData
-      fetchUserData(response.token);
-    })
-    .catch(error => {
-      console.error("Login failed:", error);
-      alert("Invalid credentials. Please try again.");
-    });
+      customFetch("POST", "login", { 
+         body: JSON.stringify(data), 
+         headers: { "Content-Type": "application/json" } 
+      })
+      .then(response => {
+         if (!response || !response.token) {
+         console.error("Login failed: No token received.");
+         alert("Login failed. Please check your credentials.");
+         return;
+         }
+      
+         console.log("Successful Login:", response);
+      
+         // Ensure you're passing token, role, id, user, and gender correctly
+         setUserSession(response.token, response.role, response.id, response.user, response.gender);
+      
+         fetchUserData();  // Fetch user data after login
+      })
+      .catch(error => {
+         console.error("Login failed:", error);
+         alert("Invalid credentials. Please try again.");
+      });
+ 
   };
 
   // Navigate based on role and gender AFTER user state is updated
