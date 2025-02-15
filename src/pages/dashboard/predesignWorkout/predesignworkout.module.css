@@ -122,13 +122,13 @@
 @media (max-width:768px){
 
    .container {
-    width: 38vw;
-    margin: .5em;
+    width: 38.5vw;
+    margin: 0.5em 0.5em 0 0;
     height: 9em;
    }
 
    .container2 {
-    width: 83vw;
+    width: 86vw;
     margin: 0.5em 0 1em 0;
     height: auto;
   }
@@ -155,6 +155,37 @@
     height: 10vh;
     flex-direction: column;
   }
+  .userSelection > select {
+    margin: 10px;
+    width: 26em!important;
+    height: 4em;
+    border-radius: 3px;
+    border: none;
+    box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04), 0px 4px 16px rgba(51, 51, 51, 0.18);
+    padding: 5px;
+    color: #888;
+  }
+
+  .sendButton {
+    height: 5em;
+    background-color: white;
+    color: teal;
+    border: 1px solid teal;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    width: 13em;
+    margin: 1em 0 1em;
+  }
+
+  .buttonWrap {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
 
  }
 

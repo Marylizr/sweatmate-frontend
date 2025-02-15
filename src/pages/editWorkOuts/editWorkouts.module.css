@@ -162,7 +162,8 @@
       flex-wrap: wrap;
       align-content: center;
       align-items: center;
-      width: 99vw;
+      width: 94vw;
+      min-height: 100vh;
    }
 }
 

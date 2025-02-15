@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import arrow_left from '../../utils/arrow_left.svg';
 
 
+
 const Quadriceps = ({onClick}) => {
  
   

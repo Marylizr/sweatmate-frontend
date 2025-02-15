@@ -287,7 +287,8 @@
    }
 
    .container{
-      width: 91vw;
+      width: 94vw;
+      margin: 1em 0 0 0;
    }
 
    .box{
@@ -362,6 +363,20 @@
       align-content: center;
       align-items: center;
       width: 100%;
+   }
+
+   .worksinput > input {
+      margin: 0.5em;
+      width: 80vw;
+      height: 4em;
+      border-radius: 3px;
+   }
+
+   .worksinput > textarea {
+      margin: 0.5em;
+      width: 80vw;
+      height: 6em;
+      border-radius: 3px;
    }
 }
 

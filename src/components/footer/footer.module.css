@@ -148,66 +148,92 @@
 
 /* Extra Small Devices (Portrait Phones, less than 576px) */
 @media only screen and (max-width: 575.98px) {
+  .wrapper {
+    width: 87vw;
+  }
+  
+  .wrapper > a{
+    font-size: 1rem;
+  }
+
   .container {
-    background-color: white;
-    width: 80%;
     display: flex;
     justify-content: center;
-    border-bottom: 1px solid #e0e0e0;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: center;
+    width: 100vw;
+    margin: 2em 0 0;
+    padding: 1em;
   }
-  
-  .navContainer {
+
+  .disclaimer {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    width: 80%;
-    max-width: 1200px;
-    padding: 0 20px;
-    position: relative;
+    margin-top: 2em;
   }
   
+
+  .disclaimer > p {
+    margin: 0;
+    font-size: 9px;
+  }
+
 }
 
 /* Small Devices (Landscape Phones, 576px and up) */
 @media only screen and (min-width: 576px) and (max-width: 767.98px) {
   .container {
-    background-color: white;
-    width: 80%;
     display: flex;
     justify-content: center;
-    border-bottom: 1px solid #e0e0e0;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: center;
+    width: 100vw;
+    margin: 2em 0 0;
+    padding: 1em;
+  }
+
+  .disclaimer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2em;
   }
   
-  .navContainer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 80%;
-    max-width: 1200px;
-    padding: 0 20px;
-    position: relative;
+
+  .disclaimer > p {
+    margin: 0;
+    font-size: 9px;
   }
+  
+
   
 }
 
 /* Medium Devices (Tablets, 768px and up) */
 @media only screen and (min-width: 768px) and (max-width: 991.98px) {
   .container {
-    background-color: white;
-    width: 100%;
     display: flex;
     justify-content: center;
-    border-bottom: 1px solid #e0e0e0;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: center;
+    width: 100vw;
+    margin: 2em 0 0;
+    padding: 1em;
+  }
+
+  .disclaimer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2em;
   }
   
-  .navContainer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 90%;
-    max-width: 1200px;
-    padding: 0 20px;
-    position: relative;
+  .disclaimer > p {
+    margin: 0;
   }
   
 }
@@ -221,14 +247,6 @@
     border-bottom: 1px solid #e0e0e0;
   }
   
-  .navContainer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 90%;
-    max-width: 1200px;
-    padding: 0 20px;
-    position: relative;
-  }
+
   
 }

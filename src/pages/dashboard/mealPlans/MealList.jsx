@@ -136,7 +136,7 @@ const MealList = () => {
           </div>
 
             {/* Send Button */}
-          <div>
+          <div className={styles.sendButton}>
             <button  onClick={handleSendPlans}>
               Send MealPlan
             </button>

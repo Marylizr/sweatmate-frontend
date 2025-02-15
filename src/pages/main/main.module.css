@@ -39,6 +39,19 @@
       width: 94vw;
       margin-top:1em;
    }
+
+   .header > a {
+      width: 94vw;
+    margin-top: 1em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+   }
+
+   .header > a > img {
+      margin: 0 1em 0
+   }
 }
 
 @media (min-width: 769px) and (max-width: 1181px) {

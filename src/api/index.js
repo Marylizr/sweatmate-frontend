@@ -42,13 +42,6 @@ const fetchResource = async (method = "GET", path, userOptions = {}) => {
     }
     
 
-
-if (!token) {
-    token = localStorage.getItem("token");
-    console.log("Fallback token from localStorage:", token);
-}
-
-
     console.log(`Token being used for request: ${token ? "Exists" : "Missing"}`);
 
     // Define default headers with Authorization if token exists
@@ -57,7 +50,6 @@ if (!token) {
         "Content-Type": "application/json",
        
       };
-
 
     // Merge user-provided options with default options and headers
     const options = {

@@ -15,7 +15,8 @@ import MealList from '../dashboard/mealPlans/MealList';
 import PlanNextEvents from '../dashboard/nextEvents/PlanNextEvents';
 import Form from '../dashboard/nextEvents/Form';
 import EditUserProfile from '../Admin-userProfile/EditUserProfile';
-
+import { Link } from 'react-router-dom';
+import arrow_left from '../../utils/arrow_left.svg';
 
 const Main = () => {
 
@@ -25,8 +26,8 @@ const Main = () => {
       <WorkoutsMenu />
 
       <div className={styles.wrap}>
-        <div className={styles.header}>
-          <h1> Dashboard </h1>
+        <div className={styles.header}>   
+          <Link to='/main/dashboard'> <img src={arrow_left} alt='' /> <h1> Dashboard </h1></Link>
         </div>
         <Routes>
           <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />

@@ -119,53 +119,75 @@
  flex-wrap: wrap;
 }
 
-.buttonWrap > div > button {
-  height: 3em;
-  background-color: white;
-  color: teal;
-  border: 1px solid teal;
-  border-radius: 4px;
-  padding: 8px 16px;
-  cursor: pointer;
-  width: 10em;
-}
+
 
 @media (max-width:768px){
 
   .container {
-    width: 37vw;
+    width: 38.5vw;
     margin: 0.5em 0 0 0;
     height: 9em;
   }
 
-  .container2 {
-   width: 83vw;
-   margin: 0.5em 0 1em 0;
-   height: auto;
- }
+    .container2 {
+    width: 86vw;
+    margin: 0.5em 0 1em 0;
+    height: auto;
+  }
 
- .filterButtons > button {
-   display: flex;
-   margin-bottom: 1em;
-   width: 77vw;
-   height: 10vh;
-   flex-direction: column;
-}
- .filterButtons {
-   display: flex;
-   justify-content: center;
-   margin-bottom: 20px;
-   flex-direction: column;
-   align-items: center;
- }
+  .filterButtons > button {
+    display: flex;
+    margin-bottom: 1em;
+    width: 77vw;
+    height: 10vh;
+    flex-direction: column;
+  }
+  .filterButtons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    flex-direction: column;
+    align-items: center;
+  }
 
- .filterButton:hover {
-   display: flex;
-   margin-bottom: 1em;
-   width: 77vw;
-   height: 10vh;
-   flex-direction: column;
- }
+  .filterButton:hover {
+    display: flex;
+    margin-bottom: 1em;
+    width: 77vw;
+    height: 10vh;
+    flex-direction: column;
+  }
+
+  .userSelection > select {
+    margin: 10px;
+    width: 26em!important;
+    height: 4em;
+    border-radius: 3px;
+    border: none;
+    box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04), 0px 4px 16px rgba(51, 51, 51, 0.18);
+    padding: 5px;
+    color: #888;
+  }
+
+  .sendButton > button {
+    height: 5em;
+    background-color: white;
+    color: teal;
+    border: 1px solid teal;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    width: 13em;
+    margin: 1em 0 1em;
+  }
+
+  .buttonWrap {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
 
 }
 
