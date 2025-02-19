@@ -162,30 +162,6 @@ p.meetingStatus {
  /* Extra Small Devices (Portrait Phones, less than 576px) */
 @media only screen and (max-width: 575.98px) {
   .container {
-    width: 96vw;
-    margin: 0.5em 0em 0 0;
-    height: auto;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-  }
-
-  .title {
-    font-size: 20px;
-  }
-
-  .meetingsList {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    width: 90vw;
-  }
-}
-
-/* Small Devices (Landscape Phones, 576px and up) */
-@media only screen and (min-width: 576px) and (max-width: 767.98px) {
-  .container {
     width: 95vw;
     margin: 0.5em 0 0 0;
     height: 17em;
@@ -231,6 +207,12 @@ p.meetingStatus {
     flex-wrap: wrap;
     align-content: center;
   }
+}
+
+/* Small Devices (Landscape Phones, 576px and up) */
+@media only screen and (min-width: 576px) and (max-width: 767.98px) {
+ 
+  
 }
 
 /* Medium Devices (Tablets, 768px and up) */
