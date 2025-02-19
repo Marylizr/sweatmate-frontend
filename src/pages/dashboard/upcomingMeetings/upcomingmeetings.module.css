@@ -45,12 +45,12 @@ button.noShowButton {
 
 .statusButtons {
   display: flex;
-  flex-direction: row;
-  align-content: center;
-  align-items: center;
-  justify-content: center;
-  margin: 1em;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 0;
 } 
+
+
 
 p.meetingStatus {
   margin:0;
@@ -263,6 +263,15 @@ p.meetingStatus {
     flex-wrap: wrap;
     align-content: center;
   }
+
+  .statusButtons {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    margin: 1em;
+  } 
 }
 
 /* Large Devices (Desktops, 992px and up) */
