@@ -5,7 +5,7 @@ import styles from './nextEvents.module.css';
 import CustomDropdown from './CustomDropdown';
 
 const Form = ({ refreshEvents }) => {
-  const { eventId } = useParams(); // Get eventId from the URL
+  const { eventId } = useParams();
   const navigate = useNavigate();
 
   const [eventType, setEventType] = useState('personal_training');
@@ -19,17 +19,15 @@ const Form = ({ refreshEvents }) => {
   const [selectAll, setSelectAll] = useState(false);
   const [trainerOnly, setTrainerOnly] = useState(false);
 
-  const WORKING_HOURS_START = 8; // 8:00 AM
-  const WORKING_HOURS_END = 20; // 8:00 PM
+  const WORKING_HOURS_START = 8;
+  const WORKING_HOURS_END = 20;
 
-  // Check if the selected time is within working hours
   const isTimeWithinWorkingHours = (selectedDateTime) => {
     const selectedDate = new Date(selectedDateTime);
     const hours = selectedDate.getHours();
     return hours >= WORKING_HOURS_START && hours < WORKING_HOURS_END;
   };
 
-  // Fetch existing users to populate the dropdown
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -47,7 +45,6 @@ const Form = ({ refreshEvents }) => {
     fetchUsers();
   }, []);
 
-  // Fetch existing event data if eventId is present (for rescheduling)
   useEffect(() => {
     if (eventId) {
       const fetchEvent = async () => {
@@ -55,7 +52,7 @@ const Form = ({ refreshEvents }) => {
           const event = await fetchResource('GET', `events/${eventId}`);
           setEventType(event.eventType);
           setTitle(event.title);
-          setDate(event.date.split('.')[0]); // Format date for input field
+          setDate(event.date.split('.')[0]); 
           setDuration(event.duration);
           setLocation(event.location);
           setDescription(event.description);
@@ -69,41 +66,45 @@ const Form = ({ refreshEvents }) => {
     }
   }, [eventId]);
 
-  const handleSubmit = async (data) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!isTimeWithinWorkingHours(date)) {
+      alert(`Please select a time between ${WORKING_HOURS_START}:00 and ${WORKING_HOURS_END}:00.`);
+      return;
+    }
+
+    let usersToAssign = trainerOnly ? [] : selectAll ? existingUsers.map((user) => user._id) : selectedUsers;
+
+    const newEvent = {
+      eventType,
+      title,
+      date,
+      duration,
+      location,
+      description,
+      userId: usersToAssign,
+      trainerOnly,
+    };
+
     try {
-      const payload = {
-        eventType: data.eventType,
-        title: data.title,
-        date: data.date,
-        duration: data.duration,
-        location: data.location,
-        description: data.description,
-        customerEmail: data.customerEmail,
-        trainerOnly: trainerOnly,  // Pass the trainerOnly checkbox value
-        userId: trainerOnly ? [] : selectedUsers, // If trainerOnly, do not send users
-        status: "pending",
-        confirmationStatus: "not_sent",
-        rescheduleHistory: [],
-      };
-  
-      console.log("Submitting event payload:", payload);
-  
-      const response = await customFetch("POST", "events", {
-        body: JSON.stringify(payload),
-        headers: { "Content-Type": "application/json" },
-      });
-  
-      if (response.error) {
-        console.error("Error creating event:", response.error);
+      if (eventId) {
+        await fetchResource('PUT', `events/${eventId}`, { body: newEvent });
+        alert('Event successfully updated!');
       } else {
-        console.log("Event created successfully", response);
+        await fetchResource('POST', 'events', { body: newEvent });
+        alert('Event successfully created!');
       }
-    } catch (error) {
-      console.error("Unexpected error:", error);
+
+      if (typeof refreshEvents === 'function') {
+        refreshEvents();
+      }
+
+      navigate('/main/plannextevents');
+    } catch (err) {
+      console.error('Error creating/updating event:', err);
     }
   };
-  
-  
 
   return (
     <div className={styles.wrap}>
