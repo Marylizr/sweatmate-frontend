@@ -69,51 +69,41 @@ const Form = ({ refreshEvents }) => {
     }
   }, [eventId]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // Check if the selected time is within working hours
-    if (!isTimeWithinWorkingHours(date)) {
-      alert(`Please select a time between ${WORKING_HOURS_START}:00 and ${WORKING_HOURS_END}:00.`);
-      return;
-    }
-
-    let usersToAssign = trainerOnly
-      ? null
-      : selectAll
-      ? existingUsers.map((user) => user._id)
-      : selectedUsers;
-
-    const newEvent = {
-      eventType,
-      title,
-      date,
-      duration,
-      location,
-      description,
-      userId: trainerOnly ? null : usersToAssign,
-      trainerOnly,
-    };
-
+  const handleSubmit = async (data) => {
     try {
-      if (eventId) {
-        await fetchResource('PUT', `events/${eventId}`, { body: newEvent });
-        alert('Event successfully updated!');
+      const payload = {
+        eventType: data.eventType,
+        title: data.title,
+        date: data.date,
+        duration: data.duration,
+        location: data.location,
+        description: data.description,
+        customerEmail: data.customerEmail,
+        trainerOnly: trainerOnly,  // Pass the trainerOnly checkbox value
+        userId: trainerOnly ? [] : selectedUsers, // If trainerOnly, do not send users
+        status: "pending",
+        confirmationStatus: "not_sent",
+        rescheduleHistory: [],
+      };
+  
+      console.log("Submitting event payload:", payload);
+  
+      const response = await customFetch("POST", "events", {
+        body: JSON.stringify(payload),
+        headers: { "Content-Type": "application/json" },
+      });
+  
+      if (response.error) {
+        console.error("Error creating event:", response.error);
       } else {
-        await fetchResource('POST', 'events', { body: newEvent });
-        alert('Event successfully created!');
+        console.log("Event created successfully", response);
       }
-
-      // Refresh events in the parent component
-      if (typeof refreshEvents === 'function') {
-        refreshEvents();
-      }
-
-      navigate('/main/plannextevents');
-    } catch (err) {
-      console.error('Error creating/updating event:', err);
+    } catch (error) {
+      console.error("Unexpected error:", error);
     }
   };
+  
+  
 
   return (
     <div className={styles.wrap}>

@@ -112,6 +112,11 @@
 
 /* Extra Small Devices (Portrait Phones, less than 576px) */
 @media only screen and (max-width: 575.98px) {
+
+   .container{
+      margin: 0;
+        width: 95vw;
+   }
    .wrapper {
       margin: 0;
       width: 15em;
@@ -140,7 +145,6 @@
       border: transparent;
    }
 
-   
 
    .log {
       display: flex;
@@ -159,7 +163,6 @@
  /* Small Devices (Landscape Phones, 576px and up) */
  @media only screen and (min-width: 576px) and (max-width: 767.98px) {
   
-   
    
 
   
