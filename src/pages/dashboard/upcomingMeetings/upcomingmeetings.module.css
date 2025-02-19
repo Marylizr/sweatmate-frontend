@@ -27,6 +27,9 @@ button.checkInButton {
   color: teal;
   padding: 3px;
   margin: 3px;
+  width: 9em;
+    height: 3em;
+    border-radius: 0.5em;
 }
 
 button.noShowButton {
@@ -35,7 +38,19 @@ button.noShowButton {
   color: red;
   padding: 3px;
   margin: 3px;
+  width: 9em;
+    height: 3em;
+    border-radius: 0.5em;
 }
+
+.statusButtons {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  margin: 1em;
+} 
 
 p.meetingStatus {
   margin:0;
@@ -71,9 +86,9 @@ p.meetingStatus {
    justify-content: space-between;
    align-items: center;
    padding: 10px;
-   border: 1px solid #ddd;
-   border-radius: 5px;
-   background-color: #f9f9f9;
+   background-color: #fff;
+   border-radius: 10px;
+   box-shadow: 0 4px 8px #00000033;
  }
  
  .userInfo {

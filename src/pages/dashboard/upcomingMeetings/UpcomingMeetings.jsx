@@ -139,7 +139,8 @@ const UpcomingMeetings = () => {
                   {new Date(meeting.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </p>
                 <p className={styles.meetingDuration}>{meeting.duration} min Session</p>
-                {meeting.status === 'pending' ? (
+              </div>
+              {meeting.status === 'pending' ? (
                   <div className={styles.statusButtons}>
                     <button
                       className={styles.checkInButton}
@@ -159,7 +160,6 @@ const UpcomingMeetings = () => {
                     {meeting.status.charAt(0).toUpperCase() + meeting.status.slice(1)}
                   </p>
                 )}
-              </div>
             </div>
           ))
         ) : (
