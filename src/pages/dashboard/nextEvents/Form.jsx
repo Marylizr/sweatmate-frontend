@@ -70,41 +70,46 @@ const Form = ({ refreshEvents }) => {
     e.preventDefault();
 
     if (!isTimeWithinWorkingHours(date)) {
-      alert(`Please select a time between ${WORKING_HOURS_START}:00 and ${WORKING_HOURS_END}:00.`);
-      return;
+        alert(`Please select a time between ${WORKING_HOURS_START}:00 and ${WORKING_HOURS_END}:00.`);
+        return;
     }
 
     let usersToAssign = trainerOnly ? [] : selectAll ? existingUsers.map((user) => user._id) : selectedUsers;
 
     const newEvent = {
-      eventType,
-      title,
-      date,
-      duration,
-      location,
-      description,
-      userId: usersToAssign,
-      trainerOnly,
+        eventType,
+        title,
+        date,
+        duration,
+        location,
+        description,
+        userId: usersToAssign, // Ensure it's an array (even empty for trainerOnly)
+        trainerOnly,
+        customerEmail: "", // Optional field, ensure it's handled
+        status: "pending", // Default value
+        confirmationStatus: "not_sent", // Default value
+        rescheduleHistory: [] // Initialize empty
     };
 
     try {
-      if (eventId) {
-        await fetchResource('PUT', `events/${eventId}`, { body: newEvent });
-        alert('Event successfully updated!');
-      } else {
-        await fetchResource('POST', 'events', { body: newEvent });
-        alert('Event successfully created!');
-      }
+        if (eventId) {
+            await fetchResource('PUT', `events/${eventId}`, { body: newEvent });
+            alert('Event successfully updated!');
+        } else {
+            await fetchResource('POST', 'events', { body: newEvent });
+            alert('Event successfully created!');
+        }
 
-      if (typeof refreshEvents === 'function') {
-        refreshEvents();
-      }
+        if (typeof refreshEvents === 'function') {
+            refreshEvents();
+        }
 
-      navigate('/main/plannextevents');
+        navigate('/main/plannextevents');
     } catch (err) {
-      console.error('Error creating/updating event:', err);
+        console.error('Error creating/updating event:', err);
     }
-  };
+};
+
 
   return (
     <div className={styles.wrap}>
