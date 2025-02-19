@@ -56,7 +56,7 @@
       margin: 1em 0 0;
    }
    .targetInputGroup > form > input, select {
-      width: 20em!important;
+      width: 20em;
     }
     .targetInputGroup > input[type="number" i] {
       width: 20em;

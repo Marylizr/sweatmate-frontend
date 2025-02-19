@@ -109,8 +109,9 @@
    color: gray;
 }
 
-@media(max-width: 768px) {
 
+/* Extra Small Devices (Portrait Phones, less than 576px) */
+@media only screen and (max-width: 575.98px) {
    .wrapper {
       margin: 0;
       width: 15em;
@@ -123,10 +124,58 @@
    }
 
    .container {
-      margin-top: 0;
+      margin: 0;
+      width: 25em;
    }
-}
 
-@media (min-width: 767px) and (max-width: 1181px) {
+   .form_styles > form > input {
+      width: 26em;
+      height: 4em;
+   }
+
+
+   .log > input {
+      width: 21em;
+      height: 4em;
+      border: transparent;
+   }
+
    
+
+   .log {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      border: gray solid 1px;
+      border-radius: 0.5em;
+      margin: 0.5em;
+   }
+   .log > i > img {
+      padding: 0 1em;
+   }
+
+ }
+ 
+ /* Small Devices (Landscape Phones, 576px and up) */
+ @media only screen and (min-width: 576px) and (max-width: 767.98px) {
+  
+   
+   
+
+  
 }
+ 
+ /* Medium Devices (Tablets, 768px and up) */
+ @media only screen and (min-width: 768px) and (max-width: 991.98px) {
+   /* Add your styles here */
+ }
+ 
+ /* Large Devices (Desktops, 992px and up) */
+ @media only screen and (min-width: 992px) and (max-width: 1199.98px) {
+   /* Add your styles here */
+ }
+ 
+ /* Extra Large Devices (Large Desktops, 1200px and up) */
+ @media only screen and (min-width: 1200px) and (max-width: 1399.98px) {
+   /* Add your styles here */
+ }

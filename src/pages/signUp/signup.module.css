@@ -144,16 +144,111 @@
     align-items: center;
 }
 
-@media(max-width: 600px) {
-
+/* Extra Small Devices (Portrait Phones, less than 576px) */
+@media only screen and (max-width: 575.98px) {
    .wrapper {
       margin: 0;
-      width: 90vw;
+      width: 15em;
+      height: auto;
+   }
+
+   .header {
+      margin-bottom: 2em;
+      margin-top: 0em;
+   }
+
+   .container {
+      margin: 0;
+      width: 25em;
+   }
+
+   .form_styles > form > input {
+      width: 26em;
+      height: 4em;
+   }
+
+   .log > input {
+      width: 22em;
+      height: 4em;
+   }
+
+   .pass {
       display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
-      align-content: center;
       align-items: center;
+      flex-direction: row;
+      border: gray solid 1px;
+      border-radius: 0.5em;
+      margin: 0.5em;
+   }
+
+   .pass > input {
+      width: 22em;
+      height: 4em;
+      border: transparent;
+      border-radius: 0.5em;
+      text-align: center;
+      color: grey;
+      margin: 0.5em 0.7em 0.5em 0;
+   }
+
+   .form_styles > form > select {
+      width: 27em;
+      height: 4em;
+      border: 1px solid gray;
+      border-radius: 0.5em;
+      text-align: center;
+      color: grey;
+      margin: 0.5em 0;
+      box-shadow: none;
+   }
+
+   .pass > i > img {
+      padding: 0 1em 0;
    }
 }
 
+/* Small Devices (Landscape Phones, 576px and up) */
+@media only screen and (min-width: 576px) and (max-width: 767.98px) {
+
+   .wrapper {
+      margin: 0;
+      width: 15em;
+      height: auto;
+   }
+
+   .header {
+      margin-bottom: 2em;
+      margin-top: 0em;
+   }
+
+   .container {
+      margin: 0;
+      width: 25em;
+   }
+
+   .form_styles > form > input {
+      width: 26em;
+      height: 4em;
+   }
+
+   .log > input {
+      width: 22em;
+      height: 4em;
+   }
+ 
+}
+
+/* Medium Devices (Tablets, 768px and up) */
+@media only screen and (min-width: 768px) and (max-width: 991.98px) {
+/* Add your styles here */
+}
+
+/* Large Devices (Desktops, 992px and up) */
+@media only screen and (min-width: 992px) and (max-width: 1199.98px) {
+/* Add your styles here */
+}
+
+/* Extra Large Devices (Large Desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) and (max-width: 1399.98px) {
+/* Add your styles here */
+}

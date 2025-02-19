@@ -235,7 +235,7 @@ const SignUpForm = () => {
             ))}
           </select>
         ) : (
-          <p>No trainers available. Please try again later.</p>
+          <p>No trainers available</p>
         )}
         {errors.trainerId && <p className={styles.error}>{errors.trainerId.message}</p>}
 

@@ -72,8 +72,14 @@ button.toggleButton {
 }
 
 
-/*mobile*/
-@media (max-width:768px){
+
+/* Extra Small Devices (Portrait Phones, less than 576px) */
+@media only screen and (max-width: 575.98px) {
+   /* Add your styles here */
+ }
+ 
+ /* Small Devices (Landscape Phones, 576px and up) */
+ @media only screen and (min-width: 576px) and (max-width: 767.98px) {
    .container {
       display: flex;
       flex-direction: column;
@@ -95,12 +101,28 @@ button.toggleButton {
    .userSelection > select  {
       width: 21em;
    }
-   
-}
-
-/* Larger screens */
-@media (min-width: 768px) {
-   .container {
-     grid-template-columns: repeat(2, 1fr);
-   }
  }
+ 
+ /* Medium Devices (Tablets, 768px and up) */
+ @media only screen and (min-width: 768px) and (max-width: 991.98px) {
+   /* Add your styles here */
+ }
+ 
+ /* Large Devices (Desktops, 992px and up) */
+ @media only screen and (min-width: 992px) and (max-width: 1199.98px) {
+   /* Add your styles here */
+ }
+ 
+ /* Extra Large Devices (Large Desktops, 1200px and up) */
+ @media only screen and (min-width: 1200px) and (max-width: 1399.98px) {
+   /* Add your styles here */
+ }
+ 
+
+/* align-content: center;
+align-items: center;
+height: auto;
+margin-right: 0;
+padding: 2em;
+width: 41em;
+margin: 1em 0; */

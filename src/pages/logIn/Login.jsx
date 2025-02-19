@@ -132,12 +132,12 @@ const Login = () => {
                 placeholder='Minimum length: 8'
                 {...register("password", { required: true, minLength: 8 })}
               />
-              <i className={styles.eye} onClick={togglePasswordVisibility}>
+              <i onClick={togglePasswordVisibility}>
                 <img src={eye} alt='eye-icon' />
               </i>
+            </div>
               {errors.password?.type === 'required' && <p className={styles.error}>This field is mandatory</p>}
               {errors.password?.type === 'minLength' && <p className={styles.error}>The password must have 8 characters min</p>}
-            </div>
             <input className={styles.submit} type="submit" value="Let's Go!" />
           </form>
         </div>

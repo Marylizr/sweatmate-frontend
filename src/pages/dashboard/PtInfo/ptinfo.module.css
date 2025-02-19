@@ -92,6 +92,11 @@
    padding: 5px;
 }
 
+.namesinput > textarea {
+   height: 5em;
+   width: 40em;
+}
+
 
 .passwordeye {
    display: flex;
