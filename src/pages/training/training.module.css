@@ -81,31 +81,40 @@ button.toggleButton {
  /* Small Devices (Landscape Phones, 576px and up) */
  @media only screen and (min-width: 576px) and (max-width: 767.98px) {
    .container {
-      display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
-      align-content: center;
-      align-items: center;
-      width: 19em;
-      height: 20em;
-      margin-bottom: 1em;
-      margin-right: 0;
-      padding: 2em;
+      width: 94vw;
    }
 
    .userSelection{
       display: flex;
+      flex-direction: row;
       flex-wrap: wrap;
-      flex-direction: column
+      justify-content: center;
    }
    .userSelection > select  {
       width: 21em;
+   }
+   .wrap {
+      flex-direction: row;
+      justify-content: center;
+      width: 90vw;
    }
  }
  
  /* Medium Devices (Tablets, 768px and up) */
  @media only screen and (min-width: 768px) and (max-width: 991.98px) {
-   /* Add your styles here */
+   .container {
+      width: 94vw;
+   }
+
+   .userSelection{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+   }
+   .userSelection > select  {
+      width: 21em;
+   }
  }
  
  /* Large Devices (Desktops, 992px and up) */
