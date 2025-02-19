@@ -217,7 +217,52 @@ p.meetingStatus {
 
 /* Medium Devices (Tablets, 768px and up) */
 @media only screen and (min-width: 768px) and (max-width: 991.98px) {
-  /* Add your styles here */
+  .container {
+    width: 95vw;
+    margin: 0.5em 0 0 0;
+    height: 17em;
+    overflow-x: hidden;
+  }
+  .header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1em;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+  .header > h2 {
+    font-size: 20px;
+  }
+
+  .header > p {
+    font-size: 15px;
+    margin: 0;
+  }
+
+  .meetingsList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 90vw;
+    align-items: center;
+  }
+  .meetingItem {
+    align-items: center;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px #0003;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    flex-direction: column;
+    width: 85vw;
+    height: auto;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+  }
 }
 
 /* Large Devices (Desktops, 992px and up) */
