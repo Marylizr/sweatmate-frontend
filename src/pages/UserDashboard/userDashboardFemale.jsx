@@ -27,11 +27,11 @@ import MoodHistory from "../../components/moodHistory/MoodHistory";
 import UserNextEvents from "../userProfile/userNextEvents/UserNextEvents";
 
 const UserDashboardFemale = () => {
-  const [user, setUser] = useState("");
+  const [userName, setUserName] = useState("");
   const [isMoodModalOpen, setIsMoodModalOpen] = useState(false);
   const [mood, setMood] = useState("");
   const [comments, setComments] = useState("");
-  // const [userId, setUserId] = useState("");
+  const [userId, setUserId] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isMoodLogged, setIsMoodLogged] = useState(false);
@@ -51,8 +51,11 @@ const UserDashboardFemale = () => {
   useEffect(() => {
     const loadUserData = async () => {
       try {
-        const json = await customFetch("GET", "user/me");
-        setUser(json)
+        const json = await customFetch("GET", `user/me?id=${userSession.id}`); 
+        setUserName(json.name);
+        setUserId(json._id || userSession.id);
+
+        
 
         // Check if the user has logged their mood today
         const today = new Date().toISOString().split("T")[0];
@@ -124,7 +127,7 @@ const UserDashboardFemale = () => {
 
 
     const data = {
-      user,
+      userId,
       mood,
       suggestions,
       comments,
