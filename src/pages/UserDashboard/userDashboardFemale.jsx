@@ -35,7 +35,7 @@ const UserDashboardFemale = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isMoodLogged, setIsMoodLogged] = useState(false);
-  const [isMessageDisplayed, setIsMessageDisplayed] = useState(false);
+  const [ setIsMessageDisplayed] = useState(false);
 
   const REACT_API_KEY = process.env.REACT_APP_CHAT_API_KEY;
   console.log(REACT_API_KEY)
