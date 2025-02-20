@@ -50,12 +50,14 @@ const UserDashboardFemale = () => {
 
   useEffect(() => {
     const loadUserData = async () => {
+      const userSession = JSON.parse(localStorage.getItem("user-session"));
+
       try {
         const json = await customFetch("GET", `user/me?id=${userSession.id}`); 
         setUserName(json.name);
         setUserId(json._id || userSession.id);
 
-        
+        console.log("User ID:", json._id);
 
         // Check if the user has logged their mood today
         const today = new Date().toISOString().split("T")[0];
@@ -68,11 +70,11 @@ const UserDashboardFemale = () => {
         console.error("Error fetching user data:", error);
       }
     };
-
+   
     loadUserData();
   }, []);
 
-  console.log("User ID:", json._id);
+ 
 
 
   const closeMoodModal = () => {
@@ -163,7 +165,7 @@ const UserDashboardFemale = () => {
           <div className={styles.modalContent}>
             {!suggestions.length ? (
               <div className={styles.wrapper}>
-                <h2>{user.name}, How do you feel today?</h2>
+                <h2>{userName}, How do you feel today?</h2>
                 <div className={styles.moods}>
                   {moods.map((item) => (
                     <button
