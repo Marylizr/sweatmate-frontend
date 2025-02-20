@@ -24,6 +24,7 @@ import goals from "../../assets/goals.svg";
 import NavBar from "../../components/navBar/navBar";
 import CookieConsent from "../../components/cookiesPreferences/Cookies";
 import MoodHistory from "../../components/moodHistory/MoodHistory";
+import UserNextEvents from "../userProfile/userNextEvents/UserNextEvents";
 
 const UserDashboardFemale = () => {
   const [userName, setUserName] = useState("");
@@ -226,10 +227,16 @@ const UserDashboardFemale = () => {
             <WeekStorical />
             <MacroCalculator />
           </div>
+
           <div className={styles.smallApps}>
             <div className={styles.save}>
               <MoodHistory />
             </div>
+
+            <div className={styles.save}>
+              <UserNextEvents />
+            </div>
+
             <div className={styles.save}>
               <button>
                 <Link to="/mygoals">
@@ -238,6 +245,7 @@ const UserDashboardFemale = () => {
                 </Link>
               </button>
             </div>
+
             <div className={styles.save}>
               <button>
                 <Link to="/allworkouts">
@@ -246,6 +254,7 @@ const UserDashboardFemale = () => {
                 </Link>
               </button>
             </div>
+
             <div className={styles.save}>
               <button>
                 <Link to="/workoutsDashboard">
@@ -254,6 +263,7 @@ const UserDashboardFemale = () => {
                 </Link>
               </button>
             </div>
+
             <div className={styles.save}>
               <button>
                 <Link to="/progress">
@@ -262,6 +272,7 @@ const UserDashboardFemale = () => {
                 </Link>
               </button>
             </div>
+
             <div className={styles.save}>
               <button>
                 <Link to="/personaltrainer">
@@ -270,6 +281,7 @@ const UserDashboardFemale = () => {
                 </Link>
               </button>
             </div>
+
             <div className={styles.save}>
               <button>
                 <Link to="/mealPlanner">
@@ -278,6 +290,7 @@ const UserDashboardFemale = () => {
                 </Link>
               </button>
             </div>
+
             <div className={styles.save}>
               <button>
                 <Link to="/">
