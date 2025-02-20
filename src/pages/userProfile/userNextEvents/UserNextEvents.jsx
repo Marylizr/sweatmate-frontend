@@ -37,7 +37,7 @@ const UserNextEvents = () => {
 
   return (
     <div>
-      <h2>My Upcoming Events</h2>
+      <h3>Upcoming Events</h3>
       <p>You have {unreadEvents} new events</p>
       <ul>
         {events.map(event => (

@@ -22,7 +22,7 @@ const MoodHistory = ({ userId }) => {
 
   return (
     <div className={styles.container}>
-      <h3>Your Mood History</h3>
+      <h3>Today's Mood</h3>
       {moodLogs.length === 0 ? (
         <p>No mood logs found.</p>
       ) : (

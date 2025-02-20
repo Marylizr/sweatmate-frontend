@@ -38,6 +38,7 @@ const UserDashboardFemale = () => {
   const [isMessageDisplayed, setIsMessageDisplayed] = useState(false);
 
   const REACT_API_KEY = process.env.REACT_APP_CHAT_API_KEY;
+  console.log(REACT_API_KEY)
 
   const moods = [
     { name: "Happy", emoji: happy },
@@ -90,6 +91,7 @@ const UserDashboardFemale = () => {
     setMood(selectedMood);
     setIsLoading(true);
 
+
     try {
       const response = await axios.post(
         "https://api.openai.com/v1/chat/completions",
@@ -111,9 +113,11 @@ const UserDashboardFemale = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${REACT_API_KEY}`,
           },
+          
         }
       );
-
+      console.log("Headers being sent:", headers);
+      
       const suggestionText = response.data.choices[0].message.content;
       setSuggestions([{ title: "Motivational Message", content: suggestionText }]);
       setIsMessageDisplayed(true);
@@ -126,7 +130,6 @@ const UserDashboardFemale = () => {
   };
 
   const handleSubmit = () => {
-
 
     const data = {
       userId,
