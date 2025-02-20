@@ -27,11 +27,11 @@ import MoodHistory from "../../components/moodHistory/MoodHistory";
 import UserNextEvents from "../userProfile/userNextEvents/UserNextEvents";
 
 const UserDashboardFemale = () => {
-  const [userName, setUserName] = useState("");
+  const [user, setUser] = useState("");
   const [isMoodModalOpen, setIsMoodModalOpen] = useState(false);
   const [mood, setMood] = useState("");
   const [comments, setComments] = useState("");
-  const [userId, setUserId] = useState("");
+  // const [userId, setUserId] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isMoodLogged, setIsMoodLogged] = useState(false);
@@ -52,8 +52,7 @@ const UserDashboardFemale = () => {
     const loadUserData = async () => {
       try {
         const json = await customFetch("GET", "user/me");
-        setUserName(json.name);
-        setUserId(json._id);
+        setUser(json)
 
         // Check if the user has logged their mood today
         const today = new Date().toISOString().split("T")[0];
@@ -69,6 +68,9 @@ const UserDashboardFemale = () => {
 
     loadUserData();
   }, []);
+
+  console.log("User ID:", json._id);
+
 
   const closeMoodModal = () => {
     setIsMoodModalOpen(false);
@@ -122,7 +124,7 @@ const UserDashboardFemale = () => {
 
 
     const data = {
-      userId,
+      user,
       mood,
       suggestions,
       comments,
@@ -158,7 +160,7 @@ const UserDashboardFemale = () => {
           <div className={styles.modalContent}>
             {!suggestions.length ? (
               <div className={styles.wrapper}>
-                <h2>{userName}, How do you feel today?</h2>
+                <h2>{user.name}, How do you feel today?</h2>
                 <div className={styles.moods}>
                   {moods.map((item) => (
                     <button
@@ -235,6 +237,7 @@ const UserDashboardFemale = () => {
 
             <div className={styles.save}>
               <UserNextEvents />
+              
             </div>
 
             <div className={styles.save}>
