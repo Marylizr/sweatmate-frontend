@@ -1,79 +1,49 @@
-import React, { useEffect, useState } from "react";
-import fetchResource from "../../api"; 
-import styles from "./userNextEvents.module.css";
+import React, { useState, useEffect } from 'react';
+import fetchResource from '../../../api'; 
+import { getSessionUser } from '../../../api/auth'; 
 
 const UserNextEvents = () => {
   const [events, setEvents] = useState([]);
   const [unreadEvents, setUnreadEvents] = useState(0);
 
+  // Fetch the authenticated user
+  const user = getSessionUser()?.user; // Ensure user is properly retrieved
+
   useEffect(() => {
+    if (!user || !user._id) {
+      console.error("User is not defined or missing user ID");
+      return;
+    }
+
     const fetchEvents = async () => {
       try {
-        const response = await fetchResource("GET", "events/user");
+        const response = await fetchResource("GET", `events?userId=${user._id}`);
+        
         if (response.authError) {
           alert("Session expired. Please log in again.");
           window.location.href = "/login";
           return;
         }
 
-        setEvents(response.events);
-        setUnreadEvents(response.unreadCount);
+        setEvents(response.events || []);
+        setUnreadEvents(response.unreadCount || 0);
       } catch (error) {
         console.error("Error fetching user events:", error);
       }
     };
 
     fetchEvents();
-  }, []);
-
-  const handleConfirm = async (eventId) => {
-    try {
-      await fetchResource("PUT", `events/confirm/${eventId}`);
-      setEvents(events.map(event => event._id === eventId ? { ...event, confirmed: true } : event));
-    } catch (error) {
-      console.error("Error confirming event:", error);
-    }
-  };
-
-  const handleCancel = async (eventId) => {
-    try {
-      await fetchResource("PUT", `events/cancel/${eventId}`);
-      setEvents(events.filter(event => event._id !== eventId));
-    } catch (error) {
-      console.error("Error canceling event:", error);
-    }
-  };
+  }, [user]); // Ensure user is defined before making API calls
 
   return (
-    <div className={styles.container}>
-      <header className={styles.header}>
-        <h2>My Next Events</h2>
-        {unreadEvents > 0 && <span className={styles.badge}>{unreadEvents}</span>}
-      </header>
-
-      {events.length === 0 ? (
-        <p className={styles.noEvents}>No upcoming events.</p>
-      ) : (
-        <ul className={styles.eventList}>
-          {events.map(event => (
-            <li key={event._id} className={styles.eventItem}>
-              <h3>{event.title}</h3>
-              <p>{new Date(event.date).toLocaleString()}</p>
-              <p>{event.location}</p>
-              <div className={styles.buttons}>
-                {!event.confirmed ? (
-                  <>
-                    <button className={styles.confirm} onClick={() => handleConfirm(event._id)}>Confirm</button>
-                    <button className={styles.cancel} onClick={() => handleCancel(event._id)}>Cancel</button>
-                  </>
-                ) : (
-                  <span className={styles.confirmed}>Confirmed</span>
-                )}
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
+    <div>
+      <h2>My Upcoming Events</h2>
+      <p>You have {unreadEvents} new events</p>
+      <ul>
+        {events.map(event => (
+          <li key={event._id}>{event.title} on {new Date(event.date).toLocaleString()}</li>
+        ))}
+      </ul>
     </div>
   );
 };
