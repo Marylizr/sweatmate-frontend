@@ -90,8 +90,7 @@ const UserDashboardFemale = () => {
   const handleMoodClick = async (selectedMood) => {
     setMood(selectedMood);
     setIsLoading(true);
-
-
+  
     try {
       const response = await axios.post(
         "https://api.openai.com/v1/chat/completions",
@@ -113,12 +112,11 @@ const UserDashboardFemale = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${REACT_API_KEY}`,
           },
-          
         }
       );
-      console.log("Headers being sent:", headers);
-      
+        console.log( `Bearer ${REACT_API_KEY}`)
       const suggestionText = response.data.choices[0].message.content;
+      
       setSuggestions([{ title: "Motivational Message", content: suggestionText }]);
       setIsMessageDisplayed(true);
     } catch (error) {
@@ -128,35 +126,37 @@ const UserDashboardFemale = () => {
       setIsLoading(false);
     }
   };
+  
 
   const handleSubmit = () => {
-
-    const data = {
-      userId,
-      mood,
-      suggestions,
-      comments,
-      date: new Date().toISOString(),
-    };
-
-    customFetch("POST", "moodTracker", { body: data })
-      .then(() => {
-        console.log("Mood logged successfully:", data);
-
-        // Store today's date in localStorage
-        const today = new Date().toISOString().split("T")[0];
-        localStorage.setItem("moodLoggedDate", today);
-
-        setSuggestions(suggestions)
-        setIsMoodLogged(true);
-
-        // If no AI-generated message is requested, close modal immediately
-        if (!isMessageDisplayed) {
-          closeMoodModal();
-        }
-      })
-      .catch((error) => console.error("Error logging mood:", error));
+  const data = {
+    userId,
+    mood,
+    suggestions,
+    comments,
+    date: new Date().toISOString(),
   };
+
+  customFetch("POST", "moodTracker", { body: data })
+    .then(() => {
+      console.log("Mood logged successfully:", data);
+
+      // Store today's date in localStorage
+      const today = new Date().toISOString().split("T")[0];
+      localStorage.setItem("moodLoggedDate", today);
+
+      setIsMoodLogged(true);
+
+      // Ensure the modal only closes after showing the message
+      if (suggestions.length > 0) {
+        setTimeout(() => {
+          closeMoodModal();
+        }, 4000); // Close after 4 seconds
+      }
+    })
+    .catch((error) => console.error("Error logging mood:", error));
+};
+
   console.log(`AI suggestion ${suggestions}`)
 
   return (
