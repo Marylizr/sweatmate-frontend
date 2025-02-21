@@ -130,7 +130,7 @@
 }
 
 .sendButton > button {
-  height: 5em;
+  height: 4em;
   background-color: white;
   color: teal;
   border: 1px solid teal;
@@ -146,23 +146,18 @@
 /* Extra Small Devices (Portrait Phones, less than 576px) */
 @media only screen and (max-width: 575.98px) {
   .container {
-    width: 96vw;
-    margin: 0.5em 0em 0 0;
-    height: auto;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+    width: 38.5vw;
+    margin: 0.5em 0.5em 0 0;
+    height: 9em;
   }
  
   .container2 {
-    width: 86vw;
-    margin: 0.5em 0em 0 0;
-    height: 100vh;
-    padding: 16px;
     display: flex;
+    margin: .5em 0 0;
+    padding: 16px;
     flex-direction: column;
-    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
   }
  
   .title {
