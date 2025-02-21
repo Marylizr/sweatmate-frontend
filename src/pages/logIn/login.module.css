@@ -134,8 +134,9 @@
    }
 
    .form_styles > form > input {
-      width: 26em;
       height: 4em;
+      width: 18em;
+      font-size: 20px;
    }
 
 

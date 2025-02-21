@@ -21,36 +21,36 @@ const MealList = () => {
   ];
 
   useEffect(() => {
-    // Fetch meal plans
-    customFetch("GET", "savePrompt")
-      .then((json) =>
-        setMealPlans(
-          json.filter((plan) => plan.infotype === "recipes") // Filter for meal plans
-        )
-      )
-      .catch((error) => console.error("Error fetching meal plans:", error));
+    const fetchData = async () => {
+      try {
+        // Fetch meal plans
+        const mealData = await customFetch("GET", "savePrompt");
+        setMealPlans(mealData.filter((plan) => plan.infotype === "recipes"));
 
-    // Fetch users
-    customFetch("GET", "user")
-      .then((json) => setUsers(json))
-      .catch((error) => console.error("Error fetching users:", error));
+        // Fetch users
+        const userData = await customFetch("GET", "user");
+        setUsers(userData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  // Filter meal plans by type
+  // Corrected Filtering Logic
   const filteredPlans = mealPlans.filter(
-    (plan) => selectedType || plan.subCategory === selectedType
+    (plan) => selectedType === "" || plan.subCategory === selectedType
   );
 
-  // Toggle selection
+  // Toggle Selection Logic
   const togglePlanSelection = (planId) => {
-    if (selectedPlans.includes(planId)) {
-      setSelectedPlans(selectedPlans.filter((id) => id !== planId));
-    } else {
-      setSelectedPlans([...selectedPlans, planId]);
-    }
+    setSelectedPlans((prev) =>
+      prev.includes(planId) ? prev.filter((id) => id !== planId) : [...prev, planId]
+    );
   };
 
-  // Send selected meal plans
+  // Send Selected Meal Plans
   const handleSendPlans = () => {
     if (!selectedUser) {
       alert("Please select a user.");
@@ -64,7 +64,6 @@ const MealList = () => {
 
     const payload = selectedPlans.map((planId) => {
       const plan = mealPlans.find((item) => item._id === planId);
-
       return {
         name: selectedUser,
         infotype: "recipes",
@@ -86,9 +85,8 @@ const MealList = () => {
       });
   };
 
-  //handle edit
+  // Handle Edit Meal Plan
   const handleEditMealPlan = (id, updatedContent) => {
-    // Update the local state
     const updatedMealPlans = mealPlans.map((mealPlan) =>
       mealPlan._id === id ? { ...mealPlan, ...updatedContent } : mealPlan
     );
@@ -97,76 +95,60 @@ const MealList = () => {
     // Save to backend
     customFetch("PUT", `savePrompt/${id}`, { body: updatedContent })
       .then(() => {
-        console.log("Workout updated successfully in the backend.");
+        console.log("Meal plan updated successfully.");
       })
       .catch((error) => {
-        console.error("Error updating workout:", error);
+        console.error("Error updating meal plan:", error);
       });
   };
-
-  //handle select 
-  const handleSelect = (id, isSelected) => {
-    if (isSelected) {
-      setSelectedPlans((prev) => [...prev, id]); // Add to selected list
-    } else {
-      setSelectedPlans((prev) => prev.filter((mealPlanId) => mealPlanId !== id)); // Remove from selected list
-    }
-  };
-
 
   return (
     <div className={styles.container2}>
 
-     <div className={styles.buttonWrap}>
+      {/* User Selection & Send Button */}
+      <div className={styles.buttonWrap}>
+        <div className={styles.userSelection}>
+          <select
+            value={selectedUser}
+            onChange={(e) => setSelectedUser(e.target.value)}
+            className={styles.dropdown}
+          >
+            <option value="">Select a user</option>
+            {users.map((user) => (
+              <option key={user._id} value={user._id}>
+                {user.email}
+              </option>
+            ))}
+          </select>
+        </div>
 
-          {/* User Selection */}
-          <div className={styles.userSelection}>
-            <select
-              value={selectedUser}
-              onChange={(e) => setSelectedUser(e.target.value)}
-              className={styles.dropdown}
-            >
-              <option value="">Select a user</option>
-              {users.map((user) => (
-                <option key={user._id} value={user._id}>
-                  {user.email}
-                </option>
-              ))}
-            </select>
-          </div>
-
-            {/* Send Button */}
-          <div className={styles.sendButton}>
-            <button  onClick={handleSendPlans}>
-              Send MealPlan
-            </button>
-          </div>
-       </div>
+        <div className={styles.sendButton}>
+          <button onClick={handleSendPlans}>Send Meal Plan</button>
+        </div>
+      </div>
 
       {/* Filter Buttons */}
       <div className={styles.filterButtons}>
         {mealTypes.map((type) => (
           <button
             key={type}
-            className={`${styles.filterButton} ${
-              selectedType === type ? styles.active : ""
-            }`}
-            onClick={() => setSelectedType(type)}
+            className={`${styles.filterButton} ${selectedType === type ? styles.active : ""}`}
+            onClick={() => setSelectedType((prev) => (prev === type ? "" : type))}
           >
             {type.charAt(0).toUpperCase() + type.slice(1)}
           </button>
         ))}
       </div>
 
-      {/* Meal Plans */}
+      {/* Meal Plans Display */}
       <div className={styles.mealPlans}>
         {filteredPlans.length > 0 ? (
           filteredPlans.map((plan) => (
             <Card
               key={plan._id}
               item={plan}
-              onSelect={handleSelect}
-              onToggleSelect={togglePlanSelection}
+              onSelect={() => togglePlanSelection(plan._id)}
+              isSelected={selectedPlans.includes(plan._id)}
               onEdit={handleEditMealPlan}
             />
           ))
@@ -175,7 +157,6 @@ const MealList = () => {
         )}
       </div>
 
-     
     </div>
   );
 };

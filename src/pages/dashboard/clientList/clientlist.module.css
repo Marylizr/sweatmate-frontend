@@ -138,8 +138,62 @@
    border-radius: 5em;
 }
 
-@media (max-width:768px){
 
+ /* Extra Small Devices (Portrait Phones, less than 576px) */
+@media only screen and (max-width: 575.98px) {
+  
+   .container {
+      width: 96vw;
+      margin: 0.5em 0em 0 0;
+      height: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+    }
+  
+    .title {
+      font-size: 20px;
+    }
+ 
+    .userList {
+       width: 90vw;
+       display: flex;
+         flex-direction: row;
+         flex-wrap: wrap;
+         align-content: center;
+         align-items: center;
+         padding: 0.5em;
+         background-color: #fff;
+         border-radius: 10px;
+    }
+    
+    .userItem {
+       width: 90vw;
+    }
+ 
+    .userDetails > p {
+       margin: 0;
+       font-size: 2em;
+    }
+ 
+    .userItem > img {
+       width: 4em;
+    }
+ 
+    .userDetails {
+       display: flex;
+       flex-direction: column;
+       justify-content: flex-start;
+       align-items: flex-start;
+       flex-wrap: wrap;
+       width: 10em;
+       overflow-y: hidden;
+    }
+ }
+ 
+ /* Small Devices (Landscape Phones, 576px and up) */
+ @media only screen and (min-width: 576px) and (max-width: 767.98px) {
    .container {
       width: 90vw;
       margin: 0.5em 0 0 0;
@@ -164,59 +218,37 @@
    .userItem {
       width: 80vw;
    }
- 
  }
-
- @media (max-width:375px){
-
-   .container {
-     width: 96vw;
-     margin: 0.5em 0em 0 0;
-     height: auto;
-     padding: 16px;
-     display: flex;
-     flex-direction: column;
-     flex-wrap: wrap;
-   }
  
-   .title {
-     font-size: 20px;
+ /* Medium Devices (Tablets, 768px and up) */
+ @media only screen and (min-width: 768px) and (max-width: 991.98px) {
+   .container {
+      width: 90vw;
+      margin: 0.5em 0 0 0;
+      height: 17em;
+      overflow-x: hidden;
    }
-
    .userList {
-      width: 90vw;
-      display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-content: center;
-        align-items: center;
-        padding: 0.5em;
-        background-color: #fff;
-        border-radius: 10px;
-   }
-   
-   .userItem {
-      width: 90vw;
-   }
-
-   .userDetails > p {
-      margin: 0;
-      font-size: 2em;
+      width: 80vw;
    }
 
    .userItem > img {
       width: 4em;
    }
-
-   .userDetails {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      width: 10em;
-      overflow-y: hidden;
+   .userDetails > p {
+      font-size: 1.3em;
    }
+
+   img.chevronIcon {
+      width: 4em;
+   }
+
+   .userItem {
+      width: 80vw;
+   }
+ }
  
- 
+ /* Large Devices (Desktops, 992px and up) */
+ @media only screen and (min-width: 992px) and (max-width: 1199.98px) {
+   /* Add your styles here */
  }
