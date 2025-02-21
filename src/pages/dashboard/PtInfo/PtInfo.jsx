@@ -33,7 +33,13 @@ const PtInfo = () => {
   const getUser = () => {
     customFetch("GET", "user/me")
       .then((json) => {
-        setUser({ ...json, password: "" });
+        console.log("API Response:", json);
+        setUser(prevUser => ({
+          ...prevUser,  
+          ...json,      
+          password: ""  
+        }));
+        
       })
       .catch(err => console.log(err, 'Cannot retrieve user information'));
   };
@@ -65,6 +71,9 @@ const PtInfo = () => {
     formData.append("file", base64Image);
     formData.append("upload_preset", uploadPreset);
     const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+
+    console.log("Cloudinary Cloud Name:", process.env.REACT_APP_CLOUDINARY_CLOUD_NAME);
+    console.log("Cloudinary Upload Preset:", process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET);
 
     try {
       const response = await fetch(url, {
