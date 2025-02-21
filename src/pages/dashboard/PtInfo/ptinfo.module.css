@@ -248,6 +248,12 @@
       flex-direction: column;
    }
 
+   .userimage > img {
+      width: 10em;
+      border-radius: 10em;
+      margin: 1em;
+   }
+
    .submit {
       border: none;
       background: teal;
