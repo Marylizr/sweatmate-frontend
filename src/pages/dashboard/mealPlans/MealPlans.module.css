@@ -147,7 +147,7 @@
 @media only screen and (max-width: 575.98px) {
   .container {
     width: 38.5vw;
-    margin: 0.5em 0.5em 0 0;
+    margin: 0.5em 0 0 0;
     height: 9em;
   }
  
@@ -158,6 +158,10 @@
     flex-direction: column;
     align-content: center;
     align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    height: auto;
+    width: 90vw;
   }
  
   .title {
@@ -227,11 +231,6 @@
     height: 9em;
   }
 
-    .container2 {
-    width: 86vw;
-    margin: 0.5em 0 1em 0;
-    height: auto;
-  }
 
   .filterButtons > button {
     display: flex;
@@ -296,11 +295,6 @@
     height: 9em;
   }
 
-    .container2 {
-    width: 86vw;
-    margin: 0.5em 0 1em 0;
-    height: auto;
-  }
 
   .filterButtons > button {
     display: flex;
