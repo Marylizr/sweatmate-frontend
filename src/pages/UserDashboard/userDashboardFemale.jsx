@@ -35,7 +35,7 @@ const UserDashboardFemale = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isMoodLogged, setIsMoodLogged] = useState(false);
-  const [ setIsMessageDisplayed] = useState(false);
+  const [ isMessageDisplayed, setIsMessageDisplayed] = useState(false);
 
   const REACT_API_KEY = process.env.REACT_APP_CHAT_API_KEY;
   console.log(REACT_API_KEY)
@@ -51,31 +51,38 @@ const UserDashboardFemale = () => {
 
   useEffect(() => {
     const loadUserData = async () => {
-      const userSession = JSON.parse(localStorage.getItem("user-session"));
-
-      try {
-        const json = await customFetch("GET", `user/me?id=${userSession.id}`); 
-        setUserName(json.name);
-        setUserId(json._id || userSession.id);
-
-        console.log("User ID:", json._id);
-
-        // Check if the user has logged their mood today
-        const today = new Date().toISOString().split("T")[0];
-        const lastLoggedDate = localStorage.getItem("moodLoggedDate");
-
-        if (lastLoggedDate !== today) {
-          setIsMoodModalOpen(true);
+        const userSession = JSON.parse(localStorage.getItem("user-session"));
+        if (!userSession || !userSession.id) {
+            console.error("User session missing or invalid:", userSession);
+            return;
         }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-   
-    loadUserData();
-  }, []);
+        try {
+            const json = await customFetch("GET", "user/me");
 
- 
+            if (!json || !json._id) {
+                console.error("Invalid API response:", json);
+                return;
+            }
+
+            setUserName(json.name);
+            setUserId(json._id);
+
+            console.log("Successfully fetched user data:", json);
+
+            // Check if the user has logged their mood today
+            const today = new Date().toISOString().split("T")[0];
+            const lastLoggedDate = localStorage.getItem("moodLoggedDate");
+
+            if (lastLoggedDate !== today) {
+                setIsMoodModalOpen(true);
+            }
+        } catch (error) {
+            console.error("Error fetching user data:", error);
+        }
+    };
+
+    loadUserData();
+}, []);
 
 
   const closeMoodModal = () => {
@@ -90,71 +97,79 @@ const UserDashboardFemale = () => {
   const handleMoodClick = async (selectedMood) => {
     setMood(selectedMood);
     setIsLoading(true);
-  
-    try {
-      const response = await axios.post(
-        "https://api.openai.com/v1/chat/completions",
-        {
-          model: "gpt-4",
-          messages: [
-            {
-              role: "system",
-              content: "Act as the best personal trainer and wellness coach.",
-            },
-            {
-              role: "user",
-              content: `I am feeling ${selectedMood}. Can you suggest a motivational message for me? Please provide only the message.`,
-            },
-          ],
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${REACT_API_KEY}`,
-          },
-        }
-      );
-        console.log( `Bearer ${REACT_API_KEY}`)
-      const suggestionText = response.data.choices[0].message.content;
-      
-      setSuggestions([{ title: "Motivational Message", content: suggestionText }]);
-      setIsMessageDisplayed(true);
-    } catch (error) {
-      console.error("Error fetching suggestions from ChatGPT:", error);
-      setSuggestions([]);
-    } finally {
-      setIsLoading(false);
+
+    // Log API Key before making the request
+    console.log("Using OpenAI API Key:", REACT_API_KEY);
+
+    if (!REACT_API_KEY) {
+        console.error("OpenAI API Key is missing!");
+        return;
     }
-  };
+
+    try {
+        const response = await axios.post(
+            "https://api.openai.com/v1/chat/completions",
+            {
+                model: "gpt-4",
+                messages: [
+                    {
+                        role: "system",
+                        content: "Act as the best personal trainer and wellness coach.",
+                    },
+                    {
+                        role: "user",
+                        content: `I am feeling ${selectedMood}. Can you suggest a motivational message for me? Please provide only the message.`,
+                    },
+                ],
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${REACT_API_KEY.trim()}`, // Trim spaces to avoid errors
+                },
+            }
+        );
+
+        const suggestionText = response.data.choices[0].message.content;
+        setSuggestions([{ title: "Motivational Message", content: suggestionText }]);
+        setIsMessageDisplayed(true);
+    } catch (error) {
+        console.error("Error fetching suggestions from ChatGPT:", error.response?.data || error.message);
+    } finally {
+        setIsLoading(false);
+    }
+};
+
   
+  const handleSubmit = async () => {
+    if (!userId) {
+        console.error("Cannot log mood, missing user ID.");
+        return;
+    }
 
-  const handleSubmit = () => {
-  const data = {
-    userId,
-    mood,
-    suggestions,
-    comments,
-    date: new Date().toISOString(),
-  };
+    const data = {
+        userId, // Ensure this is defined
+        mood,
+        suggestions,
+        comments,
+        date: new Date().toISOString(),
+    };
 
-  customFetch("POST", "moodTracker", { body: data })
-    .then(() => {
-      console.log("Mood logged successfully:", data);
+    try {
+        await customFetch("POST", "moodTracker", { body: data });
+        console.log("Mood logged successfully:", data);
 
-      // Store today's date in localStorage
-      const today = new Date().toISOString().split("T")[0];
-      localStorage.setItem("moodLoggedDate", today);
+        // Store today's date in localStorage
+        localStorage.setItem("moodLoggedDate", new Date().toISOString().split("T")[0]);
+        setIsMoodLogged(true);
 
-      setIsMoodLogged(true);
-
-      // Ensure the modal only closes after showing the message
-      if (suggestions.length > 0) {
-        setTimeout(() => {
-          closeMoodModal();
-        }, 4000); // Close after 4 seconds
-      }
-    })
-    .catch((error) => console.error("Error logging mood:", error));
+        // Only close modal if AI message is NOT requested
+        if (!isMessageDisplayed) {
+            closeMoodModal();
+        }
+    } catch (error) {
+        console.error("Error logging mood:", error);
+    }
 };
 
   console.log(`AI suggestion ${suggestions}`)
