@@ -59,7 +59,7 @@
 
 .form_styles > form > input {
    width: 18em;
-   height: 2em;
+   height: 4em;
    border: gray solid 1px;
    border-radius: 0.5em;
    text-align: center;
@@ -101,7 +101,7 @@
 
 .log > input {
    width: 15em;
-   height: 2em;
+   height: 4em;
    margin-right: 1em;
    border: gray solid 1px;
    border-radius: 0.5em;

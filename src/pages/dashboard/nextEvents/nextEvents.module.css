@@ -319,8 +319,8 @@ form > button.submit{
 
   .container {
     height: 9em;
-    margin: .5em 0 0;
-    width: 37vw;
+    margin: .5em .5em 0 0;
+    width: 36vw;
   }
 
   .styleinput {
