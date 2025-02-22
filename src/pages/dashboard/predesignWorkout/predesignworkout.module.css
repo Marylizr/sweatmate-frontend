@@ -119,9 +119,64 @@
   flex-wrap: wrap;
 }
 
-@media (max-width:768px){
 
-   .container {
+
+
+/* Extra Small Devices (Portrait Phones, less than 576px) */
+@media only screen and (max-width: 575.98px) {
+  
+  .container {
+    height: 9em;
+    margin: .5em 0.5em 0 0;
+    width: 36vw;
+  }
+
+  .container2 {
+    width: 96vw;
+    margin: 0.5em 0em 0 0;
+    height: 100vh;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+  .filterButtons > button{
+    display: flex;
+    margin-bottom: 1em;
+    width: 77vw;
+    height: 10vh;
+    flex-direction: column;
+  }
+
+  .filterButtons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .filterButton:hover {
+    display: flex;
+    margin-bottom: 1em;
+    width: 77vw;
+    height: 10vh;
+    flex-direction: column;
+  }
+}
+
+/* Small Devices (Landscape Phones, 576px and up) */
+@media only screen and (min-width: 576px) and (max-width: 767.98px) {
+  /* Add your styles here */
+}
+
+/* Medium Devices (Tablets, 768px and up) */
+@media only screen and (min-width: 768px) and (max-width: 991.98px) {
+  .container {
     width: 38.5vw;
     margin: 0.5em 0.5em 0 0;
     height: 9em;
@@ -185,58 +240,9 @@
     align-items: center;
     flex-wrap: wrap;
   }
+}
 
-
- }
-
-
- @media (max-width:375px){
-
-  .container {
-    width: 96vw;
-    margin: 0.5em 0em 0 0;
-    height: auto;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-  }
-
-  .container2 {
-    width: 96vw;
-    margin: 0.5em 0em 0 0;
-    height: 100vh;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-  }
-
-  .title {
-    font-size: 20px;
-  }
-  .filterButtons > button{
-    display: flex;
-    margin-bottom: 1em;
-    width: 77vw;
-    height: 10vh;
-    flex-direction: column;
-  }
-
-  .filterButtons {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .filterButton:hover {
-    display: flex;
-    margin-bottom: 1em;
-    width: 77vw;
-    height: 10vh;
-    flex-direction: column;
-  }
-
+/* Large Devices (Desktops, 992px and up) */
+@media only screen and (min-width: 992px) and (max-width: 1199.98px) {
+  /* Add your styles here */
 }

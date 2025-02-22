@@ -141,9 +141,10 @@
 
 
    .log > input {
+      border: #0000;
       height: 4em;
-      width: 20em;
-      border: transparent;
+      width: 16em;
+      font-size: 16px;
    }
 
 

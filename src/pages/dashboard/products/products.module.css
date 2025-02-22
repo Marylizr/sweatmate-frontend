@@ -14,30 +14,32 @@
    justify-content: center;
 }
 
-@media (max-width:768px){
 
-   .container {
-    width: 38.5vw;
-    margin: 0.5em 0 0 0;
+
+ /* Extra Small Devices (Portrait Phones, less than 576px) */
+@media only screen and (max-width: 575.98px) {
+  .container {
     height: 9em;
-    }
- }
-
- @media (max-width:375px){
-
-   .container {
-     width: 96vw;
-     margin: 0.5em 0em 0 0;
-     height: auto;
-     padding: 16px;
-     display: flex;
-     flex-direction: column;
-     flex-wrap: wrap;
+    margin: .5em 0 0;
+    width: 37.5vw;
    }
  
    .title {
      font-size: 20px;
    }
- 
- 
- }
+}
+
+/* Small Devices (Landscape Phones, 576px and up) */
+@media only screen and (min-width: 576px) and (max-width: 767.98px) {
+  /* Add your styles here */
+}
+
+/* Medium Devices (Tablets, 768px and up) */
+@media only screen and (min-width: 768px) and (max-width: 991.98px) {
+  /* Add your styles here */
+}
+
+/* Large Devices (Desktops, 992px and up) */
+@media only screen and (min-width: 992px) and (max-width: 1199.98px) {
+  /* Add your styles here */
+}

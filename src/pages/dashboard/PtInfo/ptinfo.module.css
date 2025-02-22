@@ -227,8 +227,8 @@
 
 
 
-@media (max-width:768px){
-
+/* Extra Small Devices (Portrait Phones, less than 576px) */
+@media only screen and (max-width: 575.98px) {
    .container {
       width: 95vw;
    }
@@ -249,10 +249,10 @@
    }
 
    .userimage > img {
-      width: 10em;
       border-radius: 10em;
-      margin: 1em;
-   }
+      max-width: 7em;
+      max-height: 7em;
+   } 
 
    .submit {
       border: none;
@@ -265,15 +265,7 @@
       cursor: pointer;
       margin: 2em 0 1em 0;
    }
-   .userimage > img {
-      border-radius: 10em;
-      max-width: 7em;
-   }  
-}
-
-/* Extra Small Devices (Portrait Phones, less than 576px) */
-@media only screen and (max-width: 575.98px) {
-   /* Add your styles here */
+  
  }
  
  /* Small Devices (Landscape Phones, 576px and up) */
