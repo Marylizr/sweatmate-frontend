@@ -328,6 +328,11 @@ form > button.submit{
 
 /* Small Devices (Landscape Phones, 576px and up) */
 @media only screen and (min-width: 576px) and (max-width: 767.98px) {
+ 
+}
+
+/* Medium Devices (Tablets, 768px and up) */
+@media only screen and (min-width: 768px) and (max-width: 991.98px) {
   .container2 {
     width: 94vw;
     margin: 0.5em 0 0 0;
@@ -360,11 +365,6 @@ form > button.submit{
   .dropdown {
     width: 19em;
   }
-}
-
-/* Medium Devices (Tablets, 768px and up) */
-@media only screen and (min-width: 768px) and (max-width: 991.98px) {
-  /* Add your styles here */
 }
 
 /* Large Devices (Desktops, 992px and up) */
