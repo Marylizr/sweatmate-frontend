@@ -163,7 +163,7 @@
    }
 
    .form_styles > form > input {
-      width: 26em;
+      width: 24em;
       height: 4em;
    }
 
@@ -182,7 +182,7 @@
    }
 
    .pass > input {
-      width: 22em;
+      width: 20em;
       height: 4em;
       border: transparent;
       border-radius: 0.5em;
@@ -192,7 +192,7 @@
    }
 
    .form_styles > form > select {
-      width: 27em;
+      width: 25em;
       height: 4em;
       border: 1px solid gray;
       border-radius: 0.5em;
