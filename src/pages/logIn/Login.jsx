@@ -44,18 +44,26 @@ const Login = () => {
       console.error("No token provided for fetching user data.");
       return;
     }
-
+  
     try {
       console.log("Using Token to Fetch User Data:", token);
+      
       const response = await customFetch("GET", "user/me", {
         headers: { Authorization: `Bearer ${token}` }
       });
-
+  
       console.log("Fetched User Data:", response);
-
+  
+      // Check if the API returned the correct user based on the token
+      const storedSession = getUserToken();
+      if (storedSession && storedSession.id !== response._id) {
+        console.warn("Token user ID and fetched user ID do not match! Clearing session.");
+        removeSession();
+        return;
+      }
+  
       if (response && response.role && response.gender) {
-        // Store all user details in session storage
-        setUserSession(token, response.role, response.id, response.name, response.gender);
+        setUserSession(token, response.role, response._id, response.name, response.gender);
         navigateBasedOnRole(response);
       } else {
         console.error("User data is incomplete or invalid:", response);
@@ -65,16 +73,7 @@ const Login = () => {
     }
   }, [navigateBasedOnRole]);
 
-  useEffect(() => {
-    console.log("Clearing previous session...");
-    removeSession();
-    
-    const token = getUserToken();
-    if (token) {
-      fetchUserData(token);
-    }
-  }, [fetchUserData]);
-
+  
   // Handle login submission
   const onSubmit = async (data) => {
     setErrorMessage("");
