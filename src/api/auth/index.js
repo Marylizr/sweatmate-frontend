@@ -38,16 +38,17 @@ export const getUserId = () => {
 
 // Function to store the user session in localStorage
 export const setUserSession = (token, role, id, name, gender) => {
-    if (!token) {
-      console.error("Attempted to store an empty token.");
+  if (!token || !id || !name) {
+      console.error("Invalid session data, not storing session:", { token, role, id, name, gender });
       return;
-    }
-  
-    const sessionData = { token, role, id, user: name, gender };
-    localStorage.setItem("session", JSON.stringify(sessionData));
-  
-    console.log("Session stored successfully:", sessionData);
-  };
+  }
+
+  const sessionData = { token, role, id, user: name, gender };
+  localStorage.setItem("session", JSON.stringify(sessionData));
+
+  console.log("Session stored successfully:", sessionData);
+};
+
   
 
 // Function to remove the user session from localStorage

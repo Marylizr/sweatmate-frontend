@@ -39,39 +39,52 @@ const Login = () => {
   }, [navigate]);
 
   // Fetch user data after login
-  const fetchUserData = useCallback(async (token) => {
+  const fetchUserData = async (token) => {
     if (!token) {
-      console.error("No token provided for fetching user data.");
-      return;
-    }
-  
-    try {
-      console.log("Using Token to Fetch User Data:", token);
-      
-      const response = await customFetch("GET", "user/me", {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-  
-      console.log("Fetched User Data:", response);
-  
-      // Check if the API returned the correct user based on the token
-      const storedSession = getUserToken();
-      if (storedSession && storedSession.id !== response._id) {
-        console.warn("Token user ID and fetched user ID do not match! Clearing session.");
-        removeSession();
+        console.error("No token provided for fetching user data.");
         return;
-      }
-  
-      if (response && response.role && response.gender) {
-        setUserSession(token, response.role, response._id, response.name, response.gender);
-        navigateBasedOnRole(response);
-      } else {
-        console.error("User data is incomplete or invalid:", response);
-      }
-    } catch (error) {
-      console.error("Error fetching user data:", error);
     }
-  }, [navigateBasedOnRole]);
+
+    try {
+        console.log("Using Token to Fetch User Data:", token);
+        
+        const response = await customFetch("GET", "user/me", {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+
+        console.log("Full API Response:", response);
+
+        if (!response || typeof response !== "object") {
+            console.warn("Unexpected API response. Response is not an object:", response);
+            return;
+        }
+
+        if (!response._id) {
+            console.warn("User ID is missing in API response. Possible invalid session.");
+            return;
+        }
+
+        console.log("Fetched User Data:", response);
+
+        // Check if stored session matches fetched user
+        const storedSession = getUserToken();
+        if (storedSession && storedSession.id !== response._id) {
+            console.warn("Token user ID and fetched user ID do not match! Clearing session.");
+            removeSession();
+            return;
+        }
+
+        if (response && response.role && response.gender) {
+            setUserSession(token, response.role, response._id, response.name, response.gender);
+            navigateBasedOnRole(response);
+        } else {
+            console.error("User data is incomplete or invalid:", response);
+        }
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+    }
+};
+
 
   
   // Handle login submission
