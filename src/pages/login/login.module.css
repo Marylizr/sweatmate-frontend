@@ -16,20 +16,20 @@
 }
 
 .wrapper {
-    border-radius: 1em;
-    padding: 2em;
-    padding-top: 2em;
-    padding-right: 2em;
-    padding-bottom: 2em;
-    padding-left: 2em;
-    margin: 2em;
-    height: 32em;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-content: center;
-    align-items: center;
-    justify-content: center;
+   border-radius: 1em;
+   padding: 2em;
+   padding-top: 2em;
+   padding-right: 2em;
+   padding-bottom: 2em;
+   padding-left: 2em;
+   margin: 2em;
+   height: auto;
+   display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+   align-content: center;
+   align-items: center;
+   justify-content: center;
 }
 
 .header {
@@ -107,6 +107,48 @@
    border-radius: 0.5em;
    text-align: center;
    color: gray;
+}
+
+.resetContainer {
+   display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+   align-items: center;
+}
+
+.resetContainer > input {
+   width: 18em;
+   height: 2em;
+   border: gray solid 1px;
+   border-radius: 0.5em;
+   text-align: center;
+   color: grey;
+   padding: 0.5em;
+   margin: 0.5em;
+   font-size: 16px;
+}
+
+.resetContainer > button {
+   width: 16em;
+   height: 3em;
+   background-color: white;
+   color: teal;
+   border-radius: 1.5em;
+   border: 1px teal solid;
+   cursor: pointer;
+   display: flex;
+   align-content: center;
+   justify-content: center;
+   align-items: center;
+}
+
+.resetContainer > p {
+   cursor: pointer;
+
+}
+
+.form_styles > form > p {
+   cursor: pointer;
 }
 
 

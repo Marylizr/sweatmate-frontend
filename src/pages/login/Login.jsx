@@ -1,32 +1,49 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styles from './login.module.css';
 import { useForm } from 'react-hook-form';
 import customFetch from '../../api';
-import { setUserSession, getUserToken, removeSession } from "../../api/auth";
+import { setUserSession, removeSession } from "../../api/auth"; // Removed getUserToken as it's unused
 import { useNavigate } from "react-router-dom";
 import eye from '../../assets/eye.svg';
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
   const [passwordShown, setPasswordShown] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [emailForReset, setEmailForReset] = useState("");
   const [showResetForm, setShowResetForm] = useState(false);
 
   useEffect(() => {
-    clearSessionOnLoad();
-  }, []);
-
-  // Clear stale session data before login
-  const clearSessionOnLoad = () => {
     console.log("Clearing previous session...");
     removeSession();
-  };
+  }, []);
+
+  // Navigate based on role and gender
+  const navigateBasedOnRole = useCallback((user) => {
+    if (!user) return;
+
+    console.log(`User Role: ${user.role}, Gender: ${user.gender}`);
+
+    if (user.role === "admin" || user.role === "personal-trainer") {
+      navigate("/main/dashboard");
+    } else if (["basic", "medium", "advance"].includes(user.role)) {
+      if (user.gender === "female") {
+        navigate("/dashboard/female");
+      } else if (user.gender === "male") {
+        navigate("/dashboard/male");
+      } else {
+        console.error(`Invalid gender: ${user.gender}`);
+      }
+    } else {
+      console.error(`Invalid role: ${user.role}`);
+    }
+  }, [navigate]);
 
   // Fetch user data after login
-  const fetchUserData = async (token) => {
+  const fetchUserData = useCallback(async (token) => {
+    if (!token) return;
+
     try {
       console.log("Retrieved Token:", token);
       const json = await customFetch("GET", "user/me", {
@@ -34,18 +51,19 @@ const Login = () => {
       });
 
       if (json && json.role && json.gender) {
-        setUser(json);
+        setUserSession(token, json.role, json.id, json.name, json.gender);
+        navigateBasedOnRole(json);
       } else {
         console.error("User data missing or invalid:", json);
       }
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
-  };
+  }, [navigateBasedOnRole]);
 
   // Handle login submission
   const onSubmit = async (data) => {
-    setErrorMessage(""); 
+    setErrorMessage("");
 
     try {
       const response = await customFetch("POST", "login", {
@@ -54,17 +72,8 @@ const Login = () => {
       });
 
       if (response.token) {
-        setUserSession(response.token, response.role, response.id, response.name, response.gender);
-        
         console.log("Storing session data:", { token: response.token, user: response.name, role: response.role });
-
-        setUser({
-          id: response.id,
-          name: response.name,
-          role: response.role,
-          gender: response.gender
-        });
-
+        fetchUserData(response.token);
       } else {
         console.warn("No token received in the response");
       }
@@ -74,27 +83,6 @@ const Login = () => {
     }
   };
 
-  // Navigate based on role and gender AFTER user state is updated
-  useEffect(() => {
-    if (user) {
-      console.log(`My role is ${user.role} and gender is ${user.gender}`);
-
-      if (user.role === "admin" || user.role === "personal-trainer") {
-        navigate("/main/dashboard");
-      } else if (["basic", "medium", "advance"].includes(user.role)) {
-        if (user.gender === "female") {
-          navigate("/dashboard/female");
-        } else if (user.gender === "male") {
-          navigate("/dashboard/male");
-        } else {
-          console.error(`Invalid gender: ${user.gender}`);
-        }
-      } else {
-        console.error(`Invalid role: ${user.role}`);
-      }
-    }
-  }, [user, navigate]);
-
   // Handle Password Reset Request
   const handlePasswordReset = async () => {
     if (!emailForReset) {
@@ -103,13 +91,14 @@ const Login = () => {
     }
 
     try {
-      const response = await customFetch("POST", "user/reset-password", {
+      const response = await customFetch("POST", "reset-password/forgot-password", {
         body: JSON.stringify({ email: emailForReset }),
         headers: { "Content-Type": "application/json" },
       });
 
       if (response.message) {
         alert(response.message);
+        setShowResetForm(false); // Close reset form after successful request
       } else {
         setErrorMessage("Something went wrong. Try again.");
       }
@@ -153,8 +142,8 @@ const Login = () => {
                   <img src={eye} alt='eye-icon' />
                 </i>
               </div>
-                {errors.password?.type === 'required' && <p className={styles.error}>This field is mandatory</p>}
-                {errors.password?.type === 'minLength' && <p className={styles.error}>The password must have 8 characters min</p>}
+              {errors.password?.type === 'required' && <p className={styles.error}>This field is mandatory</p>}
+              {errors.password?.type === 'minLength' && <p className={styles.error}>The password must have 8 characters min</p>}
               <input className={styles.submit} type="submit" value="Let's Go!" />
               <p className={styles.forgotPassword} onClick={() => setShowResetForm(true)}>
                 Forgot Password?
