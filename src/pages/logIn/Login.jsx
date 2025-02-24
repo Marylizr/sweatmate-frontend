@@ -77,27 +77,35 @@ const Login = () => {
   // Handle login submission
   const onSubmit = async (data) => {
     setErrorMessage("");
-
+  
     try {
       console.log("Attempting login with:", data);
       const response = await customFetch("POST", "login", {
         body: JSON.stringify(data),
         headers: { "Content-Type": "application/json" },
       });
-
-      console.log("Login Response:", response);
-
-      if (response.token) {
-        console.log("Received Token:", response.token);
-        fetchUserData(response.token);
-      } else {
-        console.warn("No token received in the response.");
+  
+      if (!response.token) {
+        console.warn("No token received in response.");
+        setErrorMessage("Invalid login credentials.");
+        return;
       }
+  
+      console.log("Received Token:", response.token);
+  
+      // Store the token and user session
+      setUserSession(response.token, response.role, response.id, response.name, response.gender);
+  
+      // Fetch user data immediately after login
+      await fetchUserData(response.token);
+  
     } catch (error) {
       console.error("Login failed:", error);
       setErrorMessage("Invalid email or password. Please try again.");
     }
   };
+  
+
 
   // Handle Password Reset Request
   const handlePasswordReset = async () => {

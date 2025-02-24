@@ -3,11 +3,14 @@ import { deleteStorageObject, getStorageObject, setStorageObject } from "./stora
 
 // Function to get the user's token from the session
 export const getUserToken = () => {
-    const session = getStorageObject("user-session");
-    console.log("Retrieved session in getUserToken:", session);
-    return session ? session.token : null;
-};
-
+    let session = JSON.parse(localStorage.getItem("session"));
+    if (!session || !session.token) {
+      console.warn("No token found in session.");
+      return null;
+    }
+    return session.token;
+  };
+  
 
 // Function to get the user object from the session
 export const getSessionUser = () => {
@@ -34,15 +37,18 @@ export const getUserId = () => {
 };
 
 // Function to store the user session in localStorage
-export const setUserSession = (token, role, id, user = {}, gender = "") => {
-    const sessionData = { token, role, id, user, gender };
-    console.log("Storing session data:", sessionData);
-    setStorageObject("user-session", sessionData);
-    localStorage.setItem("token", token);  // Store token separately for easier retrieval
-
-    // Immediately verify the stored session
-    console.log("Checking stored session:", getStorageObject("user-session"));
-};
+export const setUserSession = (token, role, id, name, gender) => {
+    if (!token) {
+      console.error("Attempted to store an empty token.");
+      return;
+    }
+  
+    const sessionData = { token, role, id, user: name, gender };
+    localStorage.setItem("session", JSON.stringify(sessionData));
+  
+    console.log("Session stored successfully:", sessionData);
+  };
+  
 
 // Function to remove the user session from localStorage
 export const removeSession = () => {

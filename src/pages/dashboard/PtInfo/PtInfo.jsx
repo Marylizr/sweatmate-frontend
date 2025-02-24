@@ -72,7 +72,7 @@ const PtInfo = () => {
     console.log("Authorization Token:", token);
   
     try {
-      const response = await customFetch("PUT", "user/me", {
+      const response = await customFetch("PUT", "user", {
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json",
