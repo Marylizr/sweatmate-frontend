@@ -6,11 +6,11 @@ import Cropper from 'react-easy-crop';
 
 const PtInfo = () => {
   const [user, setUser] = useState({
-    name: "name",
-    email: "email",
-    password: "pass",
-    image: "image",
-    age: "age",
+    name: "",
+    email: "",
+    password: "",
+    image: "",
+    age: "",
     degree: "",
     experience: "",
     specializations: "",
@@ -35,33 +35,46 @@ const PtInfo = () => {
       .then((json) => {
         console.log("API Response:", json);
         setUser(prevUser => ({
-          ...prevUser,  
-          ...json,      
-          password: ""  
+          ...prevUser,
+          ...json,
+          password: ""  // Clear password field on load
         }));
-        
       })
-      .catch(err => console.log(err, 'Cannot retrieve user information'));
+      .catch(err => console.log("Cannot retrieve user information:", err));
   };
 
   const onSubmit = async () => {
     const imageUrl = croppedImage ? await fileUpload(croppedImage) : user.image;
+    
     const data = {
-      name: user.name,
-      email: user.email,
-      password: user.password,
+      name: user.name || "",
+      email: user.email || "", // Ensure email is always included
       image: imageUrl,
-      age: user.age,
-      degree: user.degree,
-      experience: user.experience,
-      specializations: user.specializations,
-      bio: user.bio,
-      location: user.location
+      age: user.age || "",
+      degree: user.degree || "",
+      experience: user.experience || "",
+      specializations: user.specializations || "",
+      bio: user.bio || "",
+      location: user.location || ""
     };
 
-    customFetch("PUT", "user", { body: data })
-      .then(() => alert('Information Updated'))
-      .catch(err => console.log(err, 'Unable to update information'));
+    // Only include password if it's provided (avoid updating with an empty string)
+    if (user.password) {
+      data.password = user.password;
+    }
+
+    console.log("Submitting Profile Update:", data); // Debugging
+
+    try {
+      const response = await customFetch("PUT", "user", { 
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" } // Ensure JSON request format
+      });
+      console.log("Profile update response:", response);
+      alert("Information Updated");
+    } catch (err) {
+      console.error("Unable to update information:", err);
+    }
   };
 
   const fileUpload = async (base64Image) => {
@@ -72,9 +85,6 @@ const PtInfo = () => {
     formData.append("upload_preset", uploadPreset);
     const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
 
-    console.log("Cloudinary Cloud Name:", process.env.REACT_APP_CLOUDINARY_CLOUD_NAME);
-    console.log("Cloudinary Upload Preset:", process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET);
-
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -83,11 +93,10 @@ const PtInfo = () => {
       const photo = await response.json();
       return photo.url || null;
     } catch (error) {
-      console.log(error, 'Error uploading the image');
+      console.log("Error uploading the image:", error);
       return null;
     }
   };
-
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -136,7 +145,7 @@ const PtInfo = () => {
     try {
       const blob = await getCroppedImg(imageToCrop, croppedAreaPixels);
       const base64Image = await blobToBase64(blob);
-      setCroppedImage(base64Image); // Save the Base64 image for preview and upload
+      setCroppedImage(base64Image);
       setUser({ ...user, image: base64Image });
       setIsCropModalOpen(false);
     } catch (e) {
@@ -173,34 +182,17 @@ const PtInfo = () => {
         <div className={styles.namesinput}>
           <input type='text' value={user.name} onChange={(e) => setUser({ ...user, name: e.target.value })} placeholder='Name' />
           <input type="email" value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} placeholder='Email' />
-          <input type="number" onChange={(e) => setUser({ ...user, age: e.target.value })} placeholder={`${user.age} years old `} />
-          <input type="text" onChange={(e) => setUser({ ...user, degree: e.target.value })} placeholder={`Degree: ${user.degree} `} />
-          <input type="number" onChange={(e) => setUser({ ...user, experience: e.target.value })} placeholder={`${user.experience} Years of Experience `} />
-          <input type="text" onChange={(e) => setUser({ ...user, specializations: e.target.value })} placeholder={`Specializations: ${user.specializations} `} />
+          <input type="number" value={user.age} onChange={(e) => setUser({ ...user, age: e.target.value })} placeholder='Age' />
+          <input type="text" value={user.degree} onChange={(e) => setUser({ ...user, degree: e.target.value })} placeholder='Degree' />
+          <input type="number" value={user.experience} onChange={(e) => setUser({ ...user, experience: e.target.value })} placeholder='Experience (years)' />
+          <input type="text" value={user.specializations} onChange={(e) => setUser({ ...user, specializations: e.target.value })} placeholder='Specializations' />
           <textarea value={user.bio} onChange={(e) => setUser({ ...user, bio: e.target.value })} placeholder='Short Bio' rows="4" />
-          <input type="text" onChange={(e) => setUser({ ...user, location: e.target.value })} placeholder={`Location: ${user.location} `} />
-          <input type="password" value={user.password} onChange={(e) => setUser({ ...user, password: e.target.value })} placeholder="Password" />
+          <input type="text" value={user.location} onChange={(e) => setUser({ ...user, location: e.target.value })} placeholder='Location' />
+          <input type="password" value={user.password} onChange={(e) => setUser({ ...user, password: e.target.value })} placeholder="New Password" />
 
           <button className={styles.submit} onClick={(e) => { e.preventDefault(); onSubmit(); }}> Save </button>
         </div>
       </form>
-
-      {isCropModalOpen && (
-        <div className={styles.overlay}>
-          <div className={styles.cropContainer}>
-            <Cropper
-              image={imageToCrop}
-              crop={crop}
-              zoom={zoom}
-              aspect={1}
-              onCropChange={setCrop}
-              onZoomChange={setZoom}
-              onCropComplete={onCropComplete}
-            />
-            <button className={styles.saveCropButton} onClick={showCroppedImage}>Crop & Save Image</button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
