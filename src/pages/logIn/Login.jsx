@@ -16,7 +16,10 @@ const Login = () => {
 
   // Navigate based on role and gender
   const navigateBasedOnRole = useCallback((user) => {
-    if (!user) return;
+    if (!user || !user.role) {
+      console.error("Invalid user data received:", user);
+      return;
+    }
 
     console.log(`User Role: ${user.role}, Gender: ${user.gender}`);
 
@@ -37,19 +40,25 @@ const Login = () => {
 
   // Fetch user data after login
   const fetchUserData = useCallback(async (token) => {
-    if (!token) return;
+    if (!token) {
+      console.error("No token provided for fetching user data.");
+      return;
+    }
 
     try {
-      console.log("Retrieved Token:", token);
-      const json = await customFetch("GET", "user/me", {
+      console.log("Using Token to Fetch User Data:", token);
+      const response = await customFetch("GET", "user/me", {
         headers: { Authorization: `Bearer ${token}` }
       });
 
-      if (json && json.role && json.gender) {
-        setUserSession(token, json.role, json.id, json.name, json.gender);
-        navigateBasedOnRole(json);
+      console.log("Fetched User Data:", response);
+
+      if (response && response.role && response.gender) {
+        // Store all user details in session storage
+        setUserSession(token, response.role, response.id, response.name, response.gender);
+        navigateBasedOnRole(response);
       } else {
-        console.error("User data missing or invalid:", json);
+        console.error("User data is incomplete or invalid:", response);
       }
     } catch (error) {
       console.error("Error fetching user data:", error);
@@ -71,16 +80,19 @@ const Login = () => {
     setErrorMessage("");
 
     try {
+      console.log("Attempting login with:", data);
       const response = await customFetch("POST", "login", {
         body: JSON.stringify(data),
         headers: { "Content-Type": "application/json" },
       });
 
+      console.log("Login Response:", response);
+
       if (response.token) {
-        console.log("Storing session data:", { token: response.token, user: response.name, role: response.role });
+        console.log("Received Token:", response.token);
         fetchUserData(response.token);
       } else {
-        console.warn("No token received in the response");
+        console.warn("No token received in the response.");
       }
     } catch (error) {
       console.error("Login failed:", error);
