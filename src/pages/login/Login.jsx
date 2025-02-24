@@ -39,9 +39,12 @@ const Login = () => {
   }, [navigate]);
 
   // Fetch user data after login
-  const fetchUserData = async (token) => {
+  const fetchUserData = async () => {
+    const token = getUserToken(); // ✅ Now retrieves token from session storage
+
     if (!token) {
-        console.error("No token provided for fetching user data.");
+        console.error("No token found in session. Possible expired or missing token.");
+        removeSession();
         return;
     }
 
@@ -50,7 +53,7 @@ const Login = () => {
 
         const response = await customFetch("GET", "user/me", {
             headers: { Authorization: `Bearer ${token}` },
-            cache: "no-store" // Prevents caching
+            cache: "no-store" // Prevents caching issues
         });
 
         console.log("Full API Response:", response);
@@ -65,6 +68,7 @@ const Login = () => {
 
         console.log("Fetched User Data:", response);
 
+        // Store updated user session
         setUserSession(token, response.role, userId, response.name, response.gender);
         navigateBasedOnRole(response);
     } catch (error) {
@@ -73,42 +77,39 @@ const Login = () => {
 };
 
 
+const onSubmit = async (data) => {
+  setErrorMessage("");
 
-  
-  // Handle login submission
-  const onSubmit = async (data) => {
-    setErrorMessage("");
+  try {
+      console.log("Clearing previous session before logging in...");
+      removeSession(); // Clear old session before logging in
 
-    try {
-        console.log("Clearing previous session before logging in...");
-        removeSession(); // Clear old session before logging in
+      console.log("Attempting login with:", data);
+      const response = await customFetch("POST", "login", {
+          body: JSON.stringify(data),
+          headers: { "Content-Type": "application/json" },
+      });
 
-        console.log("Attempting login with:", data);
-        const response = await customFetch("POST", "login", {
-            body: JSON.stringify(data),
-            headers: { "Content-Type": "application/json" },
-        });
+      console.log("Login Response:", response);
 
-        console.log("Login Response:", response);
+      if (!response.token) {
+          console.warn("No token received in response.");
+          setErrorMessage("Invalid login credentials.");
+          return;
+      }
 
-        if (!response.token) {
-            console.warn("No token received in response.");
-            setErrorMessage("Invalid login credentials.");
-            return;
-        }
+      console.log("Received Token:", response.token);
 
-        console.log("Received Token:", response.token);
+      // Store session
+      setUserSession(response.token, response.role, response.id, response.name, response.gender);
 
-        // Store session only if response contains valid user data
-        setUserSession(response.token, response.role, response.id, response.name, response.gender);
+      // Fetch user data immediately **WITHOUT passing token explicitly**
+      await fetchUserData();
 
-        // Fetch user data immediately to verify session
-        await fetchUserData(response.token);
-
-    } catch (error) {
-        console.error("Login failed:", error);
-        setErrorMessage("Invalid email or password. Please try again.");
-    }
+  } catch (error) {
+      console.error("Login failed:", error);
+      setErrorMessage("Invalid email or password. Please try again.");
+  }
 };
 
 
