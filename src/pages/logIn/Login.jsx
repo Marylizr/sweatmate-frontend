@@ -40,10 +40,10 @@ const Login = () => {
 
   // Fetch user data after login
   const fetchUserData = async () => {
-    const token = getUserToken(); // ✅ Now retrieves token from session storage
+    const token = getUserToken(); // ✅ Always retrieve latest stored token
 
     if (!token) {
-        console.error("No token found in session. Possible expired or missing token.");
+        console.error("Token missing or expired. Fetching user data may fail.");
         removeSession();
         return;
     }
@@ -59,7 +59,7 @@ const Login = () => {
         console.log("Full API Response:", response);
 
         // Ensure correct user ID is retrieved
-        const userId = response._id || response.id;  // Handle both `_id` and `id`
+        const userId = response._id || response.id;
         if (!userId) {
             console.warn("User ID is missing in API response. Possible invalid session.");
             removeSession();
@@ -68,14 +68,13 @@ const Login = () => {
 
         console.log("Fetched User Data:", response);
 
-        // Store updated user session
+        // Store updated session
         setUserSession(token, response.role, userId, response.name, response.gender);
         navigateBasedOnRole(response);
     } catch (error) {
         console.error("Error fetching user data:", error);
     }
 };
-
 
 const onSubmit = async (data) => {
   setErrorMessage("");
@@ -100,10 +99,10 @@ const onSubmit = async (data) => {
 
       console.log("Received Token:", response.token);
 
-      // Store session
+     
       setUserSession(response.token, response.role, response.id, response.name, response.gender);
 
-      // Fetch user data immediately **WITHOUT passing token explicitly**
+
       await fetchUserData();
 
   } catch (error) {
@@ -111,6 +110,7 @@ const onSubmit = async (data) => {
       setErrorMessage("Invalid email or password. Please try again.");
   }
 };
+
 
 
 
