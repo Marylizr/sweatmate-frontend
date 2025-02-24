@@ -5,6 +5,7 @@ export const API_URL =
     ? process.env.REACT_APP_API_URL
     : "http://localhost:3001";
 
+
 // Custom API error class
 class ApiError {
   constructor(message, data, status) {
