@@ -26,7 +26,10 @@ const PtInfo = () => {
   const [isCropModalOpen, setIsCropModalOpen] = useState(false);
   const inputFile = useRef(null);
 
-  
+  useEffect(() => {
+    getUser();
+  }, []);
+
   const getUser = () => {
     customFetch("GET", "user/me")
       .then((json) => {
@@ -41,20 +44,8 @@ const PtInfo = () => {
       .catch(err => console.log(err, 'Cannot retrieve user information'));
   };
 
-  useEffect(() => {
-    getUser();
-  }, []);
-
-
   const onSubmit = async () => {
     const imageUrl = croppedImage ? await fileUpload(croppedImage) : user.image;
-    const token = localStorage.getItem("token");
-  
-    if (!token) {
-      alert("Authorization token is missing. Please log in again.");
-      return;
-    }
-  
     const data = {
       name: user.name,
       email: user.email,
@@ -67,37 +58,11 @@ const PtInfo = () => {
       bio: user.bio,
       location: user.location
     };
-  
-    console.log("Sending Update Request:", data);
-    console.log("Authorization Token:", token);
-  
-    try {
-      const response = await customFetch("PUT", "user", {
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        }
-      });
-  
-      if (response.authError) {
-        alert("Session expired. Please log in again.");
-        localStorage.removeItem("token");
-        return;
-      }
-  
-      if (response.message) {
-        alert("Profile updated successfully!");
-      } else {
-        alert("Failed to update profile.");
-      }
-    } catch (err) {
-      console.error("Error updating profile:", err);
-      alert("An error occurred while updating. Please try again.");
-    }
+
+    customFetch("PUT", "user", { body: data })
+      .then(() => alert('Information Updated'))
+      .catch(err => console.log(err, 'Unable to update information'));
   };
-  
-  
 
   const fileUpload = async (base64Image) => {
     const formData = new FormData();
