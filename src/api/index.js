@@ -1,4 +1,4 @@
-import { getUserToken } from "./auth";
+import { getUserToken, setUserSession, removeSession } from "./auth";
 
 export const API_URL =
   process.env.NODE_ENV === "production"
@@ -41,7 +41,17 @@ const fetchResource = async (method = "GET", path, userOptions = {}) => {
   let token = getUserToken();
   if (!token) {
     token = localStorage.getItem("token"); // Fallback to local storage
-    console.log("Token retrieved from getUserToken:", token);
+    console.warn("Token missing or expired. Fetching user data may fail.");
+  } else {
+    // Decode token and check expiration before using it
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    const tokenExpired = Date.now() >= payload.exp * 1000;
+
+    if (tokenExpired) {
+      console.warn("Token expired. Clearing session and requiring re-authentication.");
+      removeSession(); // Ensure the user is logged out properly
+      return { authError: true }; // Signal to the app that re-authentication is needed
+    }
   }
 
   console.log(`Token being used for request: ${token ? "Exists" : "Missing"}`);
@@ -49,11 +59,13 @@ const fetchResource = async (method = "GET", path, userOptions = {}) => {
   // Define default headers
   const headers = {
     ...(token && { Authorization: `Bearer ${token}` }),
+    "Cache-Control": "no-cache", // Prevent browser from caching API responses
+    Pragma: "no-cache",
+    Expires: "0",
   };
 
   // Detect if request contains file uploads
   const isMultipart = userOptions.body instanceof FormData;
-
   if (!isMultipart) {
     headers["Content-Type"] = "application/json";
   }
@@ -86,8 +98,8 @@ const fetchResource = async (method = "GET", path, userOptions = {}) => {
     // Handle 401 Unauthorized responses
     if (response.status === 401) {
       console.warn("Unauthorized request (401). Token might be expired or missing.");
-      localStorage.removeItem("token"); // Clear token if unauthorized
-      return { authError: true }; // Signal to the app that re-authentication is needed
+      removeSession(); // Clear session if unauthorized
+      return { authError: true }; // Signal re-authentication is needed
     }
 
     // Convert response to JSON
@@ -104,7 +116,7 @@ const fetchResource = async (method = "GET", path, userOptions = {}) => {
 
     // Store token from response if available (for cases like token refresh)
     if (parsedResponse.token) {
-      localStorage.setItem("token", parsedResponse.token);
+      setUserSession(parsedResponse.token, parsedResponse.role, parsedResponse.id, parsedResponse.name, parsedResponse.gender);
       console.log("Token refreshed and stored.");
     }
 

@@ -46,27 +46,31 @@ const Login = () => {
     }
 
     try {
-        console.log("Using Token to Fetch User Data:", token);
-        
+        console.log("Fetching fresh user data with Token:", token);
+
+        // Ensure no cached response is returned
         const response = await customFetch("GET", "user/me", {
-            headers: { Authorization: `Bearer ${token}` }
+            headers: { Authorization: `Bearer ${token}` },
+            cache: "no-store" // Prevents browser caching
         });
 
         console.log("Full API Response:", response);
 
         if (!response || typeof response !== "object") {
-            console.warn("Unexpected API response. Response is not an object:", response);
+            console.warn("Unexpected API response. Clearing session.");
+            removeSession();
             return;
         }
 
         if (!response._id) {
             console.warn("User ID is missing in API response. Possible invalid session.");
+            removeSession();
             return;
         }
 
         console.log("Fetched User Data:", response);
 
-        // Check if stored session matches fetched user
+        // Ensure the stored session matches the fetched user
         const storedSession = getUserToken();
         if (storedSession && storedSession.id !== response._id) {
             console.warn("Token user ID and fetched user ID do not match! Clearing session.");
@@ -74,12 +78,8 @@ const Login = () => {
             return;
         }
 
-        if (response && response.role && response.gender) {
-            setUserSession(token, response.role, response._id, response.name, response.gender);
-            navigateBasedOnRole(response);
-        } else {
-            console.error("User data is incomplete or invalid:", response);
-        }
+        setUserSession(token, response.role, response._id, response.name, response.gender);
+        navigateBasedOnRole(response);
     } catch (error) {
         console.error("Error fetching user data:", error);
     }
@@ -90,34 +90,39 @@ const Login = () => {
   // Handle login submission
   const onSubmit = async (data) => {
     setErrorMessage("");
-  
+
     try {
-      console.log("Attempting login with:", data);
-      const response = await customFetch("POST", "login", {
-        body: JSON.stringify(data),
-        headers: { "Content-Type": "application/json" },
-      });
-  
-      if (!response.token) {
-        console.warn("No token received in response.");
-        setErrorMessage("Invalid login credentials.");
-        return;
-      }
-  
-      console.log("Received Token:", response.token);
-  
-      // Store the token and user session
-      setUserSession(response.token, response.role, response.id, response.name, response.gender);
-  
-      // Fetch user data immediately after login
-      await fetchUserData(response.token);
-  
+        console.log("Clearing previous session before logging in...");
+        removeSession(); // Clear old session before logging in
+
+        console.log("Attempting login with:", data);
+        const response = await customFetch("POST", "login", {
+            body: JSON.stringify(data),
+            headers: { "Content-Type": "application/json" },
+        });
+
+        console.log("Login Response:", response);
+
+        if (!response.token) {
+            console.warn("No token received in response.");
+            setErrorMessage("Invalid login credentials.");
+            return;
+        }
+
+        console.log("Received Token:", response.token);
+
+        // Store session only if response contains valid user data
+        setUserSession(response.token, response.role, response.id, response.name, response.gender);
+
+        // Fetch user data immediately to verify session
+        await fetchUserData(response.token);
+
     } catch (error) {
-      console.error("Login failed:", error);
-      setErrorMessage("Invalid email or password. Please try again.");
+        console.error("Login failed:", error);
+        setErrorMessage("Invalid email or password. Please try again.");
     }
-  };
-  
+};
+
 
 
   // Handle Password Reset Request
