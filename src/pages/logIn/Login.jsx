@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import styles from './login.module.css';
 import { useForm } from 'react-hook-form';
 import customFetch from '../../api';
-import { setUserSession, removeSession } from "../../api/auth"; // Removed getUserToken as it's unused
+import { setUserSession, getUserToken, removeSession } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
 import eye from '../../assets/eye.svg';
 
@@ -13,11 +13,6 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [emailForReset, setEmailForReset] = useState("");
   const [showResetForm, setShowResetForm] = useState(false);
-
-  useEffect(() => {
-    console.log("Clearing previous session...");
-    removeSession();
-  }, []);
 
   // Navigate based on role and gender
   const navigateBasedOnRole = useCallback((user) => {
@@ -61,6 +56,16 @@ const Login = () => {
     }
   }, [navigateBasedOnRole]);
 
+  useEffect(() => {
+    console.log("Clearing previous session...");
+    removeSession();
+    
+    const token = getUserToken();
+    if (token) {
+      fetchUserData(token);
+    }
+  }, [fetchUserData]);
+
   // Handle login submission
   const onSubmit = async (data) => {
     setErrorMessage("");
@@ -98,7 +103,7 @@ const Login = () => {
 
       if (response.message) {
         alert(response.message);
-        setShowResetForm(false); // Close reset form after successful request
+        setShowResetForm(false); 
       } else {
         setErrorMessage("Something went wrong. Try again.");
       }
