@@ -46,23 +46,18 @@ const Login = () => {
     }
 
     try {
-        console.log("Fetching fresh user data with Token:", token);
+        console.log("Using Token to Fetch User Data:", token);
 
-        // Ensure no cached response is returned
         const response = await customFetch("GET", "user/me", {
             headers: { Authorization: `Bearer ${token}` },
-            cache: "no-store" // Prevents browser caching
+            cache: "no-store" // Prevents caching
         });
 
         console.log("Full API Response:", response);
 
-        if (!response || typeof response !== "object") {
-            console.warn("Unexpected API response. Clearing session.");
-            removeSession();
-            return;
-        }
-
-        if (!response._id) {
+        // Ensure correct user ID is retrieved
+        const userId = response._id || response.id;  // Handle both `_id` and `id`
+        if (!userId) {
             console.warn("User ID is missing in API response. Possible invalid session.");
             removeSession();
             return;
@@ -70,20 +65,13 @@ const Login = () => {
 
         console.log("Fetched User Data:", response);
 
-        // Ensure the stored session matches the fetched user
-        const storedSession = getUserToken();
-        if (storedSession && storedSession.id !== response._id) {
-            console.warn("Token user ID and fetched user ID do not match! Clearing session.");
-            removeSession();
-            return;
-        }
-
-        setUserSession(token, response.role, response._id, response.name, response.gender);
+        setUserSession(token, response.role, userId, response.name, response.gender);
         navigateBasedOnRole(response);
     } catch (error) {
         console.error("Error fetching user data:", error);
     }
 };
+
 
 
   
