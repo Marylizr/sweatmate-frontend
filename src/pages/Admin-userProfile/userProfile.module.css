@@ -473,10 +473,6 @@ input.submited {
       width: 100%;
       align-items: center;
     }
-
-    .sessionForm {
-      width: 93vw;
-    }
    
     .users_form > form > input{
       height: 4em;
@@ -500,8 +496,15 @@ input.submited {
         width: 85%;
     }
     .sessionForm {
-       width: 21em;
+      width: 25em;
+      margin: 1em 0;
     }
+    
+    .sessionForm > textarea {
+      height: 6em;
+      width: 25em;
+    }
+
     .submited > input {
       background: teal;
         border: none;
@@ -541,6 +544,24 @@ input.submited {
       padding: 5px;
       width: 26em;
     }
+
+    .historial {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+    }
+
+    .save > button {
+      background: teal;
+      border: 2px solid #fff;
+      border-radius: 8px;
+      color: #fff;
+      height: 5em;
+      width: 12em;
+      margin: 1em auto;
+    }
+   
 
     
  }
@@ -587,10 +608,7 @@ input.submited {
       margin: 2em 0 0;
    }
 
-   .sessionForm {
-      width: 21em;
-   }
-
+  
    .containerWrap{
       flex-direction: column;
       width: 82vw;
