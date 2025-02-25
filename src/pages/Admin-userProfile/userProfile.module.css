@@ -504,7 +504,7 @@ input.submited {
       margin: 1em 0;
     }
     
-    .sessionForm > textarea {
+    .sessionForm > form > textarea {
       height: 6em;
       width: 25em;
     }
