@@ -161,6 +161,8 @@ input.submited {
     padding: 2em 0;
  }
 
+
+
 .pass > input { 
    margin: 0.5em;
    width: 20em;
@@ -440,7 +442,8 @@ input.submited {
        width: 100%;
     }
 
-    .namesinput > form > input{
+   
+    .users_form > form > input{
       height: 4em;
       width: 85%;
       font-size: 16px;
@@ -450,14 +453,14 @@ input.submited {
        margin: 2em 0 0;
     }
 
-    .namesinput > form > select {
+    .users_form > form > select {
       height: 4em;
       width: 85%;
       font-size: 16px;
     }
  
     .pass{
-       width: 16em;
+    
        height: 4em;
         width: 85%;
     }
