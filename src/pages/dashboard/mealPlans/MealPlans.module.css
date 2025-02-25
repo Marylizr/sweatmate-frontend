@@ -168,6 +168,14 @@
     font-size: 20px;
   }
 
+  .mealPlans {
+    align-content: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
   .filterButtons > button{
     display: flex;
     margin-bottom: 1em;
@@ -185,13 +193,7 @@
     flex-wrap: wrap;
   }
  
-  .filterButtons:hover {
-    display: flex;
-    margin-bottom: 1em;
-    width: 8em;
-    height: 4em;
-    flex-direction: column;
-  }
+
   .buttonWrap {
     display: flex;
     flex-direction: column;
@@ -246,13 +248,6 @@
     align-items: center;
   }
 
-  .filterButtons:hover {
-    display: flex;
-    margin-bottom: 1em;
-    width: 9em;
-    height: 4em;
-    flex-direction: column;
-  }
 
   .userSelection > select {
     margin: 10px;

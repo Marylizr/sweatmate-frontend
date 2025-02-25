@@ -156,6 +156,7 @@
   .title {
     font-size: 20px;
   }
+  
   .filterButtons > button{
     display: flex;
     flex-direction: column;
@@ -173,13 +174,7 @@
     flex-wrap: wrap;
   }
 
-  .filterButton:hover {
-    display: flex;
-    margin-bottom: 1em;
-    width: 77vw;
-    height: 10vh;
-    flex-direction: column;
-  }
+
   .userSelection > select {
     border: none;
     border-radius: 3px;
