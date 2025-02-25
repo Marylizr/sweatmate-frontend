@@ -71,46 +71,8 @@ form {
 
 
 
-/* For larger screens */
-.container {
-   display: grid;
-   grid-template-columns: repeat(4, 1fr);
- }
- 
- /* Adjust for tablets */
- @media (max-width: 1024px) {
-   .container {
-     grid-template-columns: repeat(2, 1fr);
-   }
- }
- 
- /* Adjust for mobile */
- @media (max-width: 767px) {
-   
-   
-   .info {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      align-content: center;
-      align-items: center;
-      width: 27em;
-      padding: 0.5em;
-      background-color: #fff;
-      border-radius: 10px;
-    }
-
-    .data{
-      margin: 0;
-    }
-
-    .imagen > img {
-      width: 100%;
-   }
- }
-
- @media (max-width:375px){
-
+/* Extra Small Devices (Portrait Phones, less than 576px) */
+@media only screen and (max-width: 575.98px) {
    .info {
       margin: 0.5em 0 0;
    }
@@ -118,5 +80,23 @@ form {
    .imagen > img {
       width: 5em;
    }
- 
  }
+ 
+ /* Small Devices (Landscape Phones, 576px and up) */
+ @media only screen and (min-width: 576px) and (max-width: 767.98px) {
+   /* Add your styles here */
+ }
+ 
+ /* Medium Devices (Tablets, 768px and up) */
+ @media only screen and (min-width: 768px) and (max-width: 991.98px) {
+   /* Add your styles here */
+ }
+ 
+ /* Large Devices (Desktops, 992px and up) */
+ @media only screen and (min-width: 992px) and (max-width: 1199.98px) {
+   /* Add your styles here */
+ }
+ 
+ /* Extra Large Devices (Large Desktops, 1200px and up) */
+ @media only screen and (min-width: 1200px) and (max-width: 1399.98px) {
+   /* Add your styles here */

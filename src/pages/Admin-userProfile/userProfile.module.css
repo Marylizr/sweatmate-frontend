@@ -478,6 +478,11 @@ input.submited {
         text-transform: capitalize;
         width: 13em;
     }
+    .searchBox{
+      font-size: 16px;
+      height: 4em;
+      width: 80vw;
+    }
  }
  
  /* Small Devices (Landscape Phones, 576px and up) */
