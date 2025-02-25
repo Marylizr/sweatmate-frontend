@@ -142,7 +142,7 @@ input.submited {
  .showMoreButton {
    margin-top: 10px;
    padding: 10px 15px;
-   background-color: #007bff;
+   background-color: teal;
    color: #fff;
    border: none;
    border-radius: 4px;
@@ -421,7 +421,7 @@ input.submited {
   
  
     .wrap {
-       width: 97vw;
+       width: 93vw;
     }
  
     .editWrapper {
@@ -434,7 +434,8 @@ input.submited {
     }
  
     .namesinput {
-       width: 17em;
+      width: 79vw;
+      margin: 0;
     }
  
     .namesinput > form {
@@ -442,6 +443,40 @@ input.submited {
        width: 100%;
     }
 
+    .namesinput > form > input {
+      font-size: 16px;
+        height: 4em;
+        width: 85%;
+    }
+
+    .namesinput > form > select {
+      font-size: 16px;
+        height: 4em;
+        width: 85%;
+    }
+
+    .containerWrap{
+      align-content: flex-start;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px #0000001a;
+      margin: 0;
+      padding-bottom: 1em;
+      width: 93vw;
+    }
+
+    .form {
+      align-content: center;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      width: 100%;
+      align-items: center;
+    }
+
+    .sessionForm {
+      width: 93vw;
+    }
    
     .users_form > form > input{
       height: 4em;
@@ -483,6 +518,31 @@ input.submited {
       height: 4em;
       width: 80vw;
     }
+
+    .progressinput {
+      align-items: center;
+      background-color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      margin: 0.5em 0;
+      padding: 1em;
+      width: 85vw;
+      align-content: center;
+    }
+
+    .progressinput > input {
+      border: none;
+      border-radius: 3px;
+      box-shadow: 0 4px 4px #3333330a, 0 4px 16px #3333332e;
+      height: 4em;
+      margin: 10px;
+      padding: 5px;
+      width: 26em;
+    }
+
+    
  }
  
  /* Small Devices (Landscape Phones, 576px and up) */
