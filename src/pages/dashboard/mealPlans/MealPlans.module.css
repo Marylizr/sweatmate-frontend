@@ -232,6 +232,10 @@
     width: 96vw;
   }
 
+  .container2 {
+    width: 87vw;
+  }
+
 
   .filterButtons > button {
     display: flex;

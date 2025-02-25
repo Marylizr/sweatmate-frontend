@@ -341,7 +341,19 @@ form > button.submit{
   }
 
   .dropdown {
-    width: 19em;
+    height: 4em;
+    width: 80vw;
+    font-size: 16px;
+  }
+  .styleinput > input {
+    height: 4em;
+    width: 80vw;
+    font-size: 16px;
+  }
+  .styleinput > .selected {
+    height: 4em;
+    width: 80vw;
+    font-size: 16px;
   }
 }
 
@@ -374,7 +386,9 @@ form > button.submit{
   }
 
   .styleinput > textarea {
-    height: 5em;
+    height: 4em;
+    width: 80vw;
+    font-size: 16px;
   }
 
   select.selection {

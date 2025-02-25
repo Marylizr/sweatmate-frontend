@@ -236,11 +236,13 @@
    .namesinput > input {
       width: 85%;
       height: 4em;
+      font-size: 16px;
    }
 
    .namesinput > textarea {
       width: 85%;
       height: 6em;
+      font-size: 16px;
    }
 
    .userimage{
