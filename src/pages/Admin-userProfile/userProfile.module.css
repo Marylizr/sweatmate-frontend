@@ -399,8 +399,91 @@ input.submited {
    text-align: left;
 }
 
-/*mobile*/
-@media (max-width:768px){
+
+
+/* Extra Small Devices (Portrait Phones, less than 576px) */
+@media only screen and (max-width: 575.98px) {
+   .container {
+      width: 86vw;
+      margin: 0.5em 0em 0 0;
+      height: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+    }
+  
+    .title {
+      font-size: 20px;
+    }
+  
+ 
+    .wrap {
+       width: 97vw;
+    }
+ 
+    .editWrapper {
+       display: flex;
+       flex-direction: column;
+       flex-wrap: wrap;
+       width: 96%;
+       align-items: center;
+       align-content: center;
+    }
+ 
+    .namesinput {
+       width: 17em;
+    }
+ 
+    .namesinput > form {
+  
+       width: 100%;
+    }
+
+    .namesinput > form > input{
+      height: 4em;
+      width: 85%;
+      font-size: 16px;
+    }
+ 
+    button > .submit {
+       margin: 2em 0 0;
+    }
+
+    .namesinput > form > select {
+      height: 4em;
+      width: 85%;
+      font-size: 16px;
+    }
+ 
+    .pass{
+       width: 16em;
+       height: 4em;
+        width: 85%;
+    }
+    .sessionForm {
+       width: 21em;
+    }
+    .submited > input {
+      background: teal;
+        border: none;
+        border-radius: 8px;
+        color: #fff;
+        cursor: pointer;
+        height: 5em;
+        margin: 2em 0 1em;
+        text-transform: capitalize;
+        width: 13em;
+    }
+ }
+ 
+ /* Small Devices (Landscape Phones, 576px and up) */
+ @media only screen and (min-width: 576px) and (max-width: 767.98px) {
+   /* Add your styles here */
+ }
+ 
+ /* Medium Devices (Tablets, 768px and up) */
+ @media only screen and (min-width: 768px) and (max-width: 991.98px) {
    .container {
       display: flex;
       flex-direction: column;
@@ -454,55 +537,14 @@ input.submited {
     .pass > input {
       width: 15em;
     }
-}
-
-@media (max-width:375px){
-
-   .container {
-     width: 86vw;
-     margin: 0.5em 0em 0 0;
-     height: auto;
-     padding: 16px;
-     display: flex;
-     flex-direction: column;
-     flex-wrap: wrap;
-   }
+ }
  
-   .title {
-     font-size: 20px;
-   }
+ /* Large Devices (Desktops, 992px and up) */
+ @media only screen and (min-width: 992px) and (max-width: 1199.98px) {
+   /* Add your styles here */
+ }
  
-
-   .wrap {
-      width: 97vw;
-   }
-
-   .editWrapper {
-      display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
-      width: 96%;
-      align-items: center;
-      align-content: center;
-   }
-
-   .namesinput {
-      width: 17em;
-   }
-
-   .namesinput > form {
- 
-      width: 100%;
-   }
-
-   button > .submit {
-      margin: 2em 0 0;
-   }
-
-   .pass{
-      width: 16em;
-   }
-   .sessionForm {
-      width: 21em;
-   }
+ /* Extra Large Devices (Large Desktops, 1200px and up) */
+ @media only screen and (min-width: 1200px) and (max-width: 1399.98px) {
+   /* Add your styles here */
  }
