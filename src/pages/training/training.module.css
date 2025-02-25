@@ -88,7 +88,7 @@ button.toggleButton {
       flex-wrap: wrap;
       align-items: center;
    }
-   
+
    .userSelection > select  {
       border: none;
       border-radius: 3px;
@@ -100,13 +100,25 @@ button.toggleButton {
       font-size: 16px;
    }
 
-   .userSelection > input  {
+   .search > input  {
       border: none;
       border-radius: 3px;
       box-shadow: 0 4px 4px #3333330a, 0 4px 16px #3333332e;
       height: 4em;
       margin: 10px;
       padding: 5px;
+      width: 85vw;
+      font-size: 16px;
+   }
+
+   .search > button {
+      background: #fff;
+      border: 1px solid teal;
+      border-radius: 8px;
+      color: teal;
+      height: 4em;
+      margin-left: 1em;
+      margin-top: 1em;
       width: 85vw;
       font-size: 16px;
    }
