@@ -373,6 +373,10 @@ form > button.submit{
     flex-direction: column;
   }
 
+  .styleinput > textarea {
+    height: 5em;
+  }
+
   select.selection {
     width: 24em;
   }

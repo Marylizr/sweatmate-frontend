@@ -75,14 +75,53 @@ button.toggleButton {
 
 /* Extra Small Devices (Portrait Phones, less than 576px) */
 @media only screen and (max-width: 575.98px) {
-   /* Add your styles here */
+   .container {
+      align-content: center;
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      width: 94vw;
+   }
+   .userSelection{
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-items: center;
+   }
+   
+   .userSelection > select  {
+      border: none;
+      border-radius: 3px;
+      box-shadow: 0 4px 4px #3333330a, 0 4px 16px #3333332e;
+      height: 4em;
+      margin: 10px;
+      padding: 5px;
+      width: 85vw;
+      font-size: 16px;
+   }
+
+   .userSelection > input  {
+      border: none;
+      border-radius: 3px;
+      box-shadow: 0 4px 4px #3333330a, 0 4px 16px #3333332e;
+      height: 4em;
+      margin: 10px;
+      padding: 5px;
+      width: 85vw;
+      font-size: 16px;
+   }
+
  }
  
  /* Small Devices (Landscape Phones, 576px and up) */
  @media only screen and (min-width: 576px) and (max-width: 767.98px) {
    .container {
-      width: 94vw;
-   }
+      align-content: center;
+       align-items: center;
+       display: flex;
+       flex-wrap: wrap;
+       width: 94vw;
+     }
 
    .userSelection{
       display: flex;
@@ -91,7 +130,14 @@ button.toggleButton {
       justify-content: center;
    }
    .userSelection > select  {
-      width: 21em;
+      border: none;
+      border-radius: 3px;
+      box-shadow: 0 4px 4px #3333330a, 0 4px 16px #3333332e;
+      height: 4em;
+      margin: 10px;
+      padding: 5px;
+      width: 85vw;
+      font-size: 16px;
    }
    .wrap {
       flex-direction: row;

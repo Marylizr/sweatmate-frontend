@@ -21,13 +21,14 @@
   align-content: center;
   align-items: center;
   width: 64.5em;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin: 0.5em 0.5em 1em 0;
   padding: 1em;
   justify-content: flex-start;
+  margin-bottom: 2em;
 }
 
 .container > a {
@@ -157,18 +158,19 @@
   }
   .filterButtons > button{
     display: flex;
-    margin-bottom: 1em;
-    width: 77vw;
-    height: 10vh;
     flex-direction: column;
+    height: 4em;
+    margin-bottom: 1em;
+    width: 8em;
   }
 
   .filterButtons {
+    align-items: center;
     display: flex;
+    flex-direction: row;
     justify-content: center;
     margin-bottom: 20px;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
   }
 
   .filterButton:hover {
@@ -177,6 +179,15 @@
     width: 77vw;
     height: 10vh;
     flex-direction: column;
+  }
+  .userSelection > select {
+    border: none;
+    border-radius: 3px;
+    box-shadow: 0 4px 4px #3333330a, 0 4px 16px #3333332e;
+    height: 4em;
+    width: 14em;
+    margin: 10px;
+    padding: 5px;
   }
 }
 
