@@ -174,12 +174,15 @@
  
     .userDetails > p {
        margin: 0;
-       font-size: 2em;
+       font-size: 23px;
     }
  
     .userItem > img {
        width: 4em;
     }
+    img.chevronIcon {
+      width: 3em;
+   }
  
     .userDetails {
        display: flex;
@@ -236,11 +239,11 @@
       width: 4em;
    }
    .userDetails > p {
-      font-size: 1.3em;
+      font-size: 23px;
    }
 
    img.chevronIcon {
-      width: 4em;
+      width: 3em;
    }
 
    .userItem {
