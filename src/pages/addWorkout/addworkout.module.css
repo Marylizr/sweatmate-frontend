@@ -5,11 +5,12 @@
    align-content: center;
    align-items: center;
    width: 78vw;
-   background-color: #fff;
    border-radius: 10px;
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
    margin: 1em;
    padding: 0 0 2em;
+   background: linear-gradient(0deg, #c3dedb, #f8f8f8);
+
 }
 
 .form {

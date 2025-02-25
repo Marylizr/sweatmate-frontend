@@ -10,6 +10,8 @@
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
    margin: 1em;
    padding-bottom: 1em;
+   background: linear-gradient(0deg, #c3dedb, #f8f8f8);
+
 }
 .wrap {
    display: flex;

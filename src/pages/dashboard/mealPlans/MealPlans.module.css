@@ -12,6 +12,8 @@
   margin: 1em 0.5em 1em 0.5em;
   padding: 1em;
   justify-content: center;
+  background: linear-gradient(0deg, #c3dedb, #f8f8f8);
+
 }
 
 .container2 {

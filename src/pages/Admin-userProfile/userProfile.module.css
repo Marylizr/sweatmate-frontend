@@ -269,17 +269,15 @@ input.submited {
 }
 
 .containerWrap {
-   display: flex;
-   flex-direction: row;
-   flex-wrap: wrap;
-   align-content: flex-start;
-   align-items: flex-start;
-   width: 76vw;
-   background-color: #fff;
+   background: linear-gradient(0deg, #c3dedb, #f8f8f8);
    border-radius: 10px;
-   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   box-shadow: 0 4px 8px #0000001a;
+   flex-direction: row;
    margin: 1em;
-   padding-bottom: 1em;
+   width: 78vw;
+   display: flex;
+   flex-wrap: wrap;
+   align-items: flex-start;
 }
 
 .historial {

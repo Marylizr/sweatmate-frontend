@@ -45,7 +45,7 @@ import Terms from './components/cookiesPreferences/Termns.jsx';
 import PrivacyPolicy from './components/cookiesPreferences/PrivacyPolicy.jsx';
 import AcceptableUse from './components/cookiesPreferences/AcceptableUse.jsx';
 import Login from './pages/login/Login.jsx';
-
+import ScrollToTop from './ScrollToTop';
 
 
 function App() {
@@ -53,6 +53,7 @@ function App() {
     <div className="App">
       <UserContextProvider>
         <BrowserRouter>
+        <ScrollToTop />
           <Routes>
             <Route path="/cookiePreferences" element={<Cookies />} />
             <Route path="/" element={<Home />} />
@@ -70,7 +71,7 @@ function App() {
             <Route path="/shoulders" element={<Shoulders />} />
             <Route path="/fullbody" element={<Fullbody />} />
             <Route path="/signup" element={<SignUp />} />
-          <Route path="login" element={<Login />}/>
+            <Route path="login" element={<Login />}/>
             <Route path="/addworkout" element={<AddWorkout />} />
             <Route path="/messages" element={<UserProfile />} />
             <Route path="/workouts" element={<EditWorkouts />} />

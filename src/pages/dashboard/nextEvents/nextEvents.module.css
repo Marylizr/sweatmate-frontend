@@ -350,8 +350,14 @@ form > button.submit{
     width: 80vw;
     font-size: 16px;
   }
-  .styleinput > .selected {
+  .styleinput > .select {
     height: 4em;
+    width: 80vw;
+    font-size: 16px;
+  }
+
+  .styleinput > textarea {
+    height: 6em;
     width: 80vw;
     font-size: 16px;
   }

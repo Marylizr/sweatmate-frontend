@@ -182,7 +182,7 @@
 .cardWrap {
    border: 1px solid lightgray;
    padding: 1em;
-   height: 40em;
+   height: auto;
    font-size: 12px;
    margin: 0 1em;
    display: flex;
