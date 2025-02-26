@@ -1,14 +1,39 @@
 /* Base Nav Styles */
 .navbar {
+   align-items: flex-start;
+   background: #fff;
+   box-shadow: 0 4px 8px #0000001a;
    display: flex;
-   align-items: center;
    justify-content: space-between;
+   padding: 1em;
    position: relative;
    width: 100%;
-   padding: 1em;
    z-index: 100;
-   background: white;
-   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+}
+.side_menu > img {
+   width: 2em;
+    margin: 0 0.5em;
+}
+.side_menu > a > img {
+   width: 2em;
+    margin: 0 0.5em;
+}
+
+.side_menu > button {
+   background: transparent;
+   border: none;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   align-content: center;
+   color: gray;
+   font-size: 18px;
+}
+
+.side_menu > img {
+   width: 2em;
+   margin: 0 0.5em;
 }
 
 /* Logo Visibility */
@@ -32,11 +57,12 @@
 
 /* Desktop Menu */
 .links {
-   display: flex;
-   flex-direction: row;
    align-items: center;
-   justify-content: space-between;
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
    width: 100%;
+   flex-wrap: wrap;
 }
 
 .links a {
@@ -90,6 +116,7 @@
    font-weight: 800;
    text-decoration: none;
    text-transform: capitalize;
+   font-size: 18px;
 }
 
 .side_menu a:hover {
@@ -131,7 +158,7 @@
    .navbar {
       align-items: center;
       display: flex;
-      justify-content: space-between;
+      justify-content: space-around;
       flex-direction: row;
       height: 6em;
    }
