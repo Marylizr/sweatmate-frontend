@@ -299,10 +299,22 @@
  
    .logoSmall {
      display: block;
+     width: 6em;
+     margin-right: 1em;
    }
  
    .burgerContainer {
      display: flex;
+   }
+   .navbar {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      z-index: 100;
+      flex-direction: row;
+      flex-wrap: wrap;
+      height: 6em;
    }
  }
  

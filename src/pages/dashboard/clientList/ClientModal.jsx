@@ -8,7 +8,6 @@ const ClientModal = ({ user, activityHistory, setActivityHistory }) => {
   const [lastEvent, setLastEvent] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(null);
 
-  // Fetch today's event specifically for the selected user
   const fetchLastEvent = useCallback(async () => {
     try {
       const response = await fetchResource('GET', `events?userId=${user._id}`);
@@ -33,17 +32,15 @@ const ClientModal = ({ user, activityHistory, setActivityHistory }) => {
     }
   }, [user._id]);
 
-  // Fetch today's event when the user is loaded
   useEffect(() => {
     if (user && user._id) {
       fetchLastEvent();
     }
   }, [user, fetchLastEvent]);
 
-  // Fetch activity history for the selected month and user
   useEffect(() => {
     if (selectedMonth === null) {
-      setActivityHistory([]); // Reset activity history if no month is selected
+      setActivityHistory([]);
       return;
     }
 
@@ -71,33 +68,27 @@ const ClientModal = ({ user, activityHistory, setActivityHistory }) => {
     };
 
     fetchActivityHistory();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedMonth, user._id]);
 
-  // Handle status change for the last event (completed or canceled)
   const handleStatusChange = async (status) => {
     if (!lastEvent) return;
 
     try {
-      // Update the event's status in the database
       await fetchResource('PUT', `events/${lastEvent._id}`, { body: { status } });
 
-      // Update the activity history with the new status and move the event to history
       setActivityHistory((prevHistory) => [
-        { ...lastEvent, status }, // Add the completed/canceled event to history
+        { ...lastEvent, status },
         ...prevHistory,
       ]);
 
-      // Clear the last event from the current location (will move to history on refresh)
       setLastEvent(null);
     } catch (error) {
       console.error('Error updating event status:', error);
     }
   };
 
-  // Handle month button click: toggle open/close
   const handleMonthClick = (index) => {
-    setSelectedMonth(selectedMonth === index ? null : index); // Toggle between opening/closing the month
+    setSelectedMonth(selectedMonth === index ? null : index);
   };
 
   return (
@@ -114,7 +105,6 @@ const ClientModal = ({ user, activityHistory, setActivityHistory }) => {
         </div>
       </div>
 
-      {/* Display today's event */}
       <div className={styles.currentActivity}>
         <p>
           {new Date().toLocaleDateString('en-GB', {
@@ -126,43 +116,18 @@ const ClientModal = ({ user, activityHistory, setActivityHistory }) => {
         {lastEvent ? (
           <div>
             <div className={styles.modalstyle}>
-              <p>
-                <b>Activity: </b>
-                {lastEvent.eventType}
-              </p>
-              <p>
-                <b>Workout for:</b> {lastEvent.userId.name}
-              </p>
-              <p>
-                <b>for:</b> {lastEvent.duration} min
-              </p>
-              <p>
-                <b>at:</b>{' '}
-                {new Date(lastEvent.date).toLocaleTimeString([], {
-                  hour: '2-digit',
-                  minute: '2-digit',
-                })}
-              </p>
+              <p><b>Activity:</b> {lastEvent.eventType}</p>
+              <p><b>Workout for:</b> {lastEvent.userId.name}</p>
+              <p><b>for:</b> {lastEvent.duration} min</p>
+              <p><b>at:</b> {new Date(lastEvent.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
             </div>
 
             <div className={styles.radioButtons}>
               <label>
-                <input
-                  type="radio"
-                  name="status"
-                  value="completed"
-                  onChange={() => handleStatusChange('completed')}
-                />{' '}
-                Completed
+                <input type="radio" name="status" value="completed" onChange={() => handleStatusChange('completed')} /> Completed
               </label>
               <label>
-                <input
-                  type="radio"
-                  name="status"
-                  value="canceled"
-                  onChange={() => handleStatusChange('canceled')}
-                />{' '}
-                Canceled
+                <input type="radio" name="status" value="canceled" onChange={() => handleStatusChange('canceled')} /> Canceled
               </label>
             </div>
           </div>
@@ -174,58 +139,41 @@ const ClientModal = ({ user, activityHistory, setActivityHistory }) => {
         )}
       </div>
 
-      {/* Display month buttons */}
       <div className={styles.monthButtons}>
         {[
-          'January',
-          'February',
-          'March',
-          'April',
-          'May',
-          'June',
-          'July',
-          'August',
-          'September',
-          'October',
-          'November',
-          'December',
+          'January', 'February', 'March', 'April', 'May', 'June',
+          'July', 'August', 'September', 'October', 'November', 'December',
         ].map((monthName, index) => (
           <div key={index}>
-            <button
-              className={index === selectedMonth ? styles.selectedMonth : ''}
-              onClick={() => handleMonthClick(index)} // Toggle the month selection
-            >
+            <button className={index === selectedMonth ? styles.selectedMonth : ''} onClick={() => handleMonthClick(index)}>
               {monthName}
             </button>
 
-            {selectedMonth === index && ( // If the month is selected, display its events
+            {selectedMonth === index && (
               <div className={styles.activityHistory}>
                 {activityHistory.length > 0 ? (
-                  activityHistory.map((activity, i) => (
-                    <div key={i} className={styles.historyItem}>
-                      <p className={styles.time}>
-                        {new Date(activity.date).toLocaleDateString('en-GB', {
-                          weekday: 'short',
-                          day: 'numeric',
-                          month: 'numeric',
-                        })}
-                      </p>
-                      <div className={styles.block}>
-                        <p>{activity.eventType}</p>
-                        <p>
-                          at:{' '}
-                          {new Date(activity.date).toLocaleTimeString([], {
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          })}
-                        </p>
-                      </div>
-                      <div className={styles.block2}>
-                        <p>{activity.duration} min</p>
-                        <p>{activity.status || 'Pending'}</p>
-                      </div>
-                    </div>
-                  ))
+                  <table className={styles.historyTable}>
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Activity</th>
+                        <th>Time</th>
+                        <th>Duration</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {activityHistory.map((activity, i) => (
+                        <tr key={i}>
+                          <td>{new Date(activity.date).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'numeric' })}</td>
+                          <td>{activity.eventType}</td>
+                          <td>{new Date(activity.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
+                          <td>{activity.duration} min</td>
+                          <td>{activity.status || 'Pending'}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 ) : (
                   <div>
                     <img src={face} alt="emoji" />
