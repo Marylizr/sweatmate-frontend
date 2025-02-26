@@ -12,24 +12,25 @@
   margin: 1em 0.5em 1em 0.5em;
   padding: 1em;
   justify-content: center;
-  background: linear-gradient(0deg, #c3dedb, #f8f8f8);
-
 }
+/* container is the small one in the dashboard */
 
+/* container2 is the page container */
 .container2 {
- display: flex;
- flex-direction: column;
- flex-wrap: nowrap;
- align-content: center;
- align-items: center;
- width: 64.5em;
- height: 100vh;
- background-color: #fff;
- border-radius: 10px;
- box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
- margin: 0.5em 0.5em 1em 0;
- padding: 1em;
- justify-content: flex-start;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  align-items: center;
+  width: 15vw;
+  height: 21vh;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 1em 0.5em 1em 0.5em;
+  padding: 1em;
+  justify-content: center;
+  background: linear-gradient(0deg, #c3dedb, #f8f8f8);
 }
 
 .container > a {
@@ -232,10 +233,6 @@
   .container {
     height: 9em;
     width: 96vw;
-  }
-
-  .container2 {
-    width: 87vw;
   }
 
 

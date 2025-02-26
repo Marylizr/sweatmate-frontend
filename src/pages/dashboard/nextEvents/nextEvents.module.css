@@ -350,7 +350,7 @@ form > button.submit{
     width: 80vw;
     font-size: 16px;
   }
-  .styleinput > .select {
+  .styleinput > select {
     height: 4em;
     width: 80vw;
     font-size: 16px;
