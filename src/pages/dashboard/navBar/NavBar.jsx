@@ -92,9 +92,12 @@ const NavBar = () => {
             </Link>
           )}
           {role === 'personal-trainer' && (
+            <div className={styles.side_menu}>
+              <img src={person} alt='' /> 
             <Link to="/main/userProfiles" onClick={() => setClicked(false)}>
-              <img src={person} alt='' /> User Profiles
+              User Profiles
             </Link>
+            </div>
           )}
         </div>
         <div className={styles.side_menu}>
