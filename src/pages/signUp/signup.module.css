@@ -54,6 +54,7 @@
    height: 3em;
    text-align: center;
    width: 18em;
+   margin-bottom: 0.5em;
 }
 
 
@@ -109,7 +110,8 @@
    color: gray;
    height: 3em;
    text-align: center;
-   width: 18em;
+   width: 16em;
+   margin-bottom: 0.5em;
 }
 
 .pass {
