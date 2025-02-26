@@ -1,96 +1,95 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, RadialBarChart, RadialBar } from 'recharts';
 import styles from './training.module.css';
 import customFetch from '../../api';
 import fitness from '../../assets/fitness.svg';
 
 const WeekStorical = () => {
-  const [entrenamientos, setEntrenamientos] = useState(0);
-  const [user, setUser] = useState(null); // Store user object
+  const [user, setUser] = useState(null);
   const [historial, setHistorial] = useState([]);
+  const [workoutsPerWeek, setWorkoutsPerWeek] = useState([]);
+  const [comparison, setComparison] = useState({ diff: 0, percentage: 0 });
+  const [totals, setTotals] = useState({ totalWorkouts: 0, currentWeek: 0, gymsVisited: 0, countriesVisited: 0 });
 
   useEffect(() => {
-    // Fetch user data
-    customFetch("GET", "user/me")
-      .then((json) => {
-        if (json?._id) {
-          setUser(json); // Store the full user object
-        } else {
-          console.error("Invalid user data:", json);
-          setUser(null);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching user data:", error);
-        setUser(null);
-      });
-
-    // Fetch workout history
-    customFetch("GET", "fav")
-      .then((json) => {
-        if (Array.isArray(json)) {
-          setHistorial(json); // Ensure it's an array
-        } else {
-          console.error("Unexpected data format for historial:", json);
-          setHistorial([]);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching historial:", error);
-        setHistorial([]);
-      });
+    customFetch("GET", "user/me").then((json) => setUser(json || null)).catch(() => setUser(null));
+    customFetch("GET", "fav").then((json) => setHistorial(Array.isArray(json) ? json : [])).catch(() => setHistorial([]));
   }, []);
 
-  // Function to calculate unique workout days in the last 7 days
-  const getWorkouts = useCallback(() => {
-    if (!historial?.length || !user?._id) return 0; // Ensure historial exists and user is set
-
-    const lastWeekStart = new Date();
-    lastWeekStart.setDate(lastWeekStart.getDate() - 7); // Get date 7 days ago
-
-    const workoutsThisWeek = historial.filter(
-      (item) => item.userId === user._id && new Date(item.date) > lastWeekStart
-    );
-
-    const uniqueDays = [...new Set(workoutsThisWeek.map(item => new Date(item.date).toDateString()))];
-    console.log(`Unique workout days this week:`, uniqueDays);
-
-    return uniqueDays.length;
+  const processWorkouts = useCallback(() => {
+    if (!historial.length || !user) return;
+    
+    const weeks = Array(6).fill(0);
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const weekNumbers = historial.reduce((acc, workout) => {
+      const date = new Date(workout.date);
+      const weekNum = Math.floor((date - new Date(currentYear, 0, 1)) / (7 * 24 * 60 * 60 * 1000));
+      if (weekNum >= 0 && weekNum < 6) acc[weekNum]++;
+      return acc;
+    }, weeks);
+    
+    setWorkoutsPerWeek(weekNumbers.map((count, i) => ({ week: `w. ${i + 1}`, workouts: count })));
+    
+    const lastWeek = weekNumbers[4];
+    const thisWeek = weekNumbers[5];
+    const totalWorkouts = historial.length;
+    const lastMonthWorkouts = weekNumbers.slice(0, 4).reduce((a, b) => a + b, 0);
+    const percentage = lastMonthWorkouts ? Math.round((thisWeek / lastMonthWorkouts) * 100) : 0;
+    setComparison({ diff: thisWeek - lastWeek, percentage });
+    setTotals({ totalWorkouts, currentWeek: thisWeek, gymsVisited: 16, countriesVisited: 1 });
   }, [historial, user]);
 
   useEffect(() => {
-    const daysWorkedOut = getWorkouts();
-    setEntrenamientos(daysWorkedOut);
-  }, [getWorkouts]);
-
-  // Function to get workout dates for the last 7 days
-  const getDays = () => {
-    if (!historial?.length || !user?._id) return [];
-
-    const lastWeekStart = new Date();
-    lastWeekStart.setDate(lastWeekStart.getDate() - 7);
-
-    const workoutsThisWeek = historial.filter(
-      (item) => item.userId === user._id && new Date(item.date) > lastWeekStart
-    );
-
-    const uniqueDays = [...new Set(workoutsThisWeek.map(item => new Date(item.date).toDateString()))];
-    return uniqueDays;
-  };
-
-  const days = getDays();
+    processWorkouts();
+  }, [processWorkouts]);
 
   return (
     <div className={styles.container}>
-      <img src={fitness} alt='fit-icon' />
-      <h2>Weekly Workouts</h2>
-      {user ? (
-        <>
-          <p>{user.name}, you have trained: {entrenamientos} days this week!</p>
-          <p>{days.length > 0 ? days.join(", ") : "No workouts recorded this week"}</p>
-        </>
-      ) : (
-        <p>Loading user data...</p>
-      )}
+      <h2>Visits/week</h2>
+      <ResponsiveContainer width="100%" height={200}>
+        <BarChart data={workoutsPerWeek}>
+          <XAxis dataKey="week" />
+          <YAxis />
+          <Tooltip />
+          <Bar dataKey="workouts" fill="#bbb" />
+        </BarChart>
+      </ResponsiveContainer>
+
+      <div className={styles.statsGrid}>
+        <div className={styles.statBlock}>
+          <p className={styles.statValue}>{comparison.diff}</p>
+          <p>Workouts Compared to last week</p>
+        </div>
+        <div className={styles.statBlock}>
+          <ResponsiveContainer width={100} height={100}>
+            <RadialBarChart innerRadius="80%" outerRadius="100%" data={[{ value: comparison.percentage, fill: "#ff9900" }]}>
+              <RadialBar minAngle={15} background dataKey="value" />
+            </RadialBarChart>
+          </ResponsiveContainer>
+          <p>{comparison.percentage}% Compared to last month</p>
+        </div>
+      </div>
+
+      <h3>Your Training History</h3>
+      <div className={styles.historyGrid}>
+        <div className={styles.historyBlock}>
+          <p className={styles.statValue}>{totals.totalWorkouts}</p>
+          <p>Workouts Total</p>
+        </div>
+        <div className={styles.historyBlock}>
+          <p className={styles.statValue}>{totals.currentWeek}</p>
+          <p>Workouts This week</p>
+        </div>
+        <div className={styles.historyBlock}>
+          <p className={styles.statValue}>{totals.gymsVisited}</p>
+          <p>Gyms visited</p>
+        </div>
+        <div className={styles.historyBlock}>
+          <p className={styles.statValue}>{totals.countriesVisited}</p>
+          <p>Countries visited</p>
+        </div>
+      </div>
     </div>
   );
 };
