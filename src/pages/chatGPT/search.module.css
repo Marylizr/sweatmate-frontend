@@ -10,6 +10,7 @@
    flex-wrap: wrap;
    margin: 1em;
    width: 76vw;
+   padding: 2em;
 }
 .img > img{
    display: flex;
@@ -51,9 +52,22 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.chat > textarea {
-   box-shadow: none;
+.chat {
    background-color: white;
+    align-items: center;
+    border-radius: 1em;
+    box-shadow: 0 4px 8px #0000001a;
+    color: teal;
+    display: flex;
+    font-size: large;
+    font-weight: 800;
+    height: auto;
+    justify-content: center;
+    margin: 2em;
+    overflow: scroll;
+    padding: 1em;
+    width: 25em;
+    min-height: 6em;
 }
 
 .upload {
@@ -190,8 +204,11 @@ button.save {
    color: teal;
  }
  
-@media (max-width:768px){
 
+
+
+/* Extra Small Devices (Portrait Phones, less than 576px) */
+@media only screen and (max-width: 575.98px) {
    .container {
       width: 76vw;
    }
@@ -199,7 +216,7 @@ button.save {
 
    .prompt > textarea {
       
-      width: 22em;
+      width: 20em;
    }
 
    .chat {
@@ -211,15 +228,19 @@ button.save {
       margin-right: 1.5em;
       color: teal;
   }
-}
-
-@media (min-width: 769px) and (max-width: 1181px) {
-   .prompt > textarea {
-      width: 30em;
-   }
-   .chat {
-      width: 25em;
-      height: 8em;
-   }
-
-}
+ }
+ 
+ /* Small Devices (Landscape Phones, 576px and up) */
+ @media only screen and (min-width: 576px) and (max-width: 767.98px) {
+   /* Add your styles here */
+ }
+ 
+ /* Medium Devices (Tablets, 768px and up) */
+ @media only screen and (min-width: 768px) and (max-width: 991.98px) {
+   /* Add your styles here */
+ }
+ 
+ /* Large Devices (Desktops, 992px and up) */
+ @media only screen and (min-width: 992px) and (max-width: 1199.98px) {
+   /* Add your styles here */
+ }

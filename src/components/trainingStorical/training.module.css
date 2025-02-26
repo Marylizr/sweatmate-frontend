@@ -59,7 +59,7 @@
    text-align: center;
    width: 48%;
    margin: 0.5em;
-   border: 1px solid teal;
+  
  }
  
  /* History Grid */
@@ -75,6 +75,7 @@
    padding: 15px;
    border-radius: 12px;
    text-align: center;
+   border: 1px solid teal;
  }
  
 .container:hover {

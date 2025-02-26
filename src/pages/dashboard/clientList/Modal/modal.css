@@ -96,7 +96,8 @@ form > .buttons {
 }
 
 
-@media(max-width:768px){
+/* Extra Small Devices (Portrait Phones, less than 576px) */
+@media only screen and (max-width: 575.98px) {
   .modalContainer > img{
     width: 200px;
     height: 250px;
@@ -104,6 +105,25 @@ form > .buttons {
   }
 
   .modalContainer {
-    min-width: 330px;
+    height: 75vh;
+    min-width: 80vw;
+    padding-top: 2em;
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
+}
+
+/* Small Devices (Landscape Phones, 576px and up) */
+@media only screen and (min-width: 576px) and (max-width: 767.98px) {
+  /* Add your styles here */
+}
+
+/* Medium Devices (Tablets, 768px and up) */
+@media only screen and (min-width: 768px) and (max-width: 991.98px) {
+  /* Add your styles here */
+}
+
+/* Large Devices (Desktops, 992px and up) */
+@media only screen and (min-width: 992px) and (max-width: 1199.98px) {
+  /* Add your styles here */
 }
