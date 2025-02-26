@@ -10,7 +10,7 @@
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
    margin: 1em 0.5em 0 0;
    padding: 1em;
-   height: 21.5em;
+   min-height: 17em;
    overflow-y: auto;
    flex-wrap: nowrap;
 }
