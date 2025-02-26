@@ -4,7 +4,6 @@ import PrivateRoute from "../../api/auth/privateRoute";
 import AddWorkout from '../addWorkout/AddWorkout';
 import UserProfile from '../userProfile/UserProfile';
 import EditWorkouts from '../editWorkOuts/EditWorkouts';
-import WorkoutsMenu from '../dashboard/navBar/workoutsMenu';
 import styles from '../main/main.module.css';
 import Chat from '../chatGPT/ChatGPT';
 import Training from '../training/Training';
@@ -17,13 +16,14 @@ import Form from '../dashboard/nextEvents/Form';
 import EditUserProfile from '../Admin-userProfile/EditUserProfile';
 import { Link } from 'react-router-dom';
 import arrow_left from '../../utils/arrow_left.svg';
+import NavBar from '../dashboard/navBar/NavBar';
 
 const Main = () => {
 
   return (
     <div className={styles.container}>
      
-      <WorkoutsMenu />
+      <NavBar />
 
       <div className={styles.wrap}>
         <div className={styles.header}>   
