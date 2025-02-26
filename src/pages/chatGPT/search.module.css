@@ -1,14 +1,15 @@
 .container {
+   align-content: center;
+   align-items: center;
+   background-color: #fff;
+   background: linear-gradient(0deg, #c3dedb, #f8f8f8);
+   border-radius: 10px;
+   box-shadow: 0 4px 8px #0000001a;
    display: flex;
    flex-direction: column;
    flex-wrap: wrap;
-   align-content: center;
-   align-items: center;
-   width: 80vw;
-   padding: 2em;
    margin: 1em;
-   background: white;
-   border-radius: 1em;
+   width: 76vw;
 }
 .img > img{
    display: flex;
@@ -52,6 +53,7 @@
 
 .chat > textarea {
    box-shadow: none;
+   background-color: white;
 }
 
 .upload {
@@ -67,7 +69,7 @@ background-color: transparent !important;
 .prompt > textarea {
    background-color: transparent;
    margin: 2em;
-   width: 500px;
+   width: 20em;
    height: 70px;
    border-radius: 1em;
    display: flex;
@@ -77,7 +79,7 @@ background-color: transparent !important;
    text-align: center;
    box-shadow: none;
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-   
+   background-color: white;
 }
 
 .buttons > .reset {
@@ -143,8 +145,6 @@ button.save {
  }
  
  .prompt textarea {
-   width: 100%;
-   min-height: 80px;
    padding: 8px;
    resize: vertical;
    border-radius: 5px;
