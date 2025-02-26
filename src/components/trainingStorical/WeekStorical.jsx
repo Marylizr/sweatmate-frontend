@@ -105,14 +105,7 @@ const WeekStorical = () => {
           <p className={styles.statValue}>{totals.currentWeek}</p>
           <p>Workouts This week</p>
         </div>
-        <div className={styles.historyBlock}>
-          <p className={styles.statValue}>{totals.gymsVisited}</p>
-          <p>Gyms visited</p>
-        </div>
-        <div className={styles.historyBlock}>
-          <p className={styles.statValue}>{totals.countriesVisited}</p>
-          <p>Countries visited</p>
-        </div>
+      
       </div>
     </div>
   );

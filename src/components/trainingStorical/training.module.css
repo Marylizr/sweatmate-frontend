@@ -2,24 +2,81 @@
 /* THIS IS THE DASHBOARD MODULE!! */
 
 .container{
+   align-content: center;
+   align-items: center;
+   background-color: #fff;
+   border: 1px solid #d3d3d3;
+   border-radius: 0 0 15px 15px;
+   box-shadow: 1px 2px 4px #00000036;
    display: flex;
-    align-items: center;
-    border: lightgray 1px solid;
-    width: 17em;
-    height: 18em;
-    padding: 1em;
-    border-radius: 0 0px 15px 15px;
-    margin-bottom: 10px;
-    flex-direction: column;
-    margin-right: 1.5em;
-    overflow-y: scroll;
-    align-content: center;
-    flex-wrap: wrap;
-    justify-content: center;
-    box-shadow: 1px 2px 4px rgb(0 0 0 / 21%);
-    background-color: white;
+   flex-direction: column;
+   flex-wrap: wrap;
+   height: auto;
+   justify-content: flex-start;
+   margin-bottom: 10px;
+   margin-right: 1.5em;
+   overflow-y: scroll;
+   padding: 1em;
+   width: 20em;
 }
 
+ 
+ .title {
+   font-size: 22px;
+   font-weight: bold;
+   margin-bottom: 10px;
+ }
+ 
+ .subtitle {
+   font-size: 20px;
+   font-weight: bold;
+   margin-top: 20px;
+ }
+ 
+ /* Stats Grid */
+ .statsGrid {
+   display: flex;
+   justify-content: space-between;
+   margin-top: 20px;
+ }
+ 
+ .statBlock {
+   background: #ffffff22;
+   border-radius: 12px;
+   padding: 15px;
+   text-align: center;
+   width: 48%;
+   margin: 0.5em;
+   border: 1px solid teal;
+ }
+ 
+ .statValue {
+   font-size: 26px;
+   font-weight: bold;
+   background: #ffffff22;
+   border-radius: 12px;
+   padding: 15px;
+   text-align: center;
+   width: 48%;
+   margin: 0.5em;
+   border: 1px solid teal;
+ }
+ 
+ /* History Grid */
+ .historyGrid {
+   display: grid;
+   grid-template-columns: repeat(2, 1fr);
+   gap: 15px;
+   margin-top: 15px;
+ }
+ 
+ .historyBlock {
+   background: #ffffff22;
+   padding: 15px;
+   border-radius: 12px;
+   text-align: center;
+ }
+ 
 .container:hover {
    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
    border: teal 1.5px solid;
@@ -29,9 +86,9 @@
 /* Extra Small Devices (Portrait Phones, less than 576px) */
 @media only screen and (max-width: 575.98px) {
    .container{
-      width: 28em;
-      height: 22em;
+      height: auto;
       margin: 1em 0 0;
+      width: 22em;
    }
  }
  
@@ -67,58 +124,4 @@
 
  /* THIS IS THE DASHBOARD MODULE!! */
 
- .container {
-   background: #00264D;
-   color: white;
-   padding: 20px;
-   border-radius: 12px;
-   text-align: center;
- }
- 
- .title {
-   font-size: 22px;
-   font-weight: bold;
-   margin-bottom: 10px;
- }
- 
- .subtitle {
-   font-size: 20px;
-   font-weight: bold;
-   margin-top: 20px;
- }
- 
- /* Stats Grid */
- .statsGrid {
-   display: flex;
-   justify-content: space-between;
-   margin-top: 20px;
- }
- 
- .statBlock {
-   background: #ffffff22;
-   padding: 15px;
-   border-radius: 12px;
-   text-align: center;
-   width: 48%;
- }
- 
- .statValue {
-   font-size: 26px;
-   font-weight: bold;
- }
- 
- /* History Grid */
- .historyGrid {
-   display: grid;
-   grid-template-columns: repeat(2, 1fr);
-   gap: 15px;
-   margin-top: 15px;
- }
- 
- .historyBlock {
-   background: #ffffff22;
-   padding: 15px;
-   border-radius: 12px;
-   text-align: center;
- }
  
