@@ -65,6 +65,8 @@
    height: 3em;
    text-align: center;
    width: 18em;
+   margin: 0 0 0.5em;
+   box-shadow: none;
 }
 
 
