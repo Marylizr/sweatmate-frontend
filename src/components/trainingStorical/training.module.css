@@ -66,3 +66,59 @@
  
 
  /* THIS IS THE DASHBOARD MODULE!! */
+
+ .container {
+   background: #00264D;
+   color: white;
+   padding: 20px;
+   border-radius: 12px;
+   text-align: center;
+ }
+ 
+ .title {
+   font-size: 22px;
+   font-weight: bold;
+   margin-bottom: 10px;
+ }
+ 
+ .subtitle {
+   font-size: 20px;
+   font-weight: bold;
+   margin-top: 20px;
+ }
+ 
+ /* Stats Grid */
+ .statsGrid {
+   display: flex;
+   justify-content: space-between;
+   margin-top: 20px;
+ }
+ 
+ .statBlock {
+   background: #ffffff22;
+   padding: 15px;
+   border-radius: 12px;
+   text-align: center;
+   width: 48%;
+ }
+ 
+ .statValue {
+   font-size: 26px;
+   font-weight: bold;
+ }
+ 
+ /* History Grid */
+ .historyGrid {
+   display: grid;
+   grid-template-columns: repeat(2, 1fr);
+   gap: 15px;
+   margin-top: 15px;
+ }
+ 
+ .historyBlock {
+   background: #ffffff22;
+   padding: 15px;
+   border-radius: 12px;
+   text-align: center;
+ }
+ 
