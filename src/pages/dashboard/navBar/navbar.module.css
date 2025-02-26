@@ -31,6 +31,11 @@
    font-size: 18px;
 }
 
+.side_menu > button > img {
+   width: 2em;
+   margin: 0 0.5em;
+}
+
 .side_menu > img {
    width: 2em;
    margin: 0 0.5em;
@@ -96,7 +101,7 @@
 
 /* Side Menu Items */
 .side_menu {
-   width: 280px;
+   width: 240px;
    height: 45px;
    background: white;
    margin: 0.3em 0;
@@ -117,6 +122,11 @@
    text-decoration: none;
    text-transform: capitalize;
    font-size: 18px;
+   display: flex;
+    align-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .side_menu a:hover {
