@@ -72,65 +72,46 @@
 
 .monthButtons > div > button {
    background-color: white;
-    border: 1px solid teal;
-    padding: 0.5em;
-    border-radius: 0.5em;
-    margin: 0.5em;
-    color: teal;
-    width: 6em;
+   border: 1px solid teal;
+   padding: 0.5em;
+   border-radius: 0.5em;
+   margin: 0.5em;
+   color: teal;
+   width: 6em;
 }
 
+/* Responsive Table for Activity History */
 .activityHistory {
-   width: 23em;
+   width: 100%;
+   overflow-x: auto;
    background: #f2f2f2;
    padding: 1em;
    border-radius: 1em;
 }
 
-.historyItem {
-   display: flex;
+.historyTable {
+   width: 100%;
+   border-collapse: collapse;
 }
 
-.historyItem > p.time {
-   font-size: 20px;
-   margin: 0.3em 0 0 0;
-   font-size: 1.1em;
+.historyTable th, .historyTable td {
+   padding: 0.8em;
+   border: 1px solid #ccc;
+   text-align: center;
 }
 
-.block {
-   display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    align-items: flex-start;
-    margin: 0 1em 0 1em;
-    width: 11em;
+.historyTable th {
+   background: teal;
+   color: white;
+   font-weight: bold;
 }
 
-.block > p {
-   margin: 0.3em 0 0 0;
-   font-size: 1.1em;
+.historyTable tr:nth-child(even) {
+   background: #e6e6e6;
 }
 
-.block2 {
-   display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    align-items: flex-start;
-    margin: 0 1em 0 1em;
-}
-
-.block2 > p {
-   margin: 0.3em 0 0 0;
-   font-size: 1.1em;
-}
-
-.modalstyle{
-   display: flex;
-   flex-direction: row;
-   flex-wrap: wrap;
-   justify-content: center;
+.historyTable tr:hover {
+   background: #d1d1d1;
 }
 
 .modalHeader > img {
@@ -138,10 +119,15 @@
    border-radius: 5em;
 }
 
+.modalstyle {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   justify-content: center;
+}
 
- /* Extra Small Devices (Portrait Phones, less than 576px) */
+/* Extra Small Devices (Portrait Phones, less than 576px) */
 @media only screen and (max-width: 575.98px) {
-  
    .container {
       width: 96vw;
       margin: 0.5em 0em 0 0;
@@ -150,59 +136,69 @@
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
-    }
-  
-    .title {
+   }
+
+   .title {
       font-size: 20px;
-    }
- 
-    .userList {
-       width: 90vw;
-       display: flex;
-         flex-direction: row;
-         flex-wrap: wrap;
-         align-content: center;
-         align-items: center;
-         padding: 0.5em;
-         background-color: #fff;
-         border-radius: 10px;
-    }
-    
-    .userItem {
-       width: 90vw;
-    }
- 
-    .userDetails > p {
-       margin: 0;
-       font-size: 23px;
-    }
- 
-    .userItem > img {
-       width: 4em;
-    }
-    img.chevronIcon {
+   }
+
+   .userList {
+      width: 90vw;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-content: center;
+      align-items: center;
+      padding: 0.5em;
+      background-color: #fff;
+      border-radius: 10px;
+   }
+
+   .userItem {
+      width: 90vw;
+   }
+
+   .userDetails > p {
+      margin: 0;
+      font-size: 23px;
+   }
+
+   .userItem > img {
+      width: 4em;
+   }
+
+   img.chevronIcon {
       width: 3em;
    }
- 
-    .userDetails {
-       display: flex;
-       flex-direction: column;
-       justify-content: flex-start;
-       align-items: flex-start;
-       flex-wrap: wrap;
-       width: 10em;
-       overflow-y: hidden;
-    }
- }
- 
- /* Small Devices (Landscape Phones, 576px and up) */
- @media only screen and (min-width: 576px) and (max-width: 767.98px) {
+
+   .userDetails {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      width: 10em;
+      overflow-y: hidden;
+   }
+
+   .activityHistory {
+      overflow-x: auto;
+   }
+
+   .historyTable {
+      font-size: 0.9em;
+   }
+}
+
+/* Small Devices (Landscape Phones, 576px and up) */
+@media only screen and (min-width: 576px) and (max-width: 767.98px) {
    .container {
       width: 90vw;
       margin: 0.5em 0 0 0;
       height: 17em;
       overflow-x: hidden;
    }
+
    .userList {
       width: 80vw;
    }
@@ -210,6 +206,7 @@
    .userItem > img {
       width: 2em;
    }
+
    .userDetails > p {
       font-size: 1.3em;
    }
@@ -221,16 +218,25 @@
    .userItem {
       width: 80vw;
    }
- }
- 
- /* Medium Devices (Tablets, 768px and up) */
- @media only screen and (min-width: 768px) and (max-width: 991.98px) {
+
+   .activityHistory {
+      overflow-x: auto;
+   }
+
+   .historyTable {
+      font-size: 0.9em;
+   }
+}
+
+/* Medium Devices (Tablets, 768px and up) */
+@media only screen and (min-width: 768px) and (max-width: 991.98px) {
    .container {
       width: 90vw;
       margin: 0.5em 0 0 0;
       height: 17em;
       overflow-x: hidden;
    }
+
    .userList {
       width: 80vw;
    }
@@ -238,6 +244,7 @@
    .userItem > img {
       width: 4em;
    }
+
    .userDetails > p {
       font-size: 23px;
    }
@@ -249,9 +256,23 @@
    .userItem {
       width: 80vw;
    }
- }
- 
- /* Large Devices (Desktops, 992px and up) */
- @media only screen and (min-width: 992px) and (max-width: 1199.98px) {
-   /* Add your styles here */
- }
+
+   .activityHistory {
+      overflow-x: auto;
+   }
+}
+
+/* Large Devices (Desktops, 992px and up) */
+@media only screen and (min-width: 992px) and (max-width: 1199.98px) {
+   .container {
+      width: 80vw;
+   }
+
+   .activityHistory {
+      overflow-x: auto;
+   }
+
+   .historyTable {
+      font-size: 1em;
+   }
+}
