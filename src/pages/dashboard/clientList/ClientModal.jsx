@@ -40,25 +40,25 @@ const ClientModal = ({ user, activityHistory, setActivityHistory }) => {
 
   useEffect(() => {
     if (selectedMonth === null) {
-      setActivityHistory([]);
+      setActivityHistory([]); // Reset activity history if no month is selected
       return;
     }
-
+  
     const fetchActivityHistory = async () => {
       try {
         const year = new Date().getFullYear();
         const monthStart = new Date(year, selectedMonth, 1).toISOString();
         const monthEnd = new Date(year, selectedMonth + 1, 0, 23, 59, 59).toISOString();
-
+  
         const monthlyEventsResponse = await fetchResource(
           'GET',
           `events?userId=${user._id}&start=${monthStart}&end=${monthEnd}`
         );
-
+  
         const filteredEvents = monthlyEventsResponse.filter((event) =>
           event.userId.some((u) => u._id === user._id)
         );
-
+  
         setActivityHistory(
           filteredEvents.sort((a, b) => new Date(a.date) - new Date(b.date))
         );
@@ -66,9 +66,10 @@ const ClientModal = ({ user, activityHistory, setActivityHistory }) => {
         console.error('Error fetching activity history:', error);
       }
     };
-
+  
     fetchActivityHistory();
-  }, [selectedMonth, user._id]);
+  }, [selectedMonth, user._id, setActivityHistory]); // Added setActivityHistory
+  
 
   const handleStatusChange = async (status) => {
     if (!lastEvent) return;
