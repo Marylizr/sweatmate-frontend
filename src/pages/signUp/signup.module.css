@@ -48,29 +48,22 @@
 }
 
 .form_styles > form > input {
-   border: gray solid 1px;
-   border-radius: 0.5em;
+   border: 1px solid gray;
+   border-radius: .5em;
+   color: gray;
+   height: 3em;
    text-align: center;
-   color: grey;
-   padding: 0.5em;
-   margin: 0.5em;
-   font-size: 16px;
-   height: 4em;
-   width: 21em;
+   width: 18em;
 }
 
 
 .form_styles > form > select {
-   font-size: 16px;
-   height: 4em;
-   width: 21em;
-   margin-top: 0.5em;
-   border: gray solid 1px;
-   border-radius: 0.5em;
-   text-align: center;
+   border: 1px solid gray;
+   border-radius: .5em;
    color: gray;
-   padding: 0.5em;
-   margin: 0.5em;
+   height: 3em;
+   text-align: center;
+   width: 18em;
 }
 
 
@@ -111,14 +104,12 @@
 }
 
 .pass > input {
-   font-size: 16px;
-   height: 4em;
-   width: 21em;
-   border: gray solid 1px;
-   border-radius: 0.5em;
+   border: 1px solid gray;
+   border-radius: .5em;
+   color: gray;
+   height: 3em;
    text-align: center;
-   color: grey;
-   margin: 0.5em 0.7em 0.5em 0;
+   width: 18em;
 }
 
 .pass {
