@@ -60,6 +60,10 @@
       height: 22em;
       margin: 1em 0 0;
    }
+   .container > form > input {
+
+    width: 70vw;
+   }
  }
  
  /* Small Devices (Landscape Phones, 576px and up) */
