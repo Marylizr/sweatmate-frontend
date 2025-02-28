@@ -52,23 +52,38 @@ const CardWorkout = ({ item }) => {
       alert('User information not available.');
       return;
     }
-
+  
     const workoutData = {
       name: user.name,
       picture: favs.picture,
       workoutName: item.workoutName,
-      rounds, // Send all rounds as an array
+      rounds,
       date: e.target.date.value,
     };
-
+  
     try {
+      // Check if the workout already exists for the given date
+      const existingWorkouts = await customFetch('GET', `fav?userId=${user._id}`);
+      const duplicate = existingWorkouts.find(workout => 
+        workout.workoutName === item.workoutName &&
+        new Date(workout.date).toLocaleDateString() === new Date(e.target.date.value).toLocaleDateString()
+      );
+  
+      if (duplicate) {
+        alert('Workout already exists for this date.');
+        console.warn('Duplicate workout detected:', duplicate);
+        return;
+      }
+  
+      // If no duplicate is found, proceed with saving
       await customFetch('POST', 'fav', { body: workoutData });
       alert('Workout saved successfully!');
-      closeModal(); // Close the modal after successful submission
+      closeModal();
     } catch (error) {
       console.error('Error saving workout:', error);
     }
   };
+  
 
   return (
     <div className={styles.container}>

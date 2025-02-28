@@ -3,17 +3,15 @@ import customFetch from '../../api';
 import CardWorkout from '../../components/card/CardWorkouts';
 import styles from '../workoutHistoric/workoutHistoric.module.css';
 
-const TodayWorkout = ({ user }) => {
+const TodayWorkout = ({ user, setHasWorkouts }) => {
   const [currentWorkout, setCurrentWorkout] = useState([]);
   const [formattedDate, setFormattedDate] = useState('');
 
-  // Format current date
   useEffect(() => {
     const today = new Date();
     setFormattedDate(today.toLocaleDateString());
   }, []);
 
-  // Fetch workouts for the current date and user
   useEffect(() => {
     if (!user || !formattedDate) return;
 
@@ -24,14 +22,19 @@ const TodayWorkout = ({ user }) => {
           const workoutDate = new Date(item.date).toLocaleDateString();
           return workoutDate === formattedDate;
         });
+
         setCurrentWorkout(todayWorkouts);
+
+    
+        setHasWorkouts(todayWorkouts.length > 0);
+
       } catch (error) {
         console.error('Error fetching workouts:', error);
       }
     };
 
     fetchWorkouts();
-  }, [user, formattedDate]);
+  }, [user, formattedDate, setHasWorkouts]);
 
   return (
     <div className={styles.container}>
@@ -47,5 +50,6 @@ const TodayWorkout = ({ user }) => {
     </div>
   );
 };
+
 
 export default TodayWorkout;

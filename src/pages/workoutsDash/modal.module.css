@@ -20,11 +20,13 @@
    box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04), 0px 4px 16px rgba(51, 51, 51, 0.18);
    padding: 5px;
    color: #888;
+   font-size: 16px;
 }
 
+
+
 .roundBlock{
-   box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04), 0px 4px 16px rgba(51, 51, 51, 0.18);
-   border-bottom: 0.1em lightgrey solid;
+   border-bottom: 0.01em lightgrey solid;
    padding-bottom: 1em;
    margin-bottom: 0.1em;
    width: 30em;

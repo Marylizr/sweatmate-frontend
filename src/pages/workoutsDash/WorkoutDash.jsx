@@ -6,8 +6,9 @@ import NavBar from '../../components/navBar/navBar';
 import customFetch from '../../api';
 
 const WorkoutDash = () => {
-  const [user, setUser] = useState(null); // Store user info
+  const [user, setUser] = useState(null);
   const [show, setShow] = useState(null);
+  const [hasWorkouts, setHasWorkouts] = useState(false); // Track if TodayWorkout has stored data
 
   // Fetch user info once when the component mounts
   useEffect(() => {
@@ -28,8 +29,11 @@ const WorkoutDash = () => {
   return (
     <div className={styles.container}>
       <NavBar />
-      <TodayWorkout user={user} /> {/* Pass user to TodayWorkout */}
-      <SavedWorkouts show={show} setShow={setShow} user={user} /> {/* Pass user to SavedWorkouts */}
+      {/* Pass user & setHasWorkouts to TodayWorkout */}
+      <TodayWorkout user={user} setHasWorkouts={setHasWorkouts} />
+      
+      {/* Show SavedWorkouts only if workouts exist */}
+      {hasWorkouts && <SavedWorkouts show={show} setShow={setShow} user={user} />}
     </div>
   );
 };

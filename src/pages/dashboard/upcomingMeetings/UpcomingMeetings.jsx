@@ -35,8 +35,8 @@ const UpcomingMeetings = () => {
     return meetings
       .filter((meeting) => {
         const meetingDate = new Date(meeting.date);
-        // Check if the meeting date matches today's year, month, and day
-        console.log('User Data:', meeting.userId[0]);
+       
+      
         return (
           meetingDate.getFullYear() === today.getFullYear() &&
           meetingDate.getMonth() === today.getMonth() &&

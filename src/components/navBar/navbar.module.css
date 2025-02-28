@@ -45,8 +45,8 @@
  
  /* Active link styling */
  .activeLink {
-   color: white;
-   background-color: teal;
+   color: teal;
+   text-decoration: underline ;
    font-weight: bold;
  }
  
