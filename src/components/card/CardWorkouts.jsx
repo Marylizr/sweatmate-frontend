@@ -53,6 +53,30 @@ const CardWorkout = ({ item }) => {
       return;
     }
   
+    // Fetch saved workouts to check for duplicates
+    let savedWorkouts = [];
+    try {
+      const response = await customFetch('GET', 'fav');
+      
+  
+      if (Array.isArray(response)) {
+        savedWorkouts = response;
+      } else {
+        console.warn("Unexpected response format, expected an array:", response);
+      }
+    } catch (error) {
+      console.error('Error fetching existing workouts:', error);
+    }
+  
+   
+    const existingWorkout = savedWorkouts.find(workout => workout.workoutName === item.workoutName);
+  
+    if (existingWorkout) {
+      alert("Workout already exists!");
+      return;
+    }
+  
+
     const workoutData = {
       name: user.name,
       picture: favs.picture,
@@ -62,27 +86,15 @@ const CardWorkout = ({ item }) => {
     };
   
     try {
-      // Check if the workout already exists for the given date
-      const existingWorkouts = await customFetch('GET', `fav?userId=${user._id}`);
-      const duplicate = existingWorkouts.find(workout => 
-        workout.workoutName === item.workoutName &&
-        new Date(workout.date).toLocaleDateString() === new Date(e.target.date.value).toLocaleDateString()
-      );
-  
-      if (duplicate) {
-        alert('Workout already exists for this date.');
-        console.warn('Duplicate workout detected:', duplicate);
-        return;
-      }
-  
-      // If no duplicate is found, proceed with saving
       await customFetch('POST', 'fav', { body: workoutData });
       alert('Workout saved successfully!');
       closeModal();
     } catch (error) {
       console.error('Error saving workout:', error);
+      alert("Failed to save workout. Please try again.");
     }
   };
+  
   
 
   return (
