@@ -40,7 +40,7 @@ const Login = () => {
 
   // Fetch user data after login
   const fetchUserData = async () => {
-    const token = getUserToken(); // ✅ Always retrieve latest stored token
+    const token = getUserToken(); 
 
     if (!token) {
         console.error("Token missing or expired. Fetching user data may fail.");
@@ -53,14 +53,13 @@ const Login = () => {
 
         const response = await customFetch("GET", "user/me", {
             headers: { Authorization: `Bearer ${token}` },
-            cache: "no-store" // Prevents caching issues
+            cache: "no-store"
         });
 
         console.log("Full API Response:", response);
 
         // Ensure correct user ID is retrieved
-        const userId = response._id || response.id;
-        if (!userId) {
+        if (!response.id) { // Change from _id to id
             console.warn("User ID is missing in API response. Possible invalid session.");
             removeSession();
             return;
@@ -69,12 +68,13 @@ const Login = () => {
         console.log("Fetched User Data:", response);
 
         // Store updated session
-        setUserSession(token, response.role, userId, response.name, response.gender);
+        setUserSession(token, response.role, response.id, response.name, response.gender);
         navigateBasedOnRole(response);
     } catch (error) {
         console.error("Error fetching user data:", error);
     }
 };
+
 
 const onSubmit = async (data) => {
   setErrorMessage("");
@@ -91,26 +91,23 @@ const onSubmit = async (data) => {
 
       console.log("Login Response:", response);
 
-      if (!response.token) {
-          console.warn("No token received in response.");
+      if (!response.token || !response.id) {
+          console.warn("No token or user ID received in response.");
           setErrorMessage("Invalid login credentials.");
           return;
       }
 
       console.log("Received Token:", response.token);
 
-   
+      // Store user session using correct ID
       setUserSession(response.token, response.role, response.id, response.name, response.gender);
 
-
       await fetchUserData();
-
   } catch (error) {
       console.error("Login failed:", error);
       setErrorMessage("Invalid email or password. Please try again.");
   }
 };
-
 
 
 
