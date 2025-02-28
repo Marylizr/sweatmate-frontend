@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styles from './login.module.css';
 import { useForm } from 'react-hook-form';
 import customFetch from '../../api';
@@ -16,10 +16,7 @@ const Login = () => {
 
   // Navigate based on role and gender
   const navigateBasedOnRole = useCallback((user) => {
-    if (!user || !user.role) {
-      console.error("Invalid user data received:", user);
-      return;
-    }
+    if (!user) return;
 
     console.log(`User Role: ${user.role}, Gender: ${user.gender}`);
 
@@ -48,26 +45,27 @@ const Login = () => {
         return;
     }
 
-    try {
-        console.log("Using Token to Fetch User Data:", token);
+    console.log("Using Token to Fetch User Data:", token);
 
+    try {
         const response = await customFetch("GET", "user/me", {
             headers: { Authorization: `Bearer ${token}` },
             cache: "no-store"
         });
 
-        console.log("Full API Response:", response);
+        console.log("Fetched User Data:", response);
 
-        // Ensure correct user ID is retrieved
-        if (!response.id) { // Change from _id to id
+        if (!response.id) {
             console.warn("User ID is missing in API response. Possible invalid session.");
             removeSession();
             return;
         }
 
-        console.log("Fetched User Data:", response);
+        // Ensure correct user ID
+        if (response.id !== getUserToken().id) {
+            console.warn(`Mismatch detected! Expected ID: ${getUserToken().id}, Received: ${response.id}`);
+        }
 
-        // Store updated session
         setUserSession(token, response.role, response.id, response.name, response.gender);
         navigateBasedOnRole(response);
     } catch (error) {
@@ -75,41 +73,27 @@ const Login = () => {
     }
 };
 
+  // Handle login submission
+  const onSubmit = async (data) => {
+    setErrorMessage("");
 
-const onSubmit = async (data) => {
-  setErrorMessage("");
-
-  try {
-      console.log("Clearing previous session before logging in...");
-      removeSession(); // Clear old session before logging in
-
-      console.log("Attempting login with:", data);
+    try {
       const response = await customFetch("POST", "login", {
-          body: JSON.stringify(data),
-          headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" },
       });
 
-      console.log("Login Response:", response);
-
-      if (!response.token || !response.id) {
-          console.warn("No token or user ID received in response.");
-          setErrorMessage("Invalid login credentials.");
-          return;
+      if (response.token) {
+        console.log("Storing session data:", { token: response.token, user: response.name, role: response.role });
+        fetchUserData(response.token);
+      } else {
+        console.warn("No token received in the response");
       }
-
-      console.log("Received Token:", response.token);
-
-      // Store user session using correct ID
-      setUserSession(response.token, response.role, response.id, response.name, response.gender);
-
-      await fetchUserData();
-  } catch (error) {
+    } catch (error) {
       console.error("Login failed:", error);
       setErrorMessage("Invalid email or password. Please try again.");
-  }
-};
-
-
+    }
+  };
 
   // Handle Password Reset Request
   const handlePasswordReset = async () => {
