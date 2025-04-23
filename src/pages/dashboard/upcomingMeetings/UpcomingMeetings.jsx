@@ -138,7 +138,7 @@ const UpcomingMeetings = () => {
                 <p className={styles.meetingTime}>
                   {new Date(meeting.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </p>
-                <p className={styles.meetingDuration}>{meeting.duration} min Session</p>
+                <p className={styles.meetingDuration}>{meeting.duration} min</p>
               </div>
               {meeting.status === 'pending' ? (
                   <div className={styles.statusButtons}>
