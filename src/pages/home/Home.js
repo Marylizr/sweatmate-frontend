@@ -29,7 +29,7 @@ const Home = () => {
   return (
     <div className={styles.container}>
       <img
-        src="https://res.cloudinary.com/da6il8qmv/image/upload/v1696235230/trainers_lgabkh.png"
+        src="https://res.cloudinary.com/dtb3gqeea/image/upload/v1747741479/trainers_hnpvkt.png"
         alt="Trainers"
       />
 

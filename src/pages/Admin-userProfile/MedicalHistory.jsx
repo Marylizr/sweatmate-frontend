@@ -1,88 +1,183 @@
-import React, { useState, useEffect } from 'react';
-import fetchResource from '../../api';
-import styles from './userProfile.module.css';
+// src/components/medicalHistory/MedicalHistory.jsx
+import React, { useState, useEffect } from "react";
+import fetchResource from "../../api";
+import styles from "./userProfile.module.css";
+import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
+import "pdfjs-dist/build/pdf.worker.entry";
+
+// Tell PDF.js where its worker is
+GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsDistVersion}/pdf.worker.min.js`;
 
 const MedicalHistory = ({ userId }) => {
   const [medicalHistory, setMedicalHistory] = useState([]);
-  const [newEntry, setNewEntry] = useState('');
-  const [entryDate, setEntryDate] = useState('');
-  const [showAll, setShowAll] = useState(false); // Toggle for showing more/less history
+  const [newEntry, setNewEntry] = useState("");
+  const [entryDate, setEntryDate] = useState("");
+  const [showAll, setShowAll] = useState(false);
+  const [alerts, setAlerts] = useState([]);
+  const [fileUploading, setFileUploading] = useState(false);
 
-  // Fetch medical history on component mount
+  // Load existing records
   useEffect(() => {
-    const fetchMedicalHistory = async () => {
+    if (!userId) return;
+    (async () => {
       try {
-        const response = await fetchResource('GET', `user/${userId}/medical-history`);
-        setMedicalHistory(response);
+        const resp = await fetchResource(
+          "GET",
+          `user/${userId}/medical-history`
+        );
+        setMedicalHistory(resp);
       } catch (err) {
-        console.error('Error fetching medical history:', err);
+        console.error("Error fetching medical history:", err);
       }
-    };
-
-    if (userId) fetchMedicalHistory();
+    })();
   }, [userId]);
 
-  // Add a new medical history record
-  const handleAddEntry = async (e) => {
-    e.preventDefault();
-
-    if (!newEntry || !entryDate) {
-      alert('Both medical history and date are required.');
-      return;
-    }
-  
-    const newRecord = { history: newEntry, date: entryDate };
-    console.log('Sending newRecord:', newRecord);
-  
+  // Send text to GPT for analysis
+  const analyzeEntry = async (text) => {
     try {
-      const response = await fetchResource('POST', `user/${userId}/medical-history`, {
-        body: newRecord,
+      const res = await fetch("/api/medical-analysis", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text }),
       });
-      setMedicalHistory(response.medicalHistory);
-      setNewEntry('');
-      setEntryDate('');
+      const { alerts: newAlerts } = await res.json();
+      setAlerts(newAlerts || []);
     } catch (err) {
-      console.error('Error adding medical history:', err);
-      alert('Failed to add medical history.');
+      console.error("Error analyzing entry:", err);
     }
   };
 
-  // Toggle function for showing all or hiding
-  const toggleShowAll = () => {
-    setShowAll((prev) => !prev);
+  // Handle adding via form
+  const handleAddEntry = async (e) => {
+    e.preventDefault();
+    if (!newEntry || !entryDate) {
+      alert("Both medical history and date are required.");
+      return;
+    }
+    const record = { history: newEntry, date: entryDate };
+    try {
+      const resp = await fetchResource(
+        "POST",
+        `user/${userId}/medical-history`,
+        { body: record }
+      );
+      setMedicalHistory(resp.medicalHistory || [record, ...medicalHistory]);
+      setNewEntry("");
+      setEntryDate("");
+      await analyzeEntry(record.history);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to add medical history.");
+    }
+  };
+
+  // Extract text from PDF ArrayBuffer
+  const extractTextFromPDF = async (arrayBuffer) => {
+    const pdf = await getDocument({ data: arrayBuffer }).promise;
+    let fullText = "";
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      const strings = content.items.map((item) => item.str);
+      fullText += strings.join(" ") + "\n\n";
+    }
+    return fullText;
+  };
+
+  // Handle file uploads (.txt and .pdf)
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setFileUploading(true);
+    try {
+      let text = "";
+      if (file.name.endsWith(".txt")) {
+        text = await file.text();
+      } else if (file.name.endsWith(".pdf")) {
+        const buffer = await file.arrayBuffer();
+        text = await extractTextFromPDF(buffer);
+      } else {
+        alert("Only .txt or .pdf files are supported.");
+        return;
+      }
+      setNewEntry(text);
+      await analyzeEntry(text);
+    } catch (err) {
+      console.error("Error reading file:", err);
+      alert("Failed to read file.");
+    } finally {
+      setFileUploading(false);
+    }
   };
 
   return (
     <div className={styles.sessionForm}>
       <h2>Medical History</h2>
-      <form onSubmit={handleAddEntry}>
+
+      {alerts.length > 0 && (
+        <div className={styles.alerts}>
+          <h4>⚠️ Alerts</h4>
+          <ul>
+            {alerts.map((a, i) => (
+              <li key={i}>{a}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <form onSubmit={handleAddEntry} className={styles.users_form}>
         <textarea
           placeholder="Enter medical history details"
           value={newEntry}
           onChange={(e) => setNewEntry(e.target.value)}
+          className={styles.textarea}
         />
+
         <div className={styles.bttn}>
           <input
             type="date"
             value={entryDate}
             onChange={(e) => setEntryDate(e.target.value)}
+            required
           />
-          <button type="submit">Add Medical History</button>
+          <button type="submit" disabled={!newEntry || !entryDate}>
+            Add
+          </button>
+        </div>
+
+        <div className={styles.bttn}>
+          <input
+            type="file"
+            accept=".txt,.pdf"
+            onChange={handleFileUpload}
+            disabled={fileUploading}
+          />
+          {fileUploading && <span>Reading file...</span>}
         </div>
       </form>
+
       <h3>Medical History Records</h3>
-      {medicalHistory.length > 0 ? (
+      {medicalHistory.length ? (
         <>
           <ul>
-            {(showAll ? medicalHistory : medicalHistory.slice(0, 3)).map((entry, index) => (
-              <li key={index}>
-                <strong>{new Date(entry.date).toLocaleDateString()}</strong>: {entry.history}
+            {(showAll
+              ? medicalHistory
+              : medicalHistory.slice(0, 3)
+            ).map((entry, idx) => (
+              <li key={idx}>
+                <strong>
+                  {new Date(entry.date).toLocaleDateString()}
+                </strong>
+                : {entry.history}
               </li>
             ))}
           </ul>
           {medicalHistory.length > 3 && (
-            <button onClick={toggleShowAll} className={styles.toggleButton}>
-              {showAll ? 'Hide History' : 'Show More'}
+            <button
+              onClick={() => setShowAll((s) => !s)}
+              className={styles.toggleButton}
+            >
+              {showAll ? "Hide History" : "Show More"}
             </button>
           )}
         </>

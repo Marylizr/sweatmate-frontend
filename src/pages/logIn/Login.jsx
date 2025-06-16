@@ -142,6 +142,7 @@ const onSubmit = async (data) => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
+        <img src='https://res.cloudinary.com/dtb3gqeea/image/upload/v1747740721/logo_sweatMate_vy8s1z.png' alt='logo'/>
         <header className={styles.header}>
           <h1>Login</h1>
         </header>

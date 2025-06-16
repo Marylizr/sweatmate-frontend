@@ -1,22 +1,18 @@
-// src/pages/addWorkout/AddWorkout.jsx
 import React, { useRef, useContext, useState } from "react";
 import Cropper from "react-easy-crop";
 import { UserContext } from "../../components/userContext/userContext";
 import customFetch from "../../api";
-import { getUserId, getUserRole } from "../../index";  // auth helpers
-import styles from "./addworkout.module.css";
+import styles from "../addWorkout/addworkout.module.css";
 import pen from "../../assets/edit.svg";
 import pic from "../../assets/image.svg";
-import Card from "./Card";
+import Card from "../addWorkout/Card";
 
 const AddWorkout = () => {
   const { workout, setWorkout } = useContext(UserContext);
   const [lastData, setLastData] = useState("");
-
-  // New state for muscleGroup tag
   const [muscleGroup, setMuscleGroup] = useState(workout.muscleGroup || "");
 
-  // Cropper States
+  // --- Cropper State & Handlers (unchanged) ---
   const [imageToCrop, setImageToCrop] = useState(null);
   const [videoToCrop, setVideoToCrop] = useState(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -28,23 +24,15 @@ const AddWorkout = () => {
   const inputFile = useRef(null);
   const inputFileVideo = useRef(null);
 
-  const onCropComplete = (_croppedArea, pixels) => {
-    setCroppedAreaPixels(pixels);
-  };
+  const onCropComplete = (_area, pixels) => setCroppedAreaPixels(pixels);
 
   const handleFileChange = (e, isVideo = false) => {
     const file = e.target.files[0];
-    if (file) {
-      const url = URL.createObjectURL(file);
-      if (isVideo) {
-        setVideoToCrop(url);
-        setIsVideoCrop(true);
-      } else {
-        setImageToCrop(url);
-        setIsVideoCrop(false);
-      }
-      setIsCropModalOpen(true);
-    }
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    isVideo ? setVideoToCrop(url) : setImageToCrop(url);
+    setIsVideoCrop(isVideo);
+    setIsCropModalOpen(true);
   };
 
   const getCroppedBlob = (src, pixelCrop) =>
@@ -91,13 +79,15 @@ const AddWorkout = () => {
     }
   };
 
-  // Cloudinary uploads
+  // --- Cloudinary upload helper (unchanged) ---
   const uploadToCloudinary = async (file, type) => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET);
-    const url = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/${type}/upload`;
-    const res = await fetch(url, { method: "POST", body: formData });
+    const res = await fetch(
+      `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/${type}/upload`,
+      { method: "POST", body: formData }
+    );
     const data = await res.json();
     return data.url;
   };
@@ -105,9 +95,9 @@ const AddWorkout = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    // Upload image/video if new files selected
     let picture = workout.picture;
     let video = workout.video;
+
     if (inputFile.current.files[0]) {
       picture = await uploadToCloudinary(inputFile.current.files[0], "image");
     }
@@ -115,7 +105,7 @@ const AddWorkout = () => {
       video = await uploadToCloudinary(inputFileVideo.current.files[0], "video");
     }
 
-    // Determine trainer scoping
+    // 🔒 Scope by trainer if role is "trainer"
     const role = getUserRole();
     const trainerId = role === "trainer" ? getUserId() : null;
 
@@ -124,7 +114,7 @@ const AddWorkout = () => {
       muscleGroup,
       picture,
       video,
-      personalTrainerId: trainerId,     // tag to trainer or null (public)
+      personalTrainerId: trainerId,
     };
 
     try {
@@ -143,12 +133,16 @@ const AddWorkout = () => {
     <div className={styles.container}>
       <h2>Add a Workout</h2>
       <form className={styles.form} onSubmit={onSubmit}>
-        {/* Media Upload */}
+        {/* Media Uploads */}
         <div className={styles.media}>
           {/* Image */}
           <div className={styles.images}>
             <div className={styles.userimage}>
-              <img src={workout.image || pic} alt="Workout" className={styles.imagen} />
+              <img
+                src={workout.image || pic}
+                alt="Workout"
+                className={styles.imagen}
+              />
             </div>
             <label className={styles.editimg}>
               <input
@@ -160,10 +154,15 @@ const AddWorkout = () => {
               <img src={pen} alt="Edit" />
             </label>
           </div>
+
           {/* Video */}
           <div className={styles.images}>
             <div className={styles.userimage}>
-              <video controls src={workout.video} className={styles.imagen} />
+              <video
+                controls
+                src={workout.video}
+                className={styles.imagen}
+              />
             </div>
             <label className={styles.editimg}>
               <input
@@ -227,7 +226,9 @@ const AddWorkout = () => {
             type="number"
             placeholder="Series"
             value={workout.series || ""}
-            onChange={(e) => setWorkout({ ...workout, series: e.target.value })}
+            onChange={(e) =>
+              setWorkout({ ...workout, series: e.target.value })
+            }
             required
           />
 
@@ -242,7 +243,7 @@ const AddWorkout = () => {
         </div>
       </form>
 
-      {/* Preview of last saved workout */}
+      {/* Preview */}
       {lastData && <Card item={lastData} />}
 
       {/* Crop Modal */}
@@ -258,7 +259,10 @@ const AddWorkout = () => {
               onZoomChange={setZoom}
               onCropComplete={onCropComplete}
             />
-            <button className={styles.saveCropButton} onClick={showCroppedMedia}>
+            <button
+              className={styles.saveCropButton}
+              onClick={showCroppedMedia}
+            >
               Crop & Save
             </button>
           </div>
