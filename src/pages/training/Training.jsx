@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../training/training.module.css';
-import Card from './card/Card';
+import CardDeleteFavs from '../../components/card/CardDeleteFavs';
 import customFetch from '../../api';
 import { useForm } from 'react-hook-form';
 
@@ -154,7 +154,7 @@ const Training = ({ onClick }) => {
                            onClick={() => toggleWorkoutSelection(item)}
                            className={`${styles.card} ${selectedWorkouts.some(selected => selected._id === item._id) ? styles.selected : ''}`}
                         >
-                           <Card
+                           <CardDeleteFavs
                               item={item}
                               id={item._id}
                               onClick={onClick}

@@ -103,16 +103,18 @@ const Workouts = () => {
       console.error("Error cropping media:", e);
     }
   };
-
   const fileUpload = async () => {
     const files = inputFile.current.files;
     const formData = new FormData();
-    const url = `https://api.cloudinary.com/v1_1/da6il8qmv/image/upload`;
-
+    const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+    const preset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
+    const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+  
     let imagen;
     let file = files[0];
     formData.append("file", file);
-    formData.append("upload_preset", "h9rhkl6h");
+    formData.append("upload_preset", preset);
+  
     await fetch(url, {
       method: "POST",
       body: formData,
@@ -120,19 +122,22 @@ const Workouts = () => {
       .then((response) => response.json())
       .then((photo) => (imagen = photo.url))
       .catch((err) => console.error(err));
-
+  
     return imagen;
   };
-
+  
   const videoUpload = async () => {
     const files = inputFileVideo.current.files;
     const formData = new FormData();
-    const url = `https://api.cloudinary.com/v1_1/da6il8qmv/video/upload`;
-
+    const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+    const preset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
+    const url = `https://api.cloudinary.com/v1_1/${cloudName}/video/upload`;
+  
     let videoLoaded;
     let file = files[0];
     formData.append("file", file);
-    formData.append("upload_preset", "h9rhkl6h");
+    formData.append("upload_preset", preset);
+  
     await fetch(url, {
       method: "POST",
       body: formData,
@@ -140,9 +145,10 @@ const Workouts = () => {
       .then((response) => response.json())
       .then((media) => (videoLoaded = media.url))
       .catch((err) => console.error(err));
-
+  
     return videoLoaded;
   };
+  
 
   const onSubmit = async () => {
     const imagen = fileUpload();

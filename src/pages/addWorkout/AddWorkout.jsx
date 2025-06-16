@@ -1,16 +1,21 @@
+// src/pages/addWorkout/AddWorkout.jsx
 import React, { useRef, useContext, useState } from "react";
 import Cropper from "react-easy-crop";
 import { UserContext } from "../../components/userContext/userContext";
 import customFetch from "../../api";
-import styles from "../addWorkout/addworkout.module.css";
+import { getUserId, getUserRole } from "../../index";  // auth helpers
+import styles from "./addworkout.module.css";
 import pen from "../../assets/edit.svg";
 import pic from "../../assets/image.svg";
-import Card from "../addWorkout/Card";
+import Card from "./Card";
 
 const AddWorkout = () => {
   const { workout, setWorkout } = useContext(UserContext);
   const [lastData, setLastData] = useState("");
-  
+
+  // New state for muscleGroup tag
+  const [muscleGroup, setMuscleGroup] = useState(workout.muscleGroup || "");
+
   // Cropper States
   const [imageToCrop, setImageToCrop] = useState(null);
   const [videoToCrop, setVideoToCrop] = useState(null);
@@ -19,42 +24,40 @@ const AddWorkout = () => {
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [isCropModalOpen, setIsCropModalOpen] = useState(false);
   const [isVideoCrop, setIsVideoCrop] = useState(false);
-  
- 
+
   const inputFile = useRef(null);
   const inputFileVideo = useRef(null);
 
-  const onCropComplete = (croppedArea, croppedAreaPixels) => {
-    setCroppedAreaPixels(croppedAreaPixels);
+  const onCropComplete = (_croppedArea, pixels) => {
+    setCroppedAreaPixels(pixels);
   };
 
   const handleFileChange = (e, isVideo = false) => {
     const file = e.target.files[0];
     if (file) {
-      const fileUrl = URL.createObjectURL(file);
+      const url = URL.createObjectURL(file);
       if (isVideo) {
-        setVideoToCrop(fileUrl);
+        setVideoToCrop(url);
         setIsVideoCrop(true);
       } else {
-        setImageToCrop(fileUrl);
+        setImageToCrop(url);
         setIsVideoCrop(false);
       }
       setIsCropModalOpen(true);
     }
   };
 
-  const getCroppedBlob = (source, pixelCrop) => {
-    const media = new Image();
-    media.src = source;
-
-    return new Promise((resolve, reject) => {
-      media.onload = () => {
+  const getCroppedBlob = (src, pixelCrop) =>
+    new Promise((resolve, reject) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
         const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
         canvas.width = pixelCrop.width;
         canvas.height = pixelCrop.height;
+        const ctx = canvas.getContext("2d");
         ctx.drawImage(
-          media,
+          img,
           pixelCrop.x,
           pixelCrop.y,
           pixelCrop.width,
@@ -64,15 +67,12 @@ const AddWorkout = () => {
           pixelCrop.width,
           pixelCrop.height
         );
-
-        canvas.toBlob((blob) => {
-          if (blob) resolve(blob);
-          else reject(new Error("Canvas is empty or unsupported format"));
-        }, "image/jpeg");
+        canvas.toBlob((blob) =>
+          blob ? resolve(blob) : reject(new Error("Crop failed"))
+        , "image/jpeg");
       };
-      media.onerror = reject;
+      img.onerror = reject;
     });
-  };
 
   const showCroppedMedia = async () => {
     try {
@@ -81,209 +81,171 @@ const AddWorkout = () => {
         croppedAreaPixels
       );
       const url = URL.createObjectURL(blob);
-      if (isVideoCrop) {
-        setWorkout({ ...workout, video: url });
-      } else {
-        setWorkout({ ...workout, image: url });
-      }
+      setWorkout({
+        ...workout,
+        ...(isVideoCrop ? { video: url } : { image: url }),
+      });
       setIsCropModalOpen(false);
     } catch (e) {
-      console.error("Error cropping media:", e);
+      console.error("Error cropping:", e);
     }
   };
 
-  const fileUpload = async () => {
-    const files = inputFile.current.files;
+  // Cloudinary uploads
+  const uploadToCloudinary = async (file, type) => {
     const formData = new FormData();
-    const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
-    const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
-    const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
-  
-    let uploadedImage;
-    let file = files[0];
     formData.append("file", file);
-    formData.append("upload_preset", uploadPreset);
-  
-    try {
-      const response = await fetch(url, { method: "POST", body: formData });
-      const photo = await response.json();
-      uploadedImage = photo.url;
-    } catch (err) {
-      console.error("Error uploading image:", err);
-    }
-  
-    return uploadedImage;
+    formData.append("upload_preset", process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET);
+    const url = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/${type}/upload`;
+    const res = await fetch(url, { method: "POST", body: formData });
+    const data = await res.json();
+    return data.url;
   };
-  
-  const videoUpload = async () => {
-    const files = inputFileVideo.current.files;
-    const formData = new FormData();
-    const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
-    const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
-    const url = `https://api.cloudinary.com/v1_1/${cloudName}/video/upload`;
-  
-    let uploadedVideo;
-    let file = files[0];
-    formData.append("file", file);
-    formData.append("upload_preset", uploadPreset);
-  
-    try {
-      const response = await fetch(url, { method: "POST", body: formData });
-      const media = await response.json();
-      uploadedVideo = media.url;
-    } catch (err) {
-      console.error("Error uploading video:", err);
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    // Upload image/video if new files selected
+    let picture = workout.picture;
+    let video = workout.video;
+    if (inputFile.current.files[0]) {
+      picture = await uploadToCloudinary(inputFile.current.files[0], "image");
     }
-  
-    return uploadedVideo;
-  };
-  
+    if (inputFileVideo.current.files[0]) {
+      video = await uploadToCloudinary(inputFileVideo.current.files[0], "video");
+    }
 
-  const onSubmit = async () => {
-    const imagen = fileUpload();
-    const videoData = videoUpload();
+    // Determine trainer scoping
+    const role = getUserRole();
+    const trainerId = role === "trainer" ? getUserId() : null;
 
-    let resultado;
-    await imagen.then((result) => {
-      resultado = result;
-    });
-
-    let VideoSet;
-    await videoData.then((savedVideo) => {
-      VideoSet = savedVideo;
-    });
-
-    const data = {
-      type: workout.type,
-      name: workout.name,
-      description: workout.description,
-      reps: workout.reps,
-      series: workout.series,
-      picture: resultado || workout.picture,
-      video: VideoSet || workout.video,
-      frontpage: workout.frontpage,
+    const payload = {
+      ...workout,
+      muscleGroup,
+      picture,
+      video,
+      personalTrainerId: trainerId,     // tag to trainer or null (public)
     };
 
-    console.log(data);
-
-    customFetch("POST", "workouts", { body: data })
-      .then(() => {
-        setLastData(data);
-        alert("Workout saved");
-      })
-      .catch((err) => console.error(err));
+    try {
+      await customFetch("POST", "workouts", { body: payload });
+      setLastData(payload);
+      alert("Workout saved!");
+    } catch (err) {
+      console.error(err);
+      alert("Error saving workout");
+    }
   };
 
-  const onReset = () => {
-    window.location.reload();
-  };
+  const onReset = () => window.location.reload();
 
   return (
     <div className={styles.container}>
       <h2>Add a Workout</h2>
-      <div className={styles.wrap}>
-        <form className={styles.form}>
-          <div className={styles.media}>
-            <div className={styles.images}>
-              <div className={styles.userimage}>
-                <img
-                  src={workout.image || pic}
-                  className={styles.imagen}
-                  alt="userImage"
-                />
-              </div>
-              <div className={styles.editimg}>
-                <label>
-                  <input
-                    type="file"
-                    ref={inputFile}
-                    onChange={(e) => handleFileChange(e)}
-                    className={styles.uploading}
-                  />
-                  <img src={pen} alt="penlogo" />
-                </label>
-              </div>
+      <form className={styles.form} onSubmit={onSubmit}>
+        {/* Media Upload */}
+        <div className={styles.media}>
+          {/* Image */}
+          <div className={styles.images}>
+            <div className={styles.userimage}>
+              <img src={workout.image || pic} alt="Workout" className={styles.imagen} />
             </div>
-
-            <div className={styles.images}>
-              <div className={styles.userimage}>
-                <video
-                  controls
-                  src={workout.video}
-                  className={styles.imagen}
-                  alt="userVideo"
-                />
-              </div>
-              <div className={styles.editimg}>
-                <label>
-                  <input
-                    type="file"
-                    ref={inputFileVideo}
-                    onChange={(e) => handleFileChange(e, true)}
-                    className={styles.uploading}
-                  />
-                  <img src={pen} alt="penlogo" />
-                </label>
-              </div>
-            </div>
+            <label className={styles.editimg}>
+              <input
+                type="file"
+                ref={inputFile}
+                onChange={(e) => handleFileChange(e)}
+                className={styles.uploading}
+              />
+              <img src={pen} alt="Edit" />
+            </label>
           </div>
-
-          <div className={styles.worksinput}>
-            <input
-              type="text"
-              onChange={(e) => setWorkout({ ...workout, type: e.target.value })}
-              placeholder="type"
-            />
-
-            <input
-              type="text"
-              onChange={(e) => setWorkout({ ...workout, name: e.target.value })}
-              placeholder="name"
-            />
-
-            <textarea
-              placeholder="description"
-              rows={2}
-              cols={40}
-              onChange={(e) =>
-                setWorkout({ ...workout, description: e.target.value })
-              }
-            />
-
-            <input
-              type="text"
-              onChange={(e) => setWorkout({ ...workout, reps: e.target.value })}
-              placeholder="reps"
-            />
-
-            <input
-              type="text"
-              onChange={(e) =>
-                setWorkout({ ...workout, series: e.target.value })
-              }
-              placeholder="series"
-            />
-
-            <div className={styles.buttons}>
-              <button
-                className={styles.save}
-                onClick={(e) => {
-                  e.preventDefault();
-                  onSubmit();
-                }}
-              >
-                Save
-              </button>
-              <button className={styles.reload} onClick={onReset}>
-                Reset
-              </button>
+          {/* Video */}
+          <div className={styles.images}>
+            <div className={styles.userimage}>
+              <video controls src={workout.video} className={styles.imagen} />
             </div>
+            <label className={styles.editimg}>
+              <input
+                type="file"
+                ref={inputFileVideo}
+                onChange={(e) => handleFileChange(e, true)}
+                className={styles.uploading}
+              />
+              <img src={pen} alt="Edit" />
+            </label>
           </div>
-        </form>
+        </div>
 
-        {lastData && <Card item={lastData} />}
-      </div>
+        {/* Workout Details */}
+        <div className={styles.worksinput}>
+          <select
+            value={muscleGroup}
+            onChange={(e) => setMuscleGroup(e.target.value)}
+            required
+          >
+            <option value="">Select muscle group</option>
+            <option value="arms">Arms</option>
+            <option value="legs">Legs</option>
+            <option value="chest">Chest</option>
+            <option value="back">Back</option>
+            <option value="glutes">Glutes</option>
+            <option value="hamstrings">Hamstrings</option>
+            <option value="quadriceps">Quadriceps</option>
+            <option value="abs">Abs</option>
+            <option value="shoulders">Shoulders</option>
+            <option value="fullbody">Fullbody</option>
+          </select>
 
+          <input
+            type="text"
+            placeholder="Name"
+            value={workout.name || ""}
+            onChange={(e) => setWorkout({ ...workout, name: e.target.value })}
+            required
+          />
+
+          <textarea
+            placeholder="Description"
+            rows={2}
+            value={workout.description || ""}
+            onChange={(e) =>
+              setWorkout({ ...workout, description: e.target.value })
+            }
+            required
+          />
+
+          <input
+            type="number"
+            placeholder="Reps"
+            value={workout.reps || ""}
+            onChange={(e) => setWorkout({ ...workout, reps: e.target.value })}
+            required
+          />
+
+          <input
+            type="number"
+            placeholder="Series"
+            value={workout.series || ""}
+            onChange={(e) => setWorkout({ ...workout, series: e.target.value })}
+            required
+          />
+
+          <div className={styles.buttons}>
+            <button type="submit" className={styles.save}>
+              Save
+            </button>
+            <button type="button" className={styles.reload} onClick={onReset}>
+              Reset
+            </button>
+          </div>
+        </div>
+      </form>
+
+      {/* Preview of last saved workout */}
+      {lastData && <Card item={lastData} />}
+
+      {/* Crop Modal */}
       {isCropModalOpen && (
         <div className={styles.overlay}>
           <div className={styles.cropContainer}>
